@@ -26,6 +26,7 @@ cache:
 ## Templates
 .template_npm_script: &template_npm_script
   <<: *template_node
+  stage: build
   before_script:
     - time yarn install
     - npm config set git-tag-version false
