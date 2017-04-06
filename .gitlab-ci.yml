@@ -57,5 +57,7 @@ docker:
   # only:
   #   - develop@njlgad/web-ui-starter-kit
   #   - tags@njlgad/web-ui-starter-kit
+  variables:
+    publish: 'true'
   script:
     - time /app/scripts/build.py
