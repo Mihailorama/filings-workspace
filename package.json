@@ -30,10 +30,14 @@
     "devserver-port": 9091
   },
   "main": "bin/serve.js",
+  "bin": "bin/serve.js",
   "files": [
     "bin",
     "www"
   ],
+  "dependencies": {
+    "express": "^4.15.2"
+  },
   "devDependencies": {
     "@cfl/tslint-config": "^0.6.0",
     "@janslow/ci-build-version": "^0.1.0",
@@ -86,8 +90,5 @@
     "webpack": "^2.3.3",
     "webpack-dev-server": "^2.4.2",
     "webpack-merge": "^4.1.0"
-  },
-  "dependencies": {
-    "express": "^4.15.2"
   }
 }
