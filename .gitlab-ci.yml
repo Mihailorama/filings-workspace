@@ -1,0 +1,60 @@
+# Setup
+stages:
+  - build
+  - publish
+
+cache:
+  key: "$CI_BUILD_REF_NAME" # Per branch caching
+  paths:
+    - node_modules
+
+# Job Templates
+.template_docker: &template_docker
+  tags:
+    - docker
+
+.template_docker_privileged: &template_docker_privileged
+  tags:
+    - docker
+    - docker-privileged
+
+.template_node: &template_node
+  <<: *template_docker
+  image: artifacts.int.corefiling.com:5000/cfl-node:7
+
+# Build stage
+## Templates
+.template_npm_script: &template_npm_script
+  <<: *template_node
+  before_script:
+    - time yarn install
+    - npm config set git-tag-version false
+    - npm run set-build-version
+    # Caches + Yarn sometimes miss PhantomJS.
+    - npm rebuild phantomjs-prebuilt
+  script:
+    - time npm run $CI_BUILD_NAME
+
+## Jobs
+compile:webpack:
+  <<: *template_npm_script
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - www
+
+test:tslint: *template_npm_script
+test:karma: *template_npm_script
+
+# Publish stage
+docker:
+  <<: *template_docker_privileged
+  stage: publish
+  image: artifacts.int.corefiling.com:5000/nimbus-tools/build-npm-package:0.5.0-dev.55434
+  dependencies:
+    - compile:webpack
+  # only:
+  #   - develop@njlgad/web-ui-starter-kit
+  #   - tags@njlgad/web-ui-starter-kit
+  script:
+    - time /app/build.py
