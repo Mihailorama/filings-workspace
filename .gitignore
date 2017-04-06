@@ -19,7 +19,7 @@ node_modules
 .awcache
 
 # Webpack output
-www
+/www
 
 # Misc
 .ds_store
