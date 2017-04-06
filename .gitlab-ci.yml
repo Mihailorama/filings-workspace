@@ -58,4 +58,4 @@ docker:
   #   - develop@njlgad/web-ui-starter-kit
   #   - tags@njlgad/web-ui-starter-kit
   script:
-    - time /app/build.py
+    - time /app/scripts/build.py
