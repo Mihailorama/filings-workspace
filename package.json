@@ -36,6 +36,7 @@
   ],
   "devDependencies": {
     "@cfl/tslint-config": "^0.6.0",
+    "@janslow/ci-build-version": "^0.1.0",
     "@types/jasmine": "^2.5.47",
     "@types/react-dom": "^0.14.23",
     "@types/react-hot-loader": "^3.0.1",
