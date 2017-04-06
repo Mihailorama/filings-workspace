@@ -35,6 +35,10 @@
     "bin",
     "www"
   ],
+  "engines": {
+    "node": ">=6.0.0",
+    "npm": ">=4.0.0"
+  },
   "dependencies": {
     "express": "^4.15.2"
   },
