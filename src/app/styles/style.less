@@ -1,0 +1,12 @@
+@web-font-path: "https://fonts.googleapis.com/css?family=Inconsolata:400,700";
+
+.web-font(@path) {
+  @import url("@{path}");
+}
+.web-font(@web-font-path);
+
+html {
+  font-family: 'Inconsolata', monospace;
+  background-color: #272B30;
+  color: #C8C8C8;
+}
