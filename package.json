@@ -1,6 +1,6 @@
 {
   "name": "@cfl/web-ui-starter-kit",
-  "version": "0.1.0",
+  "version": "0.1.0-local",
   "cfl": {
     "group": {
       "name": "njlgad"
