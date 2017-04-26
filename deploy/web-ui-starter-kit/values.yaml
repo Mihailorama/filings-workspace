@@ -1,0 +1,12 @@
+namespace: njlgad
+
+imageRegistry: artifacts.int.corefiling.com:5000
+imageRepository: njlgad
+imageName: web-ui-starter-kit
+imageTag: 0.1.0-local
+
+# Pull Policy
+# pullPolicy: IfNotPresent
+
+# Number of replicas
+# replicaCount: 1
