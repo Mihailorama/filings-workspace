@@ -68,7 +68,7 @@ publish:
     - time /app/scripts/build.py
 
 # Deploy stage
-deploy:
+.template_deploy: &template_deploy
   <<: *template_python
   stage: deploy
   dependencies:
@@ -76,10 +76,40 @@ deploy:
   # only:
   #   - develop@njlgad/web-ui-starter-kit
   #   - tags@njlgad/web-ui-starter-kit
-  script:
+  variables:
+    REFRESH_TOKEN: eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJiR3F4bm5mMDRud3V2elYwcjhia0hKN0ZtdjRwV1hlRmJpdDE1dkRwNmlrIn0.eyJqdGkiOiJhNzcwYThkMS1lYmQ0LTQwODgtOTY4OS00YzY5ZDBjOTk0ZGQiLCJleHAiOjAsIm5iZiI6MCwiaWF0IjoxNDkzMjE4MTc3LCJpc3MiOiJodHRwczovL2xvZ2luLmNvcmVmaWxpbmcuY29tL2F1dGgvcmVhbG1zL2t1YmUiLCJhdWQiOiJrdWJlcm5ldGVzIiwic3ViIjoiYzI2ZmFkODEtZDg3Zi00MmE5LWJlNjctYmViYTNhN2MzOTMxIiwidHlwIjoiT2ZmbGluZSIsImF6cCI6Imt1YmVybmV0ZXMiLCJhdXRoX3RpbWUiOjAsInNlc3Npb25fc3RhdGUiOiI5NDRiNDljMC02OTE2LTRmMzctOTIxMi02YzVlNjQ4YWJlN2EiLCJjbGllbnRfc2Vzc2lvbiI6IjJhMDllZTYwLTY3MjMtNDY2ZS04YWEzLTRkYWRiOTU4NDE1MyIsInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsInZpZXctcHJvZmlsZSJdfX19.Ue4TknrqGC_Xhp9vWyDd_7D65cGddp0ILJgOMs2INSvAeApck0ZCs-7AlfayA3zAuD8nDDNBlx6KldGpV97jMXuRI6jnc5OAmQ0Zpwiq7eWgseSG5ZC3so5o4QeR5LpXjfR-sOEOOnRSnMs-gjImxXhHP9p59fKwfyRXwUezMH4Lj2rSzUQbm4Gb5Gut7-4Bq620aLsJZOgJ_KOvUldERvOOaQ_lahW--TfN4XeMCY5zdKSIqJraWWGZCb_uqwLsUwtNjgiJ4hQSnFtJIE9gdM4YBWfFsCxT05P-mL2OvEW90dUkP6lws_IqrjIGpWBKWLuSiuknZCykoyjKHpclLQ
+  before_script:
     - pip3 install pyyaml
     - pip3 install requests
     - curl -LO https://helm.kube.int.corefiling.com/kube-auth
     - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
     - chmod +x kube-auth kubectl
     - mv kube-auth kubectl /usr/local/bin
+    - kube-auth login -t $REFRESH_TOKEN
+    - kube-auth namespace create -s $CI_ENVIRONMENT_SLUG
+    - kubectl create serviceaccount tiller
+    - kubectl create rolebinding tiller --clusterrole=cluster-admin --serviceaccount=$CI_ENVIRONMENT_SLUG:tiller
+    - curl -L https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
+    - helm init --tiller-namespace=$CI_ENVIRONMENT_SLUG
+    - kubectl get deploy tiller-deploy -o yaml > tmp.yaml
+    - "sed -i 's/      securityContext: {}/      securityContext: {}\n      serviceAccount: tiller/' tmp.yaml"
+    - kubectl apply -f tmp.yaml
+
+deploy:
+  <<: *template_deploy
+  environment:
+    name: $CI_BUILD_REF_NAME
+    url: https://$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG.kube.int.corefiling.com
+    on_stop: deploy:clean
+  script:
+    - echo "Deploying https://$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG.kube.int.corefiling.com"
+
+deploy:clean:
+  <<: *template_deploy
+  when: manual
+  environment:
+    name: $CI_BUILD_REF_NAME
+    url: https://$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG.kube.int.corefiling.com
+    action: stop
+  script:
+    - echo "Pruning https://$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG.kube.int.corefiling.com"
