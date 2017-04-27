@@ -2,6 +2,7 @@
 stages:
   - build
   - publish
+  - deploy
 
 cache:
   key: "$CI_BUILD_REF_NAME" # Per branch caching
@@ -21,6 +22,10 @@ cache:
 .template_node: &template_node
   <<: *template_docker
   image: artifacts.int.corefiling.com:5000/cfl-node:7
+
+.template_python: &template_python
+  <<: *template_docker
+  image: python:3
 
 # Build stage
 ## Templates
@@ -54,10 +59,27 @@ publish:
   image: artifacts.int.corefiling.com:5000/nimbus-tools/build-npm-package:0.5.0-dev.63399
   dependencies:
     - compile:webpack
-  only:
-    - develop@njlgad/web-ui-starter-kit
-    - tags@njlgad/web-ui-starter-kit
+  # only:
+  #   - develop@njlgad/web-ui-starter-kit
+  #   - tags@njlgad/web-ui-starter-kit
   variables:
     publish: 'true'
   script:
     - time /app/scripts/build.py
+
+# Deploy stage
+deploy:
+  <<: *template_python
+  stage: deploy
+  dependencies:
+    - publish
+  # only:
+  #   - develop@njlgad/web-ui-starter-kit
+  #   - tags@njlgad/web-ui-starter-kit
+  script:
+    - pip3 install pyyaml
+    - pip3 install requests
+    - curl -LO https://helm.kube.int.corefiling.com/kube-auth
+    - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+    - chmod +x kube-auth kubectl
+    - mv kube-auth kubectl /usr/local/bin
