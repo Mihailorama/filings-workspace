@@ -86,7 +86,8 @@ publish:
     - chmod +x kube-auth kubectl
     - mv kube-auth kubectl /usr/local/bin
     - kube-auth login -t $REFRESH_TOKEN
-    - kube-auth namespace create -s $CI_ENVIRONMENT_SLUG
+    - if kube-auth namespace list | grep -cq $CI_ENVIRONMENT_SLUG; then echo "namespace $CI_ENVIRONMENT_SLUG already exists"; else kube-auth namespace create $CI_ENVIRONMENT_SLUG; fi;
+    - kube-auth namespace use my-namespace
     - kubectl create serviceaccount tiller
     - kubectl create rolebinding tiller --clusterrole=cluster-admin --serviceaccount=$CI_ENVIRONMENT_SLUG:tiller
     - curl -LO https://storage.googleapis.com/kubernetes-helm/helm-v2.3.1-linux-amd64.tar.gz
