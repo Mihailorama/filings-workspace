@@ -90,13 +90,13 @@ publish:
     - kube-auth namespace use $CI_ENVIRONMENT_SLUG
     - kubectl config get-contexts `kubectl config current-context`
     - kubectl create serviceaccount tiller --namespace=$CI_ENVIRONMENT_SLUG
-    - kubectl create rolebinding tiller --clusterrole=cluster-admin --serviceaccount=$CI_ENVIRONMENT_SLUG:tiller
+    - kubectl create rolebinding tiller --clusterrole=cluster-admin --serviceaccount=$CI_ENVIRONMENT_SLUG:tiller --namespace=$CI_ENVIRONMENT_SLUG
     - curl -LO https://storage.googleapis.com/kubernetes-helm/helm-v2.3.1-linux-amd64.tar.gz
     - tar -xzvf /tmp/helm.tar.gz -C /tmp
     - chmod +x /tmp/linux-amd64/helm
     - mv /tmp/linux-amd64/helm /usr/local/bin
     - helm init --tiller-namespace=$CI_ENVIRONMENT_SLUG
-    - kubectl get deploy tiller-deploy -o yaml > tmp.yaml
+    - kubectl get deploy tiller-deploy -o yaml --namespace=$CI_ENVIRONMENT_SLUG > tmp.yaml
     - "sed -i 's/      securityContext: {}/      securityContext: {}\n      serviceAccount: tiller/' tmp.yaml"
     - kubectl apply -f tmp.yaml
 
