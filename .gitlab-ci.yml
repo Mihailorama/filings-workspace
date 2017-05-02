@@ -104,7 +104,7 @@ publish:
     - kubectl config get-contexts `kubectl config current-context`
     - if kubectl get serviceaccount tiller --namespace=$CI_ENVIRONMENT_SLUG | grep -cq tiller; then echo "serviceaccount tiller already exists"; else kubectl create serviceaccount tiller --namespace=$CI_ENVIRONMENT_SLUG; fi;
     - if kubectl get rolebinding tiller --namespace=$CI_ENVIRONMENT_SLUG | grep -cq tiller; then echo "rolebinding tiller already exists"; else kubectl create rolebinding tiller --clusterrole=cluster-admin --serviceaccount=$CI_ENVIRONMENT_SLUG:tiller --namespace=$CI_ENVIRONMENT_SLUG; fi;
-    - curl -L -o /tmp/helm.tar.gz https://storage.googleapis.com/kubernetes-helm/helm-v2.3.1-linux-amd64.tar.gz
+    - curl -L -o /tmp/helm.tar.gz https://storage.googleapis.com/kubernetes-helm/helm-v2.2.3-linux-amd64.tar.gz
     - tar -xzvf /tmp/helm.tar.gz -C /tmp
     - chmod +x /tmp/linux-amd64/helm
     - mv /tmp/linux-amd64/helm /usr/local/bin
