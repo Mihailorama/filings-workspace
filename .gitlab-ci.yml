@@ -24,7 +24,7 @@ cache:
   image: artifacts.int.corefiling.com:5000/cfl-node:7
 
 .template_python: &template_python
-  <<: *template_docker
+  <<: *template_docker_privileged
   image: python:3
 
 # Build stage
