@@ -52,7 +52,7 @@ build:version:
   before_script:
     - npm install -g @janslow/ci-build-version@dev
   script:
-    - ci-build-version -f product.version > build.version
+    - ci-build-version -f package.json > build.version
 
 compile:webpack:
   <<: *template_npm_script
