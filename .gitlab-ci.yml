@@ -24,7 +24,7 @@ cache:
   image: artifacts.int.corefiling.com:5000/cfl-node:7
 
 .template_python: &template_python
-  <<: *template_docker_privileged
+  <<: *template_docker
   image: python:3
 
 # Build stage
@@ -112,7 +112,7 @@ publish:
     - helm init --tiller-namespace=$CI_ENVIRONMENT_SLUG
     - kubectl get deploy tiller-deploy -o yaml --namespace=$CI_ENVIRONMENT_SLUG > tmp.yaml
     - "sed -i 's/      securityContext: {}/      securityContext: {}\\n      serviceAccount: tiller/' tmp.yaml"
-
+    - kubectl apply -f tmp.yaml --namespace=$CI_ENVIRONMENT_SLUG
 
 deploy:
   <<: *template_deploy
