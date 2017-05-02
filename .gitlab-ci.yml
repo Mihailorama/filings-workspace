@@ -89,8 +89,8 @@ publish:
     - if kube-auth namespace list | grep -cq $CI_ENVIRONMENT_SLUG; then echo "namespace $CI_ENVIRONMENT_SLUG already exists"; else kube-auth namespace create $CI_ENVIRONMENT_SLUG; fi;
     - kube-auth namespace use $CI_ENVIRONMENT_SLUG
     - kubectl config get-contexts `kubectl config current-context`
-    - if kubectl get serviceaccount tiller | grep -cq tiller; then echo "serviceaccount tiller already exists"; else kubectl create serviceaccount tiller --namespace=$CI_ENVIRONMENT_SLUG; fi;
-    - if kubectl get rolebinding tiller | grep -cq tiller; then echo "rolebinding tiller already exists"; else kubectl create rolebinding tiller --clusterrole=cluster-admin --serviceaccount=$CI_ENVIRONMENT_SLUG:tiller --namespace=$CI_ENVIRONMENT_SLUG; fi;
+    - if kubectl get serviceaccount tiller --namespace=$CI_ENVIRONMENT_SLUG | grep -cq tiller; then echo "serviceaccount tiller already exists"; else kubectl create serviceaccount tiller --namespace=$CI_ENVIRONMENT_SLUG; fi;
+    - if kubectl get rolebinding tiller --namespace=$CI_ENVIRONMENT_SLUG | grep -cq tiller; then echo "rolebinding tiller already exists"; else kubectl create rolebinding tiller --clusterrole=cluster-admin --serviceaccount=$CI_ENVIRONMENT_SLUG:tiller --namespace=$CI_ENVIRONMENT_SLUG; fi;
     - curl -L -o /tmp/helm.tar.gz https://storage.googleapis.com/kubernetes-helm/helm-v2.3.1-linux-amd64.tar.gz
     - tar -xzvf /tmp/helm.tar.gz -C /tmp
     - chmod +x /tmp/linux-amd64/helm
