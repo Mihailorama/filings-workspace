@@ -85,6 +85,7 @@ publish:
   <<: *template_python
   stage: deploy
   dependencies:
+    - build:version
     - publish
   # only:
   #   - develop@njlgad/web-ui-starter-kit
