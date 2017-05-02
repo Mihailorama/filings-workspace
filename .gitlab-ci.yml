@@ -53,6 +53,7 @@ build:version:
     - npm install -g @janslow/ci-build-version@dev
   script:
     - ci-build-version -f package.json > build.version
+    - echo `cat build.version`
 
 compile:webpack:
   <<: *template_npm_script
