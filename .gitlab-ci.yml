@@ -42,6 +42,18 @@ cache:
     - time npm run $CI_BUILD_NAME
 
 ## Jobs
+build:version:
+  <<: *template_node
+  stage: build
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - build.version
+  before_script:
+    - npm install -g @janslow/ci-build-version@dev
+  script:
+    - ci-build-version -f product.version > build.version
+
 compile:webpack:
   <<: *template_npm_script
   artifacts:
@@ -98,7 +110,6 @@ publish:
     - helm init --tiller-namespace=$CI_ENVIRONMENT_SLUG
     - kubectl get deploy tiller-deploy -o yaml --namespace=$CI_ENVIRONMENT_SLUG > tmp.yaml
     - "sed -i 's/      securityContext: {}/      securityContext: {}\\n      serviceAccount: tiller/' tmp.yaml"
-    - kubectl apply -f tmp.yaml
 
 
 deploy:
@@ -109,6 +120,7 @@ deploy:
     on_stop: deploy:clean
   script:
     - echo "Deploying https://$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG.kube.int.corefiling.com"
+    - helm upgrade --install --set namespace=$CI_ENVIRONMENT_SLUG,imageTag=`cat build.version` web-ui-starter-kit deploy/web-ui-starter-kit --tiller-namespace=njlgad
 
 deploy:clean:
   <<: *template_deploy
