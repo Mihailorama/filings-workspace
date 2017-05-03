@@ -69,7 +69,7 @@ test:karma: *template_npm_script
 publish:
   <<: *template_docker_privileged
   stage: publish
-  image: artifacts.int.corefiling.com:5000/nimbus-tools/build-npm-package:0.5.0-dev.63399
+  image: artifacts.int.corefiling.com:5000/nimbus-tools/build-npm-package:0.5.0-dev.69608
   dependencies:
     - compile:webpack
   # only:
