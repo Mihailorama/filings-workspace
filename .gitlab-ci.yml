@@ -25,7 +25,7 @@ cache:
 
 .template_kube_deploy: &template_kube_deploy
   <<: *template_docker
-  image: artifacts.int.corefiling.com:5000/pdds/kube-deploy:0.1
+  image: artifacts.int.corefiling.com:5000/pdds/kube-deploy:0.2
   before_script:
     - /kube/init $REFRESH_TOKEN $CI_ENVIRONMENT_SLUG
 
