@@ -133,3 +133,4 @@ deploy:clean:
     action: stop
   script:
     - echo "Pruning https://$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG.kube.int.corefiling.com"
+    - kube-auth namespace delete $CI_ENVIRONMENT_SLUG
