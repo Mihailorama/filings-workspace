@@ -105,7 +105,7 @@ deploy:
     on_stop: deploy:clean
   script:
     - echo "Deploying https://$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG.kube.int.corefiling.com"
-    - helm upgrade --install --set namespace=$CI_ENVIRONMENT_SLUG,imageTag=`cat build.version` web-ui-starter-kit deploy/web-ui-starter-kit
+    - helm upgrade --install --set namespace=$CI_ENVIRONMENT_SLUG,imageTag=`cat build.version` web-ui-starter-kit deploy/web-ui-starter-kit --namespace=$CI_ENVIRONMENT_SLUG
 
 deploy:clean:
   <<: *template_deploy
