@@ -26,8 +26,6 @@ cache:
 .template_kube_deploy: &template_kube_deploy
   <<: *template_docker
   image: artifacts.int.corefiling.com:5000/pdds/kube-deploy:0.2
-  before_script:
-    - /kube/init $REFRESH_TOKEN $CI_ENVIRONMENT_SLUG
 
 
 # Build stage
@@ -94,8 +92,9 @@ publish:
   #   - develop@njlgad/web-ui-starter-kit
   #   - tags@njlgad/web-ui-starter-kit
   variables:
-    REFRESH_TOKEN: eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJiR3F4bm5mMDRud3V2elYwcjhia0hKN0ZtdjRwV1hlRmJpdDE1dkRwNmlrIn0.eyJqdGkiOiI4ZGFhMTkzMS0yY2I0LTQ2NmEtYWY4ZS0zOTg2OTRhNGQ4MTEiLCJleHAiOjAsIm5iZiI6MCwiaWF0IjoxNDkzMzg0MTAxLCJpc3MiOiJodHRwczovL2xvZ2luLmNvcmVmaWxpbmcuY29tL2F1dGgvcmVhbG1zL2t1YmUiLCJhdWQiOiJrdWJlcm5ldGVzIiwic3ViIjoiYzI2ZmFkODEtZDg3Zi00MmE5LWJlNjctYmViYTNhN2MzOTMxIiwidHlwIjoiT2ZmbGluZSIsImF6cCI6Imt1YmVybmV0ZXMiLCJhdXRoX3RpbWUiOjAsInNlc3Npb25fc3RhdGUiOiI5NDRiNDljMC02OTE2LTRmMzctOTIxMi02YzVlNjQ4YWJlN2EiLCJjbGllbnRfc2Vzc2lvbiI6IjJhMDllZTYwLTY3MjMtNDY2ZS04YWEzLTRkYWRiOTU4NDE1MyIsInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsInZpZXctcHJvZmlsZSJdfX19.IMt9wbULyaFsqN-9-ub7mA4mL8KcX9PhRs5jrRRloez5OKpzD4FLeGMy0RtUZz2qj-1gQpMSave5OqzhmqDdyJ1c2oN9-JQL1v1yhx5ZUspu1XUQcSBWnZzeaE4PWctYymFV_KJxXAR6mryEIkHDgS1Uw7HpG8gnbg2_kx0JrXpL8gb1VhrlNkJQh-SHI8Eh8H7up4fUqsnmJRDikW2dTvxLVOxjqsh4Je8gyclJH0wruI4CwdslCev8paJFojo4C14989RfOi_0j6w-LQTAbNCJzByc-zFhfNn7t15KPL3ft58TXuFN8-4SsP3QjrPAgTmigwtW2_BYozHU6X8Pvw
     TILLER_NAMESPACE: $CI_ENVIRONMENT_SLUG
+  before_script:
+    - /kube/init $KUBE_AUTH_TOKEN $CI_ENVIRONMENT_SLUG
 
 deploy:
   <<: *template_deploy
