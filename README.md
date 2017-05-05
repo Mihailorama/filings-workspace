@@ -22,7 +22,7 @@ npm run compile
 
 ## Package
 ```bash
-npm pack # Produces web-ui-starter-kit-$VERSION.tgz
+npm pack # Produces cfl-web-ui-starter-kit-$VERSION.tgz
 ```
 
 ## Test
@@ -38,7 +38,7 @@ npm run test-debug
 
 ## Development Server
 ```bash
-npm config set web-ui-starter-kit:devserver-host `hostname`.cfl.io # You must have a working DNS entry for "`hostname`.cfl.io".
+npm config set @cfl/web-ui-starter-kit:devserver-host `hostname`.cfl.io # You must have a working DNS entry for "`hostname`.cfl.io".
 npm start
 open https://`hostname`.cfl.io:9091/
 ```
