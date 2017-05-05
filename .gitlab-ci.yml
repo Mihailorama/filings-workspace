@@ -66,6 +66,7 @@ compile:webpack:
 test:tslint: *template_npm_script
 test:karma: *template_npm_script
 
+
 # Publish stage
 publish:
   <<: *template_docker_privileged
@@ -73,13 +74,11 @@ publish:
   image: artifacts.int.corefiling.com:5000/nimbus-tools/build-npm-package:0.5.0-dev.69735
   dependencies:
     - compile:webpack
-  # only:
-  #   - develop@njlgad/web-ui-starter-kit
-  #   - tags@njlgad/web-ui-starter-kit
   variables:
     publish: 'true'
   script:
     - time /app/scripts/build.py
+
 
 # Deploy stage
 .template_deploy: &template_deploy
@@ -88,9 +87,6 @@ publish:
   dependencies:
     - build:version
     - publish
-  # only:
-  #   - develop@njlgad/web-ui-starter-kit
-  #   - tags@njlgad/web-ui-starter-kit
   variables:
     TILLER_NAMESPACE: $CI_ENVIRONMENT_SLUG
   before_script:
