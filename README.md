@@ -6,6 +6,23 @@
 - [Webpack](https://github.com/webpack/webpack)
 
 ---
+# Clone Me
+- clone the project
+- replace occurrences of `njlgad` to change the group name.  For example:
+  ```
+  OLD=njlgad
+  NEW=$NAME
+  grep -rl --exclude-dir .git -e "$OLD" . | xargs sed -i "s/$OLD/$NEW/g"
+  ```
+- replace occurrences of `my-project` to change the project name.  For example:
+  ```
+  OLD=my-project
+  NEW=my-project
+  grep -rl --exclude-dir .git -e "$OLD" . | xargs sed -i "s/$OLD/$NEW/g"
+  ```
+- push new project to https://gitlab.int.corefiling.com using the group name and the project name specified above.
+
+---
 
 # Development
 ## Prerequisites
