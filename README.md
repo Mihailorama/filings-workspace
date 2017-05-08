@@ -8,15 +8,15 @@
 ---
 # Clone Me
 - clone the project
-- replace occurrences of `njlgad` to change the group name.  For example:
+- replace **all** occurrences of `njlgad` to change the group name.  For example:
   ```
   OLD=njlgad
   NEW=$NAME
   grep -rl --exclude-dir .git -e "$OLD" . | xargs sed -i "s/$OLD/$NEW/g"
   ```
-- replace occurrences of `my-project` to change the project name.  For example:
+- replace **all** occurrences of `web-ui-starter-kit` to change the project name.  For example:
   ```
-  OLD=my-project
+  OLD=web-ui-starter-kit
   NEW=my-project
   grep -rl --exclude-dir .git -e "$OLD" . | xargs sed -i "s/$OLD/$NEW/g"
   ```
