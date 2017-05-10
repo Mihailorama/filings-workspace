@@ -7,20 +7,25 @@
 
 ---
 # Clone Me
-- clone the project
-- replace **all** occurrences of `njlgad` to change the group name.  For example:
+- Clone the project
+- Replace **all** occurrences of `njlgad` to change the group name.  For example:
   ```
   OLD=njlgad
   NEW=$NAME
   grep -rl --exclude-dir .git -e "$OLD" . | xargs sed -i "s/$OLD/$NEW/g"
   ```
-- replace **all** occurrences of `web-ui-starter-kit` to change the project name.  For example:
+- Replace **all** occurrences of `web-ui-starter-kit` to change the project name.  For example:
   ```
   OLD=web-ui-starter-kit
   NEW=my-project
   grep -rl --exclude-dir .git -e "$OLD" . | xargs sed -i "s/$OLD/$NEW/g"
   ```
-- push new project to https://gitlab.int.corefiling.com using the group name and the project name specified above.
+- Push new project to https://gitlab.int.corefiling.com using the group name and the project name specified above.
+- Configure your `kube-auth` secret
+    - Follow instructions [here](https://wiki.int.corefiling.com/pdds/KubeAuth) to install and run `kube-auth` locally
+    - Once logged in, run `kube-auth token` to print your offline token
+    - Go to Settings > CI/CD Pipelines on your GitLab project
+    - Scroll down to Secret Variables and add a secret variable with name `KUBE_AUTH_TOKEN` and value of the offline token you just printed
 
 ---
 
