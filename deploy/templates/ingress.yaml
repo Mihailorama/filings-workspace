@@ -9,7 +9,7 @@ metadata:
     version: {{ .Chart.Version }}
 spec:
   rules:
-    - host: {{ .Chart.Name }}-{{ .Values.namespace }}.kube.int.corefiling.com
+    - host: {{ .Values.namespace }}.kube.int.corefiling.com
       http:
         paths:
           - backend:
