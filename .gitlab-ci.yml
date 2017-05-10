@@ -96,7 +96,7 @@ deploy:
   <<: *template_deploy
   environment:
     name: $CI_BUILD_REF_NAME
-    url: https://$NAMESPACE.kube.int.corefiling.com
+    url: https://$CI_PROJECT_NAMESPACE-$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG.kube.int.corefiling.com
     on_stop: deploy:clean
   script:
     - echo "Deploying https://$NAMESPACE.kube.int.corefiling.com"
@@ -107,7 +107,7 @@ deploy:clean:
   when: manual
   environment:
     name: $CI_BUILD_REF_NAME
-    url: https://$NAMESPACE.kube.int.corefiling.com
+    url: https://$CI_PROJECT_NAMESPACE-$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG.kube.int.corefiling.com
     action: stop
   script:
     - echo "Pruning https://$NAMESPACE.kube.int.corefiling.com"
