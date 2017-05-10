@@ -88,27 +88,28 @@ publish:
     - build:version
     - publish
   variables:
-    TILLER_NAMESPACE: $CI_ENVIRONMENT_SLUG
+    NAMESPACE: $CI_PROJECT_NAMESPACE-$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG
+    TILLER_NAMESPACE: $NAMESPACE
   before_script:
-    - /kube/init $KUBE_AUTH_TOKEN $CI_ENVIRONMENT_SLUG
+    - /kube/init $KUBE_AUTH_TOKEN $NAMESPACE
 
 deploy:
   <<: *template_deploy
   environment:
     name: $CI_BUILD_REF_NAME
-    url: https://$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG.kube.int.corefiling.com
+    url: https://$NAMESPACE.kube.int.corefiling.com
     on_stop: deploy:clean
   script:
-    - echo "Deploying https://$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG.kube.int.corefiling.com"
-    - helm upgrade --install --set namespace=$CI_ENVIRONMENT_SLUG,imageTag=`cat build.version` $CI_PROJECT_NAME ./deploy --namespace=$CI_ENVIRONMENT_SLUG
+    - echo "Deploying https://$NAMESPACE.kube.int.corefiling.com"
+    - helm upgrade --install --set namespace=$NAMESPACE,imageTag=`cat build.version` $CI_PROJECT_NAME ./deploy --namespace=$NAMESPACE
 
 deploy:clean:
   <<: *template_deploy
   when: manual
   environment:
     name: $CI_BUILD_REF_NAME
-    url: https://$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG.kube.int.corefiling.com
+    url: https://$NAMESPACE.kube.int.corefiling.com
     action: stop
   script:
-    - echo "Pruning https://$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG.kube.int.corefiling.com"
-    - kube-auth namespace delete $CI_ENVIRONMENT_SLUG
+    - echo "Pruning https://$NAMESPACE.kube.int.corefiling.com"
+    - kube-auth namespace delete $NAMESPACE
