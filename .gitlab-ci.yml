@@ -87,10 +87,9 @@ publish:
   dependencies:
     - build:version
     - publish
-  variables:
-    NAMESPACE: $CI_PROJECT_NAMESPACE-$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG
-    TILLER_NAMESPACE: $NAMESPACE
   before_script:
+    - export NAMESPACE="$CI_PROJECT_NAMESPACE-$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG"
+    - export TILLER_NAMESPACE="$NAMESPACE"
     - /kube/init $KUBE_AUTH_TOKEN $NAMESPACE
 
 deploy:
