@@ -1,69 +1,63 @@
-# Web UI Starter Kit
+# CoreFiling Labs Boolean Validator
+
+A simple demonstrator of using the CoreFiling Platform to valdiate a document.
+
 
 ## Stack
+
 - [Typescript](https://github.com/Microsoft/TypeScript)
 - [React](https://github.com/facebook/react)
+- [Storybook](https://storybook.js.org)
 - [Webpack](https://github.com/webpack/webpack)
-
----
-# Clone Me
-- Clone the project
-- Replace **all** occurrences of `labs` to change the group name.  For example:
-  ```
-  OLD=labs
-  NEW=$NAME
-  grep -rl --exclude-dir .git -e "$OLD" . | xargs sed -i "s/$OLD/$NEW/g"
-  ```
-- Replace **all** occurrences of `boolean-validator` to change the project name.  For example:
-  ```
-  OLD=boolean-validator
-  NEW=my-project
-  grep -rl --exclude-dir .git -e "$OLD" . | xargs sed -i "s/$OLD/$NEW/g"
-  ```
-- Push new project to https://gitlab.int.corefiling.com using the group name and the project name specified above.
-- Configure your `kube-auth` secret
-    - Follow instructions [here](https://wiki.int.corefiling.com/pdds/KubeAuth) to install and run `kube-auth` locally
-    - Once logged in, run `kube-auth token` to print your offline token
-    - Go to Settings > CI/CD Pipelines on your GitLab project
-    - Scroll down to Secret Variables and add a secret variable with name `KUBE_AUTH_TOKEN` and value of the offline token you just printed
 
 ---
 
 # Development
+
 ## Prerequisites
-Install node@>=6.0.0, npm@>=4.0.0 and yarn@>=0.21.0 and [configure for use in CFL](https://wiki.int.corefiling.com/dev/NPM)
+
+Install node@>=6.0.0, npm@>=4.0.0 and yarn@>=0.21.0
 
 ```bash
 yarn install
 ```
 
 ## Build
+
 ```bash
-npm run compile
+yarn compile
 ```
 
 ## Package
+
 ```bash
 npm pack # Produces cfl-boolean-validator-$VERSION.tgz
 ```
 
 ## Test
-### Single run
+
+Single run:
+
 ```bash
-npm run test
+yarn test
 ```
 
-### Watch files
+Watch files:
+
 ```bash
-npm run test-debug
+yarn test-debug
 ```
 
 ## Development Server
+
+You need `HOST` to be a name for your development machine for which SSL certificates are available.
+
 ```bash
-npm config set @cfl/boolean-validator:devserver-host `hostname`.cfl.io # You must have a working DNS entry for "`hostname`.cfl.io".
-npm start
-open https://`hostname`.cfl.io:9091/
+yarn config set @cfl/boolean-validator:devserver-host $HOST
+yarn start
+open https://$HOST:9091/
 ```
 
 ### SSL
+
 The dev server uses HTTPS, with certificates checked in to `.dev/`. When these expire, they will need to be replaced by the [latest ones](https://wiki.int.corefiling.com/cfl/CflDotIo).
