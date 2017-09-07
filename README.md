@@ -10,11 +10,8 @@ A simple demonstrator of using the CoreFiling Platform to valdiate a document.
 - [Storybook](https://storybook.js.org)
 - [Webpack](https://github.com/webpack/webpack)
 
----
 
-# Development
-
-## Prerequisites
+## Development prerequisites
 
 Install node@>=6.0.0, npm@>=4.0.0 and yarn@>=0.21.0
 
@@ -22,19 +19,19 @@ Install node@>=6.0.0, npm@>=4.0.0 and yarn@>=0.21.0
 yarn install
 ```
 
-## Build
+
+## Storybook
 
 ```bash
-yarn compile
+yarn storybook
 ```
 
-## Package
+and visit <http://localhost:6006/>.
 
-```bash
-npm pack # Produces cfl-boolean-validator-$VERSION.tgz
-```
+If and when creating new modules in `./src/stories`, add an import from `src/stories/index.ts`.
 
-## Test
+
+## Unit tests
 
 Single run:
 
@@ -63,3 +60,17 @@ Then open `https://$HOST:9091/`
 ### SSL
 
 The dev server uses HTTPS, with certificates checked in to `.dev/`. When these expire, they will need to be replaced by the [latest ones](https://wiki.int.corefiling.com/cfl/CflDotIo).
+
+
+## Build
+
+```bash
+yarn compile
+```
+
+
+## Package
+
+```bash
+yarn pack # Produces cfl-boolean-validator-$VERSION.tgz
+```
