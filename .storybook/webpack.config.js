@@ -39,7 +39,7 @@ module.exports = {
         use: [
           'style-loader',
           'css-loader',
-          'less-laoder',
+          'less-loader',
         ],
       },
       { test: /\.(jpg|png|gif)$/, loader: 'url-loader?mimetype=image/png' },

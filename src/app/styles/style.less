@@ -1,12 +1,16 @@
-@web-font-path: "https://fonts.googleapis.com/css?family=Inconsolata:400,700";
+@import (reference) 'defs.less';
 
-.web-font(@path) {
-  @import url("@{path}");
-}
-.web-font(@web-font-path);
+@import 'https://fonts.googleapis.com/css?family=Work_Sans:400,600';
+
 
 html {
-  font-family: 'Inconsolata', monospace;
-  background-color: #272B30;
-  color: #C8C8C8;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 16px;
+  line-height: (24 / 16);
+  background-color: @paper;
+  color: @ink;
+}
+
+b, h1, h2, h3 {
+  font-weight: 600;
 }

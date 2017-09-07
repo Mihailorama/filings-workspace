@@ -1,0 +1,50 @@
+@import (reference) '../styles/defs.less';
+
+.cflbv-ValidationResult {
+  display: flex;
+  padding: 10px;
+
+  align-items: flex-start;
+
+  &-status {
+    margin: 10px;
+    display: block;
+    width: (@hunk - @gap - 2em);
+    height: 2em;
+    padding: 0 1em;
+
+    text-align: center;
+    text-transform: uppercase;
+    line-height: 2;
+    color: #FFF;
+    border-radius: 1em;
+  }
+
+  &-passStatus {
+    background-color: @pass;
+  }
+  &-failStatus {
+    background-color: @fail;
+  }
+
+  &-detail {
+    margin: 10px;
+  }
+
+  @media (max-width: (4 * @hunk - 1px)) {
+    flex-flow: column nowrap;
+
+    &-detail {
+      padding-top: 0;
+    }
+  }
+  @media (min-width: (4 * @hunk)) {
+    flex-flow: row nowrap;
+
+    &-detail {
+      padding-top: (0.5 * (2em - @default-line-height));  // Should aligh text with text of status blob.
+    }
+  }
+}
+
+

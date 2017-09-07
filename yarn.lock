@@ -154,6 +154,10 @@
     react-treebeard "^2.0.3"
     redux "^3.6.0"
 
+"@types/classnames@^2.2.3":
+  version "2.2.3"
+  resolved "https://artifacts.int.corefiling.com/api/npm/cfl-npm/@types/classnames/-/classnames-2.2.3.tgz#3f0ff6873da793870e20a260cada55982f38a9e5"
+
 "@types/jasmine@^2.5.47":
   version "2.5.47"
   resolved "https://artifacts.int.corefiling.com/api/npm/cfl-npm/@types/jasmine/-/jasmine-2.5.47.tgz#bbba9bcf0e95e7890c6f4a47394e8bacaa960eb6"
