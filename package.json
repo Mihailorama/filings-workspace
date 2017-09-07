@@ -22,7 +22,9 @@
     "start": "webpack-dev-server --config webpack.config.js --progress --colors",
     "dev:karma": "npm run test:karma -- --single-run=false --debug --auto-watch",
     "set-build-version": "npm version \"$(ci-build-version -f package.json)\"",
-    "test-debug": "npm run dev:karma"
+    "test-debug": "npm run dev:karma",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "config": {
     "devserver-https": true,
@@ -45,9 +47,16 @@
   "devDependencies": {
     "@cfl/tslint-config": "^0.6.0",
     "@janslow/ci-build-version": "^0.1.0",
+    "@storybook/addon-actions": "^3.2.6",
+    "@storybook/addon-links": "^3.2.6",
+    "@storybook/react": "^3.2.8",
     "@types/jasmine": "^2.5.47",
+    "@types/react": "15",
     "@types/react-dom": "^0.14.23",
     "@types/react-hot-loader": "^3.0.1",
+    "@types/storybook__addon-actions": "^3.0.1",
+    "@types/storybook__addon-links": "^3.0.2",
+    "@types/storybook__react": "^3.0.5",
     "@types/webpack-env": "^1.13.0",
     "awesome-typescript-loader": "^3.1.2",
     "babel-core": "^6.24.0",
