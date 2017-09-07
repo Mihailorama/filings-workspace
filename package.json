@@ -1,17 +1,17 @@
 {
-  "name": "@cfl/web-ui-starter-kit",
+  "name": "@cfl/boolean-validator",
   "version": "0.1.0-local",
   "cfl": {
     "group": {
-      "name": "njlgad"
+      "name": "labs"
     }
   },
   "repository": {
     "type": "git",
-    "url": "https://gitlab.int.corefiling.com/njlgad/web-ui-starter-kit.git"
+    "url": "https://gitlab.int.corefiling.com/labs/boolean-validator.git"
   },
   "license": "UNLICENSED",
-  "homepage": "https://gitlab.int.corefiling.com/njlgad/web-ui-starter-kit",
+  "homepage": "https://gitlab.int.corefiling.com/labs/boolean-validator",
   "scripts": {
     "prepublishOnly": "rm -rf www && npm run compile",
     "compile": "npm run compile:webpack",

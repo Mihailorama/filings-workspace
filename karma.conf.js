@@ -5,7 +5,8 @@ module.exports = (config) => {
   config.set({
     logLevel: config.LOG_INFO,
     port: 3334,
-    browsers: ['PhantomJS'],
+    browsers: ['ChromeHeadless'],
+    concurrency: Infinity,
     singleRun: true, //just run once by default
     frameworks: ['jasmine'], //use jasmine as framework
     files: [

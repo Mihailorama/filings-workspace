@@ -1,8 +1,8 @@
-namespace: njlgad
+namespace: labs
 
 imageRegistry: artifacts.int.corefiling.com:5000
-imageRepository: njlgad
-imageName: web-ui-starter-kit
+imageRepository: labs
+imageName: boolean-validator
 imageTag: 0.1.0-local
 
 # Pull Policy

@@ -8,15 +8,15 @@
 ---
 # Clone Me
 - Clone the project
-- Replace **all** occurrences of `njlgad` to change the group name.  For example:
+- Replace **all** occurrences of `labs` to change the group name.  For example:
   ```
-  OLD=njlgad
+  OLD=labs
   NEW=$NAME
   grep -rl --exclude-dir .git -e "$OLD" . | xargs sed -i "s/$OLD/$NEW/g"
   ```
-- Replace **all** occurrences of `web-ui-starter-kit` to change the project name.  For example:
+- Replace **all** occurrences of `boolean-validator` to change the project name.  For example:
   ```
-  OLD=web-ui-starter-kit
+  OLD=boolean-validator
   NEW=my-project
   grep -rl --exclude-dir .git -e "$OLD" . | xargs sed -i "s/$OLD/$NEW/g"
   ```
@@ -44,7 +44,7 @@ npm run compile
 
 ## Package
 ```bash
-npm pack # Produces cfl-web-ui-starter-kit-$VERSION.tgz
+npm pack # Produces cfl-boolean-validator-$VERSION.tgz
 ```
 
 ## Test
@@ -60,7 +60,7 @@ npm run test-debug
 
 ## Development Server
 ```bash
-npm config set @cfl/web-ui-starter-kit:devserver-host `hostname`.cfl.io # You must have a working DNS entry for "`hostname`.cfl.io".
+npm config set @cfl/boolean-validator:devserver-host `hostname`.cfl.io # You must have a working DNS entry for "`hostname`.cfl.io".
 npm start
 open https://`hostname`.cfl.io:9091/
 ```
