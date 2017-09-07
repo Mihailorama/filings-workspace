@@ -48,15 +48,17 @@ Watch files:
 yarn test-debug
 ```
 
-## Development Server
+
+## Development server
 
 You need `HOST` to be a name for your development machine for which SSL certificates are available.
 
 ```bash
-yarn config set @cfl/boolean-validator:devserver-host $HOST
-yarn start
-open https://$HOST:9091/
+npm config set @cfl/boolean-validator:devserver-host $HOST
+npm start
 ```
+
+Then open `https://$HOST:9091/`
 
 ### SSL
 
