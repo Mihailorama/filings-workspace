@@ -37,8 +37,6 @@ cache:
     - time yarn install
     - npm config set git-tag-version false
     - npm run set-build-version
-    # Caches + Yarn sometimes miss PhantomJS.
-    - npm rebuild phantomjs-prebuilt
   script:
     - time npm run $CI_BUILD_NAME
 
