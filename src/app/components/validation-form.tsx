@@ -15,7 +15,7 @@ interface FormProps {
 }
 
 function Form({className, onSubmit, children}: FormProps): JSX.Element {
-  return <form className={classNames('cflbv-Form', className)}
+  return <form className={classNames('ckr-Form', className)}
     onSubmit={onSubmit ? e => { e.preventDefault(); onSubmit(); } : undefined}
   >{children}</form>;
 }
@@ -26,7 +26,7 @@ interface FormItemProps {
 }
 
 function FormItem({className, children}: FormItemProps): JSX.Element {
-  return <div className={classNames('cflbv-FormItem', className)}>{children}</div>;
+  return <div className={classNames('ckr-FormItem', className)}>{children}</div>;
 }
 
 interface FormActionListProps {
@@ -35,7 +35,7 @@ interface FormActionListProps {
 }
 
 function FormActionList({className, children}: FormActionListProps): JSX.Element {
-  return <div className={classNames('cflbv-FormActionList', className)}>{children}</div>;
+  return <div className={classNames('ckr-FormActionList', className)}>{children}</div>;
 }
 
 interface FormActionProps {
@@ -45,7 +45,7 @@ interface FormActionProps {
 }
 
 function FormAction({className, enabled, children}: FormActionProps): JSX.Element {
-  return <button className={classNames('cflbv-FormAction', className)} disabled={!enabled}>{children}</button>;
+  return <button className={classNames('ckr-FormAction', className)} disabled={!enabled}>{children}</button>;
 }
 
 // Actual component.
@@ -73,17 +73,23 @@ export default class ValidationForm extends Component<ValidationFormProps, Valid
     };
   }
 
+  componentWillReceiveProps(nextProps: ValidationFormProps): void {
+    if (nextProps.profiles && nextProps.profiles.length && !this.state.params.profile) {
+      this.setState({params: {...this.state.params, profile: nextProps.profiles[0].name}});
+    }
+  }
+
   render(): JSX.Element {
     const { profiles, onSubmit } = this.props;
     const { params } = this.state;
 
     if (!profiles) {
-      return <div  className='cflbv-ValidationForm cflbv-ValidationForm-loading'>
+      return <div  className='ckr-ValidationForm ckr-ValidationForm-loading'>
           Loading&thinsp;…
         </div>;
     }
 
-    return <Form className='cflbv-ValidationForm' onSubmit={() => this.onSubmit()}>
+    return <Form className='ckr-ValidationForm' onSubmit={() => this.onSubmit()}>
       <FormItem>
         <label>Validation profile</label>
         <select onChange={e => this.onChange({profile: e.currentTarget.value})}>
@@ -92,17 +98,17 @@ export default class ValidationForm extends Component<ValidationFormProps, Valid
       </FormItem>
       <FormItem>
         <Dropzone
-          className='cflbv-ValidationForm-dropzone'
-          activeClassName='cflbv-ValidationForm-dropzoneActive'
+          className='ckr-ValidationForm-dropzone'
+          activeClassName='ckr-ValidationForm-dropzoneActive'
           multiple={false}
-          onDrop={(files: File[]) => this.onChange({content: files[0]})}
+          onDrop={(files: File[]) => this.onChange({file: files[0]})}
         >
           <div>
-            {params.content && <FileReference className='cflbv-ValidationForm-file' file={params.content}/>}
-            {!params.content && <div>
-                <h2 className='cflbv-ValidationForm-heading'>Drag file to upload or</h2>
-                <div className='cflbv-ValidationForm-btn'><span className='cflbv-Button'>Choose file to upload</span></div>
-                <div className='cflbv-ValidationForm-hint'>(Zip only / 5MB max)</div>
+            {params.file && <FileReference className='ckr-ValidationForm-file' file={params.file}/>}
+            {!params.file && <div>
+                <h2 className='ckr-ValidationForm-heading'>Drag file to upload or</h2>
+                <div className='ckr-ValidationForm-btn'><span className='ckr-Button'>Choose file to upload</span></div>
+                <div className='ckr-ValidationForm-hint'>(Zip only / 5MB max)</div>
               </div>}
             </div>
         </Dropzone>

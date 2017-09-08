@@ -1,14 +1,18 @@
 import * as React from 'react';
 import { Component } from 'react';
+import { Provider } from 'react-redux';
 
-import Hello from './components/hello';
+import store from './store';
+import CheckerAppContainer from './containers/checker-app-container';
 
-export default class App extends Component<{}, {}> {
+export default class App extends Component<{}> {
   render(): JSX.Element {
     return (
       <div>
-        <h1>Hello world!</h1>
-        <Hello name='Bob' />
+        <h1>XBRL Checker</h1>
+        <Provider store={store}>
+          <CheckerAppContainer/>
+        </Provider>
       </div>
     );
   }
