@@ -1,0 +1,104 @@
+@import (reference) '../styles/defs';
+
+
+.cflbv-Button {
+  box-sizing: border-box;  // On some browsers this cannot be unset on buttons, so be consistent.
+  display: inline-block;
+  height: 2em;
+  padding: 0 1em;
+
+  font-size: 1rem;
+  text-decoration: none;
+  line-height: 2;
+  color: #FFF;
+  background: linear-gradient(180deg, @brand-lt, @brand 20%, @brand 10%, @brand-dk);
+  border: none;
+  box-shadow: 0 1px 2px fade(#000, 25%), 1px 1px 3px fade(#000, 25%);
+  user-select: none;
+  cursor: pointer;
+
+  &:hover,
+  &:active {
+    text-decoration: none;
+    box-shadow: 0 2px 4px fade(#000, 25%), 2px 2px 6px fade(#000, 25%);
+  }
+}
+
+.cflbv-Form {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: stretch;
+
+  padding: (0.5 * @gap) 0;
+}
+
+.cflbv-FormItem {
+  margin: (0.5 * @gap) @gap;
+  display: flex;
+  flex-flow: row wrap;
+
+  label {
+    color: @muted;
+    margin-right: 1em;
+  }
+
+  select {
+    .cflbv-Button;
+
+    display: block;
+    flex-grow: 1;
+  }
+
+  option {
+    color: @ink;
+    background: @paper;
+  }
+}
+
+.cflbv-FormActionList {
+  margin: (0.5 * @gap) @gap;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+}
+
+.cflbv-FormAction {
+  .cflbv-Button;
+}
+
+.cflbv-ValidationForm {
+  width: @form-wd;
+
+  &-file {
+    margin: @gap;
+    max-width: (@form-wd - 4 * @gap);
+  }
+
+  &-dropzone {
+    width: 100%;
+    height: 180px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+
+    background-color: fade(@brand, 3%);
+    box-shadow: inset @ink 1px 1px 5px;
+    border-radius: 5px;
+  }
+
+  &-heading {
+    margin-top: @gap;
+    font-size: 1em;
+    font-weight: 600;
+  }
+  &-btn {
+    margin-top: @gap;
+  }
+  &-hint {
+    margin-top: (0.5 * @gap);
+    margin-bottom: @gap;
+    font-size: 0.75em;
+    color: @muted;
+  }
+}

@@ -172,6 +172,12 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-dropzone@^3.13.1":
+  version "3.13.1"
+  resolved "https://artifacts.int.corefiling.com/api/npm/cfl-npm/@types/react-dropzone/-/react-dropzone-3.13.1.tgz#e9f24d4f3b46536fbe506fc019006c25e5b72f2e"
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-hot-loader@^3.0.1":
   version "3.0.1"
   resolved "https://artifacts.int.corefiling.com/api/npm/cfl-npm/@types/react-hot-loader/-/react-hot-loader-3.0.1.tgz#d15e3af68595c5d6c5576cfcc18e28d578924fce"
@@ -445,6 +451,10 @@ async@~0.9.0:
 asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://artifacts.int.corefiling.com/api/npm/cfl-npm/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
+
+attr-accept@^1.0.3:
+  version "1.1.0"
+  resolved "https://artifacts.int.corefiling.com/api/npm/cfl-npm/attr-accept/-/attr-accept-1.1.0.tgz#b5cd35227f163935a8f1de10ed3eba16941f6be6"
 
 autoprefixer@^6.3.1:
   version "6.7.7"
@@ -3649,6 +3659,10 @@ https-browserify@0.0.1:
   version "0.0.1"
   resolved "https://artifacts.int.corefiling.com/api/npm/cfl-npm/https-browserify/-/https-browserify-0.0.1.tgz#3f91365cabe60b77ed0ebba24b454e3e09d95a82"
 
+human-size@^1.1.0:
+  version "1.1.0"
+  resolved "https://artifacts.int.corefiling.com/api/npm/cfl-npm/human-size/-/human-size-1.1.0.tgz#052562be999841c037022c20259990c56ea996f9"
+
 hyphenate-style-name@^1.0.1, hyphenate-style-name@^1.0.2:
   version "1.0.2"
   resolved "https://artifacts.int.corefiling.com/api/npm/cfl-npm/hyphenate-style-name/-/hyphenate-style-name-1.0.2.tgz#31160a36930adaf1fc04c6074f7eb41465d4ec4b"
@@ -5494,6 +5508,13 @@ react-dom@^15.5.0:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
     prop-types "~15.5.7"
+
+react-dropzone@^4.1.2:
+  version "4.1.2"
+  resolved "https://artifacts.int.corefiling.com/api/npm/cfl-npm/react-dropzone/-/react-dropzone-4.1.2.tgz#159aac58c776ebc80e64f11fe55eaab7b6f3cb3d"
+  dependencies:
+    attr-accept "^1.0.3"
+    prop-types "^15.5.7"
 
 react-element-to-string@^1.0.2:
   version "1.0.2"
