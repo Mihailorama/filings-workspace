@@ -98,10 +98,10 @@ export default class ValidationForm extends Component<ValidationFormProps, Valid
           onDrop={(files: File[]) => this.onChange({content: files[0]})}
         >
           <div>
-            {params.content && <FileReference file={params.content}/>}
+            {params.content && <FileReference className='cflbv-ValidationForm-file' file={params.content}/>}
             {!params.content && <div>
                 <h2 className='cflbv-ValidationForm-heading'>Drag file to upload or</h2>
-                <div className='cflbv-Button'>Choose file to upload</div>
+                <div className='cflbv-ValidationForm-btn'><span className='cflbv-Button'>Choose file to upload</span></div>
                 <div className='cflbv-ValidationForm-hint'>(Zip only / 5MB max)</div>
               </div>}
             </div>
