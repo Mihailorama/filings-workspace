@@ -5,50 +5,9 @@ import { Component, Props, ReactNode } from 'react';
 
 import { ValidationProfile, ValidationParams, paramsAreComplete } from '../models';
 import FileReference from './file-reference';
+import { Form, FormItem, FormActionList, FormAction } from './form';
 
 import './validation-form.less';
-
-interface FormProps {
-  className?: string;
-  onSubmit?: () => void;
-  children: ReactNode;
-}
-
-function Form({className, onSubmit, children}: FormProps): JSX.Element {
-  return <form className={classNames('ckr-Form', className)}
-    onSubmit={onSubmit ? e => { e.preventDefault(); onSubmit(); } : undefined}
-  >{children}</form>;
-}
-
-interface FormItemProps {
-  className?: string;
-  children: ReactNode;
-}
-
-function FormItem({className, children}: FormItemProps): JSX.Element {
-  return <div className={classNames('ckr-FormItem', className)}>{children}</div>;
-}
-
-interface FormActionListProps {
-  className?: string;
-  children: ReactNode;
-}
-
-function FormActionList({className, children}: FormActionListProps): JSX.Element {
-  return <div className={classNames('ckr-FormActionList', className)}>{children}</div>;
-}
-
-interface FormActionProps {
-  className?: string;
-  enabled?: boolean;
-  children: ReactNode;
-}
-
-function FormAction({className, enabled, children}: FormActionProps): JSX.Element {
-  return <button className={classNames('ckr-FormAction', className)} disabled={!enabled}>{children}</button>;
-}
-
-// Actual component.
 
 export interface ValidationFormProps extends Props<ValidationForm> {
   profiles?: ValidationProfile[];

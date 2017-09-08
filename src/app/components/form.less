@@ -1,0 +1,67 @@
+@import (reference) '../styles/defs';
+
+
+.ckr-Button {
+  box-sizing: border-box;  // On some browsers this cannot be unset on buttons, so be consistent.
+  display: inline-block;
+  height: 2em;
+  padding: 0 1em;
+
+  font-size: 1rem;
+  text-decoration: none;
+  line-height: 2;
+  color: contrast(@ctl, #FFF, @ink);
+  background: @ctl; // linear-gradient(180deg, @ctl-lt, @ctl 10%, @ctl 5%, @ctl-dk);
+  border: none;
+  box-shadow: 0 1px 2px fade(#000, 50%), 1px 1px 3px fade(#000, 25%);
+  user-select: none;
+  cursor: pointer;
+
+  &:hover,
+  &:active {
+    text-decoration: none;
+    box-shadow: 0 3px 4px fade(#000, 50%), 2px 2px 6px fade(#000, 25%);
+  }
+}
+
+.ckr-Form {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: stretch;
+
+  padding: (0.5 * @gap) 0;
+}
+
+.ckr-FormItem {
+  margin: (0.5 * @gap) @gap;
+  display: flex;
+  flex-flow: row wrap;
+
+  label {
+    color: @muted;
+    margin-right: 1em;
+  }
+
+  select {
+    .ckr-Button;
+
+    display: block;
+    flex-grow: 1;
+  }
+
+  option {
+    color: @ink;
+    background: @paper;
+  }
+}
+
+.ckr-FormActionList {
+  margin: (0.5 * @gap) @gap;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+}
+
+.ckr-FormAction {
+  .ckr-Button;
+}
