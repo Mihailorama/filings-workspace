@@ -1,0 +1,33 @@
+@import (reference) '../styles/defs';
+
+.cflbv-FileReference {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+
+  &-icon {
+    height: 0.8em;
+    margin-right: 0.333em;
+  }
+  &-outline {
+    stroke: @ink;
+    stroke-width: 2;
+    fill: none;
+  }
+  &-inline {
+    stroke: @ink;
+    stroke-width: 1.5;
+    fill: none;
+  }
+
+  &-name {
+    flex-grow: 1;
+    margin-right: 1em;
+    white-space: nowrap;
+  }
+
+  &-size {
+    font-size: 0.75em;
+    color: @muted;
+  }
+}

@@ -5,10 +5,25 @@ import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 
 import { ValidationProfile } from '../app/models';
+import FileReference from '../app/components/file-reference';
 import ValidationForm from '../app/components/validation-form';
 import ValidationResult from '../app/components/validation-result';
 
 import '../app/styles/style.less';
+
+storiesOf('FileReference', module)
+.add('No file', () => <FileReference/>)
+.add('XML file', () => <FileReference file={new File(['CONTENT'], 'greet.xml', {type: 'application/xml'})}/>)
+.add('ZIP file', () => <FileReference file={new File(['CONTENT'], 'greet.zip', {type: 'application/zip'})}/>)
+.add('Larger', () => {
+  let x = 'CONTENT';
+  const iterations = 14;
+  for (let i = 0; i < iterations; i++) {
+    x += x + x;
+  }
+  return <FileReference file={new File([x], 'greet.zip', {type: 'application/xbrl+xml'})}/>;
+})
+;
 
 // Some hackery for creating fake profiles.
 

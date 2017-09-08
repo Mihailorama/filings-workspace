@@ -4,6 +4,7 @@ import * as Dropzone from 'react-dropzone';
 import { Component, Props, ReactNode } from 'react';
 
 import { ValidationProfile, ValidationParams, paramsAreComplete } from '../models';
+import FileReference from './file-reference';
 
 import './validation-form.less';
 
@@ -45,18 +46,6 @@ interface FormActionProps {
 
 function FormAction({className, enabled, children}: FormActionProps): JSX.Element {
   return <button className={classNames('cflbv-FormAction', className)} disabled={!enabled}>{children}</button>;
-}
-
-interface FileReferenceProps {
-  className?: string;
-  file?: File;
-}
-
-function FileReference({className, file}: FileReferenceProps): JSX.Element {
-  if (!file) {
-    return <span>No file</span>;
-  }
-  return <span className={classNames('cflbv-FileReference', className)}>{file.name}</span>;
 }
 
 // Actual component.

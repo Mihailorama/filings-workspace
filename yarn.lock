@@ -3659,6 +3659,10 @@ https-browserify@0.0.1:
   version "0.0.1"
   resolved "https://artifacts.int.corefiling.com/api/npm/cfl-npm/https-browserify/-/https-browserify-0.0.1.tgz#3f91365cabe60b77ed0ebba24b454e3e09d95a82"
 
+human-size@^1.1.0:
+  version "1.1.0"
+  resolved "https://artifacts.int.corefiling.com/api/npm/cfl-npm/human-size/-/human-size-1.1.0.tgz#052562be999841c037022c20259990c56ea996f9"
+
 hyphenate-style-name@^1.0.1, hyphenate-style-name@^1.0.2:
   version "1.0.2"
   resolved "https://artifacts.int.corefiling.com/api/npm/cfl-npm/hyphenate-style-name/-/hyphenate-style-name-1.0.2.tgz#31160a36930adaf1fc04c6074f7eb41465d4ec4b"
