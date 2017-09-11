@@ -54,6 +54,8 @@ storiesOf('ValidationForm', module)
 ;
 
 storiesOf('ValidationResult', module)
-.add('Fail', () => <ValidationResult status='fail'/>)
-.add('Pass', () => <ValidationResult status='pass'/>)
+.add('Loading', () => <ValidationResult status='loading'/>)
+.add('Invalid', () => <ValidationResult status='invalid'/>)
+.add('Valid', () => <ValidationResult status='valid'/>)
+.add('Failed', () => <ValidationResult status='failed'/>)
 ;

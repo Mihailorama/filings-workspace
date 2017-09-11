@@ -1,6 +1,6 @@
 @import (reference) '../styles/defs.less';
 
-.cflbv-ValidationResult {
+.ckr-ValidationResult {
   display: flex;
   padding: 10px;
 
@@ -20,11 +20,14 @@
     border-radius: 1em;
   }
 
-  &-passStatus {
-    background-color: @pass;
+  &-validStatus {
+    background-color: @valid;
   }
-  &-failStatus {
-    background-color: @fail;
+  &-invalidStatus {
+    background-color: @invalid;
+  }
+  &-failedStatus {
+    background-color: @failed;
   }
 
   &-detail {

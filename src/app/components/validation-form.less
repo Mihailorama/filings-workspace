@@ -1,7 +1,7 @@
 @import (reference) '../styles/defs';
 
 
-.cflbv-Button {
+.ckr-Button {
   box-sizing: border-box;  // On some browsers this cannot be unset on buttons, so be consistent.
   display: inline-block;
   height: 2em;
@@ -10,21 +10,21 @@
   font-size: 1rem;
   text-decoration: none;
   line-height: 2;
-  color: #FFF;
-  background: linear-gradient(180deg, @brand-lt, @brand 20%, @brand 10%, @brand-dk);
+  color: contrast(@ctl, #FFF, @ink);
+  background: @ctl; // linear-gradient(180deg, @ctl-lt, @ctl 10%, @ctl 5%, @ctl-dk);
   border: none;
-  box-shadow: 0 1px 2px fade(#000, 25%), 1px 1px 3px fade(#000, 25%);
+  box-shadow: 0 1px 2px fade(#000, 50%), 1px 1px 3px fade(#000, 25%);
   user-select: none;
   cursor: pointer;
 
   &:hover,
   &:active {
     text-decoration: none;
-    box-shadow: 0 2px 4px fade(#000, 25%), 2px 2px 6px fade(#000, 25%);
+    box-shadow: 0 3px 4px fade(#000, 50%), 2px 2px 6px fade(#000, 25%);
   }
 }
 
-.cflbv-Form {
+.ckr-Form {
   display: flex;
   flex-flow: column nowrap;
   align-items: stretch;
@@ -32,7 +32,7 @@
   padding: (0.5 * @gap) 0;
 }
 
-.cflbv-FormItem {
+.ckr-FormItem {
   margin: (0.5 * @gap) @gap;
   display: flex;
   flex-flow: row wrap;
@@ -43,7 +43,7 @@
   }
 
   select {
-    .cflbv-Button;
+    .ckr-Button;
 
     display: block;
     flex-grow: 1;
@@ -55,18 +55,18 @@
   }
 }
 
-.cflbv-FormActionList {
+.ckr-FormActionList {
   margin: (0.5 * @gap) @gap;
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-end;
 }
 
-.cflbv-FormAction {
-  .cflbv-Button;
+.ckr-FormAction {
+  .ckr-Button;
 }
 
-.cflbv-ValidationForm {
+.ckr-ValidationForm {
   width: @form-wd;
 
   &-file {
@@ -90,7 +90,7 @@
   &-heading {
     margin-top: @gap;
     font-size: 1em;
-    font-weight: 600;
+    font-weight: 700;
   }
   &-btn {
     margin-top: @gap;
