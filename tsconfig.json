@@ -12,7 +12,11 @@
     "noUnusedParameters": true,
     "forceConsistentCasingInFileNames": true,
     "strictNullChecks": true,
-    "rootDir": "src"
+    "rootDir": "src",
+    "typeRoots": [
+      "node_modules/@types",
+      "/ssd/src/labs/boolean-validator/typings-custom"
+    ]
   },
   "exclude": [
     "node_modules"

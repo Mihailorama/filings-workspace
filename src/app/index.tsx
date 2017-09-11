@@ -22,6 +22,10 @@ render(<App />);
 
 // Hot Module Replacement API
 if (module.hot) {
+  interface RequireImport {
+    default: any;
+  }
+
   module.hot.accept(['./app'], () => {
     // tslint:disable:variable-name
     const NextApp = require<RequireImport>('./app').default;
