@@ -19,7 +19,7 @@
     "test": "npm run test:tslint && npm run test:karma",
     "test:karma": "karma start karma.conf.js",
     "test:tslint": "tslint -t stylish -c tslint.json --project tsconfig.json",
-    "start": "webpack-dev-server --config webpack.config.js --progress --colors",
+    "start": "webpack-dev-server --config webpack.cfl.config.js --progress --colors",
     "dev:karma": "npm run test:karma -- --single-run=false --debug --auto-watch",
     "set-build-version": "npm version \"$(ci-build-version -f package.json)\"",
     "test-debug": "npm run dev:karma",
@@ -29,7 +29,9 @@
   "config": {
     "devserver-https": true,
     "devserver-host": "localhost",
-    "devserver-port": 9091
+    "devserver-port": 9091,
+    "api-proxy": "https://platform-api.cfl.io/"
+
   },
   "main": "bin/serve.js",
   "bin": "bin/serve.js",
@@ -45,7 +47,6 @@
     "express": "^4.15.2"
   },
   "devDependencies": {
-    "@types/react-dropzone": "^3.13.1",
     "@cfl/tslint-config": "^0.6.0",
     "@janslow/ci-build-version": "^0.1.0",
     "@storybook/addon-actions": "^3.2.6",
@@ -55,6 +56,7 @@
     "@types/jasmine": "^2.5.47",
     "@types/react": "15",
     "@types/react-dom": "^0.14.23",
+    "@types/react-dropzone": "^3.13.1",
     "@types/react-hot-loader": "^3.0.1",
     "@types/react-redux": "^5.0.7",
     "@types/storybook__addon-actions": "^3.0.1",
@@ -98,6 +100,7 @@
     "react-redux": "^5.0.6",
     "react-test-renderer": "^15.5.0",
     "redux": "^3.7.2",
+    "simple-oauth2": "^1.3.0",
     "skin-deep": "^1.0.0-alpha2",
     "source-map-support": "^0.4.14",
     "style-loader": "^0.16.1",
