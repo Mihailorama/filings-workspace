@@ -15,7 +15,7 @@
     "rootDir": "src",
     "typeRoots": [
       "node_modules/@types",
-      "/ssd/src/labs/boolean-validator/typings-custom"
+      "typings-custom"
     ]
   },
   "exclude": [
