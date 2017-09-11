@@ -2,8 +2,6 @@
  * State of the app as a whole.
  */
 
-import { Action } from 'redux';
-
 import { ValidationProfile } from './models';
 
 export type CheckingPhase = 'form' | 'checking';

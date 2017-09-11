@@ -1,10 +1,9 @@
-import * as classNames from 'classnames';
 import * as React from 'react';
 import { Component, Props } from 'react';
 import { connect, MapDispatchToProps } from 'react-redux';
 
 import { checkingStartAction } from '../actions';
-import { ValidationProfile, ValidationParams, paramsAreComplete } from '../models';
+import { ValidationProfile } from '../models';
 import { CheckingPhase, ValidationStatus, CheckerState } from '../state';
 import CheckerApp from '../components/checker-app';
 

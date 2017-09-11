@@ -1,8 +1,7 @@
-import * as classNames from 'classnames';
 import * as React from 'react';
 import { Component, Props } from 'react';
 
-import { ValidationProfile, ValidationParams, paramsAreComplete } from '../models';
+import { ValidationProfile, ValidationParams } from '../models';
 import { CheckingPhase, ValidationStatus } from '../state';
 import ValidationForm from './validation-form';
 import ValidationResult from './validation-result';

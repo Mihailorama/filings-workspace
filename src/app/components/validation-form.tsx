@@ -1,7 +1,6 @@
-import * as classNames from 'classnames';
 import * as React from 'react';
 import * as Dropzone from 'react-dropzone';
-import { Component, Props, ReactNode } from 'react';
+import { Component, Props } from 'react';
 
 import { ValidationProfile, ValidationParams, paramsAreComplete } from '../models';
 import FileReference from './file-reference';
@@ -39,7 +38,7 @@ export default class ValidationForm extends Component<ValidationFormProps, Valid
   }
 
   render(): JSX.Element {
-    const { profiles, onSubmit } = this.props;
+    const { profiles } = this.props;
     const { params } = this.state;
 
     if (!profiles) {
