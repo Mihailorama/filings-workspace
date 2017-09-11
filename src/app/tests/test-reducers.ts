@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import { validationProfilesReceivedAction,
    checkingRequestedAction, checkingReceivedAction } from '../actions';
 import { ValidationParams } from '../models';

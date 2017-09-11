@@ -5,7 +5,6 @@
 import * as classNames from 'classnames';
 import humanSize = require('human-size');
 import * as React from 'react';
-import { Component, Props, ReactNode } from 'react';
 
 import './file-reference.less';
 

@@ -1,10 +1,6 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
-import * as Dropzone from 'react-dropzone';
-import { Component, Props, ReactNode } from 'react';
-
-import { ValidationProfile, ValidationParams, paramsAreComplete } from '../models';
-import FileReference from './file-reference';
+import { ReactNode } from 'react';
 
 import './form.less';
 
