@@ -17,7 +17,7 @@ describe('checker (reducer)', () => {
   });
 
   it('remembers profiles', () => {
-    const profiles = [{name: 'profilename', label: 'Profile Label'}];
+    const profiles = [{id: 'profilename', name: 'Profile Label'}];
     const after = checker(initial, validationProfilesReceivedAction(profiles));
 
     expect(after.profiles).toEqual(profiles);

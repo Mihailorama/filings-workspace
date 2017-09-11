@@ -1,11 +1,23 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import createSagaMiddleware from 'redux-saga';
 
 import { checker } from './reducers';
+import { validationProfilesSaga } from './sagas';
 
-const windowPlus: {__REDUX_DEVTOOLS_EXTENSION__: any} = window as any;
+const sagaMiddleware = createSagaMiddleware();
+
+const windowPlus: {
+  __REDUX_DEVTOOLS_EXTENSION__?: any;
+  __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: any;
+} = window as any;
+
+const composeEnhancers = windowPlus.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
   checker,
-  windowPlus.__REDUX_DEVTOOLS_EXTENSION__ && windowPlus.__REDUX_DEVTOOLS_EXTENSION__());
+  composeEnhancers(
+    applyMiddleware(sagaMiddleware)));
+
+sagaMiddleware.run(validationProfilesSaga);
 
 export default store;

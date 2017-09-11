@@ -8,18 +8,8 @@ import { ValidationStatus } from './state';
 
 // Actions for aquiring the list of profiles needed by the form.
 
-export const VALIDATION_PROFILES_NEEDED = 'VALIDATION_PROFILES_NEEDED';
-export const VALIDATION_PROFILES_REQUESTED = 'VALIDATION_PROFILES_REQUESTED';
 export const VALIDATION_PROFILES_RECEIVED = 'VALIDATION_PROFILES_RECEIVED';
 export const VALIDATION_PROFILES_FAILED = 'VALIDATION_PROFILES_FAILED';
-
-export function validationProfilesNeededAction(): Action {
-  return {type: VALIDATION_PROFILES_NEEDED};
-}
-
-export function validationProfilesRequestedAction(): Action {
-  return {type: VALIDATION_PROFILES_REQUESTED};
-}
 
 export interface ValidationProfilesReceivedAction extends Action {
   profiles: ValidationProfile[];

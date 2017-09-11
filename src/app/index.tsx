@@ -4,9 +4,7 @@ import { AppContainer } from 'react-hot-loader';
 import 'normalize.css/normalize.css';
 
 import './styles/style.less';
-import { validationProfilesNeededAction } from './actions';
 import App from './app';
-import store from './store';
 
 const rootElement = document.getElementById('app');
 function render(app: JSX.Element): void {
@@ -34,12 +32,11 @@ if (module.hot) {
   });
 }
 
-store.dispatch(validationProfilesNeededAction());
-
 // Fake response.
-import { validationProfilesReceivedAction } from './actions';
+// import { validationProfilesReceivedAction } from './actions';
+// import store from './store';
 
-store.dispatch(validationProfilesReceivedAction([
-  {name: 'banana', label: 'Banana'},
-  {name: 'straw', label: 'Strawberry'},
-]));
+// store.dispatch(validationProfilesReceivedAction([
+//   {id: 'banana', name: 'Banana'},
+//   {id: 'straw', name: 'Strawberry'},
+// ]));
