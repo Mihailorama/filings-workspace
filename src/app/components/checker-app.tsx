@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { Component, Props } from 'react';
 
-import { ValidationProfile, ValidationParams } from '../models';
-import { CheckingPhase, ValidationStatus } from '../state';
+import { Profile, ValidationParams, ValidationStatus } from '../models';
+import { CheckingPhase } from '../state';
 import ValidationForm from './validation-form';
 import ValidationResult from './validation-result';
 
 export interface CheckerAppProps extends Props<CheckerApp> {
   phase?: CheckingPhase;
-  profiles?: ValidationProfile[];
+  profiles?: Profile[];
   status?: ValidationStatus;
   onSubmit?: (params: ValidationParams) => void;
 }
@@ -22,7 +22,7 @@ export default class CheckerApp extends Component<CheckerAppProps> {
     }
 
     return <div className='ckr-ValidationApp-result'>
-      <ValidationResult status={status || 'loading'}/>
+      <ValidationResult status={status}/>
     </div>;
   }
 }

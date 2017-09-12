@@ -2,14 +2,14 @@ import * as React from 'react';
 import * as Dropzone from 'react-dropzone';
 import { Component, Props } from 'react';
 
-import { ValidationProfile, ValidationParams, paramsAreComplete } from '../models';
+import { Profile, ValidationParams, paramsAreComplete } from '../models';
 import FileReference from './file-reference';
 import { Form, FormItem, FormActionList, FormAction } from './form';
 
 import './validation-form.less';
 
 export interface ValidationFormProps extends Props<ValidationForm> {
-  profiles?: ValidationProfile[];
+  profiles?: Profile[];
 
   onSubmit?: (params: ValidationParams) => void;
 }

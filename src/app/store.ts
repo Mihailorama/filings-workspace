@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
 import { checker } from './reducers';
-import { validationProfilesSaga } from './sagas';
+import { validationProfilesSaga, checkingSaga } from './sagas';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -19,5 +19,6 @@ const store = createStore(
     applyMiddleware(sagaMiddleware)));
 
 sagaMiddleware.run(validationProfilesSaga);
+sagaMiddleware.run(checkingSaga);
 
 export default store;

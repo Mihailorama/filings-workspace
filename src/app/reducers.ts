@@ -19,7 +19,7 @@ export function checker(state: CheckerState | undefined, action: Action): Checke
         return {...state, profiles};
       }
     case CHECKING_REQUESTED:
-      return {...state, phase: 'checking', status: 'loading'};
+      return {...state, phase: 'checking', status: undefined};
     case CHECKING_RECEIVED:
       {
         const { status } = action as CheckingReceivedAction;
