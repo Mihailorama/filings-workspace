@@ -37,8 +37,8 @@ function id(label: string): string {
 
 function profile(label: string): ValidationProfile {
   return {
-    name: id(label),
-    label,
+    id: id(label),
+    name: label,
   };
 }
 

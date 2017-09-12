@@ -158,6 +158,10 @@
   version "2.2.3"
   resolved "https://artifacts.int.corefiling.com/api/npm/cfl-npm/@types/classnames/-/classnames-2.2.3.tgz#3f0ff6873da793870e20a260cada55982f38a9e5"
 
+"@types/cookie@^0.3.1":
+  version "0.3.1"
+  resolved "https://artifacts.int.corefiling.com/api/npm/cfl-npm/@types/cookie/-/cookie-0.3.1.tgz#720a756ea8e760a258708b52441bd341f1ef4296"
+
 "@types/jasmine@^2.5.47":
   version "2.5.54"
   resolved "https://artifacts.int.corefiling.com/api/npm/cfl-npm/@types/jasmine/-/jasmine-2.5.54.tgz#a6b5f2ae2afb6e0307774e8c7c608e037d491c63"
@@ -2286,7 +2290,7 @@ cookie-signature@1.0.6:
   version "1.0.6"
   resolved "https://artifacts.int.corefiling.com/api/npm/cfl-npm/cookie-signature/-/cookie-signature-1.0.6.tgz#e303a882b342cc3ee8ca513a79999734dab3ae2c"
 
-cookie@0.3.1:
+cookie@0.3.1, cookie@^0.3.1:
   version "0.3.1"
   resolved "https://artifacts.int.corefiling.com/api/npm/cfl-npm/cookie/-/cookie-0.3.1.tgz#e7e0a1f9ef43b4c8ba925c5c5a96e806d16873bb"
 
@@ -6250,6 +6254,10 @@ reduce-function-call@^1.0.1:
   resolved "https://artifacts.int.corefiling.com/api/npm/cfl-npm/reduce-function-call/-/reduce-function-call-1.0.2.tgz#5a200bf92e0e37751752fe45b0ab330fd4b6be99"
   dependencies:
     balanced-match "^0.4.2"
+
+redux-saga@^0.15.6:
+  version "0.15.6"
+  resolved "https://artifacts.int.corefiling.com/api/npm/cfl-npm/redux-saga/-/redux-saga-0.15.6.tgz#8638dc522de6c6c0a496fe8b2b5466287ac2dc4d"
 
 redux@^3.6.0, redux@^3.7.2:
   version "3.7.2"

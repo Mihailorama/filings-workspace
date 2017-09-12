@@ -31,7 +31,6 @@
     "devserver-host": "localhost",
     "devserver-port": 9091,
     "api-proxy": "https://platform-api.cfl.io/"
-
   },
   "main": "bin/serve.js",
   "bin": "bin/serve.js",
@@ -53,6 +52,7 @@
     "@storybook/addon-links": "^3.2.6",
     "@storybook/react": "^3.2.8",
     "@types/classnames": "^2.2.3",
+    "@types/cookie": "^0.3.1",
     "@types/jasmine": "^2.5.47",
     "@types/react": "15",
     "@types/react-dom": "^0.14.23",
@@ -69,6 +69,7 @@
     "babel-polyfill": "^6.23.0",
     "babel-preset-es2015": "^6.24.0",
     "classnames": "^2.2.5",
+    "cookie": "^0.3.1",
     "css-loader": "^0.28.0",
     "exports-loader": "^0.6.4",
     "extract-text-webpack-plugin": "^2.1.0",
@@ -100,6 +101,7 @@
     "react-redux": "^5.0.6",
     "react-test-renderer": "^15.5.0",
     "redux": "^3.7.2",
+    "redux-saga": "^0.15.6",
     "simple-oauth2": "^1.3.0",
     "skin-deep": "^1.0.0-alpha2",
     "source-map-support": "^0.4.14",

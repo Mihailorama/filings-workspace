@@ -26,14 +26,14 @@ export default class ValidationForm extends Component<ValidationFormProps, Valid
 
     this.state = {
       params: {
-        profile: profiles && profiles.length > 0 ? profiles[0].name : undefined,
+        profile: profiles && profiles.length > 0 ? profiles[0].id : undefined,
       },
     };
   }
 
   componentWillReceiveProps(nextProps: ValidationFormProps): void {
     if (nextProps.profiles && nextProps.profiles.length && !this.state.params.profile) {
-      this.setState({params: {...this.state.params, profile: nextProps.profiles[0].name}});
+      this.setState({params: {...this.state.params, profile: nextProps.profiles[0].id}});
     }
   }
 
@@ -51,7 +51,7 @@ export default class ValidationForm extends Component<ValidationFormProps, Valid
       <FormItem>
         <label>Validation profile</label>
         <select onChange={e => this.onChange({profile: e.currentTarget.value})}>
-          {profiles.map(({name, label}) => <option key={name} value={name}>{label}</option>)}
+          {profiles.map(({id, name}) => <option key={id} value={id}>{name}</option>)}
         </select>
       </FormItem>
       <FormItem>
