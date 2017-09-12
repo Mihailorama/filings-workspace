@@ -30,8 +30,8 @@ describe('checker (reducer)', () => {
   });
 
   it('remembers validation status', () => {
-    const after = checker(initial, checkingReceivedAction('valid'));
+    const after = checker(initial, checkingReceivedAction('OK'));
 
-    expect(after.status).toBe('valid');
+    expect(after.status).toBe('OK');
   });
 });

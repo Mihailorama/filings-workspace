@@ -3,8 +3,7 @@
  */
 import { Action } from 'redux';
 
-import { ValidationProfile, ValidationParams } from './models';
-import { ValidationStatus } from './state';
+import { Profile, ValidationParams, ValidationStatus } from './models';
 
 // Actions for aquiring the list of profiles needed by the form.
 
@@ -12,10 +11,10 @@ export const VALIDATION_PROFILES_RECEIVED = 'VALIDATION_PROFILES_RECEIVED';
 export const VALIDATION_PROFILES_FAILED = 'VALIDATION_PROFILES_FAILED';
 
 export interface ValidationProfilesReceivedAction extends Action {
-  profiles: ValidationProfile[];
+  profiles: Profile[];
 }
 
-export function validationProfilesReceivedAction(profiles: ValidationProfile[]): ValidationProfilesReceivedAction {
+export function validationProfilesReceivedAction(profiles: Profile[]): ValidationProfilesReceivedAction {
   return {type: VALIDATION_PROFILES_RECEIVED, profiles};
 }
 

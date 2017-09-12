@@ -3,15 +3,15 @@ import { Component, Props } from 'react';
 import { connect, MapDispatchToProps } from 'react-redux';
 
 import { checkingStartAction } from '../actions';
-import { ValidationProfile } from '../models';
-import { CheckingPhase, ValidationStatus, CheckerState } from '../state';
+import { Profile, ValidationStatus } from '../models';
+import { CheckingPhase, CheckerState } from '../state';
 import CheckerApp from '../components/checker-app';
 
 type OwnProps = Props<CheckerAppContainer>;
 
 interface PropsFromState {
   phase?: CheckingPhase;
-  profiles?: ValidationProfile[];
+  profiles?: Profile[];
   status?: ValidationStatus;
 }
 

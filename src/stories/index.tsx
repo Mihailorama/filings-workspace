@@ -3,7 +3,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import { ValidationProfile } from '../app/models';
+import { Profile } from '../app/models';
 import FileReference from '../app/components/file-reference';
 import ValidationForm from '../app/components/validation-form';
 import ValidationResult from '../app/components/validation-result';
@@ -35,14 +35,14 @@ function id(label: string): string {
   return `id_${hash.toString(16)}`;
 }
 
-function profile(label: string): ValidationProfile {
+function profile(label: string): Profile {
   return {
     id: id(label),
     name: label,
   };
 }
 
-function profiles(...labels: string[]): ValidationProfile[] {
+function profiles(...labels: string[]): Profile[] {
   return labels.map(x => profile(x));
 }
 
@@ -53,8 +53,9 @@ storiesOf('ValidationForm', module)
 ;
 
 storiesOf('ValidationResult', module)
-.add('Loading', () => <ValidationResult status='loading'/>)
-.add('Invalid', () => <ValidationResult status='invalid'/>)
-.add('Valid', () => <ValidationResult status='valid'/>)
-.add('Failed', () => <ValidationResult status='failed'/>)
+.add('Loading', () => <ValidationResult/>)
+.add('Invalid', () => <ValidationResult status='ERROR'/>)
+.add('Valid with warnings', () => <ValidationResult status='WARNING'/>)
+.add('Valid', () => <ValidationResult status='OK'/>)
+.add('Failed', () => <ValidationResult status='FATAL_ERROR'/>)
 ;
