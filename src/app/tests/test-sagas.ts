@@ -2,7 +2,7 @@ import { delay } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { validationProfilesReceivedAction, validationProfilesFailedAction,
-  checkingStartAction, checkingRequestedAction, checkingReceivedAction } from '../actions';
+  checkingStartAction, checkingRequestedAction, checkingReceivedAction, checkingFailedAction } from '../actions';
 import { apiFetchJson } from '../api-fetch';
 import { ValidationParams, exampleCategory, exampleFiling, exampleFilingVersion } from '../models';
 import { validationProfilesSaga, checkingStartSaga } from '../sagas';
@@ -31,12 +31,13 @@ describe('validationProfilesSaga', () => {
 });
 
 describe('checkingStartSaga', () => {
+  const file = new File(['Hello world'], 'name-of-file.txt', {type: 'text/plain'});
+  const params: ValidationParams = {
+    profile: 'uiid-of-profile',
+    file,
+  };
+
   it('dispatches REQUESTED and RECEIVED if all goes well', () => {
-    const file = new File(['Hello world'], 'name-of-file.txt', {type: 'text/plain'});
-    const params: ValidationParams = {
-      profile: 'uiid-of-profile',
-      file,
-    };
     const saga = checkingStartSaga(checkingStartAction(params));
 
     expect(saga.next().value).toEqual(put(checkingRequestedAction(params)));
@@ -58,5 +59,29 @@ describe('checkingStartSaga', () => {
 
     // Now results arrive and all is well.
     expect(saga.next({...exampleFilingVersion, status: 'DONE', validationStatus: 'OK'}).value).toEqual(put(checkingReceivedAction('OK')));
+  });
+
+  it('dispatches FAILED if initial upload fails', () => {
+    const saga = checkingStartSaga(checkingStartAction(params));
+
+    saga.next(); saga.next();  // First few steps as above.
+
+    expect(saga.throw && saga.throw(new Error('LOLWAT')).value).toEqual(put(checkingFailedAction('LOLWAT')));
+  });
+
+  it('dispatches FAILED if polling fails', () => {
+    const saga = checkingStartSaga(checkingStartAction(params));
+
+    saga.next(); saga.next(); saga.next(exampleFiling); saga.next();  // First few steps as above.
+
+    expect(saga.throw && saga.throw(new Error('LOLWAT')).value).toEqual(put(checkingFailedAction('LOLWAT')));
+  });
+
+  it('dispatches FAILED if polling fails with response', () => {
+    const saga = checkingStartSaga(checkingStartAction(params));
+
+    saga.next(); saga.next(); saga.next(exampleFiling); saga.next();  // First few steps as above.
+
+    expect(saga.throw && saga.throw({status: 400, statusText: 'Nope.'}).value).toEqual(put(checkingFailedAction('Nope.')));
   });
 });
