@@ -45,7 +45,8 @@ export function* checkingStartSaga(action: CheckingAction): IterableIterator<Eff
   try {
     const filing: Filing = yield call(apiFetchJson, '/api/document-service/v1/filings/', init);
     if (!filing.versions) {
-      return put(checkingFailedAction('Filing has no versions'));
+      yield put(checkingFailedAction('Filing has no versions'));
+      return;
     }
 
     // Poll for validation status.
@@ -56,12 +57,14 @@ export function* checkingStartSaga(action: CheckingAction): IterableIterator<Eff
     }
     const { validationStatus } = version;
     if (!validationStatus) {
-      return put(checkingFailedAction('Filing version has no validation status'));
+      yield put(checkingFailedAction('Filing version has no validation status'));
+      return;
     }
 
     yield put(checkingReceivedAction(validationStatus));
   } catch (res) {
-    return put(checkingFailedAction(res.message || res.statusText));
+    yield put(checkingFailedAction(res.message || res.statusText));
+    return;
   }
 }
 

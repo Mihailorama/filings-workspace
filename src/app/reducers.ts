@@ -4,7 +4,7 @@
 import { Action } from 'redux';
 
 import { VALIDATION_PROFILES_RECEIVED, ValidationProfilesReceivedAction,
-  CHECKING_REQUESTED, CHECKING_RECEIVED, CheckingReceivedAction } from './actions';
+  CHECKING_REQUESTED, CHECKING_RECEIVED, CheckingReceivedAction, CHECKING_FAILED } from './actions';
 import { CheckerState } from './state';
 
 export function checker(state: CheckerState | undefined, action: Action): CheckerState {
@@ -24,6 +24,10 @@ export function checker(state: CheckerState | undefined, action: Action): Checke
       {
         const { status } = action as CheckingReceivedAction;
         return {...state, status};
+      }
+    case CHECKING_FAILED:
+      {
+        return {...state, status: 'FATAL_ERROR'};
       }
     default:
       break;

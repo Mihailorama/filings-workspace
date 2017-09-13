@@ -1,5 +1,5 @@
 import { validationProfilesReceivedAction,
-   checkingRequestedAction, checkingReceivedAction } from '../actions';
+   checkingRequestedAction, checkingReceivedAction, checkingFailedAction } from '../actions';
 import { ValidationParams } from '../models';
 import { checker } from '../reducers';
 
@@ -33,5 +33,11 @@ describe('checker (reducer)', () => {
     const after = checker(initial, checkingReceivedAction('OK'));
 
     expect(after.status).toBe('OK');
+  });
+
+  it('treats failing tpo getg status as fatal error', () => {
+    const after = checker(initial, checkingFailedAction('LOLWAT'));
+
+    expect(after.status).toBe('FATAL_ERROR');
   });
 });
