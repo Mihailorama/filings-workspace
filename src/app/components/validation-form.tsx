@@ -42,18 +42,12 @@ export default class ValidationForm extends Component<ValidationFormProps, Valid
     const { params } = this.state;
 
     if (!profiles) {
-      return <div  className='ckr-ValidationForm ckr-ValidationForm-loading'>
-          Loading&thinsp;…
+      return <div  className='ckr-ValidationForm-loading'>
+          <span>Loading&thinsp;…</span>
         </div>;
     }
 
     return <Form className='ckr-ValidationForm' onSubmit={() => this.onSubmit()}>
-      <FormItem>
-        <label>Validation profile</label>
-        <select onChange={e => this.onChange({profile: e.currentTarget.value})}>
-          {profiles.map(({id, name}) => <option key={id} value={id}>{name}</option>)}
-        </select>
-      </FormItem>
       <FormItem>
         <Dropzone
           className='ckr-ValidationForm-dropzone'
@@ -64,15 +58,22 @@ export default class ValidationForm extends Component<ValidationFormProps, Valid
           <div>
             {params.file && <FileReference className='ckr-ValidationForm-file' file={params.file}/>}
             {!params.file && <div>
-                <h2 className='ckr-ValidationForm-heading'>Drag file to upload or</h2>
-                <div className='ckr-ValidationForm-btn'><span className='ckr-Button'>Choose file to upload</span></div>
-                <div className='ckr-ValidationForm-hint'>(Zip only / 5MB max)</div>
+                <h2 className='ckr-ValidationForm-heading'>Drag &amp; drop</h2>
+                <div className='ckr-ValidationForm-prompt'>
+                  your files here, or <span className='ckr-ValidationForm-btn'>browse</span>
+                </div>
               </div>}
             </div>
         </Dropzone>
       </FormItem>
+      <FormItem>
+        <label>Validation profile</label>
+        <select onChange={e => this.onChange({profile: e.currentTarget.value})}>
+          {profiles.map(({id, name}) => <option key={id} value={id}>{name}</option>)}
+        </select>
+      </FormItem>
       <FormActionList>
-        <FormAction enabled={paramsAreComplete(params)}>Validate</FormAction>
+        <FormAction enabled={paramsAreComplete(params)} primary>Validate</FormAction>
       </FormActionList>
     </Form>;
   }

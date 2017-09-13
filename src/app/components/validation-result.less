@@ -2,54 +2,61 @@
 
 .ckr-ValidationResult {
   display: flex;
-  padding: 10px;
+  flex-flow: column nowrap;
+  align-items: center;
 
-  align-items: flex-start;
+  &-loading {
+    width: 400px;
+    height: 400px;
+    background-image: url(Progress_Animation.gif);
+    background-position: 50% 0;
+    background-repeat: no-repeat;
+  }
 
   &-status {
-    margin: 10px;
-    display: block;
-    width: (@hunk - @gap - 2em);
-    height: 2em;
-    padding: 0 1em;
+    margin: @hunk 0 @gap;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
 
-    text-align: center;
-    text-transform: uppercase;
     line-height: 2;
-    color: #FFF;
-    border-radius: 1em;
+
+    &:before {
+      display: block;
+      width: 1em;
+
+      font-size: 72px;
+      text-align: center;
+      line-height: 1;
+      border-radius: 0.5em;
+    }
   }
 
-  &-okStatus {
+  &-okStatus:before {
+    content: "\2705";
     background-color: @valid;
   }
-  &-warningStatus {
+  &-warningStatus:before {
+    content: "\2705";
     background-color: @warning;
   }
-  &-errorStatus {
+  &-errorStatus:before {
+    content: "\2715";
     background-color: @invalid;
   }
-  &-fatalErrorStatus {
+  &-fatalErrorStatus:before {
+    content: "\2715";
     background-color: @failed;
   }
 
   &-detail {
-    margin: 10px;
+    max-width: 30em;
+
+    margin: 0 0 @gap;
   }
 
-  @media (max-width: (4 * @hunk - 1px)) {
-    flex-flow: column nowrap;
-
-    &-detail {
-      padding-top: 0;
-    }
-  }
-  @media (min-width: (4 * @hunk)) {
-    flex-flow: row nowrap;
-
-    &-detail {
-      padding-top: (0.5 * (2em - @default-line-height));  // Should aligh text with text of status blob.
-    }
+  &-loadingDetail {
+    display: none;
   }
 }
 

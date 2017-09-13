@@ -7,20 +7,27 @@
   height: 2em;
   padding: 0 1em;
 
-  font-size: 1rem;
+  font-size: 18px;
   text-decoration: none;
   line-height: 2;
-  color: contrast(@ctl, #FFF, @ink);
-  background: @ctl; // linear-gradient(180deg, @ctl-lt, @ctl 10%, @ctl 5%, @ctl-dk);
-  border: none;
-  box-shadow: 0 1px 2px fade(#000, 50%), 1px 1px 3px fade(#000, 25%);
+  color: @ink;
+  background-color: @paper;
+  border: 1px solid @btn-bd;
+  border-radius: 3px;
+  // box-shadow: 0 1px 2px fade(#000, 50%), 1px 1px 3px fade(#000, 25%);
   user-select: none;
   cursor: pointer;
+
+  &-primary {
+    color: contrast(@primary, #FFF, @ink);
+    background-color: @primary;
+    border-color: @primary2;
+  }
 
   &:hover,
   &:active {
     text-decoration: none;
-    box-shadow: 0 3px 4px fade(#000, 50%), 2px 2px 6px fade(#000, 25%);
+    // box-shadow: 0 3px 4px fade(#000, 50%), 2px 2px 6px fade(#000, 25%);
   }
 
   &[disabled],
@@ -42,17 +49,23 @@
   flex-flow: column nowrap;
   align-items: stretch;
 
-  padding: (0.5 * @gap) 0;
+  padding: (@gap - 0.5 * @gap2) 0;
 }
 
 .ckr-FormItem {
-  margin: (0.5 * @gap) @gap;
+  margin: (0.5 * @gap2) @gap;
   display: flex;
-  flex-flow: row wrap;
+  // flex-flow: row wrap;
+  flex-flow: row nowrap;
+  align-items: center;
 
   label {
-    color: @muted;
     margin-right: 1em;
+
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    color: @muted;
   }
 
   select {
@@ -60,8 +73,13 @@
 
     display: block;
     flex-grow: 1;
+    flex-shrink: 1;
     max-width: 100%;
+
+    font-size: 14px;
+    font-weight: 500;
     text-overflow: ellipsis;
+    color: @secondary;
   }
 
   option {
@@ -71,10 +89,10 @@
 }
 
 .ckr-FormActionList {
-  margin: (0.5 * @gap) @gap;
+  margin: (@gap3 - 0.5 * @gap2) @gap (@gap3 - (@gap - 0.5 * @gap2));
   display: flex;
   flex-flow: row nowrap;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 .ckr-FormAction {

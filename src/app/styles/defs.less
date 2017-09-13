@@ -4,9 +4,9 @@
 @brand-dk: #004a93;
 @brand2: #002649;
 
-@ctl: #90CAF9;
-@ctl-lt: #2196F3;
-@ctl-dk: #1976D2;
+@primary: #69BEAB;
+@primary2: #2C5173;
+@secondary: #2D5578;
 
 @valid: #8bc34a;
 @valid-lt: #bef67a;
@@ -26,11 +26,17 @@
 
 @paper: #FFF;
 @ink: fade(#000, 80%);
-@muted: fade(#000, 50%);
+@muted: fade(#000, 60%);
+@btn-bd: fade(#000, 25%);
+
+@outerPaper: @primary;
+@outerInk: contrast(@outerPaper, #FFF, fade(#000, 80%));
 
 @default-line-height: (24 / 16);
 
 @hunk: 96px;
-@gap: 24px;
+@gap: 18px;
+@gap2: 24px;  // Used on forms
+@gap3: 36px;  // Above buttons
 
-@form-wd: 400px;
+@form-wd: 410px;

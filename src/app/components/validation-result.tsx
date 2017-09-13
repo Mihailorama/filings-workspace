@@ -8,10 +8,10 @@ import './validation-result.less';
 
 const textByStatus = {
   loading: 'Your document is being validated.',
-  OK: 'Your document has been passed as valid XBRL.',
-  WARNING: 'Your document has warnings.',
-  ERROR: 'Your document is not valid XBRL. Contact us to find out more!',
-  FATAL_ERROR: 'Your document could not be validated.',
+  OK: 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.',
+  WARNING: 'Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.',
+  ERROR: 'Donec eu libero sit amet quam egestas semper.',
+  FATAL_ERROR: ' Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra.',
 };
 
 export interface ValidationResultProps extends Props<ValidationResult> {
