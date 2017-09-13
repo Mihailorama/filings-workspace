@@ -1,28 +1,32 @@
 
 import { Effect, delay } from 'redux-saga';
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { all, call, put, takeEvery } from 'redux-saga/effects';
 
-import { validationProfilesReceivedAction, validationProfilesFailedAction,
+import { startupInfoReceivedAction, startupInfoFailedAction,
   CHECKING_START, CheckingAction, checkingRequestedAction, checkingReceivedAction, checkingFailedAction } from './actions';
 import { apiFetchJson } from './api-fetch';
-import { Category, Filing, FilingVersion } from './models';
+import { User, App, Category, Filing, FilingVersion } from './models';
 
 const POLL_MILLIS = 1000;
 
 /**
- * Fetch the validation profiles. Runs once when starting up.
+ * Fetch the information needed at startup. If this fails we cannot show the app.
  */
-export function* validationProfilesSaga(): IterableIterator<Effect> {
+export function* startupInfoSaga(): IterableIterator<Effect> {
   try {
-    const obj: Category = yield call(apiFetchJson, '/api/document-service/v1/categories/validation');
-    const { profiles } = obj;
+    const [user, category, apps]: [User, Category, App[]] = yield all([
+      call(apiFetchJson, '/api/user'),
+      call(apiFetchJson, '/api/document-service/v1/categories/validation'),
+      call(apiFetchJson, '/api/apps'),
+    ]);
+    const { profiles } = category;
     if (!profiles) {
-      yield put(validationProfilesFailedAction('No profiles'));
+      yield put(startupInfoFailedAction('No profiles'));
       return;
     }
-    yield put(validationProfilesReceivedAction(profiles));
+    yield put(startupInfoReceivedAction(user, apps, profiles));
   } catch (res) {
-    yield put(validationProfilesFailedAction(res.message || res.statusText));
+    yield put(startupInfoFailedAction(res.message || res.statusText));
   }
 }
 

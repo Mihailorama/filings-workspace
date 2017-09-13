@@ -3,7 +3,7 @@
  */
 import { Action } from 'redux';
 
-import { VALIDATION_PROFILES_RECEIVED, ValidationProfilesReceivedAction,
+import { STARTUP_INFO_RECEIVED, StartupInfoReceivedAction,
   CHECKING_REQUESTED, CHECKING_RECEIVED, CheckingReceivedAction, CHECKING_FAILED } from './actions';
 import { CheckerState } from './state';
 
@@ -13,10 +13,10 @@ export function checker(state: CheckerState | undefined, action: Action): Checke
   }
 
   switch (action.type) {
-    case VALIDATION_PROFILES_RECEIVED:
+    case STARTUP_INFO_RECEIVED:
       {
-        const { profiles } = action as ValidationProfilesReceivedAction;
-        return {...state, profiles};
+        const { user, apps, profiles } = action as StartupInfoReceivedAction;
+        return {...state, user, apps, profiles};
       }
     case CHECKING_REQUESTED:
       return {...state, phase: 'checking', status: undefined};
