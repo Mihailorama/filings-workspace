@@ -17,11 +17,12 @@ export function* validationProfilesSaga(): IterableIterator<Effect> {
     const obj: Category = yield call(apiFetchJson, '/api/document-service/v1/categories/validation');
     const { profiles } = obj;
     if (!profiles) {
-      return put(validationProfilesFailedAction('No profiles'));
+      yield put(validationProfilesFailedAction('No profiles'));
+      return;
     }
     yield put(validationProfilesReceivedAction(profiles));
   } catch (res) {
-    return put(validationProfilesFailedAction(res.message || res.statusText));
+    yield put(validationProfilesFailedAction(res.message || res.statusText));
   }
 }
 
@@ -64,7 +65,6 @@ export function* checkingStartSaga(action: CheckingAction): IterableIterator<Eff
     yield put(checkingReceivedAction(validationStatus));
   } catch (res) {
     yield put(checkingFailedAction(res.message || res.statusText));
-    return;
   }
 }
 
