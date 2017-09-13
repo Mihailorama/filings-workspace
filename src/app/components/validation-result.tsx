@@ -6,12 +6,27 @@ import { ValidationStatus } from '../models';
 
 import './validation-result.less';
 
-const textByStatus = {
-  loading: 'Your document is being validated.',
-  OK: 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.',
-  WARNING: 'Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.',
-  ERROR: 'Donec eu libero sit amet quam egestas semper.',
-  FATAL_ERROR: ' Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra.',
+interface Spec {
+  label?: string;
+  detail?: string;
+}
+
+const specByStatus: {[status: string]: Spec} = {
+  loading: {
+    detail: 'processing\u2009…',
+  },
+  OK: {
+    label: 'Pass',
+  },
+  WARNING: {
+    label: 'Pass',
+  },
+  ERROR: {
+    label: 'Fail',
+  },
+  FATAL_ERROR: {
+    label: 'Fail',
+  },
 };
 
 export interface ValidationResultProps extends Props<ValidationResult> {
@@ -22,11 +37,11 @@ export default class ValidationResult extends Component<ValidationResultProps> {
   render(): JSX.Element {
     const { status = 'loading' } = this.props;
     const lowerStatus = status.toLowerCase().split('_').map((x, i) => i === 0 ? x : x.charAt(0).toUpperCase() + x.substr(1)).join('');
+    const { label, detail } = specByStatus[status];
 
     return <div className={classNames('ckr-ValidationResult', `ckr-ValidationResult-${lowerStatus}`)}>
-      {status !== 'loading' &&
-        <b className={classNames('ckr-ValidationResult-status', `ckr-ValidationResult-${lowerStatus}Status`)}>{status}</b>}
-      <p className={classNames('ckr-ValidationResult-detail', `ckr-ValidationResult-${lowerStatus}Detail`)}>{textByStatus[status]}</p>
+      {label && <b className={classNames('ckr-ValidationResult-status', `ckr-ValidationResult-${lowerStatus}Status`)}>{label}</b>}
+      {detail && <p className={classNames('ckr-ValidationResult-detail', `ckr-ValidationResult-${lowerStatus}Detail`)}>{detail}</p>}
     </div>;
   }
 }

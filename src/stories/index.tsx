@@ -57,7 +57,7 @@ storiesOf('ValidationForm', module)
 ;
 
 storiesOf('ValidationResult', module)
-.addDecorator(story => <div className='ckr-CheckerApp ckr-CheckerApp-checking'>{story()}</div>)
+.addDecorator(story => <div className='ckr-CheckerApp ckr-CheckerApp-checking'><h1>Backgorund</h1>{story()}</div>)
 .add('Loading', () => <ValidationResult/>)
 .add('Invalid', () => <ValidationResult status='ERROR'/>)
 .add('Valid with warnings', () => <ValidationResult status='WARNING'/>)

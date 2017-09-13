@@ -1,16 +1,29 @@
 @import (reference) '../styles/defs.less';
 
 .ckr-ValidationResult {
+  position: fixed;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
 
+  color: contrast(@brand, #FFF, @ink);
+  background-color: fade(#30577A, 94%);
+
   &-loading {
-    width: 400px;
-    height: 400px;
-    background-image: url(Progress_Animation.gif);
-    background-position: 50% 0;
-    background-repeat: no-repeat;
+    &:before {
+      content: " ";
+      margin-top: 240px;
+      width: 240px;
+      height: 240px;
+      background-image: url(Progress_Animation.gif);
+      background-position: 50% 0;
+      background-repeat: no-repeat;
+      background-size: 300px 300px;
+    }
   }
 
   &-status {
@@ -19,34 +32,27 @@
     flex-flow: column nowrap;
     align-items: center;
 
-    line-height: 2;
+    font-size: 36px;
+    font-weight: 100;
+    line-height: fraction(44 / 36);
 
     &:before {
+      content: " ";
+      margin-bottom: 6px;
       display: block;
-      width: 1em;
-
-      font-size: 72px;
-      text-align: center;
-      line-height: 1;
-      border-radius: 0.5em;
+      width: 208px;
+      height: 208px;
+      background-size: 208x;
     }
   }
 
-  &-okStatus:before {
-    content: "\2705";
-    background-color: @valid;
-  }
+  &-okStatus:before,
   &-warningStatus:before {
-    content: "\2705";
-    background-color: @warning;
+    background-image: url(validation-result-ok.svg);
   }
-  &-errorStatus:before {
-    content: "\2715";
-    background-color: @invalid;
-  }
+  &-errorStatus:before,
   &-fatalErrorStatus:before {
-    content: "\2715";
-    background-color: @failed;
+    background-image: url(validation-result-error.svg);
   }
 
   &-detail {
@@ -56,7 +62,8 @@
   }
 
   &-loadingDetail {
-    display: none;
+    font-weight: 300;
+    font-style: italic;
   }
 }
 

@@ -22,10 +22,8 @@ export default class CheckerApp extends Component<CheckerAppProps> {
     const { phase, profiles, status, onSubmit } = this.props;
 
     return <div className={classNames('ckr-CheckerApp', `ckr-CheckerApp-${phase}`)}>
-      {phase === 'form'
-        ? <ValidationForm profiles={profiles} onSubmit={onSubmit}/>
-        : <ValidationResult status={status}/>
-      }
+      <ValidationForm profiles={profiles} onSubmit={phase === 'form' ? onSubmit : undefined}/>
+      {phase !== 'form' && <ValidationResult status={status}/>}
       <ContactDetails/>
     </div>;
   }
