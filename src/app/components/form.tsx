@@ -36,10 +36,13 @@ export function FormActionList({className, children}: FormActionListProps): JSX.
 
 interface FormActionProps {
   className?: string;
+  primary?: boolean;
   enabled?: boolean;
   children: ReactNode;
 }
 
-export function FormAction({className, enabled, children}: FormActionProps): JSX.Element {
-  return <button className={classNames('ckr-FormAction', className)} disabled={!enabled}>{children}</button>;
+export function FormAction({className, enabled, primary, children}: FormActionProps): JSX.Element {
+  return <button
+    className={classNames('ckr-FormAction', className, {'ckr-FormAction-primary': primary})}
+    disabled={!enabled}>{children}</button>;
 }

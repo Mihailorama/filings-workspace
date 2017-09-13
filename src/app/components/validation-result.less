@@ -1,55 +1,69 @@
 @import (reference) '../styles/defs.less';
 
 .ckr-ValidationResult {
+  position: fixed;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
-  padding: 10px;
+  flex-flow: column nowrap;
+  align-items: center;
 
-  align-items: flex-start;
+  color: contrast(@brand, #FFF, @ink);
+  background-color: fade(#30577A, 94%);
+
+  &-loading {
+    &:before {
+      content: " ";
+      margin-top: 240px;
+      width: 240px;
+      height: 240px;
+      background-image: url(Progress_Animation.gif);
+      background-position: 50% 0;
+      background-repeat: no-repeat;
+      background-size: 300px 300px;
+    }
+  }
 
   &-status {
-    margin: 10px;
-    display: block;
-    width: (@hunk - @gap - 2em);
-    height: 2em;
-    padding: 0 1em;
+    margin: @hunk 0 @gap;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
 
-    text-align: center;
-    text-transform: uppercase;
-    line-height: 2;
-    color: #FFF;
-    border-radius: 1em;
+    font-size: 36px;
+    font-weight: 100;
+    line-height: fraction(44 / 36);
+
+    &:before {
+      content: " ";
+      margin-bottom: 6px;
+      display: block;
+      width: 208px;
+      height: 208px;
+      background-size: 208x;
+    }
   }
 
-  &-okStatus {
-    background-color: @valid;
+  &-okStatus:before,
+  &-warningStatus:before {
+    background-image: url(validation-result-ok.svg);
   }
-  &-warningStatus {
-    background-color: @warning;
-  }
-  &-errorStatus {
-    background-color: @invalid;
-  }
-  &-fatalErrorStatus {
-    background-color: @failed;
+  &-errorStatus:before,
+  &-fatalErrorStatus:before {
+    background-image: url(validation-result-error.svg);
   }
 
   &-detail {
-    margin: 10px;
+    max-width: 30em;
+
+    margin: 0 0 @gap;
   }
 
-  @media (max-width: (4 * @hunk - 1px)) {
-    flex-flow: column nowrap;
-
-    &-detail {
-      padding-top: 0;
-    }
-  }
-  @media (min-width: (4 * @hunk)) {
-    flex-flow: row nowrap;
-
-    &-detail {
-      padding-top: (0.5 * (2em - @default-line-height));  // Should aligh text with text of status blob.
-    }
+  &-loadingDetail {
+    font-weight: 300;
+    font-style: italic;
   }
 }
 

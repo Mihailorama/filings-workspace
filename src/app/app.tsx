@@ -8,12 +8,9 @@ import CheckerAppContainer from './containers/checker-app-container';
 export default class App extends Component<{}> {
   render(): JSX.Element {
     return (
-      <div>
-        <h1>XBRL Checker</h1>
-        <Provider store={store}>
-          <CheckerAppContainer/>
-        </Provider>
-      </div>
+      <Provider store={store}>
+        <CheckerAppContainer/>
+      </Provider>
     );
   }
 }
