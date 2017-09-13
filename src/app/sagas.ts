@@ -6,6 +6,7 @@ import { startupInfoReceivedAction, startupInfoFailedAction,
   CHECKING_START, CheckingAction, checkingRequestedAction, checkingReceivedAction, checkingFailedAction } from './actions';
 import { apiFetchJson } from './api-fetch';
 import { User, App, Category, Filing, FilingVersion } from './models';
+import { USER, APPS, DOCUMENT_SERVICE_FILINGS, documentServiceCategories, documentServiceFilingVersion } from './urls';
 
 const POLL_MILLIS = 1000;
 
@@ -15,9 +16,9 @@ const POLL_MILLIS = 1000;
 export function* startupInfoSaga(): IterableIterator<Effect> {
   try {
     const [user, category, apps]: [User, Category, App[]] = yield all([
-      call(apiFetchJson, '/api/user'),
-      call(apiFetchJson, '/api/document-service/v1/categories/validation'),
-      call(apiFetchJson, '/api/apps'),
+      call(apiFetchJson, USER),
+      call(apiFetchJson, documentServiceCategories('validation')),
+      call(apiFetchJson, APPS),
     ]);
     const { profiles } = category;
     if (!profiles) {
@@ -48,7 +49,7 @@ export function* checkingStartSaga(action: CheckingAction): IterableIterator<Eff
     body: formData,
   };
   try {
-    const filing: Filing = yield call(apiFetchJson, '/api/document-service/v1/filings/', init);
+    const filing: Filing = yield call(apiFetchJson, DOCUMENT_SERVICE_FILINGS, init);
     if (!filing.versions) {
       yield put(checkingFailedAction('Filing has no versions'));
       return;
@@ -58,7 +59,7 @@ export function* checkingStartSaga(action: CheckingAction): IterableIterator<Eff
     let version: FilingVersion = filing.versions[0];
     while (version.status !== 'DONE') {
       yield call(delay, POLL_MILLIS);
-      version = yield call(apiFetchJson, '/api/document-service/v1/filing-versions/' + version.id);
+      version = yield call(apiFetchJson, documentServiceFilingVersion(version));
     }
     const { validationStatus } = version;
     if (!validationStatus) {
