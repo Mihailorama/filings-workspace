@@ -5,16 +5,19 @@
  *
  * Should have same signature as `window.fetch` and return a promise of the decoded JSON object.
  */
-export function apiFetchJson<T>(url: RequestInfo, init: RequestInit = {}): Promise<T> {
-  return fetch(url, {
+export async function apiFetchJson<T>(url: RequestInfo, init: RequestInit = {}): Promise<T> {
+  const res = await fetch(url, {
     credentials: 'same-origin',
     ...init,
     headers: {
       ...init.headers,
       // 'X-XSRF-TOKEN': getXsrfToken(),
     },
-  })
-  .then(res => res.json());
+  });
+  if (res.ok) {
+    return res.json();
+  }
+  throw res;
 }
 
 // function getXsrfToken(): string {

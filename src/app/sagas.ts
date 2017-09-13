@@ -17,11 +17,12 @@ export function* validationProfilesSaga(): IterableIterator<Effect> {
     const obj: Category = yield call(apiFetchJson, '/api/document-service/v1/categories/validation');
     const { profiles } = obj;
     if (!profiles) {
-      return put(validationProfilesFailedAction('No profiles'));
+      yield put(validationProfilesFailedAction('No profiles'));
+      return;
     }
     yield put(validationProfilesReceivedAction(profiles));
   } catch (res) {
-    return put(validationProfilesFailedAction(res.message || res.statusText));
+    yield put(validationProfilesFailedAction(res.message || res.statusText));
   }
 }
 
@@ -42,22 +43,29 @@ export function* checkingStartSaga(action: CheckingAction): IterableIterator<Eff
     method: 'POST',
     body: formData,
   };
-  const filing: Filing = yield call(apiFetchJson, '/api/document-service/v1/filings/', init);
-  if (!filing.versions) {
-    return put(checkingFailedAction('Filing has no versions'));
-  }
+  try {
+    const filing: Filing = yield call(apiFetchJson, '/api/document-service/v1/filings/', init);
+    if (!filing.versions) {
+      yield put(checkingFailedAction('Filing has no versions'));
+      return;
+    }
 
-  // Poll for valdiation status.
-  let version: FilingVersion = filing.versions[0];
-  while (version.status !== 'DONE') {
-    yield call(delay, POLL_MILLIS);
-    version = yield call(apiFetchJson, '/api/document-service/v1/filing-versions/' + version.id);
+    // Poll for validation status.
+    let version: FilingVersion = filing.versions[0];
+    while (version.status !== 'DONE') {
+      yield call(delay, POLL_MILLIS);
+      version = yield call(apiFetchJson, '/api/document-service/v1/filing-versions/' + version.id);
+    }
+    const { validationStatus } = version;
+    if (!validationStatus) {
+      yield put(checkingFailedAction('Filing version has no validation status'));
+      return;
+    }
+
+    yield put(checkingReceivedAction(validationStatus));
+  } catch (res) {
+    yield put(checkingFailedAction(res.message || res.statusText));
   }
-  const { validationStatus } = version;
-  if (!validationStatus) {
-    return put(checkingFailedAction('Filing version has no validation status'));
-  }
-  yield put(checkingReceivedAction(validationStatus));
 }
 
 /**
