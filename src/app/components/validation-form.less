@@ -45,6 +45,21 @@
     }
   }
 
+  &-errorDropzone {
+    font-style: italic;
+    color: #E74C3C;
+
+    &:before {
+      margin-top: 50px;
+      margin-bottom: @gap;
+      width: 122px;
+      height: 122px;
+
+      background-image: url(validation-form-error.svg);
+      background-size: auto;
+    }
+  }
+
   select {
     width: (@form-wd - 2 * @gap - 110px - @gap);
   }
