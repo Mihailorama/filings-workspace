@@ -16,8 +16,8 @@ import './app-bar.less';
 
 export interface AppBarProps extends Props<AppBar> {
   path: string;
-  user: User;
-  apps: App[];
+  user?: User;
+  apps?: App[];
 }
 
 export default class AppBar extends Component<AppBarProps> {
@@ -26,13 +26,15 @@ export default class AppBar extends Component<AppBarProps> {
 
     // Assemble the menu.
     const itemGroups: MenuItem[][] = [];
-    const appItems = apps.filter(x => x.href !== path).map(x => ({label: x.name || x.id, href: x.href}));
-    if (appItems.length > 0) {
-      itemGroups.push(appItems);
-    }
-    const app = apps.find(x => x.href === path);
-    if (app) {
-      itemGroups.push([{label: 'User’s Guide', href: appHelp(app)}]);
+    if (apps) {
+      const appItems = apps.filter(x => x.href !== path).map(x => ({label: x.name || x.id, href: x.href}));
+      if (appItems.length > 0) {
+        itemGroups.push(appItems);
+      }
+      const app = apps.find(x => x.href === path);
+      if (app) {
+        itemGroups.push([{label: 'User’s Guide', href: appHelp(app)}]);
+      }
     }
     itemGroups.push([{label: 'Log out', href: AUTH_LOGOUT}]);
 
@@ -47,7 +49,7 @@ export default class AppBar extends Component<AppBarProps> {
         <ul className='ckr-AppBar-breadcrumbNav'>
           <li><a href={path} className='ckr-AppBar-breadcrumbLink'>Home</a></li>
         </ul>
-        <span className='ckr-AppBar-userName'>{user.name || user.preferred_username || user.email}</span>
+        {user && <span className='ckr-AppBar-userName'>{user.name || user.preferred_username || user.email}</span>}
         <NavMenu itemGroups={itemGroups}/>
       </nav>
     </header>;

@@ -85,13 +85,15 @@ const apps = (...names: string[]): App[] => names.map(name => app(name));
 const sub = 'uuid-of-user';
 
 storiesOf('AppBar', module)
-.add('User with email only', () => <AppBar path='/boolean-validator/'
+.addDecorator(story => <div style={{height: '400px', backgroundColor: '#DDD'}}>{story()}</div>)
+.add('Loading', () => <AppBar path='/booleanvalidator/'/>)
+.add('User with email only', () => <AppBar path='/booleanvalidator/'
     apps={apps('Boolean Validator')}
     user={{sub, email: 'b@example.com'}}/>)
-.add('User with name', () => <AppBar path='/boolean-validator/'
+.add('User with name', () => <AppBar path='/booleanvalidator/'
     apps={apps('Boolean Validator')}
     user={{sub, name: 'Tamandani Pleško', email: 'tp@example.com'}}/>)
-.add('Multiple apps', () => <AppBar path='/boolean-validator/'
+.add('Multiple apps', () => <AppBar path='/booleanvalidator/'
     apps={apps('Boolean Validator', 'Beacon', 'Full Beam', 'Manage Account')}
     user={{sub, email: 'tp@example.com'}}/>)
 ;
