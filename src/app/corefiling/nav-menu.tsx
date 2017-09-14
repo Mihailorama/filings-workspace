@@ -35,7 +35,13 @@ export default class NavMenu extends Component<NavMenuProps, State> {
 
     return <div className={classNames('ckr-NavMenu', className)}>
       <span className={classNames('ckr-NavMenu-btn', {'ckr-NavMenu-activeBtn': isActive})}
-          onClick={() => this.setState({isActive: !isActive})}>Menu</span>
+          onClick={() => this.setState({isActive: !isActive})}>
+        <svg className='ckr-NavMenu-btnIcon' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 10'>
+          <rect x='0' y='0' width='14' height='2'/>
+          <rect x='0' y='4' width='14' height='2'/>
+          <rect x='0' y='8' width='14' height='2'/>
+        </svg>
+      </span>
       {isActive &&
         <ul className='ckr-NavMenu-menu'>
           {itemGroups.map((x, i) => <li key={i} className='ckr-NavMenu-itemGroup'>

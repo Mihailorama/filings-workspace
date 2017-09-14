@@ -107,6 +107,13 @@
     background-color: @btn-hover;
   }
 
+  &-btnIcon {
+    width: 14px;
+    height: 10px;
+
+    fill: @ink;
+  }
+
   &-menu {
     position: absolute;
     right: 0;
@@ -121,7 +128,7 @@
     padding-bottom: 6px;
 
     &:not(:first-child) {
-      border-top: 1px solid @btn-bd;
+      border-top: 1px solid fadeout(@btn-bd, 10%, true);
     }
   }
 

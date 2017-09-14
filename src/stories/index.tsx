@@ -72,7 +72,7 @@ storiesOf('ContactDetails', module)
 ;
 
 const app = (name: string): App => {
-  const id = name.toLowerCase().split(' ').join('-');
+  const id = name.toLowerCase().split(' ').join('');
   return {
     id,
     name,
@@ -88,7 +88,7 @@ storiesOf('AppBar', module)
 .add('User with email only', () => <AppBar path='/boolean-validator/'
     apps={apps('Boolean Validator')}
     user={{sub, email: 'b@example.com'}}/>)
-.add('User with name only', () => <AppBar path='/boolean-validator/'
+.add('User with name', () => <AppBar path='/boolean-validator/'
     apps={apps('Boolean Validator')}
     user={{sub, name: 'Tamandani Pleško', email: 'tp@example.com'}}/>)
 .add('Multiple apps', () => <AppBar path='/boolean-validator/'
