@@ -3,7 +3,8 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import { Profile } from '../app/models';
+import { App, Profile } from '../app/models';
+import AppBar from '../app/corefiling/app-bar';
 import FileReference from '../app/components/file-reference';
 import ValidationForm from '../app/components/validation-form';
 import ValidationResult from '../app/components/validation-result';
@@ -67,4 +68,30 @@ storiesOf('ValidationResult', module)
 
 storiesOf('ContactDetails', module)
 .addDecorator(story => <div className='ckr-App'>{story()}</div>)
-.add('contact us', () => <ContactDetails/>);
+.add('contact us', () => <ContactDetails/>)
+;
+
+const app = (name: string): App => {
+  const id = name.toLowerCase().split(' ').join('-');
+  return {
+    id,
+    name,
+    href: `/${id}/`,
+  };
+};
+
+const apps = (...names: string[]): App[] => names.map(name => app(name));
+
+const sub = 'uuid-of-user';
+
+storiesOf('AppBar', module)
+.add('User with email only', () => <AppBar path='/boolean-validator/'
+    apps={apps('Boolean Validator')}
+    user={{sub, email: 'b@example.com'}}/>)
+.add('User with name only', () => <AppBar path='/boolean-validator/'
+    apps={apps('Boolean Validator')}
+    user={{sub, name: 'Tamandani Pleško', email: 'tp@example.com'}}/>)
+.add('Multiple apps', () => <AppBar path='/boolean-validator/'
+    apps={apps('Boolean Validator', 'Beacon', 'Full Beam', 'Manage Account')}
+    user={{sub, email: 'tp@example.com'}}/>)
+;

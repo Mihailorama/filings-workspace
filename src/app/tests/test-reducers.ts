@@ -18,7 +18,7 @@ describe('checker (reducer)', () => {
 
   it('remembers profiles', () => {
     const user = {sub: 'uuid-of-user', name: 'Uttara Todorov', email: 'ut@example.com', preferred_username: 'ut'};
-    const apps = [{id: 'app'}];
+    const apps = [{id: 'app', name: 'App', href: '/app/'}];
     const profiles = [{id: 'profilename', name: 'Profile Label'}];
     const after = checker(initial, startupInfoReceivedAction(user, apps, profiles));
 

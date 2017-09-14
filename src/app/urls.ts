@@ -7,11 +7,11 @@ export const USER = '/api/user';
 export const APPS = '/api/apps';
 export const AUTH_LOGOUT = '/auth/logout';
 
-const APP_HOME = uriTemplates('/{id}/');
-const APP_HELP = uriTemplates('/{id}/statuc/user-guide.html');
+const APP_HOME = uriTemplates('{+base}');
+const APP_HELP = uriTemplates('{+base}static/user-guide.html');
 
-export const appHome = (app: App) => APP_HOME.fillFromObject(app);
-export const appHelp = (app: App) => APP_HELP.fillFromObject(app);
+export const appHome = ({href}: App) => APP_HOME.fillFromObject({base: href});
+export const appHelp = ({href}: App) => APP_HELP.fillFromObject({base: href});
 
 const DOCUMENT_SERVICE_BASE = '/api/document-service/v1/';
 const DOCUMENT_SERVICE_CATEGORIES = uriTemplates(DOCUMENT_SERVICE_BASE + 'categories/{category}');
