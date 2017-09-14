@@ -80,7 +80,11 @@ const mergedConfig = merge.smart(mainConfig, {
         res.send('<p>Logged In. Visit <a href="/auth/logout">/auth/logout</a> to logout.</p>');
       });
       app.get('/api/apps', (req, res) => {
-        res.sendFile(path.resolve(devDir, 'apps.json'));
+        res.json([
+          {"id":"beacon","name":"Beacon","href":"/beacon/","colour":"#3c7c34","iconHref":"/img/logo-beacon.svg","features":[]},
+          {"id":"account","name":"Manage account","href":"/auth/account","colour":"#3A75C4","features":[]},
+          {"id":"sms","name":"Manage organisation","href":"/sms/","colour":"#3A75C4","features":[]},
+        ]);
       });
     },
     // webpack output options

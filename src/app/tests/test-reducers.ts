@@ -1,4 +1,4 @@
-import { validationProfilesReceivedAction,
+import { startupInfoReceivedAction,
    checkingRequestedAction, checkingReceivedAction, checkingFailedAction } from '../actions';
 import { ValidationParams } from '../models';
 import { checker } from '../reducers';
@@ -17,9 +17,13 @@ describe('checker (reducer)', () => {
   });
 
   it('remembers profiles', () => {
+    const user = {sub: 'uuid-of-user', name: 'Uttara Todorov', email: 'ut@example.com', preferred_username: 'ut'};
+    const apps = [{id: 'app', name: 'App', href: '/app/'}];
     const profiles = [{id: 'profilename', name: 'Profile Label'}];
-    const after = checker(initial, validationProfilesReceivedAction(profiles));
+    const after = checker(initial, startupInfoReceivedAction(user, apps, profiles));
 
+    expect(after.user).toEqual(user);
+    expect(after.apps).toEqual(apps);
     expect(after.profiles).toEqual(profiles);
   });
 

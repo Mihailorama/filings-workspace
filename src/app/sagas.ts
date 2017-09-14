@@ -1,28 +1,33 @@
 
 import { Effect, delay } from 'redux-saga';
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { all, call, put, takeEvery } from 'redux-saga/effects';
 
-import { validationProfilesReceivedAction, validationProfilesFailedAction,
+import { startupInfoReceivedAction, startupInfoFailedAction,
   CHECKING_START, CheckingAction, checkingRequestedAction, checkingReceivedAction, checkingFailedAction } from './actions';
 import { apiFetchJson } from './api-fetch';
-import { Category, Filing, FilingVersion } from './models';
+import { User, App, Category, Filing, FilingVersion } from './models';
+import { USER, APPS, DOCUMENT_SERVICE_FILINGS, documentServiceCategories, documentServiceFilingVersion } from './urls';
 
 const POLL_MILLIS = 1000;
 
 /**
- * Fetch the validation profiles. Runs once when starting up.
+ * Fetch the information needed at startup. If this fails we cannot show the app.
  */
-export function* validationProfilesSaga(): IterableIterator<Effect> {
+export function* startupInfoSaga(): IterableIterator<Effect> {
   try {
-    const obj: Category = yield call(apiFetchJson, '/api/document-service/v1/categories/validation');
-    const { profiles } = obj;
+    const [user, category, apps]: [User, Category, App[]] = yield all([
+      call(apiFetchJson, USER),
+      call(apiFetchJson, documentServiceCategories('validation')),
+      call(apiFetchJson, APPS),
+    ]);
+    const { profiles } = category;
     if (!profiles) {
-      yield put(validationProfilesFailedAction('No profiles'));
+      yield put(startupInfoFailedAction('No profiles'));
       return;
     }
-    yield put(validationProfilesReceivedAction(profiles));
+    yield put(startupInfoReceivedAction(user, apps, profiles));
   } catch (res) {
-    yield put(validationProfilesFailedAction(res.message || res.statusText));
+    yield put(startupInfoFailedAction(res.message || res.statusText));
   }
 }
 
@@ -44,7 +49,7 @@ export function* checkingStartSaga(action: CheckingAction): IterableIterator<Eff
     body: formData,
   };
   try {
-    const filing: Filing = yield call(apiFetchJson, '/api/document-service/v1/filings/', init);
+    const filing: Filing = yield call(apiFetchJson, DOCUMENT_SERVICE_FILINGS, init);
     if (!filing.versions) {
       yield put(checkingFailedAction('Filing has no versions'));
       return;
@@ -54,7 +59,7 @@ export function* checkingStartSaga(action: CheckingAction): IterableIterator<Eff
     let version: FilingVersion = filing.versions[0];
     while (version.status !== 'DONE') {
       yield call(delay, POLL_MILLIS);
-      version = yield call(apiFetchJson, '/api/document-service/v1/filing-versions/' + version.id);
+      version = yield call(apiFetchJson, documentServiceFilingVersion(version));
     }
     const { validationStatus } = version;
     if (!validationStatus) {

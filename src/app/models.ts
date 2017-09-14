@@ -1,6 +1,42 @@
 // Interface declarations dfor the JSON objects returned by the API.
 
 /**
+ * Info about the currently logged-in user.
+ */
+
+export interface User {
+  sub: string;  // Subject indentifier: uniquely identifies this user.
+  email: string;
+  name?: string;
+  preferred_username?: string;
+}
+
+export const exampleUser: User = {
+  sub: 'ecdc0363-976d-4a42-a4cc-ae5d63f3a806',
+  name: 'Akira Knutson',
+  preferred_username: 'at',
+  email: 'at@example.com',
+};
+
+/**
+ * Information about other apps.
+ */
+export interface App {
+  id: string;
+  name: string;
+  href: string;
+  colour?: string;
+  iconHref?: string;  // Not SRC for reasons I am sure are excellent.
+  features?: string[];  // Optional features enabled in this app.
+}
+
+export const exampleApps: App[] = [
+  {id: 'beacon', name: 'Beacon', href: '/beacon/', colour: '#3c7c34', iconHref: '/img/logo-beacon.svg', features: []},
+  {id: 'account', name: 'Manage account', href: '/auth/account', colour: '#3A75C4', features: []},
+  {id: 'sms', name: 'Manage organisation', href: '/sms/', colour: '#3A75C4', features: []},
+];
+
+/**
  * One of the ways the backend might be asked to validate a document.
  */
 export interface Profile {

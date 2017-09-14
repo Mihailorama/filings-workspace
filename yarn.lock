@@ -220,6 +220,10 @@
     "@types/react" "*"
     "@types/webpack-env" "*"
 
+"@types/uri-templates@^0.1.28":
+  version "0.1.28"
+  resolved "https://artifacts.int.corefiling.com/api/npm/cfl-npm/@types/uri-templates/-/uri-templates-0.1.28.tgz#fa6d4b14eceafdca1489bf69ff4e1a40da1d7b9d"
+
 "@types/webpack-env@*":
   version "1.13.0"
   resolved "https://artifacts.int.corefiling.com/api/npm/cfl-npm/@types/webpack-env/-/webpack-env-1.13.0.tgz#3044381647e11ee973c5af2e925323930f691d80"
@@ -7341,6 +7345,10 @@ update-notifier@^2.0.0:
 upper-case@^1.0.3, upper-case@^1.1.1:
   version "1.1.3"
   resolved "https://artifacts.int.corefiling.com/api/npm/cfl-npm/upper-case/-/upper-case-1.1.3.tgz#f6b4501c2ec4cdd26ba78be7222961de77621598"
+
+uri-templates@^0.2.0:
+  version "0.2.0"
+  resolved "https://artifacts.int.corefiling.com/api/npm/cfl-npm/uri-templates/-/uri-templates-0.2.0.tgz#2b5784511cc909868731e9233c268097d10b499f"
 
 urix@^0.1.0:
   version "0.1.0"

@@ -1,6 +1,7 @@
 @import (reference) '../styles/defs';
 
 
+
 .ckr-ValidationForm {
   color: @ink;
   background-color: @paper;
@@ -9,8 +10,11 @@
 
   @media (min-width: (@form-wd)) {
     margin-top: @hunk;
-    margin-bottom: @gap;
     width: @form-wd;
+  }
+
+  @media (min-height: (@big-gap + @bar-ht + @form-ht + @hunk)) {
+    margin-top: @big-gap;
   }
 
   &-file {

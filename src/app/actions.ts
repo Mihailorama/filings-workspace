@@ -3,27 +3,29 @@
  */
 import { Action } from 'redux';
 
-import { Profile, ValidationParams, ValidationStatus } from './models';
+import { User, App, Profile, ValidationParams, ValidationStatus } from './models';
 
 // Actions for aquiring the list of profiles needed by the form.
 
-export const VALIDATION_PROFILES_RECEIVED = 'VALIDATION_PROFILES_RECEIVED';
-export const VALIDATION_PROFILES_FAILED = 'VALIDATION_PROFILES_FAILED';
+export const STARTUP_INFO_RECEIVED = 'STARTUP_INFO_RECEIVED';
+export const STARTUP_INFO_FAILED = 'STARTUP_INFO_FAILED';
 
-export interface ValidationProfilesReceivedAction extends Action {
+export interface StartupInfoReceivedAction extends Action {
+  user: User;
+  apps: App[];
   profiles: Profile[];
 }
 
-export function validationProfilesReceivedAction(profiles: Profile[]): ValidationProfilesReceivedAction {
-  return {type: VALIDATION_PROFILES_RECEIVED, profiles};
+export function startupInfoReceivedAction(user: User, apps: App[], profiles: Profile[]): StartupInfoReceivedAction {
+  return {type: STARTUP_INFO_RECEIVED, user, apps, profiles};
 }
 
-export interface ValidationProfilesFailedAction extends Action {
+export interface StartupInfoFailedAction extends Action {
   message: string;
 }
 
-export function validationProfilesFailedAction(message: string): ValidationProfilesFailedAction {
-  return {type: VALIDATION_PROFILES_FAILED, message};
+export function startupInfoFailedAction(message: string): StartupInfoFailedAction {
+  return {type: STARTUP_INFO_FAILED, message};
 }
 
 // Actions for performing the checking operation itself.

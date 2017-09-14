@@ -1,32 +1,37 @@
 import { delay } from 'redux-saga';
-import { call, put } from 'redux-saga/effects';
+import { all, call, put } from 'redux-saga/effects';
 
-import { validationProfilesReceivedAction, validationProfilesFailedAction,
+import { startupInfoReceivedAction, startupInfoFailedAction,
   checkingStartAction, checkingRequestedAction, checkingReceivedAction, checkingFailedAction } from '../actions';
 import { apiFetchJson } from '../api-fetch';
-import { ValidationParams, exampleCategory, exampleFiling, exampleFilingVersion } from '../models';
-import { validationProfilesSaga, checkingStartSaga } from '../sagas';
+import { ValidationParams, exampleUser, exampleApps, exampleCategory, exampleFiling, exampleFilingVersion } from '../models';
+import { startupInfoSaga, checkingStartSaga } from '../sagas';
 
-describe('validationProfilesSaga', () => {
-  it('calls getCategories(validation) and dispatches profiles', () => {
-    const saga = validationProfilesSaga();
+describe('startupInfoSaga', () => {
+  it('calls APIs in parallel and dispatches profiles', () => {
+    const saga = startupInfoSaga();
 
-    expect(saga.next().value).toEqual(call(apiFetchJson, '/api/document-service/v1/categories/validation'));
-    expect(saga.next(exampleCategory).value).toEqual(put(validationProfilesReceivedAction(exampleCategory.profiles)));
+    expect(saga.next().value).toEqual(all([
+      call(apiFetchJson, '/api/user'),
+      call(apiFetchJson, '/api/document-service/v1/categories/validation'),
+      call(apiFetchJson, '/api/apps'),
+    ]));
+    expect(saga.next([exampleUser, exampleCategory, exampleApps]).value)
+      .toEqual(put(startupInfoReceivedAction(exampleUser, exampleApps, exampleCategory.profiles)));
   });
 
   it('is sad if no profiles', () => {
-    const saga = validationProfilesSaga();
+    const saga = startupInfoSaga();
 
-    expect(saga.next().value).toEqual(call(apiFetchJson, '/api/document-service/v1/categories/validation'));
-    expect(saga.next({}).value).toEqual(put(validationProfilesFailedAction('No profiles')));
+    saga.next();
+    expect(saga.next([{}, {}]).value).toEqual(put(startupInfoFailedAction('No profiles')));
   });
 
   it('is sad if error fetching profiles', () => {
-    const saga = validationProfilesSaga();
+    const saga = startupInfoSaga();
 
-    expect(saga.next().value).toEqual(call(apiFetchJson, '/api/document-service/v1/categories/validation'));
-    expect(saga.throw && saga.throw({status: 403, statusText: 'LOLWAT'}).value).toEqual(put(validationProfilesFailedAction('LOLWAT')));
+    saga.next();
+    expect(saga.throw && saga.throw({status: 403, statusText: 'LOLWAT'}).value).toEqual(put(startupInfoFailedAction('LOLWAT')));
   });
 });
 
