@@ -15,17 +15,19 @@ export interface CheckerAppProps extends Props<CheckerApp> {
   phase?: CheckingPhase;
   profiles?: Profile[];
   status?: ValidationStatus;
+  error?: string;
   onSubmit?: (params: ValidationParams) => void;
 }
 
 export default class CheckerApp extends Component<CheckerAppProps> {
   render(): JSX.Element {
-    const { phase, profiles, status, onSubmit } = this.props;
+    const { phase, profiles, status, error, onSubmit } = this.props;
 
-    return <div className={classNames('ckr-CheckerApp', `ckr-CheckerApp-${phase}`, `ckr-CheckerApp-${status || 'loading'}`)}>
+    return <div className={classNames('ckr-CheckerApp', `ckr-CheckerApp-${phase}`)}>
       <AppBarContainer/>
-      <ValidationForm profiles={profiles} onSubmit={phase === 'form' ? onSubmit : undefined}/>
-      {phase !== 'form' && <ValidationResult status={status}/>}
+      <ValidationForm profiles={profiles} error={error} onSubmit={phase === 'form' ? onSubmit : undefined}/>
+      {(phase === 'uploading' || phase === 'checking' || phase === 'checking-failed' || phase === 'results')
+        && <ValidationResult status={status}/>}
       <ContactDetails/>
     </div>;
   }

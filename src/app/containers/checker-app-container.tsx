@@ -13,6 +13,7 @@ interface PropsFromState {
   phase?: CheckingPhase;
   profiles?: Profile[];
   status?: ValidationStatus;
+  message?: string;
 }
 
 interface PropsFromDispatch {
@@ -23,14 +24,14 @@ type CheckerAppContainerProps = OwnProps & PropsFromState & PropsFromDispatch;
 
 class CheckerAppContainer extends Component<CheckerAppContainerProps> {
   render(): JSX.Element {
-    const { phase, profiles, status, onCheckingStart } = this.props;
-    return <CheckerApp phase={phase} profiles={profiles} status={status} onSubmit={onCheckingStart}/>;
+    const { phase, profiles, status, message, onCheckingStart } = this.props;
+    return <CheckerApp phase={phase} profiles={profiles} status={status} error={message} onSubmit={onCheckingStart}/>;
   }
 }
 
 function propsFromState(state: CheckerState): PropsFromState {
-  const { phase, profiles, status } = state;
-  return { phase, profiles, status };
+  const { phase, profiles, status, message } = state;
+  return { phase, profiles, status, message };
 }
 
 const propsFromDispatch: MapDispatchToProps<PropsFromDispatch, {}> = {

@@ -53,8 +53,8 @@ function profiles(...labels: string[]): Profile[] {
 storiesOf('ValidationForm', module)
 .addDecorator(story => <div className='ckr-CheckerApp ckr-CheckerApp-form'>{story()}</div>)
 .add('No profiles', () => <ValidationForm onSubmit={action('submit')}/>)
-.add('One profile', () => <ValidationForm onSubmit={action('submit')} profiles={[profile('CRD IV 2.7.3')]}/>)
-.add('Many profiles', () => <ValidationForm onSubmit={action('submit')} profiles={profiles('CRD IV 2.7.3', 'Solvency III')}/>)
+.add('Profiles', () => <ValidationForm onSubmit={action('submit')} profiles={profiles('CRD IV 2.7.3', 'Solvency III')}/>)
+.add('Error', () => <ValidationForm profiles={[profile('CRD IV 2.7.3')]} error='Oh, dear'/>)
 ;
 
 storiesOf('ValidationResult', module)

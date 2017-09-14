@@ -30,9 +30,11 @@ export function startupInfoFailedAction(message: string): StartupInfoFailedActio
 
 // Actions for performing the checking operation itself.
 
-export const CHECKING_START = 'CHECKING_START';
-export const CHECKING_REQUESTED = 'CHECKING_REQUESTED';
-export const CHECKING_RECEIVED = 'CHECKING_RECEIVED';
+export const CHECKING_START = 'CHECKING_START';  // Sent by UI to request checking.
+export const UPLOAD_STARTED = 'UPLOAD_STARTED';  // from saga when upload begins
+export const CHECKING_STARTED = 'UPLOAD_COMPLETE';  // From saga when file is uploaded and checking begins
+export const UPLOAD_FAILED = 'UPLOAD_FAILED';  // From saga if uplaod fails.
+export const CHECKING_RECEIVED = 'CHECKING_RECEIVED';  // From saga when results ready at long last.
 export const CHECKING_FAILED = 'CHECKING_FAILED';
 
 export interface CheckingAction extends Action {
@@ -43,8 +45,20 @@ export function checkingStartAction(params: ValidationParams): CheckingAction {
   return {type: CHECKING_START, params};
 }
 
-export function checkingRequestedAction(params: ValidationParams): CheckingAction {
-  return {type: CHECKING_REQUESTED, params};
+export function uploadStartedAction(params: ValidationParams): CheckingAction {
+  return {type: UPLOAD_STARTED, params};
+}
+
+export function checkingStartedAction(): Action {
+  return {type: CHECKING_STARTED};
+}
+
+export interface UploadFailedAction extends Action {
+  message?: string;
+}
+
+export function uploadFailedAction(message?: string): UploadFailedAction {
+  return {type: UPLOAD_FAILED, message};
 }
 
 export interface CheckingReceivedAction extends Action {

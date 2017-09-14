@@ -1,5 +1,6 @@
 import { startupInfoReceivedAction,
-   checkingRequestedAction, checkingReceivedAction, checkingFailedAction } from '../actions';
+   uploadStartedAction, uploadFailedAction,
+   checkingStartedAction, checkingReceivedAction, checkingFailedAction } from '../actions';
 import { ValidationParams } from '../models';
 import { checker } from '../reducers';
 
@@ -28,20 +29,37 @@ describe('checker (reducer)', () => {
   });
 
   it('switches to results as soon as checking requested', () => {
-    const after = checker(initial, checkingRequestedAction(params));
+    const after = checker(initial, uploadStartedAction(params));
+
+    expect(after.phase).toBe('uploading');
+    expect(after.status).toBeFalsy();
+  });
+
+  it('switches to results as soon as checking requested', () => {
+    const after = checker(initial, uploadFailedAction('LOLWAT'));
+
+    expect(after.phase).toBe('uploading-failed');
+    expect(after.status).toBeFalsy();
+  });
+
+  it('switches to results as soon as checking requested', () => {
+    const after = checker(initial, checkingStartedAction());
 
     expect(after.phase).toBe('checking');
+    expect(after.status).toBeFalsy();
   });
 
   it('remembers validation status', () => {
     const after = checker(initial, checkingReceivedAction('OK'));
 
+    expect(after.phase).toBe('results');
     expect(after.status).toBe('OK');
   });
 
-  it('treats failing tpo getg status as fatal error', () => {
+  it('treats failing to get status after checking started as fatal error', () => {
     const after = checker(initial, checkingFailedAction('LOLWAT'));
 
+    expect(after.phase).toBe('checking-failed');
     expect(after.status).toBe('FATAL_ERROR');
   });
 });

@@ -4,12 +4,13 @@
 
 import { User, App, Profile, ValidationStatus } from './models';
 
-export type CheckingPhase = 'form' | 'checking';
+export type CheckingPhase = 'form' | 'uploading' | 'uploading-failed' | 'checking' | 'results' | 'checking-failed';
 
 export interface CheckerState {
   user?: User;
   apps?: App[];
-  phase: CheckingPhase;
   profiles?: Profile[];
+  phase: CheckingPhase;
   status?: ValidationStatus;
+  message?: string;  // May be defined if in failed phase.
 }

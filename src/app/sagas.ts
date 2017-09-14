@@ -3,7 +3,8 @@ import { Effect, delay } from 'redux-saga';
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 
 import { startupInfoReceivedAction, startupInfoFailedAction,
-  CHECKING_START, CheckingAction, checkingRequestedAction, checkingReceivedAction, checkingFailedAction } from './actions';
+  CHECKING_START, CheckingAction, uploadStartedAction, uploadFailedAction,
+  checkingStartedAction, checkingReceivedAction, checkingFailedAction } from './actions';
 import { apiFetchJson } from './api-fetch';
 import { User, App, Category, Filing, FilingVersion } from './models';
 import { USER, APPS, DOCUMENT_SERVICE_FILINGS, documentServiceCategories, documentServiceFilingVersion } from './urls';
@@ -36,7 +37,7 @@ export function* startupInfoSaga(): IterableIterator<Effect> {
  */
 export function* checkingStartSaga(action: CheckingAction): IterableIterator<Effect> {
   const { params } = action;
-  yield put(checkingRequestedAction(params));
+  yield put(uploadStartedAction(params));
 
   // Create the filing by uplaoding the file to the Document Service.
   const { profile, file } = params;
@@ -48,13 +49,22 @@ export function* checkingStartSaga(action: CheckingAction): IterableIterator<Eff
     method: 'POST',
     body: formData,
   };
-  try {
-    const filing: Filing = yield call(apiFetchJson, DOCUMENT_SERVICE_FILINGS, init);
-    if (!filing.versions) {
-      yield put(checkingFailedAction('Filing has no versions'));
-      return;
-    }
 
+  let filing: Filing;
+  try {
+    filing = yield call(apiFetchJson, DOCUMENT_SERVICE_FILINGS, init);
+  } catch (res) {
+    console.log(res);
+    yield put(uploadFailedAction(res.message || res.statusText || 'File error'));
+    return;
+  }
+  if (!filing.versions) {
+    yield put(uploadFailedAction('Filing has no versions'));
+    return;
+  }
+  yield put(checkingStartedAction());
+
+  try {
     // Poll for validation status.
     let version: FilingVersion = filing.versions[0];
     while (version.status !== 'DONE') {
@@ -69,7 +79,7 @@ export function* checkingStartSaga(action: CheckingAction): IterableIterator<Eff
 
     yield put(checkingReceivedAction(validationStatus));
   } catch (res) {
-    yield put(checkingFailedAction(res.message || res.statusText));
+    yield put(checkingFailedAction(res.message || res.statusText || `Status: ${res.status}`));
   }
 }
 
