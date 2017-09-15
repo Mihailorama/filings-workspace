@@ -1,17 +1,18 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
-import { ReactNode } from 'react';
+import { ReactNode, CSSProperties } from 'react';
 
 import './form.less';
 
 interface FormProps {
   className?: string;
+  style?: CSSProperties;
   onSubmit?: () => void;
   children: ReactNode;
 }
 
-export function Form({className, onSubmit, children}: FormProps): JSX.Element {
-  return <form className={classNames('ckr-Form', className)}
+export function Form({className, style, onSubmit, children}: FormProps): JSX.Element {
+  return <form className={classNames('ckr-Form', className)} style={style}
     onSubmit={onSubmit ? e => { e.preventDefault(); onSubmit(); } : undefined}
   >{children}</form>;
 }
