@@ -1,4 +1,4 @@
-# CoreFiling Labs Boolean Validator
+# CoreFiling Labs Pass/Fail Validator
 
 A simple demonstrator of using the CoreFiling Platform to valdiate a document.
 
@@ -51,7 +51,7 @@ yarn test-debug
 You need `HOST` to be a name for your development machine for which SSL certificates are available.
 
 ```bash
-npm config set @cfl/boolean-validator:devserver-host $HOST
+npm config set @cfl/passfail-validator:devserver-host $HOST
 npm start
 ```
 
@@ -72,5 +72,5 @@ yarn compile
 ## Package
 
 ```bash
-yarn pack # Produces cfl-boolean-validator-$VERSION.tgz
+yarn pack # Produces cfl-passfail-validator-$VERSION.tgz
 ```

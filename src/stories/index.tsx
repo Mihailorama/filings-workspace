@@ -76,7 +76,7 @@ storiesOf('ContactDetails', module)
 ;
 
 const app = (name: string): App => {
-  const id = name.toLowerCase().split(' ').join('');
+  const id = name.toLowerCase().replace(/[^a-z]/g, '');
   return {
     id,
     name,
@@ -90,14 +90,14 @@ const sub = 'uuid-of-user';
 
 storiesOf('AppBar', module)
 .addDecorator(story => <div style={{height: '400px', backgroundColor: '#DDD'}}>{story()}</div>)
-.add('Loading', () => <AppBar path='/booleanvalidator/'/>)
-.add('User with email only', () => <AppBar path='/booleanvalidator/'
-    apps={apps('Boolean Validator')}
+.add('Loading', () => <AppBar path='/passfailvalidator/'/>)
+.add('User with email only', () => <AppBar path='/passfailvalidator/'
+    apps={apps('Pass/Fail Validator')}
     user={{sub, email: 'b@example.com'}}/>)
-.add('User with name', () => <AppBar path='/booleanvalidator/'
-    apps={apps('Boolean Validator')}
+.add('User with name', () => <AppBar path='/passfailvalidator/'
+    apps={apps('Pass/Fail Validator')}
     user={{sub, name: 'Tamandani Pleško', email: 'tp@example.com'}}/>)
-.add('Multiple apps', () => <AppBar path='/booleanvalidator/'
-    apps={apps('Boolean Validator', 'Beacon', 'Full Beam', 'Manage Account')}
+.add('Multiple apps', () => <AppBar path='/passfailvalidator/'
+    apps={apps('Pass/Fail Validator', 'Beacon', 'Full Beam', 'Manage Account')}
     user={{sub, email: 'tp@example.com'}}/>)
 ;
