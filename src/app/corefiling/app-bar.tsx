@@ -7,7 +7,7 @@ import * as React from 'react';
 import { Component, Props } from 'react';
 
 import { User, App } from '../models';
-import { appHelp, AUTH_LOGOUT } from '../urls';
+import { AUTH_LOGOUT } from '../urls';
 import AppSymbol from './app-symbol';
 import CoreFilingLogo from './corefiling-logo';
 import NavMenu, { MenuItem } from './nav-menu';
@@ -30,10 +30,6 @@ export default class AppBar extends Component<AppBarProps> {
       const appItems = apps.filter(x => x.href !== path).map(x => ({label: x.name || x.id, href: x.href}));
       if (appItems.length > 0) {
         itemGroups.push(appItems);
-      }
-      const app = apps.find(x => x.href === path);
-      if (app) {
-        itemGroups.push([{label: 'User’s Guide', href: appHelp(app)}]);
       }
     }
     itemGroups.push([{label: 'Log out', href: AUTH_LOGOUT}]);
