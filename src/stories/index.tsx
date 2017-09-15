@@ -5,6 +5,7 @@ import { action } from '@storybook/addon-actions';
 
 import { App, Profile } from '../app/models';
 import AppBar from '../app/corefiling/app-bar';
+import { Form, FormItem, FormActionList, FormAction } from '../app/components/form';
 import FileReference from '../app/components/file-reference';
 import ValidationForm from '../app/components/validation-form';
 import ValidationResult from '../app/components/validation-result';
@@ -29,6 +30,17 @@ storiesOf('FileReference', module)
   }
   return <FileReference file={new File([x], 'greet.zip', {type: 'application/xbrl+xml'})}/>;
 })
+;
+
+storiesOf('Form items', module)
+.addDecorator(story => <Form onSubmit={action('onSubmit')} style={{width: '400px'}}>{story()}</Form>)
+.add('Enabled button', () => <FormActionList><FormAction primary enabled>Fold</FormAction></FormActionList>)
+.add('Disabled button', () => <FormActionList><FormAction primary>Spindle</FormAction></FormActionList>)
+.add('Other button', () => <FormActionList><FormAction enabled>Mutilate</FormAction><FormAction>Escape</FormAction></FormActionList>)
+.add('Select', () => <FormItem>
+    <label>Flavour</label>
+    <select><option>Strawberry</option><option>Sump</option></select>
+  </FormItem>)
 ;
 
 // Some hackery for creating fake profiles.
@@ -71,8 +83,12 @@ storiesOf('ValidationResult', module)
 ;
 
 storiesOf('ContactDetails', module)
-.addDecorator(story => <div className='ckr-App'>{story()}</div>)
-.add('contact us', () => <ContactDetails/>)
+.add('Form', () => <div className='ckr-CheckerApp'><ContactDetails/></div>)
+.add('Results', () => <div className='ckr-CheckerApp ckr-CheckerApp-results' style={{background: '#2C5173', paddingTop: '96px'}}>
+  {/* <ValidationForm profiles={profiles('sock')}/>
+  <ValidationResult status='OK'/> */}
+  <ContactDetails/>
+</div>)
 ;
 
 const app = (name: string): App => {

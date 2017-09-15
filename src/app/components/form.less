@@ -18,28 +18,40 @@
   user-select: none;
   cursor: pointer;
 
-  &-primary {
-    color: contrast(@primary, #FFF, @ink);
-    background-color: @primary;
-    border-color: @primary2;
-  }
-
   &:hover,
   &:active {
     text-decoration: none;
-    // box-shadow: 0 3px 4px fade(#000, 50%), 2px 2px 6px fade(#000, 25%);
+    background-color: @btn-hover;
   }
 
-  &[disabled],
-  &-disabled {
+  &[disabled] {
     opacity: 0.5;
     cursor: not-allowed;
-    box-shadow: none;
 
     &:hover,
     &:active {
       text-decoration: none;
-      box-shadow: none;
+      background-color: @paper;
+    }
+  }
+
+  &-primary {
+    color: contrast(@primary, #FFF, @ink);
+    background-color: @primary;
+    border-color: @primary2;
+
+    &:hover,
+    &:active {
+      text-decoration: none;
+      color: contrast(@secondary, #FFF, @ink);
+      background-color: @secondary;
+    }
+
+    &[disabled]:hover,
+    &[disabled]:active {
+      color: contrast(@primary, #FFF, @ink);
+      background-color: @primary;
+      border-color: @primary2;
     }
   }
 }
@@ -97,4 +109,5 @@
 
 .ckr-FormAction {
   .ckr-Button;
+  margin-left: @gap;
 }
