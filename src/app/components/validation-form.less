@@ -6,14 +6,14 @@
 
   @media (min-width: (@form-wd)) {
     margin-top: @hunk;
+    box-sizing: border-box;
     width: @form-wd;
+    height: @form-ht;
   }
 
   @media (min-height: (@big-gap + @bar-ht + @form-ht + @hunk)) {
     margin-top: @big-gap;
-    min-height: @form-ht;
   }
-
 }
 
 .ckr-ValidationForm {
@@ -94,7 +94,7 @@
   &-loading {
     .form-boxiness();
 
-    line-height: @form-ht;
+    line-height: (0.75 * @form-ht);
     text-align: center;
     color: @muted;
     background-color: @paper;
