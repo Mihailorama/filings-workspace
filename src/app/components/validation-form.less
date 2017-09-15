@@ -1,12 +1,8 @@
 @import (reference) '../styles/defs';
 
 
-
-.ckr-ValidationForm {
-  color: @ink;
-  background-color: @paper;
+.form-boxiness() {
   border-radius: 3px;
-  box-shadow: 0 3px 20px 0 rgba(0,0,0,0.23);
 
   @media (min-width: (@form-wd)) {
     margin-top: @hunk;
@@ -15,7 +11,17 @@
 
   @media (min-height: (@big-gap + @bar-ht + @form-ht + @hunk)) {
     margin-top: @big-gap;
+    min-height: @form-ht;
   }
+
+}
+
+.ckr-ValidationForm {
+  .form-boxiness();
+
+  color: @ink;
+  background-color: @paper;
+  box-shadow: 0 3px 20px 0 rgba(0,0,0,0.23);
 
   &-file {
     margin: @gap;
@@ -86,7 +92,11 @@
   }
 
   &-loading {
+    .form-boxiness();
+
+    line-height: @form-ht;
     text-align: center;
-    margin: @hunk @gap;
+    color: @muted;
+    background-color: @paper;
   }
 }
