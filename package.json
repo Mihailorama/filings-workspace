@@ -1,5 +1,5 @@
 {
-  "name": "@cfl/boolean-validator",
+  "name": "@cfl/passfail-validator",
   "version": "0.1.0-local",
   "cfl": {
     "group": {
