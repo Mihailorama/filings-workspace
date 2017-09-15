@@ -31,7 +31,7 @@ let config = {
     extensions: ['.tsx', '.ts', '.js', '.less', '.css', '.json'],
   },
   output: {
-    publicPath: '/',
+    publicPath: '',
     path: buildPath,
     filename: '[name].[hash].js'
   },
