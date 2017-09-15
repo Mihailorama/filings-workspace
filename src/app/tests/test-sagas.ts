@@ -25,14 +25,16 @@ describe('startupInfoSaga', () => {
     const saga = startupInfoSaga();
 
     saga.next();
-    expect(saga.next([{}, {}]).value).toEqual(put(startupInfoFailedAction('No profiles')));
+    expect(saga.next([{}, {}]).value)
+    .toEqual(put(startupInfoFailedAction(jasmine.stringMatching(/No profiles/) as any)));
   });
 
   it('is sad if error fetching profiles', () => {
     const saga = startupInfoSaga();
 
     saga.next();
-    expect(saga.throw && saga.throw({status: 403, statusText: 'LOLWAT'}).value).toEqual(put(startupInfoFailedAction('LOLWAT')));
+    expect(saga.throw && saga.throw({status: 403, statusText: 'LOLWAT'}).value)
+    .toEqual(put(startupInfoFailedAction(jasmine.stringMatching(/LOLWAT/) as any)));
   });
 });
 
@@ -73,7 +75,8 @@ describe('checkingStartSaga', () => {
 
     saga.next(); saga.next();  // First few steps as above.
 
-    expect(saga.throw && saga.throw(new Error('LOLWAT')).value).toEqual(put(uploadFailedAction('LOLWAT')));
+    expect(saga.throw && saga.throw(new Error('LOLWAT')).value)
+    .toEqual(put(uploadFailedAction(jasmine.stringMatching(/LOLWAT/) as any)));
   });
 
   it('dispatches FAILED if polling fails', () => {
@@ -89,6 +92,7 @@ describe('checkingStartSaga', () => {
 
     saga.next(); saga.next(); saga.next(exampleFiling); saga.next();  // First few steps as above.
 
-    expect(saga.throw && saga.throw({status: 400, statusText: 'Nope.'}).value).toEqual(put(checkingFailedAction('Nope.')));
+    expect(saga.throw && saga.throw({status: 400, statusText: 'Nope.'}).value)
+    .toEqual(put(checkingFailedAction(jasmine.stringMatching(/Nope./) as any)));
   });
 });

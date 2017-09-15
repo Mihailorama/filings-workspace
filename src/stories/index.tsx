@@ -52,9 +52,10 @@ function profiles(...labels: string[]): Profile[] {
 
 storiesOf('ValidationForm', module)
 .addDecorator(story => <div className='ckr-CheckerApp ckr-CheckerApp-form'>{story()}</div>)
-.add('No profiles', () => <ValidationForm onSubmit={action('submit')}/>)
-.add('Profiles', () => <ValidationForm onSubmit={action('submit')} profiles={profiles('CRD IV 2.7.3', 'Solvency III')}/>)
-.add('Error', () => <ValidationForm profiles={[profile('CRD IV 2.7.3')]} error='Oh, dear'/>)
+.add('Loading', () => <ValidationForm onSubmit={action('submit')}/>)
+.add('Startup failed', () => <ValidationForm error='Startup failed (401).'/>)
+.add('Form', () => <ValidationForm onSubmit={action('submit')} profiles={profiles('CRD IV 2.7.3', 'Solvency III')}/>)
+.add('Upload error', () => <ValidationForm profiles={[profile('CRD IV 2.7.3')]} error='File error (404).'/>)
 ;
 
 storiesOf('ValidationResult', module)

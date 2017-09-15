@@ -23,7 +23,7 @@ let isLoggedIn = true;
 
 const mergedConfig = merge.smart(mainConfig, {
   output: {
-    publicPath: `${baseUrl}/boolean-validator/static/`,
+    publicPath: `${baseUrl}/booleanvalidator/static/`,
   },
   devtool: 'inline-source-map',
   watch: true,
@@ -81,6 +81,7 @@ const mergedConfig = merge.smart(mainConfig, {
       });
       app.get('/api/apps', (req, res) => {
         res.json([
+          {"id":"booleanvalidator","name":"Voolean Valdiator","href":"/booleanvalidator/","colour":"#69BEAB","iconHref":"/img/logo-beacon.svg","features":[]},
           {"id":"beacon","name":"Beacon","href":"/beacon/","colour":"#3c7c34","iconHref":"/img/logo-beacon.svg","features":[]},
           {"id":"account","name":"Manage account","href":"/auth/account","colour":"#3A75C4","features":[]},
           {"id":"sms","name":"Manage organisation","href":"/sms/","colour":"#3A75C4","features":[]},
