@@ -16,8 +16,11 @@ import '../app/components/checker-app.less';
 storiesOf('FileReference', module)
 .addDecorator(story => <div style={{margin: '1em auto', maxWidth: '400px'}}>{story()}</div>)
 .add('No file', () => <FileReference/>)
-.add('XML file', () => <FileReference file={new File(['CONTENT'], 'greet.xml', {type: 'application/xml'})}/>)
-.add('ZIP file', () => <FileReference file={new File(['CONTENT'], 'greet.zip', {type: 'application/zip'})}/>)
+.add('XML file', () => <FileReference file={new File(['CONTENT'], 'Best Soufflé Company 2017.xml', {type: 'application/xml'})}/>)
+.add('Longer name', () => <FileReference file={new File(
+  ['CONTENT'],
+  'United Frog Hunters Group (Holdings) Ltd annual accounts FINAL rev 4.zip',
+)}/>)
 .add('Larger', () => {
   let x = 'CONTENT';
   const iterations = 14;
