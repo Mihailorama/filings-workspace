@@ -1,4 +1,4 @@
-// import * as cookie from 'cookie';
+import * as cookie from 'cookie';
 
 /**
  * Wrapper around the `fetch` builtin to add authentication information.
@@ -11,7 +11,7 @@ export async function apiFetchJson<T>(url: RequestInfo, init: RequestInit = {}):
     ...init,
     headers: {
       ...init.headers,
-      // 'X-XSRF-TOKEN': getXsrfToken(),
+      'X-XSRF-TOKEN': getXsrfToken(),
     },
   });
   if (res.ok) {
@@ -20,6 +20,6 @@ export async function apiFetchJson<T>(url: RequestInfo, init: RequestInit = {}):
   throw res;
 }
 
-// function getXsrfToken(): string {
-//   return cookie.parse(document.cookie)['XSRF-TOKEN'];
-// }
+function getXsrfToken(): string | undefined {
+  return cookie.parse(document.cookie)['XSRF-TOKEN'];
+}
