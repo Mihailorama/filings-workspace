@@ -6,13 +6,15 @@ import * as cookie from 'cookie';
  * Should have same signature as `window.fetch` and return a promise of the decoded JSON object.
  */
 export async function apiFetchJson<T>(url: RequestInfo, init: RequestInit = {}): Promise<T> {
+  const headers = { ...init.headers };
+  const xsrfToken = getXsrfToken();
+  if (xsrfToken) {
+    headers['X-XSRF-TOKEN'] = xsrfToken;
+  }
   const res = await fetch(url, {
     credentials: 'same-origin',
     ...init,
-    headers: {
-      ...init.headers,
-      'X-XSRF-TOKEN': getXsrfToken(),
-    },
+    headers,
   });
   if (res.ok) {
     return res.json();
