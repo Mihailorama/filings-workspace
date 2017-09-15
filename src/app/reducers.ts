@@ -3,9 +3,9 @@
  */
 import { Action } from 'redux';
 
-import { STARTUP_INFO_RECEIVED, StartupInfoReceivedAction,
-  UPLOAD_STARTED, UPLOAD_FAILED, UploadFailedAction,
-  CHECKING_STARTED, CHECKING_FAILED, CheckingFailedAction,
+import { STARTUP_INFO_RECEIVED, StartupInfoReceivedAction, STARTUP_INFO_FAILED, FailedAction,
+  UPLOAD_STARTED, UPLOAD_FAILED,
+  CHECKING_STARTED, CHECKING_FAILED,
   CHECKING_RECEIVED, CheckingReceivedAction } from './actions';
 import { CheckerState } from './state';
 
@@ -15,6 +15,11 @@ export function checker(state: CheckerState | undefined, action: Action): Checke
   }
 
   switch (action.type) {
+    case STARTUP_INFO_FAILED:
+      {
+        const { message } = action as FailedAction;
+        return { ...state, phase: 'startup-failed', message };
+      }
     case STARTUP_INFO_RECEIVED:
       {
         const { user, apps, profiles } = action as StartupInfoReceivedAction;
@@ -24,14 +29,14 @@ export function checker(state: CheckerState | undefined, action: Action): Checke
       return { ...state, phase: 'uploading', status: undefined };
     case UPLOAD_FAILED:
       {
-        const { message } = action as UploadFailedAction;
+        const { message } = action as FailedAction;
         return { ...state, phase: 'uploading-failed', status: undefined, message };
       }
     case CHECKING_STARTED:
       return { ...state, phase: 'checking', status: undefined };
     case CHECKING_FAILED:
       {
-        const { message } = action as CheckingFailedAction;
+        const { message } = action as FailedAction;
         return { ...state, phase: 'checking-failed', status: 'FATAL_ERROR', message };
       }
     case CHECKING_RECEIVED:

@@ -44,7 +44,7 @@ export default class ValidationForm extends Component<ValidationFormProps, Valid
 
     if (!profiles) {
       return <div  className='ckr-ValidationForm-loading'>
-          <span>Loading&thinsp;…</span>
+          <span>{error || 'Loading\u2009…'}</span>
         </div>;
     }
 

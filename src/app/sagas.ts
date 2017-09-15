@@ -22,13 +22,13 @@ export function* startupInfoSaga(): IterableIterator<Effect> {
       call(apiFetchJson, APPS),
     ]);
     const { profiles } = category;
-    if (!profiles) {
-      yield put(startupInfoFailedAction('No profiles'));
+    if (!profiles || profiles.length === 0) {
+      yield put(startupInfoFailedAction('Startup failed (No profiles)'));
       return;
     }
     yield put(startupInfoReceivedAction(user, apps, profiles));
   } catch (res) {
-    yield put(startupInfoFailedAction(res.message || res.statusText));
+    yield put(startupInfoFailedAction(`Startup failed (${res.message || res.statusText || res.status}).`));
   }
 }
 
@@ -55,7 +55,7 @@ export function* checkingStartSaga(action: CheckingAction): IterableIterator<Eff
     filing = yield call(apiFetchJson, DOCUMENT_SERVICE_FILINGS, init);
   } catch (res) {
     console.log(res);
-    yield put(uploadFailedAction(res.message || res.statusText || 'File error'));
+    yield put(uploadFailedAction(`File error (${res.message || res.statusText || res.status}).`));
     return;
   }
   if (!filing.versions) {

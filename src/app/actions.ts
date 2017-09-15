@@ -20,11 +20,11 @@ export function startupInfoReceivedAction(user: User, apps: App[], profiles: Pro
   return {type: STARTUP_INFO_RECEIVED, user, apps, profiles};
 }
 
-export interface StartupInfoFailedAction extends Action {
-  message: string;
+export interface FailedAction extends Action {
+  message?: string;
 }
 
-export function startupInfoFailedAction(message: string): StartupInfoFailedAction {
+export function startupInfoFailedAction(message: string): FailedAction {
   return {type: STARTUP_INFO_FAILED, message};
 }
 
@@ -53,11 +53,7 @@ export function checkingStartedAction(): Action {
   return {type: CHECKING_STARTED};
 }
 
-export interface UploadFailedAction extends Action {
-  message?: string;
-}
-
-export function uploadFailedAction(message?: string): UploadFailedAction {
+export function uploadFailedAction(message?: string): FailedAction {
   return {type: UPLOAD_FAILED, message};
 }
 
@@ -69,10 +65,6 @@ export function checkingReceivedAction(status: ValidationStatus): CheckingReceiv
   return {type: CHECKING_RECEIVED, status};
 }
 
-export interface CheckingFailedAction extends Action {
-  message: string;
-}
-
-export function checkingFailedAction(message: string): CheckingFailedAction {
+export function checkingFailedAction(message: string): FailedAction {
   return {type: CHECKING_FAILED, message};
 }
