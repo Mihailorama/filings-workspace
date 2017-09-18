@@ -14,7 +14,6 @@
  *  limitations under the License.
  */
 
-
 import * as uriTemplates from 'uri-templates';
 
 import { App, FilingVersion } from './models';
