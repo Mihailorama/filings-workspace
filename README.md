@@ -2,6 +2,23 @@
 
 A simple demonstrator of using the CoreFiling Platform to valdiate a document.
 
+It starts by using the CoreFiling Platform API to request a list of validation
+profiles, then presents a form for choosing one and uplaoding a file. it submits this
+to the Document Service and polls for the validation status.
+
+
+## Licence
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this software except in compliance with the License.
+You may obtain a copy of the License at <http://www.apache.org/licenses/LICENSE-2.0>.
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
 
 ## Stack
 
@@ -13,7 +30,7 @@ A simple demonstrator of using the CoreFiling Platform to valdiate a document.
 
 ## Development prerequisites
 
-Install node@>=6.0.0, npm@>=4.0.0 and yarn@>=0.21.0
+Install node@>=6.0.0, npm@>=4.0.0 and yarn@>=1.0.0
 
 ```bash
 yarn install
@@ -59,7 +76,7 @@ Then open `https://$HOST:9091/`
 
 ### SSL
 
-The dev server uses HTTPS, with certificates checked in to `.dev/`. When these expire, they will need to be replaced by the [latest ones](https://wiki.int.corefiling.com/cfl/CflDotIo).
+The dev server uses HTTPS, with certificates copied in to `.dev/`.
 
 
 ## Build
