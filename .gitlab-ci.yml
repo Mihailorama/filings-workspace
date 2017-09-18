@@ -21,12 +21,15 @@ cache:
 
 .template_node: &template_node
   <<: *template_docker_privileged
-  image: artifacts.int.corefiling.com:5000/nimbus-tools/build-npm-package:0.6.0
+  image: artifacts.int.corefiling.com:5000/nimbus-tools/build-npm-package:0.7.0
 
 .template_kube_deploy: &template_kube_deploy
   <<: *template_docker
-  image: artifacts.int.corefiling.com:5000/pdds/kube-deploy:0.2
+  image: artifacts.int.corefiling.com:5000/pdds/kube-deploy:0.8.1
 
+.template_build_npm: &template_build_npm
+  <<: *template_docker_privileged
+  image: artifacts.int.corefiling.com:5000/nimbus-tools/build-npm-package:0.7.0
 
 # Build stage
 ## Templates
@@ -67,9 +70,8 @@ test:karma: *template_npm_script
 
 # Publish stage
 publish:
-  <<: *template_docker_privileged
+  <<: *template_build_npm
   stage: publish
-  image: artifacts.int.corefiling.com:5000/nimbus-tools/build-npm-package:0.6.0
   dependencies:
     - compile:webpack
   variables:
@@ -79,34 +81,29 @@ publish:
 
 
 # Deploy stage
-.template_deploy: &template_deploy
-  <<: *template_kube_deploy
+deploy:
   stage: deploy
   dependencies:
     - build:version
-    - publish
+  #   - publish
+  environment:
+    name: staging
+    url: https://platform.cfl.io
+  variables:
+    TILLER_NAMESPACE: platform  # Internal namespace we use for apps staging
+    HELM_CHART: $CI_PROJECT_NAME
   before_script:
-    - export NAMESPACE="$CI_PROJECT_NAMESPACE-$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG"
-    - export TILLER_NAMESPACE="$NAMESPACE"
-    - /kube/init $KUBE_AUTH_TOKEN $NAMESPACE
-
-deploy:
-  <<: *template_deploy
-  environment:
-    name: $CI_BUILD_REF_NAME
-    url: https://$CI_PROJECT_NAMESPACE-$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG.kube.int.corefiling.com
-    on_stop: deploy:clean
+    - export IMAGE_TAG=`cat build.version`
+    - echo "IMAGE_TAG=$IMAGE_TAG"
+    - /kube/init $KUBE_AUTH_TOKEN $TILLER_NAMESPACE
   script:
-    - echo "Deploying https://$NAMESPACE.kube.int.corefiling.com"
-    - helm upgrade --install --set namespace=$NAMESPACE,imageTag=`cat build.version` $CI_PROJECT_NAME ./deploy --namespace=$NAMESPACE
-
-deploy:clean:
-  <<: *template_deploy
-  when: manual
-  environment:
-    name: $CI_BUILD_REF_NAME
-    url: https://$CI_PROJECT_NAMESPACE-$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG.kube.int.corefiling.com
-    action: stop
-  script:
-    - echo "Pruning https://$NAMESPACE.kube.int.corefiling.com"
-    - kube-auth namespace delete $NAMESPACE
+    - echo "Deploying $HELM_CHART with image $IMAGE_TAG"
+    - cd charts
+    - helm dep up $HELM_CHART
+    - helm upgrade --install
+      --set imageTag=$IMAGE_TAG
+      --namespace=$TILLER_NAMESPACE
+      $HELM_CHART $HELM_CHART
+    - /kube/checkRunning
+  only:
+    - develop@labs/passfail-validator # Need to watch out for if generating template

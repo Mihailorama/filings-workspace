@@ -1,9 +1,7 @@
-namespace: labs
-
 imageRegistry: artifacts.int.corefiling.com:5000
 imageRepository: labs
 imageName: passfail-validator
-imageTag: 0.1.0-local
+imageTag: 0.1.0
 
 # Pull Policy
 # pullPolicy: IfNotPresent
