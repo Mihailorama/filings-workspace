@@ -17,17 +17,9 @@
 @import (reference) '../styles/defs.less';
 
 .ckr-ValidationResult {
-  position: fixed;
-  left: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-
-  color: contrast(@brand, #FFF, @ink);
-  background-color: fade(#30577A, 94%);
 
   &-loading {
     &:before {
@@ -50,7 +42,7 @@
 
     font-size: 36px;
     font-weight: 100;
-    line-height: fraction(44 / 36);
+    line-height: percentage(44 / 36);
 
     @media (min-height: (@bigger-gap + @status-ht + @hunk)) {
       margin-top: (@bigger-gap);
