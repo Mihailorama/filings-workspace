@@ -75,6 +75,7 @@ export default class ValidationForm extends Component<ValidationFormProps, Valid
               className='ckr-ValidationForm-dropzone'
               activeClassName='ckr-ValidationForm-dropzoneActive'
               multiple={false}
+              aria-label='File to validate'
               onDrop={(files: File[]) => this.onChange({file: files[0]})}
             >
               <div>
@@ -90,8 +91,8 @@ export default class ValidationForm extends Component<ValidationFormProps, Valid
         }
       </FormItem>
       <FormItem>
-        <label>Validation profile</label>
-        <select disabled={!onSubmit} onChange={e => this.onChange({profile: e.currentTarget.value})}>
+        <label htmlFor='profile-pickr'>Validation profile</label>
+        <select id='profile-pickr' disabled={!onSubmit} onChange={e => this.onChange({profile: e.currentTarget.value})}>
           {profiles.map(({id, name}) => <option key={id} value={id}>{name}</option>)}
         </select>
       </FormItem>
