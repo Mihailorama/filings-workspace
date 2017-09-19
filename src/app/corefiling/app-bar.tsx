@@ -62,7 +62,7 @@ export default class AppBar extends Component<AppBarProps> {
         <ul className='ckr-AppBar-breadcrumbNav'>
           <li><a href={path} className='ckr-AppBar-breadcrumbLink'>Home</a></li>
         </ul>
-        {user && <span className='ckr-AppBar-userName'>{user.name || user.preferred_username || user.email}</span>}
+        {user && <span className='ckr-AppBar-userName'>{user.email}</span>}
         <NavMenu itemGroups={itemGroups}/>
       </nav>
     </header>;
