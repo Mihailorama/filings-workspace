@@ -90,8 +90,8 @@ export default class ValidationForm extends Component<ValidationFormProps, Valid
         }
       </FormItem>
       <FormItem>
-        <label>Validation profile</label>
-        <select disabled={!onSubmit} onChange={e => this.onChange({profile: e.currentTarget.value})}>
+        <label htmlFor='profile-pickr'>Validation profile</label>
+        <select id='profile-pickr' disabled={!onSubmit} onChange={e => this.onChange({profile: e.currentTarget.value})}>
           {profiles.map(({id, name}) => <option key={id} value={id}>{name}</option>)}
         </select>
       </FormItem>
