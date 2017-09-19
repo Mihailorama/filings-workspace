@@ -69,7 +69,7 @@ test:karma: *template_npm_script
 
 
 # Publish stage
-publish:
+publish:npm:
   <<: *template_build_npm
   stage: publish
   dependencies:
@@ -79,31 +79,12 @@ publish:
   script:
     - time /app/scripts/build.py
 
-
-# Deploy stage
-deploy:
-  stage: deploy
-  dependencies:
-    - build:version
-  #   - publish
-  environment:
-    name: staging
-    url: https://platform.cfl.io
-  variables:
-    TILLER_NAMESPACE: platform  # Internal namespace we use for apps staging
-    HELM_CHART: $CI_PROJECT_NAME
-  before_script:
-    - export IMAGE_TAG=`cat build.version`
-    - echo "IMAGE_TAG=$IMAGE_TAG"
-    - /kube/init $KUBE_AUTH_TOKEN $TILLER_NAMESPACE
-  script:
-    - echo "Deploying $HELM_CHART with image $IMAGE_TAG"
-    - cd charts
-    - helm dep up $HELM_CHART
-    - helm upgrade --install
-      --set imageTag=$IMAGE_TAG
-      --namespace=$TILLER_NAMESPACE
-      $HELM_CHART $HELM_CHART
-    - /kube/checkRunning
-  only:
-    - develop@labs/passfail-validator # Need to watch out for if generating template
+publish:chart:
+  <<: *template_kube_deploy
+  stage: publish
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - build.version
+      - charts/*.tgz
+  script: tools/build.sh
