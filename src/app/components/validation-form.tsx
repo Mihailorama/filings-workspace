@@ -75,6 +75,7 @@ export default class ValidationForm extends Component<ValidationFormProps, Valid
               className='ckr-ValidationForm-dropzone'
               activeClassName='ckr-ValidationForm-dropzoneActive'
               multiple={false}
+              aria-label='File to validate'
               onDrop={(files: File[]) => this.onChange({file: files[0]})}
             >
               <div>
