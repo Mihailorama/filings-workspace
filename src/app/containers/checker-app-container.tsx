@@ -18,7 +18,7 @@ import * as React from 'react';
 import { Component, Props } from 'react';
 import { connect, MapDispatchToProps } from 'react-redux';
 
-import { checkingStartAction } from '../actions';
+import { checkingStartAction, resultsDismissAction } from '../actions';
 import { Profile, ValidationStatus } from '../models';
 import { CheckingPhase, CheckerState } from '../state';
 import CheckerApp from '../components/checker-app';
@@ -34,14 +34,16 @@ interface PropsFromState {
 
 interface PropsFromDispatch {
   onCheckingStart?: typeof checkingStartAction;
+  onResultsDismiss?: typeof resultsDismissAction;
 }
 
 type CheckerAppContainerProps = OwnProps & PropsFromState & PropsFromDispatch;
 
 class CheckerAppContainer extends Component<CheckerAppContainerProps> {
   render(): JSX.Element {
-    const { phase, profiles, status, message, onCheckingStart } = this.props;
-    return <CheckerApp phase={phase} profiles={profiles} status={status} error={message} onSubmit={onCheckingStart}/>;
+    const { phase, profiles, status, message, onCheckingStart, onResultsDismiss } = this.props;
+    return <CheckerApp phase={phase} profiles={profiles} status={status} error={message}
+      onSubmit={onCheckingStart} onResultsDismiss={onResultsDismiss} />;
   }
 }
 
@@ -52,6 +54,7 @@ function propsFromState(state: CheckerState): PropsFromState {
 
 const propsFromDispatch: MapDispatchToProps<PropsFromDispatch, {}> = {
   onCheckingStart: checkingStartAction,
+  onResultsDismiss: resultsDismissAction,
 };
 
 export default connect(propsFromState, propsFromDispatch)(CheckerAppContainer);

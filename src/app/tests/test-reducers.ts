@@ -15,8 +15,9 @@
  */
 
 import { startupInfoReceivedAction,
-   uploadStartedAction, uploadFailedAction,
-   checkingStartedAction, checkingReceivedAction, checkingFailedAction } from '../actions';
+  uploadStartedAction, uploadFailedAction,
+  checkingStartedAction, checkingReceivedAction, checkingFailedAction,
+  resultsDismissAction } from '../actions';
 import { ValidationParams } from '../models';
 import { checker } from '../reducers';
 
@@ -77,5 +78,23 @@ describe('checker (reducer)', () => {
 
     expect(after.phase).toBe('checking-failed');
     expect(after.status).toBe('FATAL_ERROR');
+  });
+
+  it('is ready for a new game after user dismisses results', () => {
+    const before = checker(initial, checkingReceivedAction('OK'));
+
+    const after = checker(before, resultsDismissAction());
+
+    expect(after.phase).toBe('form');
+    expect(after.status).toBeUndefined();
+  });
+
+  it('is ready for a new game after user dismisses error', () => {
+    const before = checker(initial, checkingFailedAction('LOLWAT'));
+
+    const after = checker(before, resultsDismissAction());
+
+    expect(after.phase).toBe('form');
+    expect(after.message).toBeUndefined();
   });
 });
