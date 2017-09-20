@@ -20,7 +20,7 @@ cache:
     - docker-privileged
 
 .template_node: &template_node
-  <<: *template_docker_privileged
+  <<: *template_docker
   image: artifacts.int.corefiling.com:5000/nimbus-tools/build-npm-package:0.7.0
 
 .template_kube_deploy: &template_kube_deploy
