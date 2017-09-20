@@ -20,7 +20,8 @@
 
 import { User, App, Profile, ValidationStatus } from './models';
 
-export type CheckingPhase = 'startup-failed' | 'form' | 'uploading' | 'uploading-failed' | 'checking' | 'results' | 'checking-failed';
+export type CheckingPhase = 'startup' | 'startup-failed' | 'form' |
+  'uploading' | 'uploading-failed' | 'checking' | 'results' | 'checking-failed';
 
 export interface CheckerState {
   user?: User;

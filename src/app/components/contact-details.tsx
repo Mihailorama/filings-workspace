@@ -14,12 +14,14 @@
  *  limitations under the License.
  */
 
+import * as classNames from 'classnames';
 import * as React from 'react';
 
 import './contact-details.less';
 
-export default function ContactDetails({}): JSX.Element {
-  return <a className='ckr-ContactDetails' href='https://www.corefiling.com/standing/contactus/' target='_blank'>
+export default function ContactDetails({className}: {className?: string}): JSX.Element {
+  return <a className={classNames('ckr-ContactDetails', className)}
+      href='https://www.corefiling.com/standing/contactus/' target='_blank'>
     <b className='ckr-Link'>Contact us</b> to find out more!
   </a>;
 }

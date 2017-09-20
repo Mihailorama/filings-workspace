@@ -24,17 +24,21 @@ import AppBar from './app-bar';
 
 export const HOME = `/${location.pathname.split('/')[1]}/`;
 
+interface OwnProps extends Props<AppBarContainer> {
+  className?: string;
+}
+
 interface PropsFromState {
   user?: User;
   apps?: App[];
 }
 
-type AppBarContainerProps = Props<AppBarContainer> & PropsFromState;
+type AppBarContainerProps = OwnProps & PropsFromState;
 
 class AppBarContainer extends Component<AppBarContainerProps> {
   render(): JSX.Element {
-    const { user, apps } = this.props;
-    return <AppBar path={HOME} user={user} apps={apps}/>;
+    const { className, user, apps } = this.props;
+    return <AppBar className={className} path={HOME} user={user} apps={apps}/>;
   }
 }
 

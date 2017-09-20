@@ -27,7 +27,7 @@ import { CheckerState } from './state';
 
 export function checker(state: CheckerState | undefined, action: Action): CheckerState {
   if (!state) {
-    return {phase: 'form'};
+    return {phase: 'startup'};
   }
 
   switch (action.type) {
@@ -39,7 +39,7 @@ export function checker(state: CheckerState | undefined, action: Action): Checke
     case STARTUP_INFO_RECEIVED:
       {
         const { user, apps, profiles } = action as StartupInfoReceivedAction;
-        return { ...state, user, apps, profiles };
+        return { ...state, phase: 'form', user, apps, profiles };
       }
     case UPLOAD_STARTED:
       return { ...state, phase: 'uploading', status: undefined };

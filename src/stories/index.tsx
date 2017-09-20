@@ -15,17 +15,21 @@
  */
 
 import * as React from 'react';
+import { Store } from 'redux';
+import { Provider } from 'react-redux';
 
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import { App, Profile } from '../app/models';
+import { CheckerState } from '../app/state';
 import AppBar from '../app/corefiling/app-bar';
 import { Form, FormItem, FormActionList, FormAction } from '../app/components/form';
 import FileReference from '../app/components/file-reference';
 import ValidationForm from '../app/components/validation-form';
 import ValidationResult from '../app/components/validation-result';
 import ContactDetails from '../app/components/contact-details';
+import CheckerAppContainer from '../app/containers/checker-app-container';
 
 import '../app/styles/style.less';
 import '../app/components/checker-app.less';
@@ -138,4 +142,38 @@ storiesOf('AppBar', module)
 .add('Multiple apps', () => <AppBar path='/passfailvalidator/'
     apps={apps('Pass/Fail Validator', 'Beacon', 'Full Beam', 'Manage Account')}
     user={{sub, email: 'tp@example.com'}}/>)
+;
+
+const etc: CheckerState = {
+  user: {sub, email: 'b@example.com'},
+  apps: apps('Pass/Fail Validator'),
+  profiles: profiles('Profile'),
+  phase: 'startup',
+};
+const funcs: Store<CheckerState> = {
+  getState: () => etc,
+  dispatch: action('dispatch') as any,
+  subscribe: action('subscribe') as any,
+  replaceReducer: action('replaceReducer') as any,
+};
+
+storiesOf('App layout', module)
+.add('Form', () => <Provider store={{
+    ...funcs,
+    getState: () => ({...etc,  phase: 'form'}),
+  }}>
+    <CheckerAppContainer/>
+  </Provider>)
+.add('Checking', () => <Provider store={{
+    ...funcs,
+    getState: () => ({...etc, phase: 'checking'}),
+  }}>
+    <CheckerAppContainer/>
+  </Provider>)
+.add('Result', () => <Provider store={{
+    ...funcs,
+    getState: () => ({...etc, profiles: profiles('Profile'), phase: 'results', status: 'OK'}),
+  }}>
+    <CheckerAppContainer/>
+  </Provider>)
 ;
