@@ -87,4 +87,6 @@ publish:chart:
     paths:
       - build.version
       - charts/*.tgz
-  script: tools/build.sh
+  script:
+    - tools/build.sh
+    - tools/publish.sh
