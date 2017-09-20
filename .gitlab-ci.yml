@@ -83,4 +83,4 @@ publish:chart:
   dependencies:
     - build:version
   script:
-    - ./publish.sh
+    - tools/publish.sh
