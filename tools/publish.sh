@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 if [ -z "$CI" ]; then
   echo "This script should only be run under CI."
