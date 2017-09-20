@@ -17,7 +17,7 @@
 @import (reference) '../styles/defs';
 
 
-@contact-ht: (@gap + @text-ln-ht * @text-sz + @gap2);
+@contact-ht: (@gap3 + @text-ln-ht * @text-sz + @gap2);
 @tall-enough: (@bar-ht + @gap3 + @form-ht + @contact-ht);
 
 .verticallyCentred(@extra-bar-ht: 0) {
@@ -36,7 +36,6 @@
     margin-top: (@extra-bar-ht + @big-gap);
   }
 }
-
 
 .ckr-CheckerApp {
   width: 100%;
@@ -89,12 +88,13 @@
 
     color: contrast(@brand, #FFF, @ink);
     background-color: fade(#30577A, 94%);
+  }
 
-    .ckr-ContactDetails {
-      margin-top: 40px;
+  &-resultContact {
+    .ckr-ContactDetails-link {
+      margin-top: @gap;
       width: 222px;
-      line-height: 42px;
-      z-index: 1;
+      padding: (0.5 * (42px - 17px)) @gap2;
 
       background: linear-gradient(221.35deg, #40A097 0%, rgba(126,164,157,0.69) 100%);
       border: 1px solid @primary;
@@ -106,3 +106,5 @@
     }
   }
 }
+
+
