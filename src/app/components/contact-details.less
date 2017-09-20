@@ -17,15 +17,24 @@
 @import (reference) '../styles/defs';
 
 .ckr-ContactDetails {
-  color: inherit;
-  text-decoration: inherit;
 
-  margin: @gap 0 @gap2;
+  margin: @gap3 0 @gap2;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
 
   font-size: 14px;
   font-weight: 300;
   font-style: italic;
   text-align: center;
+
+}
+
+.ckr-ContactDetails-link {
+  color: inherit;
+  text-decoration: inherit;
+
+  margin: 0 (0.5 * @gap);
 
   &:hover {
     .ckr-Link {
