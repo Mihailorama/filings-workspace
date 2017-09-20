@@ -22,7 +22,8 @@ import { Action } from 'redux';
 import { STARTUP_INFO_RECEIVED, StartupInfoReceivedAction, STARTUP_INFO_FAILED, FailedAction,
   UPLOAD_STARTED, UPLOAD_FAILED,
   CHECKING_STARTED, CHECKING_FAILED,
-  CHECKING_RECEIVED, CheckingReceivedAction } from './actions';
+  CHECKING_RECEIVED, CheckingReceivedAction,
+  RESULTS_DISMISS } from './actions';
 import { CheckerState } from './state';
 
 export function checker(state: CheckerState | undefined, action: Action): CheckerState {
@@ -60,6 +61,8 @@ export function checker(state: CheckerState | undefined, action: Action): Checke
         const { status } = action as CheckingReceivedAction;
         return { ...state, phase: 'results', status };
       }
+    case RESULTS_DISMISS:
+      return { ...state, phase: 'form', status: undefined, message: undefined };
     default:
       break;
   }

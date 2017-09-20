@@ -15,7 +15,7 @@
  */
 
 /**
- * Actions understood by the checker.
+ * Actions are used to pass info from the UI back to the state and sagas.
  */
 import { Action } from 'redux';
 
@@ -83,4 +83,12 @@ export function checkingReceivedAction(status: ValidationStatus): CheckingReceiv
 
 export function checkingFailedAction(message: string): FailedAction {
   return {type: CHECKING_FAILED, message};
+}
+
+// Action sent when user tires of the results.
+
+export const RESULTS_DISMISS = 'RESULTS_DISMISS';
+
+export function resultsDismissAction(): FailedAction {
+  return {type: RESULTS_DISMISS};
 }
