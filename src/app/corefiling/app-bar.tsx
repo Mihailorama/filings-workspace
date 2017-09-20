@@ -54,7 +54,7 @@ export default class AppBar extends Component<AppBarProps> {
       <div className='ckr-AppBar-brand'>
         <a href={path} className='ckr-AppBar-appLogo'>
           <AppSymbol className='ckr-AppBar-appSymbol'/>
-          Pass/Fail Validator
+          Quick XBRL Validator
         </a>
         <CoreFilingLogo className='ckr-AppBar-corefilingLogo'/>
       </div>

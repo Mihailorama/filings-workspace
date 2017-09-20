@@ -1,4 +1,4 @@
-# CoreFiling Labs Pass/Fail Validator
+# CoreFiling Labs Quick XBRL Validator
 
 A simple demonstrator of using the CoreFiling Platform to valdiate a document.
 
