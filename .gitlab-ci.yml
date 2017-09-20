@@ -16,25 +16,20 @@ cache:
 
 .template_docker_privileged: &template_docker_privileged
   tags:
-    - docker
     - docker-privileged
 
-.template_node: &template_node
-  <<: *template_docker
+.template_npm: &template_npm
   image: artifacts.int.corefiling.com:5000/nimbus-tools/build-npm-package:0.7.0
 
 .template_kube_deploy: &template_kube_deploy
   <<: *template_docker
   image: artifacts.int.corefiling.com:5000/pdds/kube-deploy:0.8.1
 
-.template_build_npm: &template_build_npm
-  <<: *template_docker_privileged
-  image: artifacts.int.corefiling.com:5000/nimbus-tools/build-npm-package:0.7.0
-
 # Build stage
 ## Templates
 .template_npm_script: &template_npm_script
-  <<: *template_node
+  <<: *template_docker_privileged
+  <<: *template_npm
   stage: build
   before_script:
     - time yarn install
@@ -45,7 +40,8 @@ cache:
 
 ## Jobs
 build:version:
-  <<: *template_node
+  <<: *template_docker
+  <<: *template_npm
   stage: build
   artifacts:
     expire_in: 1 week
@@ -70,7 +66,8 @@ test:karma: *template_npm_script
 
 # Publish stage
 publish:npm:
-  <<: *template_build_npm
+  <<: *template_docker_privileged
+  <<: *template_npm_script
   stage: publish
   dependencies:
     - compile:webpack
