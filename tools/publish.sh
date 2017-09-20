@@ -7,10 +7,7 @@ fi
 
 cd charts
 
-shopt -s nullglob
-
 for f in *.tgz
 do
-  echo "Publishing chart '$f'"
-  curl -F "file=@$f" https://helm.cfl.io || exit $?
+  /kube/helmPush $f || exit $?
 done

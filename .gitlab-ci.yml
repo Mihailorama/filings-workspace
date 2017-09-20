@@ -75,6 +75,7 @@ publish:npm:
     publish: 'true'
   script:
     - time /app/scripts/build.py
+  allow_failure: true
 
 publish:chart:
   <<: *template_kube_deploy
