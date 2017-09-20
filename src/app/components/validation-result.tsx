@@ -29,7 +29,7 @@ interface Spec {
 
 const specByStatus: {[status: string]: Spec} = {
   loading: {
-    detail: 'processing\u2009…',
+    detail: 'Processing\u2009…',
   },
   OK: {
     label: 'Pass',
