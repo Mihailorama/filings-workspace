@@ -111,6 +111,7 @@ export default class ValidationForm extends Component<ValidationFormProps, Valid
     const { params } = this.state;
     if (onSubmit && paramsAreComplete(params)) {
       onSubmit(params);
+      this.setState({params: {...params, file: undefined}});
     }
   }
 }
