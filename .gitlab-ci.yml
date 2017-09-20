@@ -80,11 +80,7 @@ publish:npm:
 publish:chart:
   <<: *template_kube_deploy
   stage: publish
-  artifacts:
-    expire_in: 1 week
-    paths:
-      - build.version
-      - charts/*.tgz
+  dependencies:
+    - build:version
   script:
-    - tools/build.sh
-    - tools/publish.sh
+    - ./publish.sh
