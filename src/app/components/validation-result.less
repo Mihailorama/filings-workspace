@@ -17,45 +17,58 @@
 @import (reference) '../styles/defs.less';
 
 .ckr-ValidationResult {
+  flex-grow: 1;
+  width: 100%;
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: column wrap;
+  justify-content: flex-end;
   align-items: center;
 
   &-loading {
+    box-sizing: border-box;
+    height: @form-ht;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+
     &:before {
       content: " ";
-      margin-top: 280px;
-      margin-bottom: @gap;
       width: 240px;
       height: 240px;
       background-image: url(Progress_Animation.gif);
-      background-position: 50% 0;
+      background-position: 50% 50%;
       background-repeat: no-repeat;
       background-size: 300px 300px;
     }
   }
 
   &-status {
-    margin: @hunk 0 @gap;
+    flex-grow: 1;
+    width: 100%;
+
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
+    justify-content: flex-end;
 
     font-size: 36px;
     font-weight: 100;
     line-height: percentage(44 / 36);
 
-    @media (min-height: (@bigger-gap + @status-ht + @hunk)) {
-      margin-top: (@bigger-gap);
-    }
+    // @media (min-height: (@bigger-gap + @status-ht + @hunk)) {
+    //   margin-top: (@bigger-gap);
+    // }
 
     &:before {
       content: " ";
+      flex-grow: 1;
       margin-bottom: 6px;
       display: block;
-      width: @status-ht;
-      height: @status-ht;
-      background-size: 208x;
+      width: 100%;
+      max-height: @status-ht;
+      background-size: auto 100%;
+      background-position: 50% 50%;
+      background-repeat: no-repeat;
     }
   }
 

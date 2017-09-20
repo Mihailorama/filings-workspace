@@ -18,22 +18,20 @@
 
 
 .form-boxiness() {
+  box-sizing: border-box;
+
   border-radius: 3px;
 
   @media (min-width: (@form-wd)) {
-    margin-top: @hunk;
-    box-sizing: border-box;
     width: @form-wd;
-    height: @form-ht;
-  }
-
-  @media (min-height: (@big-gap + @bar-ht + @form-ht + @hunk)) {
-    margin-top: @big-gap;
   }
 }
 
 .ckr-ValidationForm {
   .form-boxiness();
+
+  height: @form-ht;
+  flex-shrink: 0;
 
   color: @ink;
   background-color: @paper;
@@ -110,6 +108,9 @@
 
   &-loading {
     .form-boxiness();
+
+    height: @form-ht;
+    flex-shrink: 0;
 
     line-height: (0.75 * @form-ht);
     text-align: center;

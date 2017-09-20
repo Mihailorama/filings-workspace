@@ -34,11 +34,12 @@ export interface AppBarProps extends Props<AppBar> {
   path: string;
   user?: User;
   apps?: App[];
+  className?: string;
 }
 
 export default class AppBar extends Component<AppBarProps> {
   render(): JSX.Element {
-    const { path, user, apps } = this.props;
+    const { path, user, apps, className } = this.props;
 
     // Assemble the menu.
     const itemGroups: MenuItem[][] = [];
@@ -50,7 +51,7 @@ export default class AppBar extends Component<AppBarProps> {
     }
     itemGroups.push([{label: 'Log out', href: AUTH_LOGOUT}]);
 
-    return <header className={classNames('ckr-AppBar')}>
+    return <header className={classNames('ckr-AppBar', className)}>
       <div className='ckr-AppBar-brand'>
         <a href={path} className='ckr-AppBar-appLogo'>
           <AppSymbol className='ckr-AppBar-appSymbol'/>

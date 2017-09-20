@@ -29,7 +29,7 @@ describe('checker (reducer)', () => {
   const initial = checker(undefined, {type: '????'});
 
   it('is initially in the form', () => {
-    expect(initial.phase).toBe('form');
+    expect(initial.phase).toBe('startup');
     expect(initial.status).toBeUndefined();
   });
 
