@@ -30,9 +30,15 @@ import ValidationForm from '../app/components/validation-form';
 import ValidationResult from '../app/components/validation-result';
 import ContactDetails from '../app/components/contact-details';
 import CheckerAppContainer from '../app/containers/checker-app-container';
+import CloseSymbol from '../app/components/close-symbol';
 
 import '../app/styles/style.less';
 import '../app/components/checker-app.less';
+
+storiesOf('CloseSymbol', module)
+.addDecorator(story => <div className='ckr-CheckerApp-resultOverlay'>{story()}</div>)
+.add('Default size', () => <CloseSymbol/>)
+;
 
 storiesOf('FileReference', module)
 .addDecorator(story => <div style={{margin: '1em auto', maxWidth: '400px'}}>{story()}</div>)

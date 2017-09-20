@@ -69,7 +69,7 @@
   &-resultHolder {
     .verticallyCentred(@bar-ht);
     height: @form-ht;
-    width: 100%;
+    width: @form-wd;
 
     display: flex;
     flex-flow: column nowrap;
@@ -88,12 +88,14 @@
 
     color: contrast(@brand, #FFF, @ink);
     background-color: fade(#30577A, 94%);
+
+    @media (min-height: (@tall-enough)) {
+      box-sizing: border-box;
+      padding-top: @bar-ht;
+    }
   }
 
   &-resultContact {
-    flex-flow: column nowrap;
-    align-items: center;
-
     .ckr-ContactDetails-link {
       margin-top: @gap;
       margin-left: 0;
@@ -121,15 +123,19 @@
     }
 
     .ckr-ContactDetails-secondaryLink {
-      margin-bottom: (-@gap - 2 * 14px - @gap2); // Make vertical centering ignore this link.
       padding-left: 0;
       padding-right: 0;
+      margin-bottom: @gap;
 
       font-size: 12px;
       text-align: center;
       line-height: (14/12);
+
+      @media (min-height: @tall-enough) {
+        position: absolute;
+        top: 100%;
+        margin-top: 0;
+      }
     }
   }
 }
-
-
