@@ -1,9 +1,9 @@
 # CoreFiling Labs Quick XBRL Validator
 
-A simple demonstrator of using the CoreFiling Platform to valdiate a document.
+A simple demonstration of how the CoreFiling Platform can be used to validate a document.
 
 It starts by using the CoreFiling Platform API to request a list of validation
-profiles, then presents a form for choosing one and uplaoding a file. it submits this
+profiles, then presents a form for choosing one and uploading a file. It submits this
 to the Document Service and polls for the validation status.
 
 
