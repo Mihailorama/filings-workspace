@@ -21,10 +21,12 @@ import './contact-details.less';
 
 export default function ContactDetails({className}: {className?: string}): JSX.Element {
   return <div className={classNames('ckr-ContactDetails', className)}>
-    <a  className='ckr-ContactDetails-link' href='https://www.corefiling.com/standing/contactus/' target='_blank'>
+    <a className='ckr-ContactDetails-link ckr-ContactDetails-primaryLink'
+        href='https://www.corefiling.com/standing/contactus/' target='_blank'>
       <b className='ckr-Link'>Contact us</b> to find out more!
     </a>
-    <a  className='ckr-ContactDetails-link' href='https://github.com/CoreFiling/quick-xbrl-validator' target='_blank'>
+    <a className='ckr-ContactDetails-link ckr-ContactDetails-secondaryLink'
+        href='https://github.com/CoreFiling/quick-xbrl-validator' target='_blank'>
       An API for this functionality is available, <b className='ckr-Link'>click here</b> to read more
     </a>
   </div>;

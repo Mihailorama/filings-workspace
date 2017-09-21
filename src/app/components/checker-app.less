@@ -17,7 +17,7 @@
 @import (reference) '../styles/defs';
 
 
-@contact-ht: (@gap3 + @text-ln-ht * @text-sz + @gap2);
+@contact-ht: (@gap3 + @text-ln-ht * @text-sz + @gap + 2 * @text-ln-ht * @text-sz + @gap2);  // Height allowed for the contact us links
 @tall-enough: (@bar-ht + @gap3 + @form-ht + @contact-ht);
 
 .verticallyCentred(@extra-bar-ht: 0) {
@@ -91,18 +91,43 @@
   }
 
   &-resultContact {
+    flex-flow: column nowrap;
+    align-items: center;
+
     .ckr-ContactDetails-link {
       margin-top: @gap;
-      width: 222px;
+      margin-left: 0;
+      margin-right: 0;
+      box-sizing: border-box;
+      width: 226px;
       padding: (0.5 * (42px - 17px)) @gap2;
+    }
 
+    .ckr-ContactDetails-primaryLink {
+      font-style: normal;
+      font-weight: 500;
+      text-align: center;
       background: linear-gradient(221.35deg, #40A097 0%, rgba(126,164,157,0.69) 100%);
       border: 1px solid @primary;
       border-radius: 3px;
 
       &:hover {
         background: @primary;
+
+        .ckr-Link {
+          border: none;
+        }
       }
+    }
+
+    .ckr-ContactDetails-secondaryLink {
+      margin-bottom: (-@gap - 2 * 14px - @gap2); // Make vertical centering ignore this link.
+      padding-left: 0;
+      padding-right: 0;
+
+      font-size: 12px;
+      text-align: center;
+      line-height: (14/12);
     }
   }
 }
