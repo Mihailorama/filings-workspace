@@ -24,6 +24,7 @@ import AppBarContainer from '../corefiling/app-bar-container';
 import ContactDetails from './contact-details';
 import ValidationForm from './validation-form';
 import ValidationResult from './validation-result';
+import CloseSymbol from './close-symbol';
 
 import './checker-app.less';
 
@@ -52,6 +53,7 @@ export default class CheckerApp extends Component<CheckerAppProps> {
           <div className='ckr-CheckerApp-resultHolder'>
             <ValidationResult status={status}/>
             {(phase === 'checking-failed' || phase === 'results') && <ContactDetails className='ckr-CheckerApp-resultContact'/>}
+            {(phase === 'checking-failed' || phase === 'results') && <CloseSymbol/>}
           </div>
         </div>}
     </div>;
