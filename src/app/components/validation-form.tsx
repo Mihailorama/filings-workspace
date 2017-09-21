@@ -75,16 +75,20 @@ export default class ValidationForm extends Component<ValidationFormProps, Valid
               className='ckr-ValidationForm-dropzone'
               activeClassName='ckr-ValidationForm-dropzoneActive'
               multiple={false}
+              accept='.xml,.xbrl,.html,.htm,.zip'
+              maxSize={5 * 1024 * 1024}
               aria-label='File to validate'
               onDrop={(files: File[]) => this.onChange({file: files[0]})}
             >
               <div>
-                {params.file && <FileReference className='ckr-ValidationForm-file' file={params.file}/>}
-                {!params.file && <div>
-                    <h2 className='ckr-ValidationForm-heading'>Drag &amp; drop</h2>
+                {params.file
+                ? <FileReference className='ckr-ValidationForm-file' file={params.file}/>
+                : <div>
+                    <h2 className='ckr-ValidationForm-heading'>Drag &amp; Drop</h2>
                     <div className='ckr-ValidationForm-prompt'>
-                      your files here, or <span className='ckr-ValidationForm-btn'>browse</span>
+                      your file here, or <span className='ckr-ValidationForm-btn'>browse</span>
                     </div>
+                    <div className='ckr-ValidationForm-hint'>XBRL, Inline XBRL, or ZIP. 5&thinsp;MB max.</div>
                   </div>}
                 </div>
             </Dropzone>
