@@ -19,7 +19,7 @@ cache:
     - docker-privileged
 
 .template_npm: &template_npm
-  image: artifacts.int.corefiling.com:5000/nimbus-tools/build-npm-package:0.7.0
+  image: artifacts.int.corefiling.com:5000/nimbus-tools/build-npm-package:0.6.0
 
 .template_kube_deploy: &template_kube_deploy
   <<: *template_docker
@@ -75,7 +75,6 @@ publish:npm:
     publish: 'true'
   script:
     - time /app/scripts/build.py
-  allow_failure: true
 
 publish:chart:
   <<: *template_kube_deploy
