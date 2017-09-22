@@ -23,7 +23,7 @@ cache:
 
 .template_kube_deploy: &template_kube_deploy
   <<: *template_docker
-  image: artifacts.int.corefiling.com:5000/pdds/kube-deploy:0.8.1
+  image: artifacts.int.corefiling.com:5000/pdds/kube-deploy:0.8.2
 
 # Build stage
 ## Templates
@@ -65,6 +65,7 @@ test:karma: *template_npm_script
 
 
 # Publish stage
+# TODO: Change publish to false if not develop/tags
 publish:npm:
   <<: *template_docker_privileged
   <<: *template_npm_script
