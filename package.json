@@ -8,10 +8,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://gitlab.int.corefiling.com/labs/boolean-validator.git"
+    "url": "https://gitlab.int.corefiling.com/labs/passfail-validator.git"
   },
   "license": "UNLICENSED",
-  "homepage": "https://gitlab.int.corefiling.com/labs/boolean-validator",
+  "homepage": "https://gitlab.int.corefiling.com/labs/passfail-validator",
   "scripts": {
     "prepublishOnly": "rm -rf www && npm run compile",
     "compile": "npm run compile:webpack",
