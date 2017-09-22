@@ -1,6 +1,6 @@
 imageRegistry: artifacts.int.corefiling.com:5000
 imageRepository: labs
-imageName: passfail-validator
+imageName: quick-xbrl-validator
 imageTag: 0.1.1
 
 # Pull Policy
