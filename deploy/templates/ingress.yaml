@@ -1,0 +1,17 @@
+kind: Ingress
+apiVersion: extensions/v1beta1
+metadata:
+metadata:
+  name: {{ .Chart.Name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Chart.Name }}
+    version: {{ .Chart.Version }}
+spec:
+  rules:
+    - host: {{ .Values.namespace }}.kube.int.corefiling.com
+      http:
+        paths:
+          - backend:
+              serviceName: {{ .Chart.Name }}
+              servicePort: 80

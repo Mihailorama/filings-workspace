@@ -1,47 +1,95 @@
-# Web UI Starter Kit
+# CoreFiling Labs Quick XBRL Validator
+
+A simple demonstration of how the CoreFiling Platform can be used to validate a document.
+
+It starts by using the CoreFiling Platform API to request a list of validation
+profiles, then presents a form for choosing one and uploading a file. It submits this
+to the Document Service and polls for the validation status.
+
+
+## Licence
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this software except in compliance with the License.
+You may obtain a copy of the License at <http://www.apache.org/licenses/LICENSE-2.0>.
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
 
 ## Stack
+
 - [Typescript](https://github.com/Microsoft/TypeScript)
 - [React](https://github.com/facebook/react)
+- [Redux](http://redux.js.org/)
+- [Redux-Saga](https://redux-saga.js.org/)
+- [Storybook](https://storybook.js.org)
 - [Webpack](https://github.com/webpack/webpack)
 
----
 
-# Development
-## Prerequisites
-Install node@>=6.0.0, npm@>=4.0.0 and yarn@>=0.21.0 and [configure for use in CFL](https://wiki.int.corefiling.com/dev/NPM)
+## Development prerequisites
+
+Install node@>=6.0.0, npm@>=4.0.0 and yarn@>=1.0.0
 
 ```bash
 yarn install
 ```
 
-## Build
+
+## Storybook
+
 ```bash
-npm run compile
+yarn storybook
 ```
 
-## Package
+and visit <http://localhost:6006/>.
+
+If and when creating new modules in `./src/stories`, add an import from `src/stories/index.ts`.
+
+
+## Unit tests
+
+Single run:
+
 ```bash
-npm pack # Produces web-ui-starter-kit-$VERSION.tgz
+yarn test
 ```
 
-## Test
-### Single run
+Watch files:
+
 ```bash
-npm run test
+yarn test-debug
 ```
 
-### Watch files
-```bash
-npm run test-debug
-```
 
-## Development Server
+## Development server
+
+You need `HOST` to be a name for your development machine for which SSL certificates are available.
+
 ```bash
-npm config set web-ui-starter-kit:devserver-host `hostname`.cfl.io # You must have a working DNS entry for "`hostname`.cfl.io".
+npm config set @cfl/passfail-validator:devserver-host $HOST
 npm start
-open https://`hostname`.cfl.io:9091/
 ```
+
+Then open `https://$HOST:9091/`
 
 ### SSL
-The dev server uses HTTPS, with certificates checked in to `.dev/`. When these expire, they will need to be replaced by the [latest ones](https://wiki.int.corefiling.com/cfl/CflDotIo).
+
+The dev server uses HTTPS, with certificates copied in to `.dev/`.
+
+
+## Build
+
+```bash
+yarn compile
+```
+
+
+## Package
+
+```bash
+yarn pack # Produces cfl-passfail-validator-$VERSION.tgz
+```
