@@ -24,6 +24,8 @@ limitations under the License.
 
 - [Typescript](https://github.com/Microsoft/TypeScript)
 - [React](https://github.com/facebook/react)
+- [Redux](http://redux.js.org/)
+- [Redux-Saga](https://redux-saga.js.org/)
 - [Storybook](https://storybook.js.org)
 - [Webpack](https://github.com/webpack/webpack)
 
