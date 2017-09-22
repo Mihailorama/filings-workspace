@@ -86,6 +86,6 @@ publish:chart:
     - tools/publish.sh
   # Restrict to only publishing on develop/release - don't need to publish fb builds
   # unless we have a CI staging environment for them
-  # only:
-  #   - develop@labs/passfail-validator
-  #   - tags@labs/passfail-validator
+  only:
+    - develop@labs/passfail-validator
+    - tags@labs/passfail-validator
