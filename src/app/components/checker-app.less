@@ -66,6 +66,19 @@
     .verticallyCentred(0);
   }
 
+  &-form &-formHolder:before {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    content: " ";
+    display: block;
+    width: @form-wd;
+    height: (@form-ht - @form-drop-shadow-top-gap);
+
+    border-radius: 3px;
+    box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.3);
+  }
+
   &-resultHolder {
     .verticallyCentred(0);
     height: @form-ht;
