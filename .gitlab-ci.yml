@@ -16,22 +16,20 @@ cache:
 
 .template_docker_privileged: &template_docker_privileged
   tags:
-    - docker
     - docker-privileged
 
-.template_node: &template_node
-  <<: *template_docker_privileged
+.template_npm: &template_npm
   image: artifacts.int.corefiling.com:5000/nimbus-tools/build-npm-package:0.6.0
 
 .template_kube_deploy: &template_kube_deploy
   <<: *template_docker
-  image: artifacts.int.corefiling.com:5000/pdds/kube-deploy:0.2
-
+  image: artifacts.int.corefiling.com:5000/pdds/kube-deploy:0.8.2
 
 # Build stage
 ## Templates
 .template_npm_script: &template_npm_script
-  <<: *template_node
+  <<: *template_docker_privileged
+  <<: *template_npm
   stage: build
   before_script:
     - time yarn install
@@ -42,7 +40,8 @@ cache:
 
 ## Jobs
 build:version:
-  <<: *template_node
+  <<: *template_docker
+  <<: *template_npm
   stage: build
   artifacts:
     expire_in: 1 week
@@ -66,10 +65,11 @@ test:karma: *template_npm_script
 
 
 # Publish stage
-publish:
+# TODO: Change publish to false if not develop/tags
+publish:npm:
   <<: *template_docker_privileged
+  <<: *template_npm_script
   stage: publish
-  image: artifacts.int.corefiling.com:5000/nimbus-tools/build-npm-package:0.6.0
   dependencies:
     - compile:webpack
   variables:
@@ -77,36 +77,15 @@ publish:
   script:
     - time /app/scripts/build.py
 
-
-# Deploy stage
-.template_deploy: &template_deploy
+publish:chart:
   <<: *template_kube_deploy
-  stage: deploy
+  stage: publish
   dependencies:
     - build:version
-    - publish
-  before_script:
-    - export NAMESPACE="$CI_PROJECT_NAMESPACE-$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG"
-    - export TILLER_NAMESPACE="$NAMESPACE"
-    - /kube/init $KUBE_AUTH_TOKEN $NAMESPACE
-
-deploy:
-  <<: *template_deploy
-  environment:
-    name: $CI_BUILD_REF_NAME
-    url: https://$CI_PROJECT_NAMESPACE-$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG.kube.int.corefiling.com
-    on_stop: deploy:clean
   script:
-    - echo "Deploying https://$NAMESPACE.kube.int.corefiling.com"
-    - helm upgrade --install --set namespace=$NAMESPACE,imageTag=`cat build.version` $CI_PROJECT_NAME ./deploy --namespace=$NAMESPACE
-
-deploy:clean:
-  <<: *template_deploy
-  when: manual
-  environment:
-    name: $CI_BUILD_REF_NAME
-    url: https://$CI_PROJECT_NAMESPACE-$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG.kube.int.corefiling.com
-    action: stop
-  script:
-    - echo "Pruning https://$NAMESPACE.kube.int.corefiling.com"
-    - kube-auth namespace delete $NAMESPACE
+    - tools/publish.sh
+  # Restrict to only publishing on develop/release - don't need to publish fb builds
+  # unless we have a CI staging environment for them
+  only:
+    - develop@labs/quick-xbrl-validator
+    - tags@labs/quick-xbrl-validator

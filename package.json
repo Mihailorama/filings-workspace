@@ -1,5 +1,5 @@
 {
-  "name": "@cfl/passfail-validator",
+  "name": "@cfl/quick-xbrl-validator",
   "version": "0.1.1-local",
   "cfl": {
     "group": {
@@ -8,10 +8,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://gitlab.int.corefiling.com/labs/passfail-validator.git"
+    "url": "https://gitlab.int.corefiling.com/labs/quick-xbrl-validator.git"
   },
   "license": "UNLICENSED",
-  "homepage": "https://gitlab.int.corefiling.com/labs/passfail-validator",
+  "homepage": "https://gitlab.int.corefiling.com/labs/quick-xbrl-validator",
   "scripts": {
     "prepublishOnly": "rm -rf www && npm run compile",
     "compile": "npm run compile:webpack",

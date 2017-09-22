@@ -70,7 +70,7 @@ yarn test-debug
 You need `HOST` to be a name for your development machine for which SSL certificates are available.
 
 ```bash
-npm config set @cfl/passfail-validator:devserver-host $HOST
+npm config set @cfl/quick-xbrl-validator:devserver-host $HOST
 npm start
 ```
 
@@ -91,5 +91,5 @@ yarn compile
 ## Package
 
 ```bash
-yarn pack # Produces cfl-passfail-validator-$VERSION.tgz
+yarn pack # Produces cfl-quick-xbrl-validator-$VERSION.tgz
 ```
