@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.0 (25 September 2017)
+## 1.0.0
 
 ### Added
 

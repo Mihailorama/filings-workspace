@@ -1,7 +1,7 @@
 imageRegistry: artifacts.int.corefiling.com:5000
 imageRepository: labs
 imageName: quick-xbrl-validator
-imageTag: 0.1.1
+imageTag: 1.0.0
 
 # Pull Policy
 # pullPolicy: IfNotPresent
