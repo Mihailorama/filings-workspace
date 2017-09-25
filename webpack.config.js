@@ -24,6 +24,7 @@ let config = {
   entry: {
     vendors: [
       'babel-polyfill',
+      'isomorphic-fetch',
     ],
     app: appEntries
   },
