@@ -11,11 +11,13 @@ const awesomeTypescriptLoader = require('awesome-typescript-loader');
 const srcPath = path.resolve(__dirname, 'src');
 const buildPath = path.resolve(__dirname, 'www');
 const isProd = process.env.NODE_ENV === 'production';
+const isTest = process.env.NODE_ENV === 'test';
+const isDev = !isProd && !isTest;
 const extractCssPlugin = new ExtractTextPlugin({ filename: '[name].[contenthash].css', allChunks: true, disable: !isProd });
 
 const appEntries = [path.resolve(srcPath, 'app', 'index.tsx')];
 const tsxLoaders = [{ loader: 'awesome-typescript-loader', options: { useCache: true, useBabel: true } }];
-if (!isProd) {
+if (isDev) {
   appEntries.unshift('react-hot-loader/patch');
   tsxLoaders.unshift({ loader: 'react-hot-loader/webpack' });
 }
@@ -24,6 +26,7 @@ let config = {
   entry: {
     vendors: [
       'babel-polyfill',
+      'isomorphic-fetch',
     ],
     app: appEntries
   },
@@ -84,7 +87,7 @@ let config = {
   plugins: [...generatePlugins()],
 };
 
-if (!isProd) {
+if (isDev) {
   const devDir = path.resolve(__dirname, '.dev');
   const host = process.env.npm_package_config_devserver_host;
   const port = parseInt(process.env.npm_package_config_devserver_port, 10);
@@ -138,26 +141,26 @@ function* generatePlugins() {
         dead_code: true,
       },
     });
-    yield new TransferWebpackPlugin([{ from: 'src/www' }]);
     yield new LicenseWebpackPlugin({
       pattern: /^(.*)$/,
       filename: '../www/LICENSING.TXT',
       includeUndefined: true,
     });
   }
-  else {
+  else if (isDev) {
     // DEV only
     yield new webpack.HotModuleReplacementPlugin();
     yield new awesomeTypescriptLoader.CheckerPlugin();
     yield new webpack.NoEmitOnErrorsPlugin();
   }
 
+  yield new TransferWebpackPlugin([{ from: 'src/www' }]);
   yield extractCssPlugin;
   yield new HtmlWebpackPlugin({
     template: 'src/index.ejs',
     appVersion: `${require('./package.json').version}`,
     favicon: 'src/www/app-logo.ico',
-  })
+  });
 }
 
 module.exports = config;

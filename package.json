@@ -1,6 +1,6 @@
 {
-  "name": "@cfl/passfail-validator",
-  "version": "0.1.0-local",
+  "name": "@cfl/quick-xbrl-validator",
+  "version": "1.0.0-local",
   "cfl": {
     "group": {
       "name": "labs"
@@ -8,10 +8,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://gitlab.int.corefiling.com/labs/passfail-validator.git"
+    "url": "https://github.com/CoreFiling/quick-xbrl-validator.git"
   },
   "license": "UNLICENSED",
-  "homepage": "https://gitlab.int.corefiling.com/labs/passfail-validator",
+  "homepage": "https://github.com/CoreFiling/quick-xbrl-validator",
   "scripts": {
     "prepublishOnly": "rm -rf www && npm run compile",
     "compile": "npm run compile:webpack",
@@ -53,6 +53,7 @@
     "@storybook/react": "^3.2.8",
     "@types/classnames": "^2.2.3",
     "@types/cookie": "^0.3.1",
+    "@types/isomorphic-fetch": "^0.0.34",
     "@types/jasmine": "^2.5.47",
     "@types/react": "15",
     "@types/react-dom": "^0.14.23",

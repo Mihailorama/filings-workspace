@@ -1,5 +1,8 @@
 const path = require('path');
 
+process.env.NODE_ENV = 'test';
+const webpackConfig = require('./webpack.config');
+
 // Karma configuration here
 module.exports = (config) => {
   config.set({
@@ -16,7 +19,7 @@ module.exports = (config) => {
       'karma.tests.js': ['webpack', 'sourcemap'] //preprocess with webpack and sourcemap loader
     },
     reporters: ['dots'], //report results in this format
-    webpack: require('./webpack.config'),
+    webpack: webpackConfig,
     webpackMiddleware: {
       stats: {
         colors: true,
