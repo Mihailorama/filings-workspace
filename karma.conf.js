@@ -1,5 +1,12 @@
 const path = require('path');
 
+const webpackConfig = require('./webpack.config');
+delete webpackConfig.entry;
+webpackConfig.module.rules.find(x => x.use && x.use[0].loader === 'react-hot-loader/webpack').use.shift();
+delete webpackConfig.devServer;
+delete webpackConfig.devtool;
+delete webpackConfig.output;
+
 // Karma configuration here
 module.exports = (config) => {
   config.set({
@@ -16,7 +23,7 @@ module.exports = (config) => {
       'karma.tests.js': ['webpack', 'sourcemap'] //preprocess with webpack and sourcemap loader
     },
     reporters: ['dots'], //report results in this format
-    webpack: require('./webpack.config'),
+    webpack: webpackConfig,
     webpackMiddleware: {
       stats: {
         colors: true,

@@ -139,7 +139,6 @@ function* generatePlugins() {
         dead_code: true,
       },
     });
-    yield new TransferWebpackPlugin([{ from: 'src/www' }]);
     yield new LicenseWebpackPlugin({
       pattern: /^(.*)$/,
       filename: '../www/LICENSING.TXT',
@@ -153,6 +152,7 @@ function* generatePlugins() {
     yield new webpack.NoEmitOnErrorsPlugin();
   }
 
+  yield new TransferWebpackPlugin([{ from: 'src/www' }]);
   yield extractCssPlugin;
   yield new HtmlWebpackPlugin({
     template: 'src/index.ejs',
