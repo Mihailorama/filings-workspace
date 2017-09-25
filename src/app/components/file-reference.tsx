@@ -39,7 +39,7 @@ export default function FileReference({className, file}: FileReferenceProps): JS
         <path className='ckr-FileReference-outline' d='M1,1H11l6,8V23H1z'/>
         <path className='ckr-FileReference-inline' d='M11,1l-2,6 8,2'/>
       </svg>
-      {file.name}
+      {file.name || 'Selected file'}
     </span>
     <span className='ckr-FileReference-size'>{humanSize(file.size)}</span>
   </span>;
