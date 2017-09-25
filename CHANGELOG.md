@@ -4,7 +4,7 @@
 
 ### Added
 
-- Compatibilityy with Microsoft IE 11 and Edge
+- Compatible with Microsoft IE 11 and Edge
 
 ### Changed
 
