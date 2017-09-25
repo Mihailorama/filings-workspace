@@ -162,6 +162,10 @@
   version "0.3.1"
   resolved "https://artifacts.int.corefiling.com/api/npm/cfl-npm/@types/cookie/-/cookie-0.3.1.tgz#720a756ea8e760a258708b52441bd341f1ef4296"
 
+"@types/isomorphic-fetch@^0.0.34":
+  version "0.0.34"
+  resolved "https://artifacts.int.corefiling.com/api/npm/cfl-npm/@types/isomorphic-fetch/-/isomorphic-fetch-0.0.34.tgz#3c3483e606c041378438e951464f00e4e60706d6"
+
 "@types/jasmine@^2.5.47":
   version "2.6.0"
   resolved "https://artifacts.int.corefiling.com/api/npm/cfl-npm/@types/jasmine/-/jasmine-2.6.0.tgz#997b41a27752b4850af2683bc4a8d8222c25bd02"
