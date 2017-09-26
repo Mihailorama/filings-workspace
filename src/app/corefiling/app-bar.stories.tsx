@@ -18,19 +18,8 @@ import * as React from 'react';
 
 import { storiesOf } from '@storybook/react';
 
-import { App } from '../models';
+import { apps } from '../../stories/util';
 import AppBar from './app-bar';
-
-const app = (name: string): App => {
-  const id = name.toLowerCase().replace(/[^a-z]+/g, '-');
-  return {
-    id,
-    name,
-    href: `/${id}/`,
-  };
-};
-
-const apps = (...names: string[]): App[] => names.map(name => app(name));
 
 const sub = 'uuid-of-user';
 

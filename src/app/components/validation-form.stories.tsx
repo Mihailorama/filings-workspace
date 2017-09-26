@@ -19,30 +19,8 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import { Profile } from '../models';
+import { profiles, profile } from '../../stories/util';
 import ValidationForm from './validation-form';
-
-// Some hackery for creating fake profiles.
-
-function id(label: string): string {
-  let hash = 0;
-  for (let i = 0; i < label.length; i++) {
-    const chr = label.charCodeAt(i);
-    hash  = (((hash << 5) - hash) + chr) & 0x7FFFFFFF; // tslint:disable-line:no-bitwise
-  }
-  return `id_${hash.toString(16)}`;
-}
-
-function profile(label: string): Profile {
-  return {
-    id: id(label),
-    name: label,
-  };
-}
-
-function profiles(...labels: string[]): Profile[] {
-  return labels.map(x => profile(x));
-}
 
 storiesOf('ValidationForm', module)
 .addDecorator(story => <div className='ckr-CheckerApp ckr-CheckerApp-form'>{story()}</div>)

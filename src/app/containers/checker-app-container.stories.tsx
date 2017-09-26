@@ -21,47 +21,12 @@ import { Provider } from 'react-redux';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import { App, Profile } from '../models';
+import { profiles, apps } from '../../stories/util';
 import { CheckerState } from '../state';
 import CheckerAppContainer from './checker-app-container';
 
-// Some hackery for creating fake profiles.
-
-function id(label: string): string {
-  let hash = 0;
-  for (let i = 0; i < label.length; i++) {
-    const chr = label.charCodeAt(i);
-    hash  = (((hash << 5) - hash) + chr) & 0x7FFFFFFF; // tslint:disable-line:no-bitwise
-  }
-  return `id_${hash.toString(16)}`;
-}
-
-function profile(label: string): Profile {
-  return {
-    id: id(label),
-    name: label,
-  };
-}
-
-function profiles(...labels: string[]): Profile[] {
-  return labels.map(x => profile(x));
-}
-
-const app = (name: string): App => {
-  const id = name.toLowerCase().replace(/[^a-z]+/g, '-');
-  return {
-    id,
-    name,
-    href: `/${id}/`,
-  };
-};
-
-const apps = (...names: string[]): App[] => names.map(name => app(name));
-
-const sub = 'uuid-of-user';
-
 const etc: CheckerState = {
-  user: {sub, email: 'b@example.com'},
+  user: {sub: 'uuid-of-user', email: 'b@example.com'},
   apps: apps('Pass/Fail Validator'),
   profiles: profiles('Profile'),
   phase: 'startup',
