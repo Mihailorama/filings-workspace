@@ -14,8 +14,13 @@
  *  limitations under the License.
  */
 
-// Actual stories are alongside their respective components.
-// This file just ensures the global styles are imported.
+import * as React from 'react';
 
-import '../app/styles/style.less';
-import '../app/components/checker-app.less';
+import { storiesOf } from '@storybook/react';
+
+import CloseSymbol from './close-symbol';
+
+storiesOf('CloseSymbol', module)
+.addDecorator(story => <div className='ckr-CheckerApp-resultOverlay'>{story()}</div>)
+.add('Default size', () => <CloseSymbol/>)
+;

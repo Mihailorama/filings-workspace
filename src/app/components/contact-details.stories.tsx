@@ -14,8 +14,16 @@
  *  limitations under the License.
  */
 
-// Actual stories are alongside their respective components.
-// This file just ensures the global styles are imported.
+import * as React from 'react';
+import { storiesOf } from '@storybook/react';
 
-import '../app/styles/style.less';
-import '../app/components/checker-app.less';
+import ContactDetails from './contact-details';
+
+storiesOf('ContactDetails', module)
+.add('Form', () => <div className='ckr-CheckerApp'><ContactDetails/></div>)
+.add('Results', () => <div className='ckr-CheckerApp ckr-CheckerApp-results' style={{background: '#2C5173', paddingTop: '96px'}}>
+  {/* <ValidationForm profiles={profiles('sock')}/>
+  <ValidationResult status='OK'/> */}
+  <ContactDetails/>
+</div>)
+;
