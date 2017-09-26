@@ -39,22 +39,21 @@ const funcs: Store<CheckerState> = {
 };
 
 storiesOf('App layout', module)
-.add('Form', () => <Provider store={{
-    ...funcs,
-    getState: () => ({...etc,  phase: 'form'}),
-  }}>
-    <CheckerAppContainer/>
-  </Provider>)
-.add('Checking', () => <Provider store={{
-    ...funcs,
-    getState: () => ({...etc, phase: 'checking'}),
-  }}>
-    <CheckerAppContainer/>
-  </Provider>)
-.add('Result', () => <Provider store={{
-    ...funcs,
-    getState: () => ({...etc, profiles: profiles('Profile'), phase: 'results', status: 'OK'}),
-  }}>
-    <CheckerAppContainer/>
-  </Provider>)
-;
+  .add('Form', () => <Provider store={{
+      ...funcs,
+      getState: () => ({...etc,  phase: 'form'}),
+    }}>
+      <CheckerAppContainer/>
+    </Provider>)
+  .add('Checking', () => <Provider store={{
+      ...funcs,
+      getState: () => ({...etc, phase: 'checking'}),
+    }}>
+      <CheckerAppContainer/>
+    </Provider>)
+  .add('Result', () => <Provider store={{
+      ...funcs,
+      getState: () => ({...etc, profiles: profiles('Profile'), phase: 'results', status: 'OK'}),
+    }}>
+      <CheckerAppContainer/>
+    </Provider>);

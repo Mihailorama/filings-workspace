@@ -20,10 +20,7 @@ import { storiesOf } from '@storybook/react';
 import ContactDetails from './contact-details';
 
 storiesOf('ContactDetails', module)
-.add('Form', () => <div className='ckr-CheckerApp'><ContactDetails/></div>)
-.add('Results', () => <div className='ckr-CheckerApp ckr-CheckerApp-results' style={{background: '#2C5173', paddingTop: '96px'}}>
-  {/* <ValidationForm profiles={profiles('sock')}/>
-  <ValidationResult status='OK'/> */}
-  <ContactDetails/>
-</div>)
-;
+  .add('Form', () => <div className='ckr-CheckerApp'><ContactDetails/></div>)
+  .add('Results', () => <div className='ckr-CheckerApp ckr-CheckerApp-results' style={{background: '#2C5173', paddingTop: '96px'}}>
+    <ContactDetails/>
+  </div>);

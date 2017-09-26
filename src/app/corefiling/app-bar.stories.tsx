@@ -24,15 +24,14 @@ import AppBar from './app-bar';
 const sub = 'uuid-of-user';
 
 storiesOf('AppBar', module)
-.addDecorator(story => <div style={{height: '400px', backgroundColor: '#DDD'}}>{story()}</div>)
-.add('Loading', () => <AppBar path='/quick-xbrl-validator/'/>)
-.add('User with email only', () => <AppBar path='/quick-xbrl-validator/'
+  .addDecorator(story => <div style={{height: '400px', backgroundColor: '#DDD'}}>{story()}</div>)
+  .add('Loading', () => <AppBar path='/quick-xbrl-validator/'/>)
+  .add('User with email only', () => <AppBar path='/quick-xbrl-validator/'
     apps={apps('Quick XBRL Validator')}
     user={{sub, email: 'b@example.com'}}/>)
-.add('User with name', () => <AppBar path='/quick-xbrl-validator/'
+  .add('User with name', () => <AppBar path='/quick-xbrl-validator/'
     apps={apps('Quick XBRL Validator')}
     user={{sub, name: 'Tamandani Pleško', email: 'tp@example.com'}}/>)
-.add('Multiple apps', () => <AppBar path='/quick-xbrl-validator/'
+  .add('Multiple apps', () => <AppBar path='/quick-xbrl-validator/'
     apps={apps('Quick XBRL Validator', 'Beacon', 'Full Beam', 'Manage Account')}
-    user={{sub, email: 'tp@example.com'}}/>)
-;
+    user={{sub, email: 'tp@example.com'}}/>);

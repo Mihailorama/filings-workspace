@@ -21,6 +21,5 @@ import { storiesOf } from '@storybook/react';
 import CloseSymbol from './close-symbol';
 
 storiesOf('CloseSymbol', module)
-.addDecorator(story => <div className='ckr-CheckerApp-resultOverlay'>{story()}</div>)
-.add('Default size', () => <CloseSymbol/>)
-;
+  .addDecorator(story => <div className='ckr-CheckerApp-resultOverlay'>{story()}</div>)
+  .add('Default size', () => <CloseSymbol/>);

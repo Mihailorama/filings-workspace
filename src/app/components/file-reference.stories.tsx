@@ -29,11 +29,10 @@ const file = (name?: string, size: number = 1024 * 20, type?: string): File => {
 };
 
 storiesOf('FileReference', module)
-.addDecorator(story => <div style={{margin: '1em auto', maxWidth: '400px'}}>{story()}</div>)
-.add('No file', () => <FileReference/>)
-.add('Bytes', () => <FileReference file={file('Best Soufflé Company 2017.xml', 69, 'application/xml')}/>)
-.add('Kilobytes', () => <FileReference file={file('Amalagmated Holdings (Group).xml', 42 * 1024, 'application/xml')}/>)
-.add('Megabytes', () => <FileReference file={file('accts.xml', 13 * 1024 * 1024, 'application/xml')}/>)
-.add('Longer name', () => <FileReference file={
-  file('United Frog Hunters Group (Holdings) Ltd annual accounts FINAL rev 4.zip', 77 * 1024)}/>)
-;
+  .addDecorator(story => <div style={{margin: '1em auto', maxWidth: '400px'}}>{story()}</div>)
+  .add('No file', () => <FileReference/>)
+  .add('Bytes', () => <FileReference file={file('Best Soufflé Company 2017.xml', 69, 'application/xml')}/>)
+  .add('Kilobytes', () => <FileReference file={file('Amalagmated Holdings (Group).xml', 42 * 1024, 'application/xml')}/>)
+  .add('Megabytes', () => <FileReference file={file('accts.xml', 13 * 1024 * 1024, 'application/xml')}/>)
+  .add('Longer name', () => <FileReference file={
+    file('United Frog Hunters Group (Holdings) Ltd annual accounts FINAL rev 4.zip', 77 * 1024)}/>);

@@ -21,15 +21,14 @@ import { storiesOf } from '@storybook/react';
 import ValidationResult from './validation-result';
 
 storiesOf('ValidationResult', module)
-.addDecorator(story => <div className='ckr-CheckerApp ckr-CheckerApp-checking'>
-  <h1>Backgorund</h1>
-  <div className='ckr-CheckerApp-resultOverlay'>
-    {story()}
-  </div>
-</div>)
-.add('Loading', () => <ValidationResult/>)
-.add('Invalid', () => <ValidationResult status='ERROR'/>)
-.add('Valid with warnings', () => <ValidationResult status='WARNING'/>)
-.add('Valid', () => <ValidationResult status='OK'/>)
-.add('Failed', () => <ValidationResult status='FATAL_ERROR'/>)
-;
+  .addDecorator(story => <div className='ckr-CheckerApp ckr-CheckerApp-checking'>
+    <h1>Backgorund</h1>
+    <div className='ckr-CheckerApp-resultOverlay'>
+      {story()}
+    </div>
+  </div>)
+  .add('Loading', () => <ValidationResult/>)
+  .add('Invalid', () => <ValidationResult status='ERROR'/>)
+  .add('Valid with warnings', () => <ValidationResult status='WARNING'/>)
+  .add('Valid', () => <ValidationResult status='OK'/>)
+  .add('Failed', () => <ValidationResult status='FATAL_ERROR'/>);

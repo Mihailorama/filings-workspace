@@ -22,12 +22,11 @@ import { action } from '@storybook/addon-actions';
 import { Form, FormItem, FormActionList, FormAction } from './form';
 
 storiesOf('Form items', module)
-.addDecorator(story => <Form onSubmit={action('onSubmit')} style={{width: '400px'}}>{story()}</Form>)
-.add('Enabled button', () => <FormActionList><FormAction primary enabled>Fold</FormAction></FormActionList>)
-.add('Disabled button', () => <FormActionList><FormAction primary>Spindle</FormAction></FormActionList>)
-.add('Other button', () => <FormActionList><FormAction enabled>Mutilate</FormAction><FormAction>Escape</FormAction></FormActionList>)
-.add('Select', () => <FormItem>
-    <label>Flavour</label>
-    <select><option>Strawberry</option><option>Sump</option></select>
-  </FormItem>)
-;
+  .addDecorator(story => <Form onSubmit={action('onSubmit')} style={{width: '400px'}}>{story()}</Form>)
+  .add('Enabled button', () => <FormActionList><FormAction primary enabled>Fold</FormAction></FormActionList>)
+  .add('Disabled button', () => <FormActionList><FormAction primary>Spindle</FormAction></FormActionList>)
+  .add('Other button', () => <FormActionList><FormAction enabled>Mutilate</FormAction><FormAction>Escape</FormAction></FormActionList>)
+  .add('Select', () => <FormItem>
+      <label>Flavour</label>
+      <select><option>Strawberry</option><option>Sump</option></select>
+    </FormItem>);
