@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
 
+# Based off scripts from platform/platform
+# Ideally this functionality will be available in the kube-deploy image
+
 # User specified as parameter or assume project name
 CHART=${1:-$CI_PROJECT_NAME}
 if [ -z "$CHART" ]; then
