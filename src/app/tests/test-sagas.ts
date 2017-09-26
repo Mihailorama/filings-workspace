@@ -21,8 +21,9 @@ import { startupInfoReceivedAction, startupInfoFailedAction,
   checkingStartAction, uploadStartedAction, uploadFailedAction,
   checkingStartedAction, checkingReceivedAction, checkingFailedAction } from '../actions';
 import { apiFetchJson } from '../api-fetch';
-import { ValidationParams, exampleUser, exampleApps, exampleCategory, exampleFiling, exampleFilingVersion } from '../models';
+import { ValidationParams,  } from '../models';
 import { startupInfoSaga, checkingStartSaga } from '../sagas';
+import { exampleUser, exampleApps, exampleCategory, exampleFiling, exampleFilingVersion } from './model-examples';
 
 describe('startupInfoSaga', () => {
   it('calls APIs in parallel and dispatches profiles', () => {
