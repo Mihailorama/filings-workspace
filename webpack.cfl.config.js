@@ -98,13 +98,6 @@ const mergedConfig = merge.smart(mainConfig, {
   },
 });
 
-(function enableReactHotLoader() {
-  // Load before everything except `babel-polyfill`
-  mergedConfig.entry.vendors.splice(1, 0, 'react-hot-loader/patch');
-  // Add to typescript rule
-  mergedConfig.module.rules[1].use.unshift({ loader: 'react-hot-loader/webpack' });
-})();
-
 // Edit linting config
 mergedConfig.module.rules[0].options = Object.assign({}, mergedConfig.module.rules[0].options, {emitErrors: false});
 

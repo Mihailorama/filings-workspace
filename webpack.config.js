@@ -24,11 +24,11 @@ if (isDev) {
 
 let config = {
   entry: {
-    vendors: [
+    app: [
       'babel-polyfill',
       'isomorphic-fetch',
+      ...appEntries,
     ],
-    app: appEntries
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.less', '.css', '.json'],
