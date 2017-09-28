@@ -32,6 +32,7 @@ interface PropsFromState {
   profiles?: Profile[];
   status?: ValidationStatus;
   message?: string;
+  tables?: TableMetadata[];
   metadata?: TableMetadata;
   zOptions?: Option[][];
   table?: QueryableTablePage;
@@ -48,7 +49,7 @@ type CheckerAppContainerProps = OwnProps & PropsFromState & PropsFromDispatch;
 class CheckerAppContainer extends Component<CheckerAppContainerProps> {
   render(): JSX.Element {
     const {
-      phase, profiles, status, message, onCheckingStart, onResultsDismiss, metadata, zOptions, table, onTableRenderPage,
+      phase, profiles, status, message, onCheckingStart, onResultsDismiss, tables, metadata, zOptions, table, onTableRenderPage,
     } = this.props;
     return (
       <CheckerApp
@@ -58,6 +59,7 @@ class CheckerAppContainer extends Component<CheckerAppContainerProps> {
         error={message}
         onSubmit={onCheckingStart}
         onResultsDismiss={onResultsDismiss}
+        tables={tables}
         metadata={metadata}
         zOptions={zOptions}
         table={table}
@@ -68,8 +70,8 @@ class CheckerAppContainer extends Component<CheckerAppContainerProps> {
 }
 
 function propsFromState(state: CheckerState): PropsFromState {
-  const { phase, profiles, status, message, selectedTable: metadata, zOptions, tableRendering: table } = state;
-  return { phase, profiles, status, message, metadata, zOptions, table };
+  const { phase, profiles, status, message, tables, selectedTable: metadata, zOptions, tableRendering: table } = state;
+  return { phase, profiles, status, message, tables, metadata, zOptions, table };
 }
 
 const propsFromDispatch: MapDispatchToProps<PropsFromDispatch, {}> = {

@@ -3,17 +3,23 @@ import TableViewer, { Pager, ZAxisNavigation } from '@cfl/table-viewer';
 import { QueryableTablePage } from '@cfl/table-viewer';
 import { Option, TableMetadata } from '@cfl/table-rendering-service';
 
+import './table.less';
+
 export interface TableProps {
+  tables: TableMetadata[];
   metadata: TableMetadata;
   zOptions: Option[][];
   table: QueryableTablePage;
   onChangePage: (x: number, y: number, z: number) => void;
 }
 export default function Table(props: TableProps): JSX.Element {
-  const { metadata, zOptions, table, onChangePage } = props;
+  const { tables, metadata, zOptions, table, onChangePage } = props;
   return (
-    <div>
+    <div className={'ckr-TableHolder'}>
       <div style={{height: 100}}>
+        <select>
+          {tables.map(t => <option>{t.name}</option>)}
+        </select>
         <ZAxisNavigation
           breakdowns={metadata.z.breakdowns}
           options={zOptions}
@@ -28,7 +34,7 @@ export default function Table(props: TableProps): JSX.Element {
           onSelect={(x, y) => onChangePage(x, y, table.z)}
         />}
       </div>
-      <div style={{height: 800}}>
+      <div className={'ckr-TableHolder-table'}>
         <TableViewer
           data={table}
           onSelect={() => undefined}

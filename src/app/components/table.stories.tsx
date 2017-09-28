@@ -10,6 +10,7 @@ storiesOf('Table', module)
 
     return (
       <Table
+        tables={[metadata]}
         metadata={metadata}
         zOptions={zOptions}
         table={table}

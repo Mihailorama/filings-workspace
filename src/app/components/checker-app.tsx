@@ -38,6 +38,7 @@ export interface CheckerAppProps extends Props<CheckerApp> {
   error?: string;
   onSubmit?: (params: ValidationParams) => void;
   onResultsDismiss?: () => void;
+  tables?: TableMetadata[];
   metadata?: TableMetadata;
   zOptions?: Option[][];
   table?: QueryableTablePage;
@@ -46,7 +47,7 @@ export interface CheckerAppProps extends Props<CheckerApp> {
 
 export default class CheckerApp extends Component<CheckerAppProps> {
   render(): JSX.Element {
-    const { phase, profiles, status, error, onSubmit, onResultsDismiss, metadata, zOptions, table, onChangePage } = this.props;
+    const { phase, profiles, status, error, onSubmit, onResultsDismiss, tables, metadata, zOptions, table, onChangePage } = this.props;
 
     return <div className={classNames('ckr-CheckerApp', `ckr-CheckerApp-${phase}`)}>
       <AppBarContainer className='ckr-CheckerApp-appBar'/>
@@ -59,8 +60,8 @@ export default class CheckerApp extends Component<CheckerAppProps> {
             onClick={(phase === 'checking-failed' || phase === 'results') ? onResultsDismiss : undefined}>
           <div className='ckr-CheckerApp-resultHolder'>
             <ValidationResult status={status}/>
-            {phase === 'results' && metadata && zOptions && table && onChangePage
-              && <Table metadata={metadata} zOptions={zOptions} table={table} onChangePage={onChangePage}/>}
+            {phase === 'results' && tables && metadata && zOptions && table && onChangePage
+              && <Table tables={tables} metadata={metadata} zOptions={zOptions} table={table} onChangePage={onChangePage}/>}
             {(phase === 'checking-failed' || phase === 'results') && <ContactDetails className='ckr-CheckerApp-resultContact'/>}
             {(phase === 'checking-failed' || phase === 'results') && <CloseSymbol/>}
           </div>

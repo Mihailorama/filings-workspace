@@ -24,6 +24,7 @@ import { action } from '@storybook/addon-actions';
 import { profiles, apps } from '../../stories/util';
 import { CheckerState } from '../state';
 import CheckerAppContainer from './checker-app-container';
+import { basicTableWithMetadata } from '@cfl/table-viewer/lib/test-utils';
 
 const etc: CheckerState = {
   user: {sub: 'uuid-of-user', email: 'b@example.com'},
@@ -51,9 +52,22 @@ storiesOf('App layout', module)
     }}>
       <CheckerAppContainer/>
     </Provider>)
-  .add('Result', () => <Provider store={{
+  .add('Result', () => {
+    const { table, metadata, zOptions } = basicTableWithMetadata();
+    return <Provider store={{
       ...funcs,
-      getState: () => ({...etc, profiles: profiles('Profile'), phase: 'results', status: 'OK'}),
+      getState: () => ({
+        ...etc,
+        profiles: profiles('Profile'),
+        phase: 'results',
+        status: 'OK',
+        tables: [metadata, {name: 'another table'}],
+        selectedTable: metadata,
+        zOptions,
+        tableRendering: table,
+        onChangePage: action('onChangePage') as any,
+      }),
     }}>
       <CheckerAppContainer/>
-    </Provider>);
+    </Provider>;
+  });
