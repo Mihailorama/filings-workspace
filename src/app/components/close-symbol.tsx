@@ -28,14 +28,17 @@ export interface CloseSymbolProps {
   ell?: number;
   stroke?: string;
   fill?: string;
+
+  onClick?: () => void;
 }
 
-function CloseSymbol({className, ell = 10, r = 12, strokeWidth = 2, circleStrokeWidth = 0, stroke, fill}: CloseSymbolProps): JSX.Element {
+function CloseSymbol({className, ell = 10, r = 12, strokeWidth = 2, circleStrokeWidth = 0, stroke, fill,
+      onClick}: CloseSymbolProps): JSX.Element {
   return <svg xmlns='http://www.w3.org/2000/svg'
       viewBox={`0 0 ${2 * r} ${2 * r}`}
       width={2 * r} accentHeight={2 * r}
       className={classNames('ckr-CloseSymbol', className)}>
-    <g stroke={stroke}>
+    <g stroke={stroke} onClick={onClick}>
       <circle cx={r} cy={r} r={r - 0.5 * circleStrokeWidth} fill={fill} strokeWidth={circleStrokeWidth}/>
       <path d={`M${r - 0.5 * ell},${r - 0.5 * ell}l${ell},${ell}m0,${-ell}l${-ell},${ell}`} strokeWidth={strokeWidth}/>
     </g>

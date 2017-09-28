@@ -11,15 +11,18 @@ export interface TableProps {
   zOptions: Option[][];
   table: QueryableTablePage;
   onChangePage: (x: number, y: number, z: number) => void;
+  onChangeTable: (table: TableMetadata) => void;
 }
 export default function Table(props: TableProps): JSX.Element {
-  const { tables, metadata, zOptions, table, onChangePage } = props;
+  const { tables, metadata, zOptions, table, onChangePage, onChangeTable } = props;
   return (
     <div className={'ckr-TableHolder'}>
-      <div style={{height: 100}}>
-        <select>
-          {tables.map(t => <option>{t.name}</option>)}
-        </select>
+      <div style={{ height: 100 }}>
+        {tables.length > 1 &&
+          <select onChange={e => onChangeTable(tables[+e.currentTarget.value])}>
+            {tables.map((t, i) => <option key={t.id} value={i}>{t.name}</option>)}
+          </select>
+        }
         <ZAxisNavigation
           breakdowns={metadata.z.breakdowns}
           options={zOptions}

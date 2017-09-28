@@ -64,6 +64,7 @@ class CheckerAppContainer extends Component<CheckerAppContainerProps> {
         zOptions={zOptions}
         table={table}
         onChangePage={(x, y, z) => onTableRenderPage && metadata && onTableRenderPage(metadata, x, y, z)}
+        onChangeTable={newTable => onTableRenderPage && onTableRenderPage(newTable, 0, 0, 0)}
       />
     );
   }

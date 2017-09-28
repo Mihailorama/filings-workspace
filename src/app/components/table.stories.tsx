@@ -10,11 +10,12 @@ storiesOf('Table', module)
 
     return (
       <Table
-        tables={[metadata]}
+        tables={[metadata, {name: 'Better table'} as any]}
         metadata={metadata}
         zOptions={zOptions}
         table={table}
         onChangePage={action('onChangePage')}
+        onChangeTable={action('onChangeTable')}
       />
     );
   });

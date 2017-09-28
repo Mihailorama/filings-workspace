@@ -43,11 +43,13 @@ export interface CheckerAppProps extends Props<CheckerApp> {
   zOptions?: Option[][];
   table?: QueryableTablePage;
   onChangePage?: (x: number, y: number, z: number) => void;
+  onChangeTable?: (table: TableMetadata) => void;
 }
 
 export default class CheckerApp extends Component<CheckerAppProps> {
   render(): JSX.Element {
-    const { phase, profiles, status, error, onSubmit, onResultsDismiss, tables, metadata, zOptions, table, onChangePage } = this.props;
+    const { phase, profiles, status, error, onSubmit, onResultsDismiss, tables, metadata, zOptions, table,
+        onChangePage, onChangeTable } = this.props;
 
     return <div className={classNames('ckr-CheckerApp', `ckr-CheckerApp-${phase}`)}>
       <AppBarContainer className='ckr-CheckerApp-appBar'/>
@@ -56,14 +58,14 @@ export default class CheckerApp extends Component<CheckerAppProps> {
         <ContactDetails className='ckr-CheckerApp-formContact'/>
       </div>
       {(phase === 'uploading' || phase === 'checking' || phase === 'checking-failed' || phase === 'results')
-        && <div className='ckr-CheckerApp-resultOverlay'
-            onClick={(phase === 'checking-failed' || phase === 'results') ? onResultsDismiss : undefined}>
+        && <div className='ckr-CheckerApp-resultOverlay'>
           <div className='ckr-CheckerApp-resultHolder'>
             <ValidationResult status={status}/>
-            {phase === 'results' && tables && metadata && zOptions && table && onChangePage
-              && <Table tables={tables} metadata={metadata} zOptions={zOptions} table={table} onChangePage={onChangePage}/>}
+            {phase === 'results' && tables && metadata && zOptions && table && onChangePage && onChangeTable
+              && <Table tables={tables} metadata={metadata} zOptions={zOptions} table={table}
+                  onChangePage={onChangePage} onChangeTable={onChangeTable}/>}
             {(phase === 'checking-failed' || phase === 'results') && <ContactDetails className='ckr-CheckerApp-resultContact'/>}
-            {(phase === 'checking-failed' || phase === 'results') && <CloseSymbol/>}
+            {(phase === 'checking-failed' || phase === 'results') && <CloseSymbol onClick={onResultsDismiss}/>}
           </div>
         </div>}
     </div>;
