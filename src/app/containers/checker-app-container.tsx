@@ -18,10 +18,12 @@ import * as React from 'react';
 import { Component, Props } from 'react';
 import { connect, MapDispatchToProps } from 'react-redux';
 
-import { checkingStartAction, resultsDismissAction } from '../actions';
+import { tableRenderPageAction, checkingStartAction, resultsDismissAction } from '../actions';
 import { Profile, ValidationStatus } from '../models';
 import { CheckingPhase, CheckerState } from '../state';
 import CheckerApp from '../components/checker-app';
+import { QueryableTablePage } from '@cfl/table-viewer';
+import { Option, TableMetadata } from '@cfl/table-rendering-service';
 
 type OwnProps = Props<CheckerAppContainer>;
 
@@ -30,31 +32,50 @@ interface PropsFromState {
   profiles?: Profile[];
   status?: ValidationStatus;
   message?: string;
+  metadata?: TableMetadata;
+  zOptions?: Option[][];
+  table?: QueryableTablePage;
 }
 
 interface PropsFromDispatch {
   onCheckingStart?: typeof checkingStartAction;
   onResultsDismiss?: typeof resultsDismissAction;
+  onTableRenderPage?: typeof tableRenderPageAction;
 }
 
 type CheckerAppContainerProps = OwnProps & PropsFromState & PropsFromDispatch;
 
 class CheckerAppContainer extends Component<CheckerAppContainerProps> {
   render(): JSX.Element {
-    const { phase, profiles, status, message, onCheckingStart, onResultsDismiss } = this.props;
-    return <CheckerApp phase={phase} profiles={profiles} status={status} error={message}
-      onSubmit={onCheckingStart} onResultsDismiss={onResultsDismiss} />;
+    const {
+      phase, profiles, status, message, onCheckingStart, onResultsDismiss, metadata, zOptions, table, onTableRenderPage,
+    } = this.props;
+    return (
+      <CheckerApp
+        phase={phase}
+        profiles={profiles}
+        status={status}
+        error={message}
+        onSubmit={onCheckingStart}
+        onResultsDismiss={onResultsDismiss}
+        metadata={metadata}
+        zOptions={zOptions}
+        table={table}
+        onChangePage={(x, y, z) => onTableRenderPage && metadata && onTableRenderPage(metadata, x, y, z)}
+      />
+    );
   }
 }
 
 function propsFromState(state: CheckerState): PropsFromState {
-  const { phase, profiles, status, message } = state;
-  return { phase, profiles, status, message };
+  const { phase, profiles, status, message, selectedTable: metadata, zOptions, tableRendering: table } = state;
+  return { phase, profiles, status, message, metadata, zOptions, table };
 }
 
 const propsFromDispatch: MapDispatchToProps<PropsFromDispatch, {}> = {
   onCheckingStart: checkingStartAction,
   onResultsDismiss: resultsDismissAction,
+  onTableRenderPage: tableRenderPageAction,
 };
 
 export default connect(propsFromState, propsFromDispatch)(CheckerAppContainer);

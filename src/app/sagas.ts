@@ -14,17 +14,37 @@
  *  limitations under the License.
  */
 
-import { Effect, delay } from 'redux-saga';
+import { delay, Effect } from 'redux-saga';
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 
-import { startupInfoReceivedAction, startupInfoFailedAction,
-  CHECKING_START, CheckingAction, uploadStartedAction, uploadFailedAction,
-  checkingStartedAction, checkingReceivedAction, checkingFailedAction } from './actions';
+import { CHECKING_START,
+  CheckingAction,
+  checkingFailedAction,
+  checkingReceivedAction,
+  checkingStartedAction,
+  startupInfoFailedAction,
+  startupInfoReceivedAction,
+  TABLE_RENDER_PAGE,
+  tableRenderingReceivedAction,
+  tableRenderingRequested,
+  TableRenderPageAction,
+  tableRenderPageAction,
+  tablesReceivedAction,
+  uploadFailedAction,
+  uploadStartedAction } from './actions';
 import { apiFetchJson } from './api-fetch';
-import { User, App, Category, Filing, FilingVersion } from './models';
-import { USER, APPS, DOCUMENT_SERVICE_FILINGS, documentServiceCategories, documentServiceFilingVersion } from './urls';
+import { App, Category, Filing, FilingVersion, QueryableTablePageImpl, User } from './models';
+import { APPS,
+  DOCUMENT_SERVICE_FILINGS,
+  documentServiceCategories,
+  documentServiceFilingVersion,
+  tableRenderingServiceRender,
+  tableRenderingServiceTables,
+  tableRenderingServiceZOptions,
+  USER } from './urls';
 
 const POLL_MILLIS = 1000;
+const TABLE_WINDOW_HEIGHT = 64;
 
 /**
  * Fetch the information needed at startup. If this fails we cannot show the app.
@@ -86,21 +106,47 @@ export function* checkingStartSaga(action: CheckingAction): IterableIterator<Eff
       yield call(delay, POLL_MILLIS);
       version = yield call(apiFetchJson, documentServiceFilingVersion(version));
     }
-    const { validationStatus } = version;
+    const { validationStatus, id: filingVersionId } = version;
     if (!validationStatus) {
       yield put(checkingFailedAction('Filing version has no validation status'));
       return;
     }
-
     yield put(checkingReceivedAction(validationStatus));
+
+    // Fetch table info
+    const tables = yield call(apiFetchJson, tableRenderingServiceTables(filingVersionId));
+    yield put(tablesReceivedAction(tables));
+
+    // Select the first table
+    yield put(tableRenderPageAction(tables[0], 0, 0, 0));
+  } catch (res) {
+    yield put(checkingFailedAction(res.message || res.statusText || `Status: ${res.status}`));
+  }
+}
+
+export function* tableRenderingSaga(action: TableRenderPageAction): IterableIterator<Effect> {
+  const { table, x, y, z } = action;
+  try {
+    const width = table.x.sliceCount > 0 && table.x.depth > 0 ? table.x.sliceCount : 1;
+    const window = {x, y, z, width, height: TABLE_WINDOW_HEIGHT};
+    yield put(tableRenderingRequested(table, window));
+
+    const [ zOptions, tableRendering ] = yield all([
+      call(apiFetchJson, tableRenderingServiceZOptions(table.id, 0)),
+      call(apiFetchJson, tableRenderingServiceRender(table.id, window)),
+    ]);
+    yield put(tableRenderingReceivedAction(zOptions, new QueryableTablePageImpl(table, tableRendering)));
   } catch (res) {
     yield put(checkingFailedAction(res.message || res.statusText || `Status: ${res.status}`));
   }
 }
 
 /**
- * Watch for `CHECKING_START` actions.
+ * Watch for actions.
  */
 export function* checkingSaga(): IterableIterator<Effect> {
-  yield takeEvery(CHECKING_START, checkingStartSaga);
+  yield all([
+    takeEvery(CHECKING_START, checkingStartSaga),
+    takeEvery(TABLE_RENDER_PAGE, tableRenderingSaga),
+  ]);
 }

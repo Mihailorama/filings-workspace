@@ -19,11 +19,15 @@
  */
 import { Action } from 'redux';
 
-import { STARTUP_INFO_RECEIVED, StartupInfoReceivedAction, STARTUP_INFO_FAILED, FailedAction,
+import {
+  STARTUP_INFO_RECEIVED, StartupInfoReceivedAction, STARTUP_INFO_FAILED, FailedAction,
   UPLOAD_STARTED, UPLOAD_FAILED,
   CHECKING_STARTED, CHECKING_FAILED,
   CHECKING_RECEIVED, CheckingReceivedAction,
-  RESULTS_DISMISS } from './actions';
+  RESULTS_DISMISS,
+  TABLES_RECEIVED, TableRenderingRequestedAction,
+  TABLE_RENDERING_RECEIVED, TableRenderingReceivedAction, TablesReceivedAction, TABLE_RENDERING_REQUESTED,
+} from './actions';
 import { CheckerState } from './state';
 
 export function checker(state: CheckerState | undefined, action: Action): CheckerState {
@@ -63,6 +67,21 @@ export function checker(state: CheckerState | undefined, action: Action): Checke
       }
     case RESULTS_DISMISS:
       return { ...state, phase: 'form', status: undefined, message: undefined };
+    case TABLES_RECEIVED:
+      {
+        const { tables } = action as TablesReceivedAction;
+        return { ...state, tables };
+      }
+    case TABLE_RENDERING_REQUESTED:
+      {
+        const { table } = action as TableRenderingRequestedAction;
+        return { ...state, selectedTable: table };
+      }
+    case TABLE_RENDERING_RECEIVED:
+      {
+        const { zOptions, tableRendering } = action as TableRenderingReceivedAction;
+        return { ...state, zOptions, tableRendering };
+      }
     default:
       break;
   }
