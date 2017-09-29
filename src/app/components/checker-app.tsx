@@ -27,6 +27,9 @@ import ValidationResult from './validation-result';
 import CloseSymbol from './close-symbol';
 
 import './checker-app.less';
+import Table from './table';
+import { Option, TableMetadata } from '@cfl/table-rendering-service';
+import { QueryableTablePage } from '@cfl/table-viewer';
 
 export interface CheckerAppProps extends Props<CheckerApp> {
   phase?: CheckingPhase;
@@ -35,25 +38,34 @@ export interface CheckerAppProps extends Props<CheckerApp> {
   error?: string;
   onSubmit?: (params: ValidationParams) => void;
   onResultsDismiss?: () => void;
+  tables?: TableMetadata[];
+  metadata?: TableMetadata;
+  zOptions?: Option[][];
+  table?: QueryableTablePage;
+  onChangePage?: (x: number, y: number, z: number) => void;
+  onChangeTable?: (table: TableMetadata) => void;
 }
 
 export default class CheckerApp extends Component<CheckerAppProps> {
   render(): JSX.Element {
-    const { phase, profiles, status, error, onSubmit, onResultsDismiss } = this.props;
+    const { phase, profiles, status, error, onSubmit, onResultsDismiss, tables, metadata, zOptions, table,
+        onChangePage, onChangeTable } = this.props;
 
     return <div className={classNames('ckr-CheckerApp', `ckr-CheckerApp-${phase}`)}>
       <AppBarContainer className='ckr-CheckerApp-appBar'/>
-      <div className='ckr-CheckerApp-formHolder'>
+      {(phase === 'startup' || phase === 'form') && <div className='ckr-CheckerApp-formHolder'>
         <ValidationForm profiles={profiles} error={error} onSubmit={phase === 'form' ? onSubmit : undefined}/>
         <ContactDetails className='ckr-CheckerApp-formContact'/>
-      </div>
+      </div>}
       {(phase === 'uploading' || phase === 'checking' || phase === 'checking-failed' || phase === 'results')
-        && <div className='ckr-CheckerApp-resultOverlay'
-            onClick={(phase === 'checking-failed' || phase === 'results') ? onResultsDismiss : undefined}>
+        && <div className='ckr-CheckerApp-resultOverlay'>
           <div className='ckr-CheckerApp-resultHolder'>
             <ValidationResult status={status}/>
+            {phase === 'results' && tables && metadata && zOptions && table && onChangePage && onChangeTable
+              && <Table tables={tables} metadata={metadata} zOptions={zOptions} table={table}
+                  onChangePage={onChangePage} onChangeTable={onChangeTable}/>}
             {(phase === 'checking-failed' || phase === 'results') && <ContactDetails className='ckr-CheckerApp-resultContact'/>}
-            {(phase === 'checking-failed' || phase === 'results') && <CloseSymbol/>}
+            {(phase === 'checking-failed' || phase === 'results') && <CloseSymbol onClick={onResultsDismiss}/>}
           </div>
         </div>}
     </div>;

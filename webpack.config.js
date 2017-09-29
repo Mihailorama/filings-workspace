@@ -24,11 +24,11 @@ if (isDev) {
 
 let config = {
   entry: {
-    vendors: [
+    app: [
       'babel-polyfill',
       'isomorphic-fetch',
+      ...appEntries,
     ],
-    app: appEntries
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.less', '.css', '.json'],
@@ -79,6 +79,13 @@ let config = {
       { test: /\.woff(2)?(\?v=[0-9].[0-9].[0-9])?$/, loader: 'url-loader?mimetype=application/font-woff' },
       { test: /\.(ttf|eot)(\?v=[0-9].[0-9].[0-9])?$/, loader: 'file-loader?name=[name].[ext]?[hash:6]' },
       { test: /\.json$/, loader: 'json-loader' },
+      {
+        test: /\.js$/,
+        include: [
+            /@cfl/
+        ],
+        loader: 'babel-loader',
+      },
     ]
   },
   node: {
