@@ -72,6 +72,25 @@
   }
 }
 
+select {
+  .ckr-Button;
+
+  display: block;
+  flex-grow: 1;
+  flex-shrink: 1;
+  max-width: 100%;
+
+  font-size: 14px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  color: @secondary;
+}
+
+option {
+  color: @ink;
+  background: @paper;
+}
+
 .ckr-Form {
   display: flex;
   flex-flow: column nowrap;
@@ -94,25 +113,6 @@
     font-weight: 500;
     white-space: nowrap;
     color: @muted;
-  }
-
-  select {
-    .ckr-Button;
-
-    display: block;
-    flex-grow: 1;
-    flex-shrink: 1;
-    max-width: 100%;
-
-    font-size: 14px;
-    font-weight: 500;
-    text-overflow: ellipsis;
-    color: @secondary;
-  }
-
-  option {
-    color: @ink;
-    background: @paper;
   }
 }
 
