@@ -10,7 +10,7 @@
     "type": "git",
     "url": "https://github.com/CoreFiling/quick-xbrl-validator.git"
   },
-  "license": "UNLICENSED",
+  "license": "Apache-2.0",
   "homepage": "https://github.com/CoreFiling/quick-xbrl-validator",
   "scripts": {
     "prepublishOnly": "rm -rf www && npm run compile",
