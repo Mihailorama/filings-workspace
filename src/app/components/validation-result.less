@@ -16,8 +16,11 @@
 
 @import (reference) '../styles/defs.less';
 
+@statusIcon: 48px;
+@statusBd: 2px;
+@statusTotal: @statusIcon + 2 * @statusBd + @gap2;
+
 .ckr-ValidationResult {
-  flex-grow: 1;
   width: 100%;
   display: flex;
   flex-flow: column wrap;
@@ -44,17 +47,16 @@
   }
 
   &-status {
-    flex-grow: 1;
+    // flex-grow: 1;
+    flex-shrink: 0;
+    margin: @gap2 @gap3 0;
     width: 100%;
 
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: center;
-    justify-content: flex-end;
+    display: block;
 
     font-size: 36px;
     font-weight: 300;
-    line-height: percentage(44 / 36);
+    line-height: 1;
 
     // @media (min-height: (@bigger-gap + @status-ht + @hunk)) {
     //   margin-top: (@bigger-gap);
@@ -62,15 +64,20 @@
 
     &:before {
       content: " ";
-      flex-grow: 1;
-      margin-bottom: 6px;
-      display: block;
-      width: 100%;
-      height: 100%;
+      // flex-grow: 1;
+      margin-right: 12px;
+      display: inline-block;
+      vertical-align: -33%;
+      height: @statusIcon;
+      width: @statusIcon;
+      // width: 100%;
+      // height: 100%;
       max-height: @status-ht;
       background-size: auto 100%;
       background-position: 50% 50%;
       background-repeat: no-repeat;
+      border: @statusBd solid #FFF;
+      border-radius: 25px;
     }
   }
 
@@ -86,7 +93,7 @@
   &-detail {
     max-width: 30em;
 
-    margin: 0 0 @gap;
+    margin: 0 0 0 (50px + 12px);
   }
 
   &-loadingDetail {

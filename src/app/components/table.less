@@ -1,10 +1,90 @@
+@import (reference) '../styles/defs';
+@import (reference) './checker-app';
+@import (reference) './validation-result';
 
-.ckr-TableHolder {
-  background-color: #eee;
-  color: black;
+.clearfix() {  // Needed because Bootstrap implements grid with floats like some kind of cave person.
+  &:after {
+    clear: both;
+    display: block;
+    width: 0;
+    height: 0;
+    content: "";
+  }
+}
+
+.ckr-Table {
+  flex-grow: 1;
+  margin: @gap 0 0;
+  width: 100%;
+
+  color: @ink;
+  background: @paper;
+
+  &-tableSelect,
+  &-nav,
+  &-pager {
+    width: 100%;
+    margin-bottom: @gap;
+
+    .clearfix();
+  }
+
+  &-tableSelect {
+    font-size: 24px;
+    height: 48px;
+
+    option {
+      font-size: 14px;
+      line-height: 2;
+    }
+  }
+
+  &-nav {
+    div div div div:not(.dropdown) {
+      margin-left: @gap;
+    }
+  }
+
+  &-pager {
+    padding-left: @gap;
+  }
+
+  // We have to calculate the remaining space ourselves.
+  // This varies ccording to what other UI elements are present.
+  // This is conveyed through additional classes.
 
   &-table {
-    height: 500px;
-    width: 80vw;
+    height: calc(~"100vh - " (@bar-ht + @statusTotal + @gap + @contact-ht));
+    width: calc(~"100vw - " (2 * @gap3));
+
+    background-color: lighten(@primary, 35%, false);
+  }
+
+  &-withPager {
+    height: calc(~"100vh - " (@bar-ht + @statusTotal + @gap + 34px + @gap + @contact-ht));
+  }
+
+  &-withTableSelect {
+    height: calc(~"100vh - " (@bar-ht + @statusTotal + @gap + 48px + @gap + @contact-ht));
+  }
+
+  &-withTableSelect&-withPager {
+    height: calc(~"100vh - " (@bar-ht + @statusTotal + @gap + 48px + @gap + 34px + @gap + @contact-ht));
+  }
+
+  &-withZOptions {
+    height: calc(~"100vh - " (@bar-ht + @statusTotal + @gap + 34px + @gap + @contact-ht));
+  }
+
+  &-withZOptions&-withPager {
+    height: calc(~"100vh - " (@bar-ht + @statusTotal + @gap + 34px + @gap + 34px + @gap + @contact-ht));
+  }
+
+  &-withTableSelect&-withZOptions {
+    height: calc(~"100vh - " (@bar-ht + @statusTotal + @gap + 48px + @gap + 34px + @gap + @contact-ht));
+  }
+
+  &-withTableSelect&-withZOptions&-withPager {
+    height: calc(~"100vh - " (@bar-ht + @statusTotal + @gap + 48px + @gap + 34px + @gap + 34px + @gap + @contact-ht));
   }
 }
