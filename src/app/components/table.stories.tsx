@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import Table from './table';
 import { action } from '@storybook/addon-actions';
-import { basicTableWithMetadata } from '@cfl/table-viewer/lib/test-utils';
+import { lShapedTableWithMetadata } from '@cfl/table-viewer/lib/test-utils/l-shaped-headers';
+
+import Table from './table';
 
 storiesOf('Table', module)
   .add('Single page', () => {
-    const { table, metadata, zOptions } = basicTableWithMetadata();
+    const { table, metadata, zOptions} = lShapedTableWithMetadata();
 
     return (
       <Table

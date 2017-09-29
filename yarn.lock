@@ -13,9 +13,9 @@
     core-js "^2.4.0"
     isomorphic-fetch "^2.2.1"
 
-"@cfl/table-viewer@0.1.1-dev.31665":
-  version "0.1.1-dev.31665"
-  resolved "https://artifacts.int.corefiling.com/api/npm/cfl-npm/@cfl/table-viewer/-/@cfl/table-viewer-0.1.1-dev.31665.tgz#6a48cb47917c449807d046393e08f9208edd8ea4"
+"@cfl/table-viewer@0.1.1-dev.31799":
+  version "0.1.1-dev.31799"
+  resolved "https://artifacts.int.corefiling.com/api/npm/cfl-npm/@cfl/table-viewer/-/@cfl/table-viewer-0.1.1-dev.31799.tgz#9298c58c0736d53aa9cd3d25c6f2f7b1df0b9a87"
   dependencies:
     react-virtualized "~9.9.0"
 

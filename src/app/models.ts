@@ -17,8 +17,9 @@
 // Interface declarations for the JSON objects returned by the API.
 // There are example values in ./tests/model-examples.ts.
 
-import { HeaderSlice, QueryableTablePage } from '@cfl/table-viewer';
+import { createHeaderSlice, HeaderSlice, QueryableTablePage } from '@cfl/table-viewer';
 import { Cell, Header, TableChunk, TableHeader, TableMetadata } from '@cfl/table-rendering-service';
+
 /**
  * Info about the currently logged-in user.
  */
@@ -175,25 +176,11 @@ export class QueryableTablePageImpl implements QueryableTablePage {
   }
 
   getXHeaders(col: number): HeaderSlice[] {
-    const slice = this.chunk.xAxis[col - this.x];
-    return this.metadata.x.breakdowns.map((breakdown, i) => {
-      return {
-        breakdown,
-        depth: slice[i].depth,
-        header: slice[i],
-        headers: slice,
-      };
-    });
+    return createHeaderSlice(this.metadata.x.breakdowns, this.chunk.xAxis[col - this.x]);
   }
 
   getYHeaders(row: number): HeaderSlice[] {
-    const slice = this.chunk.yAxis[row - this.y];
-    return this.metadata.y.breakdowns.map((breakdown, i) => ({
-      breakdown,
-      depth: slice[i].depth,
-      header: slice[i],
-      headers: slice,
-    }));
+    return createHeaderSlice(this.metadata.y.breakdowns, this.chunk.yAxis[row - this.y]);
   }
 
   getRow(y: number): Cell[] {
