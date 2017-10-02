@@ -57,7 +57,7 @@ export default function CheckerApp(props: CheckerAppProps): JSX.Element {
       && <div className='ckr-CheckerApp-resultOverlay'>
         <div className='ckr-CheckerApp-resultHolder'>
           <ValidationResult status={status}/>
-          {phase === 'results' && tables && metadata && zOptions && table && onChangePage && onChangeTable
+          {phase === 'results' && tables && metadata && zOptions && onChangePage && onChangeTable
             && <Table tables={tables} metadata={metadata} zOptions={zOptions} table={table}
                 onChangePage={onChangePage} onChangeTable={onChangeTable}/>}
           {(phase === 'checking-failed' || phase === 'results') && <ContactDetails className='ckr-CheckerApp-resultContact'/>}

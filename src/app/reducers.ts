@@ -75,7 +75,7 @@ export function checker(state: CheckerState | undefined, action: Action): Checke
     case TABLE_RENDERING_REQUESTED:
       {
         const { table } = action as TableRenderingRequestedAction;
-        return { ...state, selectedTable: table };
+        return { ...state, selectedTable: table, tableRendering: undefined };
       }
     case TABLE_RENDERING_RECEIVED:
       {
