@@ -56,4 +56,19 @@ storiesOf('CheckerApp', module)
         onChangeTable={action('onChangeTable') as any}
       />
     );
+  })
+  .add('Loading table', () => {
+    const { metadata, zOptions } = basicTableWithMetadata();
+    return (
+      <CheckerApp
+        profiles={profiles('Profile')}
+        phase={'results'}
+        status={'OK'}
+        tables={[metadata, {name: 'another table'} as TableMetadata]}
+        metadata={metadata}
+        zOptions={zOptions}
+        onChangePage={action('onChangePage') as any}
+        onChangeTable={action('onChangeTable') as any}
+      />
+    );
   });
