@@ -17,13 +17,14 @@
 import * as React from 'react';
 import { Component, Props } from 'react';
 import { connect, MapDispatchToProps } from 'react-redux';
+import { Option, TableMetadata } from '@cfl/table-rendering-service';
+import { QueryableTablePage } from '@cfl/table-viewer';
 
 import { tableRenderPageAction, checkingStartAction, resultsDismissAction } from '../actions';
 import { Profile, ValidationStatus } from '../models';
 import { CheckingPhase, CheckerState } from '../state';
 import CheckerApp from '../components/checker-app';
-import { QueryableTablePage } from '@cfl/table-viewer';
-import { Option, TableMetadata } from '@cfl/table-rendering-service';
+import AppBarContainer from '../corefiling/app-bar-container';
 
 type OwnProps = Props<CheckerAppContainer>;
 
@@ -52,20 +53,23 @@ class CheckerAppContainer extends Component<CheckerAppContainerProps> {
       phase, profiles, status, message, onCheckingStart, onResultsDismiss, tables, metadata, zOptions, table, onTableRenderPage,
     } = this.props;
     return (
-      <CheckerApp
-        phase={phase}
-        profiles={profiles}
-        status={status}
-        error={message}
-        onSubmit={onCheckingStart}
-        onResultsDismiss={onResultsDismiss}
-        tables={tables}
-        metadata={metadata}
-        zOptions={zOptions}
-        table={table}
-        onChangePage={(x, y, z) => onTableRenderPage && metadata && onTableRenderPage(metadata, x, y, z)}
-        onChangeTable={newTable => onTableRenderPage && onTableRenderPage(newTable, 0, 0, 0)}
-      />
+      <div>
+        <AppBarContainer className='ckr-CheckerApp-appBar'/>
+        <CheckerApp
+          phase={phase}
+          profiles={profiles}
+          status={status}
+          error={message}
+          onSubmit={onCheckingStart}
+          onResultsDismiss={onResultsDismiss}
+          tables={tables}
+          metadata={metadata}
+          zOptions={zOptions}
+          table={table}
+          onChangePage={(x, y, z) => onTableRenderPage && metadata && onTableRenderPage(metadata, x, y, z)}
+          onChangeTable={newTable => onTableRenderPage && onTableRenderPage(newTable, 0, 0, 0)}
+        />
+      </div>
     );
   }
 }
