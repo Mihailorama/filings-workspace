@@ -25,6 +25,22 @@ import { profiles } from '../../stories/util';
 import CheckerApp from './checker-app';
 
 storiesOf('CheckerApp', module)
+  .add('Form', () => {
+    return (
+      <CheckerApp
+        profiles={profiles('Profile')}
+        phase={'form'}
+      />
+    );
+  })
+  .add('Checking', () => {
+    return (
+      <CheckerApp
+        profiles={profiles('Profile')}
+        phase={'checking'}
+      />
+    );
+  })
   .add('Result', () => {
     const { table, metadata, zOptions } = basicTableWithMetadata();
     return (

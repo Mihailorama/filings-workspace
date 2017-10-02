@@ -21,10 +21,9 @@ import { Provider } from 'react-redux';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import { profiles, apps } from '../../stories/util';
+import { apps, profiles } from '../../stories/util';
 import { CheckerState } from '../state';
 import CheckerAppContainer from './checker-app-container';
-import { basicTableWithMetadata } from '@cfl/table-viewer/lib/test-utils';
 
 const etc: CheckerState = {
   user: {sub: 'uuid-of-user', email: 'b@example.com'},
@@ -45,29 +44,5 @@ storiesOf('App layout', module)
       getState: () => ({...etc,  phase: 'form'}),
     }}>
       <CheckerAppContainer/>
-    </Provider>)
-  .add('Checking', () => <Provider store={{
-      ...funcs,
-      getState: () => ({...etc, phase: 'checking'}),
-    }}>
-      <CheckerAppContainer/>
-    </Provider>)
-  .add('Result', () => {
-    const { table, metadata, zOptions } = basicTableWithMetadata();
-    return <Provider store={{
-      ...funcs,
-      getState: () => ({
-        ...etc,
-        profiles: profiles('Profile'),
-        phase: 'results',
-        status: 'OK',
-        tables: [metadata, {name: 'another table'}],
-        selectedTable: metadata,
-        zOptions,
-        tableRendering: table,
-        onChangePage: action('onChangePage') as any,
-      }),
-    }}>
-      <CheckerAppContainer/>
-    </Provider>;
-  });
+    </Provider>,
+  );
