@@ -23,7 +23,6 @@ import { Option, TableMetadata } from '@cfl/table-rendering-service';
 import './table.less';
 
 export interface TableProps {
-  tables: TableMetadata[];
   metadata: TableMetadata;
   zOptions: Option[][];
   table?: QueryableTablePage;
@@ -31,16 +30,10 @@ export interface TableProps {
   onChangeTable: (table: TableMetadata) => void;
 }
 export default function Table(props: TableProps): JSX.Element {
-  const { tables, metadata, zOptions, table, onChangePage, onChangeTable } = props;
-  const withTableSelect = tables.length > 1;
+  const { metadata, zOptions, table, onChangePage } = props;
   const withZOptions = zOptions.length > 1;
   return (
     <div className={'ckr-Table'}>
-      {withTableSelect &&
-        <select onChange={e => onChangeTable(tables[+e.currentTarget.value])} className='ckr-Table-tableSelect'>
-          {tables.sort((a, b) => a.name.localeCompare(b.name)).map((t, i) => ( <option key={t.id} value={i}>{t.name}</option>))}
-        </select>
-      }
       {withZOptions && table && <div className='ckr-Table-nav'>
         <ZAxisNavigation
           breakdowns={metadata.z.breakdowns}
@@ -59,7 +52,6 @@ export default function Table(props: TableProps): JSX.Element {
       </div>}
       {!table && <div className={'ckr-Table-loading'}></div>}
       {table && <div className={classNames('ckr-Table-table', {
-        'ckr-Table-withTableSelect': withTableSelect,
         'ckr-Table-withZOptions': withZOptions,
         'ckr-Table-withPager': table.hasMultiplePages,
       })}>

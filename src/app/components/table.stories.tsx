@@ -1,14 +1,14 @@
 /*
  *  Copyright 2017 CoreFiling S.A.R.L.
  *
- *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  Licensed under the Apache License, Version 2.0 (the 'License');
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
  *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  distributed under the License is distributed on an 'AS IS' BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
@@ -19,6 +19,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { lShapedTableWithMetadata } from '@cfl/table-viewer/lib/test-utils/l-shaped-headers';
 
+// import { tables as ta, zOptions, tableChunk } from '../../stories/table-a.json';
 import Table from './table';
 
 storiesOf('Table', module)
@@ -27,7 +28,6 @@ storiesOf('Table', module)
 
     return (
       <Table
-        tables={[metadata, {name: 'Better table'} as any]}
         metadata={metadata}
         zOptions={zOptions}
         table={table}
@@ -35,4 +35,17 @@ storiesOf('Table', module)
         onChangeTable={action('onChangeTable')}
       />
     );
+  // })
+  // .add('Many Z options', () => {
+
+  //   return (
+  //     <Table
+  //       tables={[metadata]}
+  //       metadata={metadata}
+  //       zOptions={zOptions}
+  //       table={table}
+  //       onChangePage={action('onChangePage')}
+  //       onChangeTable={action('onChangeTable')}
+  //     />
+  //   );
   });
