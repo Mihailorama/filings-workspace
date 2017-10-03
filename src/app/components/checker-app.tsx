@@ -21,12 +21,12 @@ import { QueryableTablePage } from '@cfl/table-viewer';
 
 import { Profile, ValidationParams, ValidationStatus } from '../models';
 import { CheckingPhase } from '../state';
+import Button from './button';
 import ContactDetails from './contact-details';
-import ValidationForm from './validation-form';
-import ValidationResult from './validation-result';
-import CloseSymbol from './close-symbol';
 import Table from './table';
 import TableSelector from './table-selector';
+import ValidationForm from './validation-form';
+import ValidationResult from './validation-result';
 
 import './checker-app.less';
 
@@ -70,7 +70,7 @@ export default function CheckerApp(props: CheckerAppProps): JSX.Element {
         <div className='ckr-CheckerApp-resultHeading'>
           <ValidationResult status={status}/>
           {tables && tables.length > 1 && onChangeTable && <TableSelector tables={tables} onChangeTable={onChangeTable}/>}
-          <CloseSymbol onClick={onResultsDismiss}/>
+          <Button primary className='ckr-CheckerApp-resultReset' onClick={onResultsDismiss}>Upload</Button>
         </div>
         {metadata && zOptions && onChangePage && onChangeTable
           && <Table metadata={metadata} zOptions={zOptions} table={table}

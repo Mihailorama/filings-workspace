@@ -16,8 +16,7 @@
 
 @import (reference) 'defs.less';
 
-@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,300i,500,500i,700');
-
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,300i,500,500i,700');
 
 html {
   margin: 0;
@@ -31,4 +30,63 @@ html {
 body {
   margin: 0;
   padding: 0;
+}
+
+.pagination {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-flow: row nowrap;
+
+
+  li {
+    list-style: nonde;
+    margin: 0;
+    padding: 0;
+    display: block;
+
+    font-weight: 300;
+    border: 1px solid @btn-bd;
+    border-left: none;
+
+    &.active {
+      font-weight: 500;
+
+      a {
+        border-color: @primary;
+      }
+    }
+
+    &.disabled {
+      color: @muted;
+    }
+
+    &:first-child {
+      border-left: 1px solid @btn-bd;
+      border-top-left-radius: 3px;
+      border-bottom-left-radius: 3px;
+    }
+
+    &:last-child {
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+    }
+  }
+
+  a {
+    color: inherit;
+    text-decoration: inherit;
+
+    display: block;
+    width: 2em;
+    line-height: 2em;
+    text-align: center;
+    border: 1px solid @paper;
+
+    &:hover,
+    &:active {
+      background-color: @btn-hover;
+      border-color: @primary;
+    }
+  }
 }

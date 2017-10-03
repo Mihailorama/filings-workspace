@@ -48,7 +48,7 @@ storiesOf('CheckerApp', module)
         profiles={profiles('Profile')}
         phase={'results'}
         status={'OK'}
-        tables={[metadata, {name: 'another table'} as TableMetadata]}
+        tables={[metadata, {name: 'another table', id: 'uuid-of-another-table'} as TableMetadata]}
         metadata={metadata}
         zOptions={zOptions}
         table={table}

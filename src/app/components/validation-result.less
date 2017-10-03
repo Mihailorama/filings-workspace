@@ -16,14 +16,13 @@
 
 @import (reference) '../styles/defs.less';
 
-@statusIcon: 48px;
-@statusBd: 2px;
+@statusIcon: 38px;
+@statusBd: 0px;
 @statusTotal: @statusIcon + 2 * @statusBd + @gap2;
 
 .ckr-ValidationResult {
-  width: 100%;
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: row nowrap;
   justify-content: flex-end;
   align-items: center;
 
@@ -47,31 +46,22 @@
   }
 
   &-status {
-    // flex-grow: 1;
-    flex-shrink: 0;
-    margin: @gap2 @gap3 0;
-    width: 100%;
-
+    margin: 12px @gap3 10px @gap2;
     display: block;
 
+    white-space: nowrap;
     font-size: 36px;
     font-weight: 300;
     line-height: 1;
-
-    // @media (min-height: (@bigger-gap + @status-ht + @hunk)) {
-    //   margin-top: (@bigger-gap);
-    // }
+    color: @secondary;
 
     &:before {
       content: " ";
-      // flex-grow: 1;
       margin-right: 12px;
       display: inline-block;
-      vertical-align: -33%;
+      vertical-align: -18%;
       height: @statusIcon;
       width: @statusIcon;
-      // width: 100%;
-      // height: 100%;
       max-height: @status-ht;
       background-size: auto 100%;
       background-position: 50% 50%;
