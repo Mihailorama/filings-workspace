@@ -65,7 +65,6 @@ export default function Table(props: TableProps): JSX.Element {
       })}>
         <TableViewer
           data={table}
-          onSelect={() => undefined}
           autoWidth
         />
       </div>}
