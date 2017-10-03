@@ -19,7 +19,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { lShapedTableWithMetadata } from '@cfl/table-viewer/lib/test-utils/l-shaped-headers';
 
-// import { tables as ta, zOptions, tableChunk } from '../../stories/table-a.json';
+import { QueryableTablePageImpl } from '../models';
 import Table from './table';
 
 storiesOf('Table', module)
@@ -35,17 +35,17 @@ storiesOf('Table', module)
         onChangeTable={action('onChangeTable')}
       />
     );
-  // })
-  // .add('Many Z options', () => {
-
-  //   return (
-  //     <Table
-  //       tables={[metadata]}
-  //       metadata={metadata}
-  //       zOptions={zOptions}
-  //       table={table}
-  //       onChangePage={action('onChangePage')}
-  //       onChangeTable={action('onChangeTable')}
-  //     />
-  //   );
+  })
+  .add('Many Z options', () => {
+    const { tables, zOptions, tableChunk } = require('../../stories/table-a.json');
+    const table = new QueryableTablePageImpl(tables[0], tableChunk);
+    return (
+      <Table
+        metadata={tables[0]}
+        zOptions={zOptions}
+        table={table}
+        onChangePage={action('onChangePage')}
+        onChangeTable={action('onChangeTable')}
+      />
+    );
   });

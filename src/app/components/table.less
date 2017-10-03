@@ -65,8 +65,10 @@
   }
 
   &-nav {
-    div div div div:not(.dropdown) {
-      margin-left: @gap;
+    padding: 0 @gap;
+    > div {
+      display: flex;
+      flex-flow: row wrap;
     }
   }
 
