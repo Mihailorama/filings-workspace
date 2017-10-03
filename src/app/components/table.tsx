@@ -38,7 +38,7 @@ export default function Table(props: TableProps): JSX.Element {
     <div className={'ckr-Table'}>
       {withTableSelect &&
         <select onChange={e => onChangeTable(tables[+e.currentTarget.value])} className='ckr-Table-tableSelect'>
-          {tables.map((t, i) => <option key={t.id} value={i}>{t.name}</option>)}
+          {tables.sort((a, b) => a.name.localeCompare(b.name)).map((t, i) => ( <option key={t.id} value={i}>{t.name}</option>))}
         </select>
       }
       {withZOptions && table && <div className='ckr-Table-nav'>
