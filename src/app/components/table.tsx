@@ -36,6 +36,10 @@ export interface TableProps {
 export default function Table(props: TableProps): JSX.Element {
   const { status, metadata, zOptions, table, onChangePage } = props;
   const withZOptions = zOptions.length > 1;
+  const tableOffsets = {
+    'ckr-Table-withZOptions': withZOptions,
+    'ckr-Table-withPager': table && table.hasMultiplePages,
+  };
   return (
     <div className={'ckr-Table'}>
       {withZOptions && table && <div className='ckr-Table-nav'>
@@ -54,11 +58,8 @@ export default function Table(props: TableProps): JSX.Element {
           onSelect={(x, y) => onChangePage(x, y, table.z)}
         />
       </div>}
-      {!table && <div className={'ckr-Table-loading'}></div>}
-      {table && <div className={classNames('ckr-Table-table', `ckr-Table-table-${toLowerStatus(status)}Status`, {
-        'ckr-Table-withZOptions': withZOptions,
-        'ckr-Table-withPager': table.hasMultiplePages,
-      })}>
+      {!table && <div className={classNames('ckr-Table-loading', tableOffsets)} />}
+      {table && <div className={classNames('ckr-Table-table', `ckr-Table-table-${toLowerStatus(status)}Status`, tableOffsets)}>
         <TableViewer
           data={table}
           autoWidth

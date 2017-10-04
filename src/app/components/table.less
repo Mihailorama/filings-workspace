@@ -46,7 +46,6 @@
 
   &-loading {
     box-sizing: border-box;
-    height: @form-ht;
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
@@ -81,7 +80,6 @@
   // This is conveyed through additional classes.
 
   &-table {
-    height: calc(~"100vh - " (@bar-ht + @statusTotal + @gap + @contact-ht));
     width: calc(~"100vw - " (2 * @gap3));
     margin: 12px;
 
@@ -97,6 +95,11 @@
       background-color: lighten(@failed, 35%, false);
       border: 1px solid @failed;
     }
+  }
+
+  &-table,
+  &-loading {
+    height: calc(~"100vh - " (@bar-ht + @statusTotal + @gap + @contact-ht));
   }
 
   &-withPager {
