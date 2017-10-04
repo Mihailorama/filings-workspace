@@ -67,14 +67,16 @@ export default function CheckerApp(props: CheckerAppProps): JSX.Element {
     case 'checking-failed':
     case 'results':
       innards = <div className='ckr-CheckerApp-resultHolder'>
-        <div className='ckr-CheckerApp-resultHeading'>
-          <ValidationResult status={status}/>
-          {tables && tables.length > 1 && onChangeTable && <TableSelector tables={tables} onChangeTable={onChangeTable}/>}
-          <Button primary className='ckr-CheckerApp-resultReset' onClick={onResultsDismiss}>Upload</Button>
+        <div className='ckr-CheckerApp-resultView'>
+          <div className='ckr-CheckerApp-resultHeading'>
+            <ValidationResult status={status}/>
+            {tables && tables.length > 1 && onChangeTable && <TableSelector tables={tables} onChangeTable={onChangeTable}/>}
+            <Button primary className='ckr-CheckerApp-resultReset' onClick={onResultsDismiss}>Upload</Button>
+          </div>
+          {metadata && zOptions && onChangePage && onChangeTable && status
+            && <Table status={status} metadata={metadata} zOptions={zOptions} table={table}
+                onChangePage={onChangePage} onChangeTable={onChangeTable}/>}
         </div>
-        {metadata && zOptions && onChangePage && onChangeTable
-          && <Table metadata={metadata} zOptions={zOptions} table={table}
-              onChangePage={onChangePage} onChangeTable={onChangeTable}/>}
         <ContactDetails className='ckr-CheckerApp-resultContact'/>
       </div>;
       break;

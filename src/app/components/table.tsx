@@ -20,9 +20,13 @@ import TableViewer, { Pager, ZAxisNavigation } from '@cfl/table-viewer';
 import { QueryableTablePage } from '@cfl/table-viewer';
 import { Option, TableMetadata } from '@cfl/table-rendering-service';
 
+import { ValidationStatus } from '../models';
+import { toLowerStatus } from '../utils';
+
 import './table.less';
 
 export interface TableProps {
+  status: ValidationStatus;
   metadata: TableMetadata;
   zOptions: Option[][];
   table?: QueryableTablePage;
@@ -30,7 +34,7 @@ export interface TableProps {
   onChangeTable: (table: TableMetadata) => void;
 }
 export default function Table(props: TableProps): JSX.Element {
-  const { metadata, zOptions, table, onChangePage } = props;
+  const { status, metadata, zOptions, table, onChangePage } = props;
   const withZOptions = zOptions.length > 1;
   return (
     <div className={'ckr-Table'}>
@@ -51,7 +55,7 @@ export default function Table(props: TableProps): JSX.Element {
         />
       </div>}
       {!table && <div className={'ckr-Table-loading'}></div>}
-      {table && <div className={classNames('ckr-Table-table', {
+      {table && <div className={classNames('ckr-Table-table', `ckr-Table-table-${toLowerStatus(status)}Status`, {
         'ckr-Table-withZOptions': withZOptions,
         'ckr-Table-withPager': table.hasMultiplePages,
       })}>

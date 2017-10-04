@@ -85,9 +85,18 @@
     width: calc(~"100vw - " (2 * @gap3));
     margin: 12px;
 
-    background-color: lighten(@primary, 35%, false);
-    border: 1px solid @primary;
     border-radius: 3px;
+
+    &-okStatus,
+    &-warningStatus {
+      background-color: lighten(@primary, 35%, false);
+      border: 1px solid @primary;
+    }
+    &-errorStatus,
+    &-fatalErrorStatus {
+      background-color: lighten(@failed, 35%, false);
+      border: 1px solid @failed;
+    }
   }
 
   &-withPager {
