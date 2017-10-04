@@ -60,10 +60,12 @@ export default function Table(props: TableProps): JSX.Element {
       </div>}
       {!table && <div className={classNames('ckr-Table-loading', tableOffsets)} />}
       {table && <div className={classNames('ckr-Table-table', `ckr-Table-table-${toLowerStatus(status)}Status`, tableOffsets)}>
-        <TableViewer
-          data={table}
-          autoWidth
-        />
+        <div className={classNames('ckr-Table-table-inner', tableOffsets)}>
+          <TableViewer
+            data={table}
+            autoWidth
+          />
+        </div>
       </div>}
     </div>
   );
