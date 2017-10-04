@@ -22,7 +22,7 @@ import ValidationResult from './validation-result';
 
 storiesOf('ValidationResult', module)
   .addDecorator(story => <div className='ckr-CheckerApp ckr-CheckerApp-checking'>
-    <h1>Backgorund</h1>
+    <h1>Background</h1>
     <div className='ckr-CheckerApp-resultOverlay'>
       {story()}
     </div>

@@ -91,38 +91,6 @@
     flex-flow: column nowrap;
   }
 
-  &-resultView {
-    color: @ink;
-    background: @paper;
-    border-radius: 3px;
-
-    box-shadow: 0 15px 50px 0 rgba(0, 0, 0, 0.3);  // TODO Make this box shadow super fancy.
-  }
-
-  &-resultHeading {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  &-resultReset {
-    margin-left: @gap3;
-    margin-right: @gap;
-
-    &:before {
-      content: " ";
-      display: inline-block;
-      width: 14px;
-      height: 19px;
-
-      margin-right: 10px;
-
-      background-image: url(checker-app-upload.svg);
-      background-size: 14px 19px;
-    }
-  }
-
   &-loadingOverlay {
     flex-grow: 1;
     display: flex;

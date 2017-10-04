@@ -21,12 +21,9 @@ import { QueryableTablePage } from '@cfl/table-viewer';
 
 import { Profile, ValidationParams, ValidationStatus } from '../models';
 import { CheckingPhase } from '../state';
-import Button from './button';
 import ContactDetails from './contact-details';
-import Table from './table';
-import TableSelector from './table-selector';
+import Results from './results';
 import ValidationForm from './validation-form';
-import ValidationResult from './validation-result';
 
 import './checker-app.less';
 
@@ -69,16 +66,16 @@ export default function CheckerApp(props: CheckerAppProps): JSX.Element {
     case 'checking-failed':
     case 'results':
       innards = <div className='ckr-CheckerApp-resultHolder'>
-        <div className='ckr-CheckerApp-resultView'>
-          <div className='ckr-CheckerApp-resultHeading'>
-            <ValidationResult status={status}/>
-            {tables && tables.length > 1 && onChangeTable && <TableSelector tables={tables} onChangeTable={onChangeTable}/>}
-            <Button primary className='ckr-CheckerApp-resultReset' onClick={onResultsDismiss}>Upload</Button>
-          </div>
-          {metadata && zOptions && onChangePage && onChangeTable && status
-            && <Table status={status} metadata={metadata} zOptions={zOptions} table={table}
-                onChangePage={onChangePage} onChangeTable={onChangeTable}/>}
-        </div>
+        <Results
+          status={status}
+          tables={tables}
+          metadata={metadata}
+          zOptions={zOptions}
+          table={table}
+          onChangePage={onChangePage}
+          onChangeTable={onChangeTable}
+          onResultsDismiss={onResultsDismiss}
+        />
         <ContactDetails className='ckr-CheckerApp-resultContact'/>
       </div>;
       break;

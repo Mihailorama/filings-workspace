@@ -15,39 +15,54 @@
  */
 
 import * as React from 'react';
-
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
+
 import { TableMetadata } from '@cfl/table-rendering-service';
 import { basicTableWithMetadata } from '@cfl/table-viewer/lib/test-utils';
 
-import { profiles } from '../../stories/util';
-import CheckerApp from './checker-app';
+import Results from './results';
 
-storiesOf('CheckerApp', module)
-  .add('Form', () => {
-    return (
-      <CheckerApp
-        profiles={profiles('Profile')}
-        phase={'form'}
-      />
-    );
-  })
-  .add('Checking', () => {
-    return (
-      <CheckerApp
-        profiles={profiles('Profile')}
-        phase={'checking'}
-      />
-    );
-  })
-  .add('Result', () => {
+storiesOf('Results', module)
+  .add('Full', () => {
     const { table, metadata, zOptions } = basicTableWithMetadata();
     return (
-      <CheckerApp
-        profiles={profiles('Profile')}
-        phase={'results'}
+      <Results
         status={'OK'}
+        tables={[metadata, {name: 'another table', id: 'uuid-of-another-table'} as TableMetadata]}
+        metadata={metadata}
+        zOptions={zOptions}
+        table={table}
+        onChangePage={action('onChangePage') as any}
+        onChangeTable={action('onChangeTable') as any}
+      />
+    );
+  })
+  .add('Loading table', () => {
+    const { metadata, zOptions } = basicTableWithMetadata();
+    return (
+      <Results
+        status={'OK'}
+        tables={[metadata, {name: 'another table'} as TableMetadata]}
+        metadata={metadata}
+        zOptions={zOptions}
+        onChangePage={action('onChangePage') as any}
+        onChangeTable={action('onChangeTable') as any}
+      />
+    );
+  })
+  .add('No tables', () => {
+    return (
+      <Results
+        status={'OK'}
+      />
+    );
+  })
+  .add('Warning', () => {
+    const { table, metadata, zOptions } = basicTableWithMetadata();
+    return (
+      <Results
+        status={'WARNING'}
         tables={[metadata, {name: 'another table', id: 'uuid-of-another-table'} as TableMetadata]}
         metadata={metadata}
         zOptions={zOptions}
