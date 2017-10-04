@@ -36,8 +36,8 @@ const specByStatus: {[status: string]: Spec} = {
     label: 'Pass',
   },
   WARNING: {
-    label: 'Pass',
-    detail: 'Valid, but with warnings',
+    label: 'Valid',
+    detail: 'With Warnings',
   },
   ERROR: {
     label: 'Fail',

@@ -25,6 +25,9 @@
   flex-flow: row nowrap;
   justify-content: flex-end;
   align-items: center;
+  margin: 12px @gap3 10px @gap2;
+  color: @secondary;
+  line-height: 1;
 
   &-loading {
     box-sizing: border-box;
@@ -46,18 +49,17 @@
   }
 
   &-status {
-    margin: 12px @gap3 10px @gap2;
     display: block;
 
     white-space: nowrap;
     font-size: 36px;
     font-weight: 300;
-    line-height: 1;
-    color: @secondary;
+
+    margin-right: 5px;
 
     &:before {
       content: " ";
-      margin-right: 12px;
+      margin-right: 8px;
       display: inline-block;
       vertical-align: -18%;
       height: @statusIcon;
@@ -67,13 +69,16 @@
       background-position: 50% 50%;
       background-repeat: no-repeat;
       border: @statusBd solid #FFF;
-      border-radius: 25px;
     }
   }
 
-  &-okStatus:before,
-  &-warningStatus:before {
+  &-okStatus:before {
     background-image: url(validation-result-ok.svg);
+  }
+  &-warningStatus:before {
+    background-image: url(validation-result-warning.svg);
+    height: 41px;
+    width: 47px;
   }
   &-errorStatus:before,
   &-fatalErrorStatus:before {
@@ -81,9 +86,9 @@
   }
 
   &-detail {
-    max-width: 30em;
-
-    margin: 0 0 0 (50px + 12px);
+    width: 50px; // Force line breaks
+    font-weight: 500;
+    margin: 0;
   }
 
   &-loadingDetail {

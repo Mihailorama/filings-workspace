@@ -21,9 +21,8 @@ import { storiesOf } from '@storybook/react';
 import ValidationResult from './validation-result';
 
 storiesOf('ValidationResult', module)
-  .addDecorator(story => <div className='ckr-CheckerApp ckr-CheckerApp-checking'>
-    <h1>Background</h1>
-    <div className='ckr-CheckerApp-resultOverlay'>
+  .addDecorator(story => <div className='ckr-Results'>
+    <div className='ckr-Results-resultHeading'>
       {story()}
     </div>
   </div>)
