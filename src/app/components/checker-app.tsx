@@ -84,6 +84,6 @@ export default function CheckerApp(props: CheckerAppProps): JSX.Element {
   }
 
   return <div className={classNames('ckr-CheckerApp', `ckr-CheckerApp-${phase}`)}>
-    {innards && innards}
+    {innards}
   </div>;
 }
