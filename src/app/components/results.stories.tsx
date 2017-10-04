@@ -63,7 +63,7 @@ storiesOf('Results', module)
     return (
       <Results
         status={'WARNING'}
-        tables={[metadata, {name: 'another table', id: 'uuid-of-another-table'} as TableMetadata]}
+        tables={[metadata, {name: 'another table with a super long name', id: 'uuid-of-another-table'} as TableMetadata]}
         metadata={metadata}
         zOptions={zOptions}
         table={table}
