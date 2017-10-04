@@ -52,6 +52,8 @@ export default function CheckerApp(props: CheckerAppProps): JSX.Element {
   let innards: JSX.Element | undefined = undefined;
   switch (phase) {
     case 'startup':
+    case 'startup-failed':
+    case 'uploading-failed':
     case 'form':
       innards = <div className='ckr-CheckerApp-formHolder'>
         <ValidationForm profiles={profiles} error={error} onSubmit={phase === 'form' ? onSubmit : undefined}/>
