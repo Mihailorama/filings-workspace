@@ -33,7 +33,8 @@ import { CHECKING_START,
   uploadFailedAction,
   uploadStartedAction } from './actions';
 import { apiFetchJson } from './api-fetch';
-import { App, Category, Filing, FilingVersion, QueryableTablePageImpl, User } from './models';
+import { App, Category, Filing, FilingVersion, User } from './models';
+import QueryableTablePageImpl, { TABLE_WINDOW_HEIGHT } from './models/queryable-table-page-impl';
 import { APPS,
   DOCUMENT_SERVICE_FILINGS,
   documentServiceCategories,
@@ -44,7 +45,6 @@ import { APPS,
   USER } from './urls';
 
 const POLL_MILLIS = 1000;
-const TABLE_WINDOW_HEIGHT = 64;
 
 /**
  * Fetch the information needed at startup. If this fails we cannot show the app.

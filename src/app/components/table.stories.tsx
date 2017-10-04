@@ -19,7 +19,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { lShapedTableWithMetadata } from '@cfl/table-viewer/lib/test-utils/l-shaped-headers';
 
-import { QueryableTablePageImpl } from '../models';
+import QueryableTablePageImpl from '../models/queryable-table-page-impl';
 import Table from './table';
 
 storiesOf('Table', module)

@@ -17,9 +17,6 @@
 // Interface declarations for the JSON objects returned by the API.
 // There are example values in ./tests/model-examples.ts.
 
-import { createHeaderSlice, HeaderSlice, QueryableTablePage } from '@cfl/table-viewer';
-import { Cell, Header, TableChunk, TableHeader, TableMetadata } from '@cfl/table-rendering-service';
-
 /**
  * Info about the currently logged-in user.
  */
@@ -85,7 +82,7 @@ export interface Filing {
   type: 'Filing' | 'FilingSummary';
   name: string;  // Human-chosen name for this filing.  (Defaults to name of uploaded file.)
   versions?: FilingVersion[];  // Included if type is `Filing`.
-};
+}
 
 /**
  * Information about one version of a filing. (Filings at present always have exactly one version.)
@@ -100,7 +97,7 @@ export interface FilingVersion {
   filing?: Filing;  // Included if type is `FilingVersion`.
   created: string; // Date in XML Schema format
   deleted?: string;  // Date in XML Schema format
-};
+}
 
 export type ValidationStatus = 'FATAL_ERROR' | 'ERROR' | 'WARNING' | 'OK';
 
@@ -110,7 +107,7 @@ export type ValidationStatus = 'FATAL_ERROR' | 'ERROR' | 'WARNING' | 'OK';
 export interface Actor {
   id: string;
   name?: string;
-};
+}
 
 /**
  * Describes a representation of data associated with a filing.
@@ -123,98 +120,6 @@ export interface Document {
     status: 'PENDING' | 'RUNNING' | 'DONE';
   };
   created: string;  // XML Schema data format
-}
-
-export class QueryableTablePageImpl implements QueryableTablePage {
-  constructor(
-    private readonly metadata: TableMetadata,
-    private readonly chunk: TableChunk,
-  ) {
-    chunk.data = chunk.data.map(colData =>
-      colData.map(cell => cell || {
-        issues: [],
-        facts: [],
-      }),
-    );
-  }
-
-  get key(): string {
-    const { metadata, x, y, z } = this;
-    return `${metadata.id}(${x},${y},${z})`;
-  }
-
-  get x(): number {
-    return this.chunk.x;
-  }
-
-  get y(): number {
-    return this.chunk.y;
-  }
-
-  get z(): number {
-    return this.chunk.z;
-  }
-
-  get zHeaders(): Header[] {
-    return this.chunk.zAxis;
-  }
-
-  get height(): number {
-    return this.chunk.data[0].length;
-  }
-
-  get width(): number {
-    return this.chunk.data.length;
-  }
-
-  get xDepth(): number {
-    return this.metadata.x.breakdowns.length;
-  }
-
-  get yDepth(): number {
-    return this.metadata.y.breakdowns.length;
-  }
-
-  getXHeaders(col: number): HeaderSlice[] {
-    return createHeaderSlice(this.metadata.x.breakdowns, this.chunk.xAxis[col - this.x]);
-  }
-
-  getYHeaders(row: number): HeaderSlice[] {
-    return createHeaderSlice(this.metadata.y.breakdowns, this.chunk.yAxis[row - this.y]);
-  }
-
-  getRow(y: number): Cell[] {
-    const row = y - this.y;
-    return this.chunk.data.map(col => col[row]);
-  }
-
-  getCell(col: number, row: number): Cell {
-    return this.chunk.data[col - this.x][row - this.y];
-  }
-
-  get pageCoordinates(): [number[], number[]] {
-    return [this.getAxisPageCoordinates(this.metadata.x, this.width), this.getAxisPageCoordinates(this.metadata.y, this.height)];
-  }
-
-  get hasMultiplePages(): boolean {
-    return this.x > 0 || this.y > 0 || this.metadata.x.sliceCount > this.width || this.metadata.y.sliceCount > this.height;
-  }
-
-  getPageCoordinates(x: number, y: number): [number, number] {
-    return [Math.floor(x / this.width) * this.width, Math.floor(y / this.height) * this.height];
-  }
-
-  has(x: number, y: number): boolean {
-    return x >= this.x && x < (this.x + this.width) && y >= this.y && y < (this.y + this.height);
-  }
-
-  private getAxisPageCoordinates(axis: TableHeader, pageSize: number): number[] {
-    const coordinates = [];
-    for (let i = 0; i < axis.sliceCount; i += pageSize) {
-      coordinates.push(i);
-    }
-    return coordinates;
-  }
 }
 
 export interface TableRenderingWindow {
