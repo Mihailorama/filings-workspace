@@ -47,19 +47,15 @@
 
   color: contrast(@primary, #FFF, @ink);
   background-color: @primary;
+  
+  min-height: 100vh;
 
-
-  @media (min-height: @tall-enough) {
-    min-height: 100vh;
-    // overflow: hidden;
-
-    // Make the contact info effectively zero height so the form gets centred, rather than the form + contact info.
-    &-formContact {
-      position: absolute;
-      top: 100%;
-      left: 50%;
-      margin-left: (-0.5 * @contact-wd);
-    }
+  // Make the contact info effectively zero height so the form gets centred, rather than the form + contact info.
+  &-formContact {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: (-0.5 * @contact-wd);
   }
 
   &-appBar {
@@ -100,7 +96,6 @@
     top: 0;
     width: 100%;
     height: 100%;
-    display: flex;
     flex-flow: column nowrap;
     align-items: center;
 
