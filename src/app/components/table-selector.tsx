@@ -14,12 +14,23 @@
  *  limitations under the License.
  */
 
+import * as classNames from 'classnames';
 import * as React from 'react';
 
-import { storiesOf } from '@storybook/react';
+import { TableMetadata } from '@cfl/table-rendering-service';
 
-import CloseSymbol from './close-symbol';
+interface TableSelectorProps {
+  tables: TableMetadata[];
+  className?: string;
 
-storiesOf('CloseSymbol', module)
-  .addDecorator(story => <div className='ckr-CheckerApp-resultOverlay'>{story()}</div>)
-  .add('Default size', () => <CloseSymbol/>);
+  onChangeTable: (table: TableMetadata) => void;
+}
+
+export default function TableSelector({ tables, onChangeTable, className }: TableSelectorProps): JSX.Element {
+  return (
+    <select onChange={e => onChangeTable(tables[+e.currentTarget.value])}
+        className={classNames('ckr-Table-tableSelect', className)}>
+      {tables.sort((a, b) => a.name.localeCompare(b.name)).map((t, i) => <option key={t.id} value={i}>{t.name}</option>)}
+    </select>
+  );
+}

@@ -36,18 +36,14 @@
   color: @ink;
   background: @paper;
 
-  &-tableSelect,
   &-nav,
   &-pager {
-    width: 100%;
     margin-bottom: @gap;
 
     .clearfix();
   }
 
   &-loading {
-    box-sizing: border-box;
-    height: @form-ht;
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
@@ -66,18 +62,20 @@
   }
 
   &-tableSelect {
-    font-size: 24px;
-    height: 48px;
+    flex-basis: auto;
+    flex-grow: 0;
+    flex-shrink: 1;
 
-    option {
-      font-size: 14px;
-      line-height: 2;
-    }
+    // I seem to need the following to get it to shrink to fit narrow screen.
+    // But it sadly has the effect of making flex-grow act as if set to 1.
+    width: 100%;
   }
 
   &-nav {
-    div div div div:not(.dropdown) {
-      margin-left: @gap;
+    padding: 0 @gap;
+    > div {
+      display: flex;
+      flex-flow: row wrap;
     }
   }
 
@@ -85,42 +83,57 @@
     padding-left: @gap;
   }
 
+  &-table,
+  &-loading,
+  &-noTable {
+    width: calc(~"100vw - " (2 * @gap3));
+    margin: 12px;
+  }
+
+  &-table {
+    border-radius: 3px;
+
+    &-okStatus,
+    &-warningStatus {
+      background-color: @tablePaper;
+      border: 1px solid @primary;
+    }
+    &-warningStatus {
+      border: 1px solid @warning;
+    }
+    &-errorStatus,
+    &-fatalErrorStatus {
+      background-color: @failPaper;
+      border: 1px solid @failed;
+    }
+  }
+
+  &-loading,
+  &-noTable {
+    border: 1px solid transparent;  // To make geometry match the table when it appears.
+  }
+
+
   // We have to calculate the remaining space ourselves.
   // This varies ccording to what other UI elements are present.
   // This is conveyed through additional classes.
 
-  &-table {
-    height: calc(~"100vh - " (@bar-ht + @statusTotal + @gap + @contact-ht));
-    width: calc(~"100vw - " (2 * @gap3));
-
-    background-color: lighten(@primary, 35%, false);
+  &-table,
+  &-table-inner,
+  &-loading,
+  &-noTable {
+    height: calc(~"100vh - " (@bar-ht + @statusTotal + @gap + @contact-ht + 2px));
   }
 
   &-withPager {
-    height: calc(~"100vh - " (@bar-ht + @statusTotal + @gap + 34px + @gap + @contact-ht));
-  }
-
-  &-withTableSelect {
-    height: calc(~"100vh - " (@bar-ht + @statusTotal + @gap + 48px + @gap + @contact-ht));
-  }
-
-  &-withTableSelect&-withPager {
-    height: calc(~"100vh - " (@bar-ht + @statusTotal + @gap + 48px + @gap + 34px + @gap + @contact-ht));
+    height: calc(~"100vh - " (@bar-ht + @statusTotal + @gap + 34px + @gap + @contact-ht + 2px));
   }
 
   &-withZOptions {
-    height: calc(~"100vh - " (@bar-ht + @statusTotal + @gap + 34px + @gap + @contact-ht));
+    height: calc(~"100vh - " (@bar-ht + @statusTotal + @gap + 32px + @gap + @contact-ht + 2px));
   }
 
   &-withZOptions&-withPager {
-    height: calc(~"100vh - " (@bar-ht + @statusTotal + @gap + 34px + @gap + 34px + @gap + @contact-ht));
-  }
-
-  &-withTableSelect&-withZOptions {
-    height: calc(~"100vh - " (@bar-ht + @statusTotal + @gap + 48px + @gap + 34px + @gap + @contact-ht));
-  }
-
-  &-withTableSelect&-withZOptions&-withPager {
-    height: calc(~"100vh - " (@bar-ht + @statusTotal + @gap + 48px + @gap + 34px + @gap + 34px + @gap + @contact-ht));
+    height: calc(~"100vh - " (@bar-ht + @statusTotal + @gap + 32px + @gap + 34px + @gap + @contact-ht + 2px));
   }
 }

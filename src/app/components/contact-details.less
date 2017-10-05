@@ -17,7 +17,6 @@
 @import (reference) '../styles/defs';
 
 .ckr-ContactDetails {
-  margin: @gap3 0 @gap2;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
@@ -27,28 +26,63 @@
     color: inherit;
     text-decoration: inherit;
 
-    margin: 0 (0.5 * @gap);
-    width: 226px;
+    position: absolute;
+    display: block;
 
     font-size: 14px;
     font-weight: 300;
     font-style: italic;
     text-align: center;
+  }
 
-    & + & {
-      margin-top: @gap;
-    }
+  &-primaryLink {
+    top: 100%;
 
-    &:hover {
-      .ckr-Link {
-        border-bottom: 1px solid;
-      }
-    }
+    padding-top: 60px;
   }
 
   &-secondaryLink {
-    font-size: 12px;
-    line-height: (14/12);
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: -3px;
+
+    box-sizing: border-box;
+    height: 29px;
+    padding: 0 0 0;  // Overlaps rounded corner above it.
+
+    line-height: 26px;
+    color: contrast(@secondary, @ink, #FFF);
+    background: @secondary;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+
+    .ckr-Link {
+      font-weight: inherit;
+      margin: 0 8px;
+
+      &:before {
+        content: '';
+        display: inline-block;
+        margin-right: 9px;
+        width: 22px;
+        height: 22px;
+        vertical-align: -20%;
+
+        background-image: url(contact-details-api-symbol.svg);
+        background-size: 22px 22px;
+      }
+    }
+
+    &:before {
+      content: "";
+      display: block;
+
+      width: 100%;
+      height: 0;
+      border-bottom: 3px solid  #FFF;
+      border-bottom-right-radius: 3px;
+    }
   }
 }
 

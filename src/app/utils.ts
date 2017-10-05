@@ -14,13 +14,6 @@
  *  limitations under the License.
  */
 
-import * as React from 'react';
-import { storiesOf } from '@storybook/react';
-
-import ContactDetails from './contact-details';
-
-storiesOf('ContactDetails', module)
-  .add('Form', () => <div className='ckr-CheckerApp'><ContactDetails/></div>)
-  .add('Results', () => <div className='ckr-CheckerApp ckr-CheckerApp-results' style={{background: '#2C5173', paddingTop: '96px'}}>
-    <ContactDetails/>
-  </div>);
+export function toLowerStatus(status: string): string {
+  return status.toLowerCase().split('_').map((x, i) => i === 0 ? x : x.charAt(0).toUpperCase() + x.substr(1)).join('');
+}

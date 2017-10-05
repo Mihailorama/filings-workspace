@@ -16,18 +16,16 @@
 
 import * as classNames from 'classnames';
 import * as React from 'react';
+import { Option, TableMetadata } from '@cfl/table-rendering-service';
+import { QueryableTablePage } from '@cfl/table-viewer';
 
 import { Profile, ValidationParams, ValidationStatus } from '../models';
 import { CheckingPhase } from '../state';
 import ContactDetails from './contact-details';
+import Results from './results';
 import ValidationForm from './validation-form';
-import ValidationResult from './validation-result';
-import CloseSymbol from './close-symbol';
 
 import './checker-app.less';
-import Table from './table';
-import { Option, TableMetadata } from '@cfl/table-rendering-service';
-import { QueryableTablePage } from '@cfl/table-viewer';
 
 export interface CheckerAppProps {
   phase?: CheckingPhase;
@@ -48,21 +46,45 @@ export default function CheckerApp(props: CheckerAppProps): JSX.Element {
   const { phase, profiles, status, error, onSubmit, onResultsDismiss, tables, metadata, zOptions, table,
       onChangePage, onChangeTable } = props;
 
+  let innards: JSX.Element | undefined = undefined;
+  switch (phase) {
+    case 'startup':
+    case 'startup-failed':
+    case 'uploading-failed':
+    case 'form':
+      innards = <div className='ckr-CheckerApp-formHolder'>
+        <ValidationForm profiles={profiles} error={error} onSubmit={phase === 'form' ? onSubmit : undefined}/>
+        <ContactDetails className='ckr-CheckerApp-formContact'/>
+      </div>;
+      break;
+    case 'checking':
+    case 'uploading':
+      innards = <div className='ckr-CheckerApp-loadingOverlay'>
+        <div className='ckr-CheckerApp-loading'>Processing&thinsp;…</div>
+      </div>;
+      break;
+    case 'checking-failed':
+    case 'results':
+      innards = <div className='ckr-CheckerApp-resultHolder'>
+        <Results
+          status={status}
+          tables={tables}
+          metadata={metadata}
+          zOptions={zOptions}
+          table={table}
+          onChangePage={onChangePage}
+          onChangeTable={onChangeTable}
+          onResultsDismiss={onResultsDismiss}
+        />
+        <ContactDetails className='ckr-CheckerApp-resultContact'/>
+      </div>;
+      break;
+    default:
+      innards = <b>Forgot the case {phase}!?</b>;
+      break;
+  }
+
   return <div className={classNames('ckr-CheckerApp', `ckr-CheckerApp-${phase}`)}>
-    {(phase === 'startup' || phase === 'form') && <div className='ckr-CheckerApp-formHolder'>
-      <ValidationForm profiles={profiles} error={error} onSubmit={phase === 'form' ? onSubmit : undefined}/>
-      <ContactDetails className='ckr-CheckerApp-formContact'/>
-    </div>}
-    {(phase === 'uploading' || phase === 'checking' || phase === 'checking-failed' || phase === 'results')
-      && <div className='ckr-CheckerApp-resultOverlay'>
-        <div className='ckr-CheckerApp-resultHolder'>
-          <ValidationResult status={status}/>
-          {phase === 'results' && tables && metadata && zOptions && onChangePage && onChangeTable
-            && <Table tables={tables} metadata={metadata} zOptions={zOptions} table={table}
-                onChangePage={onChangePage} onChangeTable={onChangeTable}/>}
-          {(phase === 'checking-failed' || phase === 'results') && <ContactDetails className='ckr-CheckerApp-resultContact'/>}
-          {(phase === 'checking-failed' || phase === 'results') && <CloseSymbol onClick={onResultsDismiss}/>}
-        </div>
-      </div>}
+    {innards}
   </div>;
 }

@@ -15,69 +15,13 @@
  */
 
 @import (reference) '../styles/defs';
+@import (reference) './button';
 
-
-.ckr-Button {
-  box-sizing: border-box;  // On some browsers this cannot be unset on buttons, so be consistent.
-  display: inline-block;
-  height: 2em;
-  padding: 0 1em;
-
-  font-size: 18px;
-  text-decoration: none;
-  line-height: 2;
-  color: @ink;
-  background-color: @paper;
-  border: 1px solid @btn-bd;
-  border-radius: 3px;
-  // box-shadow: 0 1px 2px fade(#000, 50%), 1px 1px 3px fade(#000, 25%);
-  user-select: none;
-  cursor: pointer;
-
-  &:hover,
-  &:active {
-    text-decoration: none;
-    background-color: @btn-hover;
-  }
-
-  &[disabled] {
-    opacity: 0.5;
-    cursor: not-allowed;
-
-    &:hover,
-    &:active {
-      text-decoration: none;
-      background-color: @paper;
-    }
-  }
-
-  &-primary {
-    color: contrast(@primary, #FFF, @ink);
-    background-color: @primary;
-    border-color: @primary2;
-
-    &:hover,
-    &:active {
-      text-decoration: none;
-      color: contrast(@secondary, #FFF, @ink);
-      background-color: @secondary;
-    }
-
-    &[disabled]:hover,
-    &[disabled]:active {
-      color: contrast(@primary, #FFF, @ink);
-      background-color: @primary;
-      border-color: @primary2;
-    }
-  }
-}
 
 select {
   .ckr-Button;
 
   display: block;
-  flex-grow: 1;
-  flex-shrink: 1;
   max-width: 100%;
 
   font-size: 14px;
@@ -113,6 +57,12 @@ option {
     font-weight: 500;
     white-space: nowrap;
     color: @muted;
+  }
+
+  select {
+    width: 100%;
+    flex-grow: 1;
+    flex-shrink: 1;
   }
 }
 
