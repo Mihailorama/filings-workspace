@@ -38,7 +38,6 @@
 
   &-nav,
   &-pager {
-    width: 100%;
     margin-bottom: @gap;
 
     .clearfix();
@@ -113,27 +112,27 @@
     }
   }
 
-  &-table,
-  &-table-inner,
-  &-loading,
-  &-noTable {
-    height: calc(~"100vh - " (@bar-ht + @statusTotal + @gap + @contact-ht));
-  }
-
   &-loading,
   &-noTable {
     border: 1px solid transparent;  // To make geometry match the table when it appears.
   }
 
+  &-table,
+  &-table-inner,
+  &-loading,
+  &-noTable {
+    height: calc(~"100vh - " (@bar-ht + @statusTotal + @gap + @contact-ht + 2px));
+  }
+
   &-withPager {
-    height: calc(~"100vh - " (@bar-ht + @statusTotal + @gap + 34px + @gap + @contact-ht));
+    height: calc(~"100vh - " (@bar-ht + @statusTotal + @gap + 34px + @gap + @contact-ht + 2px));
   }
 
   &-withZOptions {
-    height: calc(~"100vh - " (@bar-ht + @statusTotal + @gap + 34px + @gap + @contact-ht));
+    height: calc(~"100vh - " (@bar-ht + @statusTotal + @gap + 32px + @gap + @contact-ht + 2px));
   }
 
   &-withZOptions&-withPager {
-    height: calc(~"100vh - " (@bar-ht + @statusTotal + @gap + 34px + @gap + 34px + @gap + @contact-ht));
+    height: calc(~"100vh - " (@bar-ht + @statusTotal + @gap + 32px + @gap + 34px + @gap + @contact-ht + 2px));
   }
 }
