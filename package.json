@@ -48,7 +48,7 @@
   "devDependencies": {
     "@cfl/react-components": "^1.4.0",
     "@cfl/table-rendering-service": "^1.4.0",
-    "@cfl/table-viewer": "0.1.1-dev.32164",
+    "@cfl/table-viewer": "^0.1.1-dev.32251",
     "@cfl/tslint-config": "^0.6.0",
     "@janslow/ci-build-version": "^0.1.0",
     "@storybook/addon-actions": "^3.2.6",
