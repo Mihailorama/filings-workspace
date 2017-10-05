@@ -27,7 +27,7 @@ import './table.less';
 
 export interface TableProps {
   status: ValidationStatus;
-  metadata?: TableMetadata;  // The table we wantg to show, or undefined if not got any tables.
+  metadata?: TableMetadata;  // The table we want to show, or undefined if not got any tables.
   zOptions?: Option[][];
   table?: QueryableTablePage;
   onChangePage: (x: number, y: number, z: number) => void;

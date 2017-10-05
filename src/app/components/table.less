@@ -83,10 +83,6 @@
     padding-left: @gap;
   }
 
-  // We have to calculate the remaining space ourselves.
-  // This varies ccording to what other UI elements are present.
-  // This is conveyed through additional classes.
-
   &-table,
   &-loading,
   &-noTable {
@@ -116,6 +112,11 @@
   &-noTable {
     border: 1px solid transparent;  // To make geometry match the table when it appears.
   }
+
+
+  // We have to calculate the remaining space ourselves.
+  // This varies ccording to what other UI elements are present.
+  // This is conveyed through additional classes.
 
   &-table,
   &-table-inner,
