@@ -64,6 +64,12 @@
   }
 
   &-tableSelect {
+    flex-basis: auto;
+    flex-grow: 0;
+    flex-shrink: 1;
+
+    // I seem to need the following to get it to shrink to fit narrow screen.
+    // But it sadly has the effect of making flex-grow act as if set to 1.
     width: 100%;
   }
 
