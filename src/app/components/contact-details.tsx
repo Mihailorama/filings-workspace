@@ -27,7 +27,7 @@ export default function ContactDetails({className}: {className?: string}): JSX.E
     </a>
     <a className='ckr-ContactDetails-link ckr-ContactDetails-secondaryLink'
         href='https://github.com/CoreFiling/quick-xbrl-validator' target='_blank'>
-      An API for this functionality is available, <b className='ckr-Link'>click here</b> to read more
+        <b className='ckr-Link'>API available</b>
     </a>
   </div>;
 }

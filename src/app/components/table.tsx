@@ -27,22 +27,22 @@ import './table.less';
 
 export interface TableProps {
   status: ValidationStatus;
-  metadata: TableMetadata;
-  zOptions: Option[][];
+  metadata?: TableMetadata;  // The table we wantg to show, or undefined if not got any tables.
+  zOptions?: Option[][];
   table?: QueryableTablePage;
   onChangePage: (x: number, y: number, z: number) => void;
   onChangeTable: (table: TableMetadata) => void;
 }
 export default function Table(props: TableProps): JSX.Element {
   const { status, metadata, zOptions, table, onChangePage } = props;
-  const withZOptions = zOptions.length > 1;
+  const withZOptions = zOptions && zOptions.length > 1;
   const tableOffsets = {
     'ckr-Table-withZOptions': withZOptions,
     'ckr-Table-withPager': table && table.hasMultiplePages,
   };
   return (
     <div className={'ckr-Table'}>
-      {withZOptions && table && <div className='ckr-Table-nav'>
+      {withZOptions && zOptions && table && metadata && <div className='ckr-Table-nav'>
         <ZAxisNavigation
           breakdowns={metadata.z.breakdowns}
           options={zOptions}
@@ -58,7 +58,8 @@ export default function Table(props: TableProps): JSX.Element {
           onSelect={(x, y) => onChangePage(x, y, table.z)}
         />
       </div>}
-      {!table && <div className={classNames('ckr-Table-loading', tableOffsets)} />}
+      {!table && metadata && <div className={classNames('ckr-Table-loading', tableOffsets)} />}
+      {!table && !metadata && <div className={'ckr-Table-noTable'} />}
       {table && <div className={classNames('ckr-Table-table', `ckr-Table-table-${toLowerStatus(status)}Status`, tableOffsets)}>
         <div className={classNames('ckr-Table-table-inner', tableOffsets)}>
           <TableViewer

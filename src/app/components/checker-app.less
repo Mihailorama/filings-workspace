@@ -47,16 +47,8 @@
 
   color: contrast(@primary, #FFF, @ink);
   background-color: @primary;
-  
-  min-height: 100vh;
 
-  // Make the contact info effectively zero height so the form gets centred, rather than the form + contact info.
-  &-formContact {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: (-0.5 * @contact-wd);
-  }
+  min-height: 100vh;
 
   &-appBar {
     flex-shrink: 0;
@@ -81,10 +73,13 @@
 
   &-resultHolder {
     width: calc(~"100% - " @gap * 2);
-    margin: @gap;
+    margin: @gap @gap (@gap + 14px + 60px);
     flex-grow: 1;
+
+    position: relative;
     display: flex;
     flex-flow: column nowrap;
+    justify-content: flex-end;
   }
 
   &-loadingOverlay {

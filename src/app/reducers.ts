@@ -70,12 +70,12 @@ export function checker(state: CheckerState | undefined, action: Action): Checke
     case TABLES_RECEIVED:
       {
         const { tables } = action as TablesReceivedAction;
-        return { ...state, tables };
+        return { ...state, tables, selectedTable: (state.selectedTable || tables[0]), zOptions: [] };
       }
     case TABLE_RENDERING_REQUESTED:
       {
         const { table } = action as TableRenderingRequestedAction;
-        return { ...state, selectedTable: table, tableRendering: undefined };
+        return { ...state, selectedTable: table, zOptions: [], tableRendering: undefined };
       }
     case TABLE_RENDERING_RECEIVED:
       {

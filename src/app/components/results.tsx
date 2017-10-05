@@ -46,7 +46,7 @@ export default function Results(props: ResultsProps): JSX.Element {
         {tables && tables.length > 1 && onChangeTable && <TableSelector tables={tables} onChangeTable={onChangeTable}/>}
         <Button primary className='ckr-Results-resultReset' onClick={onResultsDismiss}>Upload</Button>
       </div>
-      {status && metadata && zOptions && onChangePage && onChangeTable
+      {status && onChangePage && onChangeTable
       && <Table status={status} metadata={metadata} zOptions={zOptions} table={table}
                 onChangePage={onChangePage} onChangeTable={onChangeTable}/>}
     </div>

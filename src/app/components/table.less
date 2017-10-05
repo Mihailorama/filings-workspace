@@ -45,7 +45,6 @@
   }
 
   &-loading {
-    box-sizing: border-box;
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
@@ -89,15 +88,19 @@
   // This varies ccording to what other UI elements are present.
   // This is conveyed through additional classes.
 
-  &-table {
+  &-table,
+  &-loading,
+  &-noTable {
     width: calc(~"100vw - " (2 * @gap3));
     margin: 12px;
+  }
 
+  &-table {
     border-radius: 3px;
 
     &-okStatus,
     &-warningStatus {
-      background-color: lighten(@primary, 35%, false);
+      background-color: @tablePaper;
       border: 1px solid @primary;
     }
     &-warningStatus {
@@ -105,15 +108,21 @@
     }
     &-errorStatus,
     &-fatalErrorStatus {
-      background-color: lighten(@failed, 35%, false);
+      background-color: @failPaper;
       border: 1px solid @failed;
     }
   }
 
   &-table,
   &-table-inner,
-  &-loading {
+  &-loading,
+  &-noTable {
     height: calc(~"100vh - " (@bar-ht + @statusTotal + @gap + @contact-ht));
+  }
+
+  &-loading,
+  &-noTable {
+    border: 1px solid transparent;  // To make geometry match the table when it appears.
   }
 
   &-withPager {
