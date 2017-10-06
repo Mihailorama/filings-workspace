@@ -17,10 +17,8 @@
 @import (reference) '../styles/defs';
 
 
-@contact-ht: (@gap3 + @text-ln-ht * @text-sz + @gap + 2 * @text-ln-ht * @text-sz + @gap2);  // Height allowed for the contact us links
+@contact-ht: 90px;  // Height allowed for the contact us links
 @tall-enough: (@bar-ht + @gap3 + @form-ht + @contact-ht);
-
-@contact-wd: 226px;  // Measured
 
 .verticallyCentred(@extra-bar-ht: 0) {
   margin-top: @gap3;
@@ -28,6 +26,11 @@
   flex-flow: column nowrap;
   align-items: center;
   position: relative;
+
+  @media (max-height: (@bar-ht + @gap3 + @form-ht + @contact-ht - 1px)) {
+    margin-top: @gap3;
+    margin-bottom: @contact-ht;
+  }
 
   @media (min-height: (@bar-ht + @gap3 + @form-ht + @contact-ht)) and (max-height: (@bar-ht + @big-gap + @form-ht + @big-gap - 1px)) {
     margin-top: auto;
@@ -41,6 +44,12 @@
 
 .ckr-CheckerApp {
   width: 100%;
+
+  @media (min-height: (@bar-ht + @gap3 + @form-ht + @contact-ht)) {
+    height: calc(~"100vh - " @bar-ht);
+  }
+
+
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
