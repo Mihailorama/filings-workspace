@@ -14,23 +14,21 @@
  *  limitations under the License.
  */
 
- @import (reference) '../styles/defs';
+import * as classNames from 'classnames';
+import * as React from 'react';
+import { ReactNode } from 'react';
 
+import './button.less';
 
-.ckr-CloseSymbol {
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  width: 24px;
-  height: 24px;
-
-  fill: none;
-  stroke: #FFF;
-  cursor: pointer;
-
-  &:hover {
-    fill: @btn-hover;
-  }
+interface ButtonProps {
+  className?: string;
+  primary?: boolean;
+  children?: ReactNode;
+  onClick?: () => void;
 }
 
-
+export default function Button({className, primary, children, onClick}: ButtonProps): JSX.Element {
+  return <button className={classNames(className, 'ckr-Button', {'ckr-Button-primary': primary})} onClick={onClick}>
+    {children}
+  </button>;
+}

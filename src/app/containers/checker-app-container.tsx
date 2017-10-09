@@ -17,11 +17,14 @@
 import * as React from 'react';
 import { Component, Props } from 'react';
 import { connect, MapDispatchToProps } from 'react-redux';
+import { Option, TableMetadata } from '@cfl/table-rendering-service';
+import { QueryableTablePage } from '@cfl/table-viewer';
 
-import { checkingStartAction, resultsDismissAction } from '../actions';
+import { tableRenderPageAction, checkingStartAction, resultsDismissAction } from '../actions';
 import { Profile, ValidationStatus } from '../models';
 import { CheckingPhase, CheckerState } from '../state';
 import CheckerApp from '../components/checker-app';
+import AppBarContainer from '../corefiling/app-bar-container';
 
 type OwnProps = Props<CheckerAppContainer>;
 
@@ -30,31 +33,56 @@ interface PropsFromState {
   profiles?: Profile[];
   status?: ValidationStatus;
   message?: string;
+  tables?: TableMetadata[];
+  metadata?: TableMetadata;
+  zOptions?: Option[][];
+  table?: QueryableTablePage;
 }
 
 interface PropsFromDispatch {
   onCheckingStart?: typeof checkingStartAction;
   onResultsDismiss?: typeof resultsDismissAction;
+  onTableRenderPage?: typeof tableRenderPageAction;
 }
 
 type CheckerAppContainerProps = OwnProps & PropsFromState & PropsFromDispatch;
 
 class CheckerAppContainer extends Component<CheckerAppContainerProps> {
   render(): JSX.Element {
-    const { phase, profiles, status, message, onCheckingStart, onResultsDismiss } = this.props;
-    return <CheckerApp phase={phase} profiles={profiles} status={status} error={message}
-      onSubmit={onCheckingStart} onResultsDismiss={onResultsDismiss} />;
+    const {
+      phase, profiles, status, message, onCheckingStart, onResultsDismiss, tables, metadata, zOptions, table, onTableRenderPage,
+    } = this.props;
+    return (
+      <div>
+        <AppBarContainer className='ckr-CheckerApp-appBar'/>
+        <CheckerApp
+          phase={phase}
+          profiles={profiles}
+          status={status}
+          error={message}
+          onSubmit={onCheckingStart}
+          onResultsDismiss={onResultsDismiss}
+          tables={tables}
+          metadata={metadata}
+          zOptions={zOptions}
+          table={table}
+          onChangePage={(x, y, z) => onTableRenderPage && metadata && onTableRenderPage(metadata, x, y, z)}
+          onChangeTable={newTable => onTableRenderPage && onTableRenderPage(newTable, 0, 0, 0)}
+        />
+      </div>
+    );
   }
 }
 
 function propsFromState(state: CheckerState): PropsFromState {
-  const { phase, profiles, status, message } = state;
-  return { phase, profiles, status, message };
+  const { phase, profiles, status, message, tables, selectedTable: metadata, zOptions, tableRendering: table } = state;
+  return { phase, profiles, status, message, tables, metadata, zOptions, table };
 }
 
 const propsFromDispatch: MapDispatchToProps<PropsFromDispatch, {}> = {
   onCheckingStart: checkingStartAction,
   onResultsDismiss: resultsDismissAction,
+  onTableRenderPage: tableRenderPageAction,
 };
 
 export default connect(propsFromState, propsFromDispatch)(CheckerAppContainer);

@@ -1,7 +1,11 @@
-imageRegistry: artifacts.int.corefiling.com:5000
-imageRepository: labs
-imageName: quick-xbrl-validator
-imageTag: 1.0.0
+# Values in caps are expected to be overriden
+
+global:
+  registry: REGISTRY
+
+image: labs/quick-xbrl-validator
+# When building the chart in CI, the tag will be automatically populated
+imageTag: TAG
 
 # Pull Policy
 # pullPolicy: IfNotPresent

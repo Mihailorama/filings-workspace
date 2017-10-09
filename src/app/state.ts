@@ -19,6 +19,8 @@
  */
 
 import { User, App, Profile, ValidationStatus } from './models';
+import { QueryableTablePage } from '@cfl/table-viewer';
+import { Option, TableMetadata } from '@cfl/table-rendering-service';
 
 export type CheckingPhase = 'startup' | 'startup-failed' | 'form' |
   'uploading' | 'uploading-failed' | 'checking' | 'results' | 'checking-failed';
@@ -30,4 +32,9 @@ export interface CheckerState {
   phase: CheckingPhase;
   status?: ValidationStatus;
   message?: string;  // May be defined if in failed phase.
+
+  tables?: TableMetadata[];
+  selectedTable?: TableMetadata;
+  zOptions?: Option[][];
+  tableRendering?: QueryableTablePage;
 }

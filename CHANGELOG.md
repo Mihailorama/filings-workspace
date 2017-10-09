@@ -1,7 +1,10 @@
 # Changelog
 
-## 1.0.0
+## 1.1.0
+- Show table contents in addition to pass/fail status
 
+
+## 1.0.0
 ### Added
 
 - Compatible with Microsoft IE 11 and Edge
@@ -10,7 +13,5 @@
 
 - Reorganized Helm charts
 
-
 ## 0.1.0
-
 Initial release.

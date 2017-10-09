@@ -6,6 +6,11 @@ It starts by using the CoreFiling Platform API to request a list of validation
 profiles, then presents a form for choosing one and uploading a file. It submits this
 to the Document Service and polls for the validation status.
 
+Once the document has been processed it displays the valdiation status
+and displays table renderings provided by the Table Rendering API.
+This uses Table Linkbase if the taxonomy includes it, otherwise
+synthesizes table layouts automatically.
+
 
 ## Licence
 

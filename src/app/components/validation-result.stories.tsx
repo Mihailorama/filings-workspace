@@ -14,8 +14,20 @@
  *  limitations under the License.
  */
 
-// Actual stories are alongside their respective components.
-// This file just ensures the global styles are imported.
+import * as React from 'react';
 
-import '../app/styles/style.less';
-import '../app/components/checker-app.less';
+import { storiesOf } from '@storybook/react';
+
+import ValidationResult from './validation-result';
+
+storiesOf('ValidationResult', module)
+  .addDecorator(story => <div className='ckr-Results'>
+    <div className='ckr-Results-resultHeading'>
+      {story()}
+    </div>
+  </div>)
+  .add('Loading', () => <ValidationResult/>)
+  .add('Invalid', () => <ValidationResult status='ERROR'/>)
+  .add('Valid with warnings', () => <ValidationResult status='WARNING'/>)
+  .add('Valid', () => <ValidationResult status='OK'/>)
+  .add('Failed', () => <ValidationResult status='FATAL_ERROR'/>);

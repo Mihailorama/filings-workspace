@@ -17,17 +17,20 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
 
-import './contact-details.less';
+import { TableMetadata } from '@cfl/table-rendering-service';
 
-export default function ContactDetails({className}: {className?: string}): JSX.Element {
-  return <div className={classNames('ckr-ContactDetails', className)}>
-    <a className='ckr-ContactDetails-link ckr-ContactDetails-primaryLink'
-        href='https://www.corefiling.com/standing/contactus/' target='_blank'>
-      <b className='ckr-Link'>Contact us</b> to find out more!
-    </a>
-    <a className='ckr-ContactDetails-link ckr-ContactDetails-secondaryLink'
-        href='https://github.com/CoreFiling/quick-xbrl-validator' target='_blank'>
-        <b className='ckr-Link'>API available</b>
-    </a>
-  </div>;
+interface TableSelectorProps {
+  tables: TableMetadata[];
+  className?: string;
+
+  onChangeTable: (table: TableMetadata) => void;
+}
+
+export default function TableSelector({ tables, onChangeTable, className }: TableSelectorProps): JSX.Element {
+  return (
+    <select onChange={e => onChangeTable(tables[+e.currentTarget.value])}
+        className={classNames('ckr-Table-tableSelect', className)}>
+      {tables.sort((a, b) => a.name.localeCompare(b.name)).map((t, i) => <option key={t.id} value={i}>{t.name}</option>)}
+    </select>
+  );
 }

@@ -11,11 +11,10 @@ spec:
     metadata:
       labels:
         app: {{ .Chart.Name }}
-        version: {{ .Chart.Version }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
-          image: {{ if .Values.imageRegistry }}{{ .Values.imageRegistry }}/{{ end }}{{ if .Values.imageRepository }}{{ .Values.imageRepository }}/{{ end }}{{ .Values.imageName }}:{{ .Values.imageTag }}
+          image: {{ .Values.global.registry }}/{{ .Values.image }}:{{ .Values.imageTag }}
           imagePullPolicy: {{default "IfNotPresent" .Values.pullPolicy}}
           ports:
             - containerPort: 8080

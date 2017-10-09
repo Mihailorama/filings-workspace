@@ -14,8 +14,6 @@
  *  limitations under the License.
  */
 
-// Actual stories are alongside their respective components.
-// This file just ensures the global styles are imported.
-
-import '../app/styles/style.less';
-import '../app/components/checker-app.less';
+export function toLowerStatus(status: string): string {
+  return status.toLowerCase().split('_').map((x, i) => i === 0 ? x : x.charAt(0).toUpperCase() + x.substr(1)).join('');
+}
