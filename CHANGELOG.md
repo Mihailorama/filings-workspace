@@ -1,6 +1,7 @@
 # Changelog
 
 ## 1.1.0
+- Show table contents in addition to pass/fail status
 
 
 ## 1.0.0
