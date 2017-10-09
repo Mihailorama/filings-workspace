@@ -76,8 +76,8 @@ publish:npm:
   script:
     - time /app/scripts/build.py
   only:
-    - develop
-    - tags
+    - develop@labs/quick-xbrl-validator
+    - tags@labs/quick-xbrl-validator
 
 publish:chart:
   <<: *template_kube_deploy
@@ -89,5 +89,5 @@ publish:chart:
   # Restrict to only publishing on develop/release - don't need to publish fb builds
   # unless we have a CI staging environment for them
   only:
-    - develop
-    - tags
+    - develop@labs/quick-xbrl-validator
+    - tags@labs/quick-xbrl-validator
