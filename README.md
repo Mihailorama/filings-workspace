@@ -79,7 +79,7 @@ npm config set @cfl/quick-xbrl-validator:devserver-host $HOST
 npm start
 ```
 
-Then open `https://$HOST:9091/`
+Then open `https://$HOST:9091/quick-xbrl-validator/`
 
 ### SSL
 
