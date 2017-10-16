@@ -2,6 +2,17 @@
 
 A simple demonstration of how the CoreFiling Platform can be used to validate a document.
 
+## Upload
+
+![upload3](https://user-images.githubusercontent.com/1489182/31607189-5a9ce7ea-b263-11e7-8233-c394db384606.png)
+
+## Review
+
+![pass-with-tables](https://user-images.githubusercontent.com/1489182/31607196-602adff0-b263-11e7-8846-4f8df0793487.PNG)
+
+
+## Synopsis
+
 It starts by using the CoreFiling Platform API to request a list of validation
 profiles, then presents a form for choosing one and uploading a file. It submits this
 to the Document Service and polls for the validation status.
