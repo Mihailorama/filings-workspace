@@ -42,6 +42,7 @@ import { APPS,
   tableRenderingServiceRender,
   tableRenderingServiceTables,
   tableRenderingServiceZOptions,
+  validationServiceFilingVersion,
   USER } from './urls';
 
 const POLL_MILLIS = 1000;
@@ -100,21 +101,18 @@ export function* checkingStartSaga(action: CheckingAction): IterableIterator<Eff
   yield put(checkingStartedAction());
 
   try {
-    // Poll for validation status.
+    // Poll for filing completion status.
     let version: FilingVersion = filing.versions[0];
     while (version.status !== 'DONE') {
       yield call(delay, POLL_MILLIS);
       version = yield call(apiFetchJson, documentServiceFilingVersion(version));
     }
-    const { validationStatus, id: filingVersionId } = version;
-    if (!validationStatus) {
-      yield put(checkingFailedAction('Filing version has no validation status'));
-      return;
-    }
-    yield put(checkingReceivedAction(validationStatus));
+
+    const validationSummary = yield call(apiFetchJson, validationServiceFilingVersion(version));
+    yield put(checkingReceivedAction(validationSummary.severity));
 
     // Fetch table info
-    const tables = yield call(apiFetchJson, tableRenderingServiceTables(filingVersionId));
+    const tables = yield call(apiFetchJson, tableRenderingServiceTables(version.id));
     yield put(tablesReceivedAction(tables));
 
     // Select the first table
