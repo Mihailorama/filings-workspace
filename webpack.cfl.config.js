@@ -23,7 +23,7 @@ let isLoggedIn = true;
 
 const mergedConfig = merge.smart(mainConfig, {
   output: {
-    publicPath: `${baseUrl}/quick-xbrl-validator/static/`,
+    publicPath: `${baseUrl}/quick-xbrl-validator/`,
   },
   devtool: 'inline-source-map',
   watch: true,
