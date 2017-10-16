@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-import { User, App, Category, Filing, FilingVersion } from '../models';
+import { User, App, Category, Filing, FilingVersion, ValidationServiceFilingVersionSummary } from '../models';
 
 export const exampleUser: User = {
   sub: 'ecdc0363-976d-4a42-a4cc-ae5d63f3a806',
@@ -74,7 +74,6 @@ export const exampleFilingVersion: FilingVersion = {
     name: 'Gurdeep Tash',
   },
   status: 'DONE',
-  validationStatus: 'OK',
   documents: [
     {
       category: 'validation',
@@ -95,4 +94,9 @@ export const exampleFilingVersion: FilingVersion = {
     id: '8723b794-3261-4cd3-b946-b683c19fb99c',
     name: 'report.xbrl',
   },
+};
+
+export const exampleValidationServiceFilingVersionSummary: ValidationServiceFilingVersionSummary = {
+  id: exampleFilingVersion.id,
+  severity: 'OK',
 };

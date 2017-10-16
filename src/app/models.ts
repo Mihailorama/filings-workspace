@@ -92,11 +92,15 @@ export interface FilingVersion {
   id: string;
   creator?: Actor;
   status: 'PENDING' | 'RUNNING' | 'DONE';
-  validationStatus?: ValidationStatus;
   documents?: Document[];  // Included if type is `FilingVersion`
   filing?: Filing;  // Included if type is `FilingVersion`.
   created: string; // Date in XML Schema format
   deleted?: string;  // Date in XML Schema format
+}
+
+export interface ValidationServiceFilingVersionSummary {
+  id: string;
+  severity: ValidationStatus;
 }
 
 export type ValidationStatus = 'FATAL_ERROR' | 'ERROR' | 'WARNING' | 'OK';
