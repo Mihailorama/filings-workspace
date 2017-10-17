@@ -1,6 +1,9 @@
 # Changelog
 
 ## develop
+- Fixed display of tables for the previous filing when the current filing was
+  invalid.
+- Fixed drop-down menu displayed behind other UI.
 
 ## 1.1.1
 - Update to use the Validation Service API to retrieve validation results.
