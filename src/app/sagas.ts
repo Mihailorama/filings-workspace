@@ -115,8 +115,10 @@ export function* checkingStartSaga(action: CheckingAction): IterableIterator<Eff
     const tables = yield call(apiFetchJson, tableRenderingServiceTables(version.id));
     yield put(tablesReceivedAction(tables));
 
-    // Select the first table
-    yield put(tableRenderPageAction(tables[0], 0, 0, 0));
+    // Select the first table if any are available.
+    if (tables.length > 0) {
+      yield put(tableRenderPageAction(tables[0], 0, 0, 0));
+    }
   } catch (res) {
     yield put(checkingFailedAction(res.message || res.statusText || `Status: ${res.status}`));
   }

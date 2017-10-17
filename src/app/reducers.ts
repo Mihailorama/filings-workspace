@@ -84,7 +84,7 @@ export function filingReducer(state: FilingState | undefined, action: Action): F
     }
     case TABLES_RECEIVED: {
       const { tables } = action as TablesReceivedAction;
-      return { ...state, tables, selectedTable: (state.selectedTable || tables[0]), zOptions: [] };
+      return { ...state, tables, selectedTable: tables.length > 0 ? tables[0] : undefined, zOptions: [] };
     }
     case TABLE_RENDERING_REQUESTED: {
       const { table } = action as TableRenderingRequestedAction;
