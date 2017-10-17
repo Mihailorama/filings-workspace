@@ -97,7 +97,6 @@ describe('globalReducer', () => {
   });
 });
 
-
 describe('filingReducer', () => {
 
   const initial: FilingState = filingReducer(undefined, {type: '????'});
