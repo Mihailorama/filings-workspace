@@ -26,10 +26,14 @@ import { CheckerState } from '../state';
 import CheckerAppContainer from './checker-app-container';
 
 const etc: CheckerState = {
-  user: {sub: 'uuid-of-user', email: 'b@example.com'},
-  apps: apps('Pass/Fail Validator'),
-  profiles: profiles('Profile'),
-  phase: 'startup',
+  global: {
+    user: {sub: 'uuid-of-user', email: 'b@example.com'},
+    apps: apps('Pass/Fail Validator'),
+    profiles: profiles('Profile'),
+    phase: 'startup',
+  },
+  filing: {
+  },
 };
 const funcs: Store<CheckerState> = {
   getState: () => etc,

@@ -26,13 +26,20 @@ export type CheckingPhase = 'startup' | 'startup-failed' | 'form' |
   'uploading' | 'uploading-failed' | 'checking' | 'results' | 'checking-failed';
 
 export interface CheckerState {
+  global: GlobalState;
+  filing: FilingState;
+}
+
+export interface GlobalState {
   user?: User;
   apps?: App[];
   profiles?: Profile[];
   phase: CheckingPhase;
-  status?: ValidationStatus;
   message?: string;  // May be defined if in failed phase.
+}
 
+export interface FilingState {
+  status?: ValidationStatus;
   tables?: TableMetadata[];
   selectedTable?: TableMetadata;
   zOptions?: Option[][];
