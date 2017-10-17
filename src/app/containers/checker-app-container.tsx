@@ -75,8 +75,11 @@ class CheckerAppContainer extends Component<CheckerAppContainerProps> {
 }
 
 function propsFromState(state: CheckerState): PropsFromState {
-  const { phase, profiles, status, message, tables, selectedTable: metadata, zOptions, tableRendering: table } = state;
-  return { phase, profiles, status, message, tables, metadata, zOptions, table };
+  const {
+    global: {phase, profiles, message},
+    filing: {status, tables, selectedTable: metadata, zOptions, tableRendering: table},
+  } = state;
+  return {phase, profiles, message, status, tables, metadata, zOptions, table};
 }
 
 const propsFromDispatch: MapDispatchToProps<PropsFromDispatch, {}> = {

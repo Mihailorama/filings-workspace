@@ -17,28 +17,32 @@
 import { startupInfoReceivedAction,
   uploadStartedAction, uploadFailedAction,
   checkingStartedAction, checkingReceivedAction, checkingFailedAction,
+  tablesReceivedAction, tableRenderingRequested, tableRenderingReceivedAction,
   resultsDismissAction } from '../actions';
 import { ValidationParams } from '../models';
-import { checker } from '../reducers';
+import { globalReducer, filingReducer } from '../reducers';
+import { GlobalState, FilingState } from '../state';
+import { exampleQueryableTablePage, exampleTableMetadata,
+  exampleTableRenderingWindow, exampleZOption } from './model-examples';
 
-describe('checker (reducer)', () => {
-  const params: ValidationParams = {
-    profile: 'CRD V 1.69.42',
-    file: new File(['hello'], 'x.brl'),
-  };
+const params: ValidationParams = {
+  profile: 'CRD V 1.69.42',
+  file: new File(['hello'], 'x.brl'),
+};
 
-  const initial = checker(undefined, {type: '????'});
+describe('globalReducer', () => {
+
+  const initial: GlobalState = globalReducer(undefined, {type: '????'});
 
   it('is initially in the form', () => {
     expect(initial.phase).toBe('startup');
-    expect(initial.status).toBeUndefined();
   });
 
   it('remembers profiles', () => {
     const user = {sub: 'uuid-of-user', name: 'Uttara Todorov', email: 'ut@example.com', preferred_username: 'ut'};
     const apps = [{id: 'app', name: 'App', href: '/app/'}];
     const profiles = [{id: 'profilename', name: 'Profile Label'}];
-    const after = checker(initial, startupInfoReceivedAction(user, apps, profiles));
+    const after = globalReducer(initial, startupInfoReceivedAction(user, apps, profiles));
 
     expect(after.user).toEqual(user);
     expect(after.apps).toEqual(apps);
@@ -46,55 +50,102 @@ describe('checker (reducer)', () => {
   });
 
   it('switches to results as soon as checking requested', () => {
-    const after = checker(initial, uploadStartedAction(params));
+    const after = globalReducer(initial, uploadStartedAction(params));
 
     expect(after.phase).toBe('uploading');
-    expect(after.status).toBeFalsy();
   });
 
   it('switches to results as soon as checking requested', () => {
-    const after = checker(initial, uploadFailedAction('LOLWAT'));
+    const after = globalReducer(initial, uploadFailedAction('LOLWAT'));
 
     expect(after.phase).toBe('uploading-failed');
-    expect(after.status).toBeFalsy();
   });
 
   it('switches to results as soon as checking requested', () => {
-    const after = checker(initial, checkingStartedAction());
+    const after = globalReducer(initial, checkingStartedAction());
 
     expect(after.phase).toBe('checking');
-    expect(after.status).toBeFalsy();
   });
 
   it('remembers validation status', () => {
-    const after = checker(initial, checkingReceivedAction('OK'));
+    const after = globalReducer(initial, checkingReceivedAction('OK'));
 
     expect(after.phase).toBe('results');
-    expect(after.status).toBe('OK');
   });
 
   it('treats failing to get status after checking started as fatal error', () => {
-    const after = checker(initial, checkingFailedAction('LOLWAT'));
+    const after = globalReducer(initial, checkingFailedAction('LOLWAT'));
 
     expect(after.phase).toBe('checking-failed');
-    expect(after.status).toBe('FATAL_ERROR');
   });
 
   it('is ready for a new game after user dismisses results', () => {
-    const before = checker(initial, checkingReceivedAction('OK'));
+    const before = globalReducer(initial, checkingReceivedAction('OK'));
 
-    const after = checker(before, resultsDismissAction());
+    const after = globalReducer(before, resultsDismissAction());
 
     expect(after.phase).toBe('form');
-    expect(after.status).toBeUndefined();
   });
 
   it('is ready for a new game after user dismisses error', () => {
-    const before = checker(initial, checkingFailedAction('LOLWAT'));
+    const before = globalReducer(initial, checkingFailedAction('LOLWAT'));
 
-    const after = checker(before, resultsDismissAction());
+    const after = globalReducer(before, resultsDismissAction());
 
     expect(after.phase).toBe('form');
     expect(after.message).toBeUndefined();
   });
+});
+
+
+describe('filingReducer', () => {
+
+  const initial: FilingState = filingReducer(undefined, {type: '????'});
+  const full: FilingState = {
+    status: 'FATAL_ERROR',
+    selectedTable: exampleTableMetadata,
+    tableRendering: exampleQueryableTablePage,
+    tables: [exampleTableMetadata],
+    zOptions: [[exampleZOption]],
+  };
+
+  it('is initially in the form', () => {
+    expect(initial).toEqual({});
+  });
+
+  it('clears filing state when starting an upload', () => {
+    const after = filingReducer(full, uploadStartedAction(params));
+    expect(after).toEqual({});
+  });
+
+  it('clears all filing state when dismissing results', () => {
+    const after = filingReducer(full, resultsDismissAction());
+    expect(after).toEqual({});
+  });
+
+  it('remembers status', () => {
+    const after = filingReducer(initial, checkingReceivedAction('ERROR'));
+    expect(after.status).toEqual('ERROR');
+  });
+
+  it('remembers tables and selects the first table by default', () => {
+    const tables = [exampleTableMetadata];
+    const after = filingReducer(initial, tablesReceivedAction(tables));
+    expect(after.tables).toEqual(tables);
+  });
+
+  it('clears table options when the table changes', () => {
+    const after = filingReducer(full, tableRenderingRequested(exampleTableMetadata, exampleTableRenderingWindow));
+    expect(after.selectedTable).toEqual(exampleTableMetadata);
+    expect(after.zOptions).toEqual([]);
+    expect(after.tableRendering).toBeUndefined();
+  });
+
+  it('remembers table rendering', () => {
+    const zOptions = {} as any;
+    const tableRendering = {} as any;
+    const after = filingReducer(full, tableRenderingReceivedAction(zOptions, tableRendering));
+    expect(after.tableRendering).toEqual(tableRendering);
+  });
+
 });

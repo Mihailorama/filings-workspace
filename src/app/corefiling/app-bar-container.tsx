@@ -42,6 +42,6 @@ class AppBarContainer extends Component<AppBarContainerProps> {
   }
 }
 
-const propsFromState = ({ user, apps }: CheckerState): PropsFromState => ({user, apps});
+const propsFromState = ({ global: { user, apps } }: CheckerState): PropsFromState => ({user, apps});
 
 export default connect(propsFromState)(AppBarContainer);

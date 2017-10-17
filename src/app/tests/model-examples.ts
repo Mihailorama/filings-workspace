@@ -14,7 +14,10 @@
  *  limitations under the License.
  */
 
-import { User, App, Category, Filing, FilingVersion, ValidationServiceFilingVersionSummary } from '../models';
+import { User, App, Category, Filing, FilingVersion,
+  TableRenderingWindow, ValidationServiceFilingVersionSummary } from '../models';
+import { QueryableTablePage } from '@cfl/table-viewer';
+import { Breakdown, Option, TableHeader, TableMetadata } from '@cfl/table-rendering-service';
 
 export const exampleUser: User = {
   sub: 'ecdc0363-976d-4a42-a4cc-ae5d63f3a806',
@@ -99,4 +102,40 @@ export const exampleFilingVersion: FilingVersion = {
 export const exampleValidationServiceFilingVersionSummary: ValidationServiceFilingVersionSummary = {
   id: exampleFilingVersion.id,
   severity: 'OK',
+};
+
+export const exampleZOption: Option = {
+  headers: [],
+  z: 1,
+};
+
+export const exampleBreakdown: Breakdown = {
+  depth: 1,
+  name: 'exampleBreakdown',
+};
+
+export const exampleTableHeader: TableHeader = {
+  breakdowns: [exampleBreakdown],
+  depth: 1,
+  sliceCount: 1,
+};
+
+export const exampleTableMetadata: TableMetadata = {
+  id: 'foo',
+  name: 'Foo',
+  x: exampleTableHeader,
+  y: exampleTableHeader,
+  z: exampleTableHeader,
+};
+
+// So far just used in equality checks.
+export const exampleQueryableTablePage: QueryableTablePage = {
+} as any;
+
+export const exampleTableRenderingWindow: TableRenderingWindow = {
+  height: 1,
+  width: 1,
+  x: 1,
+  y: 1,
+  z: 1,
 };
