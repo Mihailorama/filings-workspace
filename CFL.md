@@ -19,3 +19,4 @@ Just in case we want to update the app logo, here is how I converted it to .ICO 
 
     inkscape -z -e app-logo.png -w 512 -h 512 app-logo.svg
     convert app-logo.png -define icon:auto-resize=64,48,32,16 app-logo.ico
+
