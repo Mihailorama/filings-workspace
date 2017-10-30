@@ -20,6 +20,7 @@
 import { Action } from 'redux';
 
 import { App, Profile, TableRenderingWindow, User, ValidationParams, ValidationStatus } from './models';
+import { Statistic } from '@cfl/filing-statistics-service';
 import { Option, TableMetadata } from '@cfl/table-rendering-service';
 import { QueryableTablePage } from '@cfl/table-viewer';
 
@@ -76,11 +77,12 @@ export function uploadFailedAction(message?: string): FailedAction {
 }
 
 export interface CheckingReceivedAction extends Action {
+  filingVersionId: string;
   status: ValidationStatus;
 }
 
-export function checkingReceivedAction(status: ValidationStatus): CheckingReceivedAction {
-  return {type: CHECKING_RECEIVED, status};
+export function checkingReceivedAction(filingVersionId: string, status: ValidationStatus): CheckingReceivedAction {
+  return {type: CHECKING_RECEIVED, filingVersionId, status};
 }
 
 export function checkingFailedAction(message: string): FailedAction {
@@ -146,4 +148,36 @@ export interface TableRenderPageAction extends Action {
 
 export function tableRenderPageAction(table: TableMetadata, x: number, y: number, z: number): TableRenderPageAction {
   return {type: TABLE_RENDER_PAGE, table, x, y, z};
+}
+
+// Action sent when statistics are requested.
+
+export const FILING_STATISTICS_REQUESTED = 'FILING_STATISTICS_REQUESTED';
+
+export interface FilingStatisticsAction extends Action {
+  filingVersionId: string;
+}
+
+export function filingStatisticsRequestedAction(filingVersionId: string): FilingStatisticsAction {
+  return {type: FILING_STATISTICS_REQUESTED, filingVersionId};
+}
+
+// Action sent when filing version's statistics are received.
+
+export const FILING_STATISTICS_RECEIVED = 'FILING_STATISTICS_RECEIVED';
+
+export interface FilingStatisticsReceivedAction extends Action {
+  statistics: Statistic[];
+}
+
+export function filingStatisticsReceivedAction(statistics: Statistic[]): FilingStatisticsReceivedAction {
+  return {type: FILING_STATISTICS_RECEIVED, statistics};
+}
+
+// Action for fetching statistics.
+
+export const FILING_STATISTICS_FETCH = 'FILING_STATISTICS_FETCH';
+
+export function filingStatisticsFetchAction(filingVersionId: string): FilingStatisticsAction {
+  return {type: FILING_STATISTICS_FETCH, filingVersionId};
 }

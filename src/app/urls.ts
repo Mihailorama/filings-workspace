@@ -51,3 +51,9 @@ export const tableRenderingServiceTables = (filingVersionId: string) => TABLE_RE
 export const tableRenderingServiceZOptions = (tableId: string, z: number) => TABLE_RENDERING_SERVICE_Z_OPTIONS.fillFromObject({tableId, z});
 export const tableRenderingServiceRender = (tableId: string, window: TableRenderingWindow) =>
   TABLE_RENDERING_SERVICE_RENDER.fillFromObject({tableId, ...window});
+
+const FILING_STATISTICS_SERVICE_BASE = '/api/filing-statistics-service/v1/';
+const FILING_STATISTICS_SERVICE_STATISTICS = uriTemplates(FILING_STATISTICS_SERVICE_BASE + 'filing-versions/{id}/statistics/');
+
+export const filingStatisticsServiceStatistics = (filingVersionId: string) =>
+  FILING_STATISTICS_SERVICE_STATISTICS.fillFromObject({id: filingVersionId});

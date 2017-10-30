@@ -68,7 +68,7 @@ describe('globalReducer', () => {
   });
 
   it('remembers validation status', () => {
-    const after = globalReducer(initial, checkingReceivedAction('OK'));
+    const after = globalReducer(initial, checkingReceivedAction('12345678', 'OK'));
 
     expect(after.phase).toBe('results');
   });
@@ -80,7 +80,7 @@ describe('globalReducer', () => {
   });
 
   it('is ready for a new game after user dismisses results', () => {
-    const before = globalReducer(initial, checkingReceivedAction('OK'));
+    const before = globalReducer(initial, checkingReceivedAction('12345678', 'OK'));
 
     const after = globalReducer(before, resultsDismissAction());
 
@@ -123,7 +123,7 @@ describe('filingReducer', () => {
   });
 
   it('remembers status', () => {
-    const after = filingReducer(initial, checkingReceivedAction('ERROR'));
+    const after = filingReducer(initial, checkingReceivedAction('12345678', 'ERROR'));
     expect(after.status).toEqual('ERROR');
   });
 

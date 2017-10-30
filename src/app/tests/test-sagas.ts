@@ -89,7 +89,8 @@ describe('checkingStartSaga', () => {
       '/api/validation-service/v1/filing-versions/f09be954-1895-4954-b333-6c9c89b833f1'));
 
     // Now results arrive and all is well.
-    expect(saga.next(exampleValidationServiceFilingVersionSummary).value).toEqual(put(checkingReceivedAction('OK')));
+    expect(saga.next(exampleValidationServiceFilingVersionSummary).value).toEqual(put(
+      checkingReceivedAction('f09be954-1895-4954-b333-6c9c89b833f1', 'OK')));
   });
 
   it('dispatches FAILED if initial upload fails', () => {
