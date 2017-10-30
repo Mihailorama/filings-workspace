@@ -26,9 +26,14 @@ const statistics: Statistic[] = [
 ];
 
 storiesOf('Statistics', module)
-  .add('No statistics', () => {
+  .add('Not loaded', () => {
     return (
       <Statistics />
+    );
+  })
+  .add('No statistics', () => {
+    return (
+      <Statistics statistics={[]} />
     );
   })
   .add('With statistics', () => {

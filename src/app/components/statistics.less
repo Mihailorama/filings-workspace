@@ -35,4 +35,22 @@
     font-size: 16px;
     margin-bottom: 12px;
   }
+
+  &-loading {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+
+    &:before {
+      content: " ";
+      display: block;
+      width: 240px;
+      height: 240px;
+      background-image: url(Progress_Animation.gif);
+      background-position: 50% 50%;
+      background-repeat: no-repeat;
+      background-size: 300px 300px;
+    }
+  }
 }

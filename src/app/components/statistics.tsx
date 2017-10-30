@@ -44,7 +44,8 @@ export default class Statistics extends React.Component<StatisticsProps, Statist
         <div className='ckr-Statistics-heading'>
           <button onClick={this.toggleExpand.bind(this)}>Filing details</button>
         </div>
-        {expanded && (statistics ?
+        {expanded && !statistics && <div className='ckr-Statistics-loading' />}
+        {expanded && statistics && (statistics.length > 0 ?
           <table>
             <tbody>
               {statistics.map(statistic => (
