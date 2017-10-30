@@ -18,10 +18,16 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
+import { Statistic } from '@cfl/filing-statistics-service';
 import { TableMetadata } from '@cfl/table-rendering-service';
 import { basicTableWithMetadata } from '@cfl/table-viewer/lib/test-utils';
 
 import Results from './results';
+
+const statistics: Statistic[] = [
+  {name: 'table-count', label: 'Table count', value: 12},
+  {name: 'fact-count', label: 'Fact count', value: 123},
+];
 
 storiesOf('Results', module)
   .add('Full', () => {
@@ -35,6 +41,7 @@ storiesOf('Results', module)
         table={table}
         onChangePage={action('onChangePage') as any}
         onChangeTable={action('onChangeTable') as any}
+        onFetchStatistics={action('onFetchStatistics') as any}
       />
     );
   })
@@ -48,6 +55,7 @@ storiesOf('Results', module)
         zOptions={zOptions}
         onChangePage={action('onChangePage') as any}
         onChangeTable={action('onChangeTable') as any}
+        onFetchStatistics={action('onFetchStatistics') as any}
       />
     );
   })
@@ -55,6 +63,37 @@ storiesOf('Results', module)
     return (
       <Results
         status={'OK'}
+      />
+    );
+  })
+  .add('With statistics', () => {
+    const { table, metadata, zOptions } = basicTableWithMetadata();
+    return (
+      <Results
+        status={'OK'}
+        statistics={statistics}
+        tables={[metadata, {name: 'another table', id: 'uuid-of-another-table'} as TableMetadata]}
+        metadata={metadata}
+        zOptions={zOptions}
+        table={table}
+        onChangePage={action('onChangePage') as any}
+        onChangeTable={action('onChangeTable') as any}
+        onFetchStatistics={action('onFetchStatistics') as any}
+      />
+    );
+  })
+  .add('No statistics', () => {
+    const { table, metadata, zOptions } = basicTableWithMetadata();
+    return (
+      <Results
+        status={'OK'}
+        tables={[metadata, {name: 'another table', id: 'uuid-of-another-table'} as TableMetadata]}
+        metadata={metadata}
+        zOptions={zOptions}
+        table={table}
+        onChangePage={action('onChangePage') as any}
+        onChangeTable={action('onChangeTable') as any}
+        onFetchStatistics={action('onFetchStatistics') as any}
       />
     );
   })
@@ -69,6 +108,7 @@ storiesOf('Results', module)
         table={table}
         onChangePage={action('onChangePage') as any}
         onChangeTable={action('onChangeTable') as any}
+        onFetchStatistics={action('onFetchStatistics') as any}
       />
     );
   });

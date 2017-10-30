@@ -16,11 +16,13 @@
 
 import * as React from 'react';
 
+import { Statistic } from '@cfl/filing-statistics-service';
 import { Option, TableMetadata } from '@cfl/table-rendering-service';
 import { QueryableTablePage } from '@cfl/table-viewer';
 
 import Table from './table';
 import Button from './button';
+import Statistics from './statistics';
 import TableSelector from './table-selector';
 import ValidationResult from './validation-result';
 import { ValidationStatus } from '../models';
@@ -29,6 +31,7 @@ import './results.less';
 
 export interface ResultsProps {
   status?: ValidationStatus;
+  statistics?: Statistic[];
   tables?: TableMetadata[];
   metadata?: TableMetadata;
   zOptions?: Option[][];
@@ -36,9 +39,13 @@ export interface ResultsProps {
   onChangePage?: (x: number, y: number, z: number) => void;
   onChangeTable?: (table: TableMetadata) => void;
   onResultsDismiss?: () => void;
+  onFetchStatistics?: () => void;
 }
 export default function Results(props: ResultsProps): JSX.Element {
-  const { status, tables, metadata, zOptions, table, onChangePage, onChangeTable, onResultsDismiss } = props;
+  const {
+    status, statistics, tables, metadata, zOptions, table,
+    onChangePage, onChangeTable, onResultsDismiss, onFetchStatistics,
+  } = props;
   return (
     <div className='ckr-Results-resultView'>
       <div className='ckr-Results-resultHeading'>
@@ -46,6 +53,7 @@ export default function Results(props: ResultsProps): JSX.Element {
         {tables && tables.length > 1 && onChangeTable && <TableSelector tables={tables} onChangeTable={onChangeTable}/>}
         <Button primary className='ckr-Results-resultReset' onClick={onResultsDismiss}>Upload</Button>
       </div>
+      <Statistics statistics={statistics} onExpand={onFetchStatistics}/>
       {status && onChangePage && onChangeTable
       && <Table status={status} metadata={metadata} zOptions={zOptions} table={table}
                 onChangePage={onChangePage} onChangeTable={onChangeTable}/>}
