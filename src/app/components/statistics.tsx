@@ -42,7 +42,7 @@ export default class Statistics extends React.Component<StatisticsProps, Statist
     return (
       <div className='ckr-Statistics'>
         <div className='ckr-Statistics-heading'>
-          <button onClick={this.toggleExpand.bind(this)}>Filing details</button>
+          <button onClick={() => this.toggleExpand()}>Filing details</button>
         </div>
         {expanded && !statistics && <div className='ckr-Statistics-loading' />}
         {expanded && statistics && (statistics.length > 0 ?
