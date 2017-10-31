@@ -19,7 +19,7 @@ import { all, call, put } from 'redux-saga/effects';
 
 import { startupInfoReceivedAction, startupInfoFailedAction,
   checkingStartAction, uploadStartedAction, uploadFailedAction,
-  checkingStartedAction, checkingReceivedAction, checkingFailedAction } from '../actions';
+  checkingStartedAction, checkingReceivedAction, failedAction } from '../actions';
 import { apiFetchJson } from '../api-fetch';
 import { ValidationParams,  } from '../models';
 import { startupInfoSaga, checkingStartSaga } from '../sagas';
@@ -107,7 +107,7 @@ describe('checkingStartSaga', () => {
 
     saga.next(); saga.next(); saga.next(exampleFiling); saga.next();  // First few steps as above.
 
-    expect(saga.throw && saga.throw(new Error('LOLWAT')).value).toEqual(put(checkingFailedAction('LOLWAT')));
+    expect(saga.throw && saga.throw(new Error('LOLWAT')).value).toEqual(put(failedAction('LOLWAT')));
   });
 
   it('dispatches FAILED if polling fails with response', () => {
@@ -116,6 +116,6 @@ describe('checkingStartSaga', () => {
     saga.next(); saga.next(); saga.next(exampleFiling); saga.next();  // First few steps as above.
 
     expect(saga.throw && saga.throw({status: 400, statusText: 'Nope.'}).value)
-    .toEqual(put(checkingFailedAction(jasmine.stringMatching(/Nope./) as any)));
+    .toEqual(put(failedAction(jasmine.stringMatching(/Nope./) as any)));
   });
 });

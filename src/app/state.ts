@@ -24,7 +24,7 @@ import { QueryableTablePage } from '@cfl/table-viewer';
 import { Option, TableMetadata } from '@cfl/table-rendering-service';
 
 export type CheckingPhase = 'startup' | 'startup-failed' | 'form' |
-  'uploading' | 'uploading-failed' | 'checking' | 'results' | 'checking-failed';
+  'uploading' | 'uploading-failed' | 'checking' | 'results' | 'failed';
 
 export interface CheckerState {
   global: GlobalState;

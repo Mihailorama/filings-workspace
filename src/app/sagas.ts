@@ -20,7 +20,7 @@ import { all, call, put, takeEvery } from 'redux-saga/effects';
 import {
   CHECKING_START,
   CheckingAction,
-  checkingFailedAction,
+  failedAction,
   checkingReceivedAction,
   checkingStartedAction,
   startupInfoFailedAction,
@@ -129,7 +129,7 @@ export function* checkingStartSaga(action: CheckingAction): IterableIterator<Eff
       yield put(tableRenderPageAction(tables[0], 0, 0, 0));
     }
   } catch (res) {
-    yield put(checkingFailedAction(res.message || res.statusText || `Status: ${res.status}`));
+    yield put(failedAction(res.message || res.statusText || `Status: ${res.status}`));
   }
 }
 
@@ -146,7 +146,7 @@ export function* tableRenderingSaga(action: TableRenderPageAction): IterableIter
     ]);
     yield put(tableRenderingReceivedAction(zOptions, new QueryableTablePageImpl(table, tableRendering)));
   } catch (res) {
-    yield put(checkingFailedAction(res.message || res.statusText || `Status: ${res.status}`));
+    yield put(failedAction(res.message || res.statusText || `Status: ${res.status}`));
   }
 }
 
@@ -157,7 +157,7 @@ export function* filingStatisticsSaga(action: FilingStatisticsAction): IterableI
     const statistics = yield call(apiFetchJson, filingStatisticsServiceStatistics(filingVersionId));
     yield put(filingStatisticsReceivedAction(statistics));
   } catch (res) {
-    yield put(checkingFailedAction(res.message || res.statusText || `Status: ${res.status}`));
+    yield put(failedAction(res.message || res.statusText || `Status: ${res.status}`));
   }
 }
 

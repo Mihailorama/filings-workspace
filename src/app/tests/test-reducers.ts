@@ -16,7 +16,7 @@
 
 import { startupInfoReceivedAction,
   uploadStartedAction, uploadFailedAction,
-  checkingStartedAction, checkingReceivedAction, checkingFailedAction,
+  checkingStartedAction, checkingReceivedAction, failedAction,
   tablesReceivedAction, tableRenderingRequested, tableRenderingReceivedAction,
   resultsDismissAction } from '../actions';
 import { ValidationParams } from '../models';
@@ -74,9 +74,9 @@ describe('globalReducer', () => {
   });
 
   it('treats failing to get status after checking started as fatal error', () => {
-    const after = globalReducer(initial, checkingFailedAction('LOLWAT'));
+    const after = globalReducer(initial, failedAction('LOLWAT'));
 
-    expect(after.phase).toBe('checking-failed');
+    expect(after.phase).toBe('failed');
   });
 
   it('is ready for a new game after user dismisses results', () => {
@@ -88,7 +88,7 @@ describe('globalReducer', () => {
   });
 
   it('is ready for a new game after user dismisses error', () => {
-    const before = globalReducer(initial, checkingFailedAction('LOLWAT'));
+    const before = globalReducer(initial, failedAction('LOLWAT'));
 
     const after = globalReducer(before, resultsDismissAction());
 

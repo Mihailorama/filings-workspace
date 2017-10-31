@@ -54,7 +54,7 @@ export const UPLOAD_STARTED = 'UPLOAD_STARTED';  // from saga when upload begins
 export const CHECKING_STARTED = 'UPLOAD_COMPLETE';  // From saga when file is uploaded and checking begins
 export const UPLOAD_FAILED = 'UPLOAD_FAILED';  // From saga if uplaod fails.
 export const CHECKING_RECEIVED = 'CHECKING_RECEIVED';  // From saga when results ready at long last.
-export const CHECKING_FAILED = 'CHECKING_FAILED';
+export const FAILED = 'FAILED';
 
 export interface CheckingAction extends Action {
   params: ValidationParams;
@@ -85,8 +85,8 @@ export function checkingReceivedAction(filingVersionId: string, status: Validati
   return {type: CHECKING_RECEIVED, filingVersionId, status};
 }
 
-export function checkingFailedAction(message: string): FailedAction {
-  return {type: CHECKING_FAILED, message};
+export function failedAction(message: string): FailedAction {
+  return {type: FAILED, message};
 }
 
 // Action sent when user tires of the results.
