@@ -33,6 +33,18 @@ function StatisticsTable({statistics}: {statistics: Statistic[]}): JSX.Element {
   </table>;
 }
 
+function StatisticsPopupTitle({onCloseClick}: {onCloseClick?: () => void}): JSX.Element {
+  return <div className='ckr-StatisticsPopup-title'>
+    <div className='ckr-StatisticsPopup-title-text'>Filing statistics</div>
+    <button onClick={onCloseClick} title='Close statistics'>
+      <svg width={7} height={8}>
+        <line x1={0} y1={0} x2={7} y2={8} />
+        <line x1={0} y1={8} x2={7} y2={0} />
+      </svg>
+    </button>
+  </div>;
+}
+
 export interface StatisticsPopupProps {
   statistics?: Statistic[];
   onCloseClick?: () => void;
@@ -46,15 +58,7 @@ export default function StatisticsPopup({statistics, onCloseClick}: StatisticsPo
   return <div>
     <div className='ckr-StatisticsPopup-cover' onClick={onCloseClick} />
     <div className='ckr-StatisticsPopup' style={{marginTop: -popupHeight / 2}}>
-      <div className='ckr-StatisticsPopup-title'>
-        <div className='ckr-StatisticsPopup-title-text'>Filing statistics</div>
-        <button onClick={onCloseClick} title='Close statistics'>
-          <svg width={7} height={8}>
-            <line x1={0} y1={0} x2={7} y2={8} />
-            <line x1={0} y1={8} x2={7} y2={0} />
-          </svg>
-        </button>
-      </div>
+      <StatisticsPopupTitle onCloseClick={onCloseClick}/>
       {!statistics && <div className='ckr-StatisticsPopup-loading' />}
       {statistics && (statistics.length > 0 ?
         <StatisticsTable statistics={statistics} /> :
