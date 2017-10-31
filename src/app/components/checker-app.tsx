@@ -70,6 +70,7 @@ export default function CheckerApp(props: CheckerAppProps): JSX.Element {
     case 'results':
       innards = <div className='ckr-CheckerApp-resultHolder'>
         <Results
+          error={error}
           statistics={statistics}
           status={status}
           tables={tables}

@@ -30,6 +30,7 @@ import { ValidationStatus } from '../models';
 import './results.less';
 
 export interface ResultsProps {
+  error?: string;
   status?: ValidationStatus;
   statistics?: Statistic[];
   tables?: TableMetadata[];
@@ -43,20 +44,24 @@ export interface ResultsProps {
 }
 export default function Results(props: ResultsProps): JSX.Element {
   const {
-    status, statistics, tables, metadata, zOptions, table,
+    error, status, statistics, tables, metadata, zOptions, table,
     onChangePage, onChangeTable, onResultsDismiss, onFetchStatistics,
   } = props;
   return (
     <div className='ckr-Results-resultView'>
       <div className='ckr-Results-resultHeading'>
-        <ValidationResult status={status}/>
-        {tables && tables.length > 1 && onChangeTable && <TableSelector tables={tables} onChangeTable={onChangeTable}/>}
+        <ValidationResult status={status} error={error}/>
+        {!error && tables && tables.length > 1 && onChangeTable && <TableSelector tables={tables} onChangeTable={onChangeTable}/>}
         <Button primary className='ckr-Results-resultReset' onClick={onResultsDismiss}>Upload</Button>
       </div>
-      <Statistics statistics={statistics} onExpand={onFetchStatistics}/>
-      {status && onChangePage && onChangeTable
-      && <Table status={status} metadata={metadata} zOptions={zOptions} table={table}
-                onChangePage={onChangePage} onChangeTable={onChangeTable}/>}
+      {!error &&
+        <div>
+          <Statistics statistics={statistics} onExpand={onFetchStatistics}/>
+          {status && onChangePage && onChangeTable
+            && <Table status={status} metadata={metadata} zOptions={zOptions} table={table}
+                      onChangePage={onChangePage} onChangeTable={onChangeTable}/>}
+        </div>
+      }
     </div>
   );
 }

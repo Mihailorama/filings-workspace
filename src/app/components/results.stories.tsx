@@ -116,6 +116,14 @@ storiesOf('Results', module)
       />
     );
   })
+  .add('Failed', () => {
+    return (
+      <Results
+        status={'FATAL_ERROR'}
+        error={'Something went wrong'}
+      />
+    );
+  })
   .add('Warning', () => {
     const { table, metadata, zOptions } = basicTableWithMetadata();
     return (
