@@ -20,45 +20,45 @@ import { Statistic } from '@cfl/filing-statistics-service';
 
 import './statistics.less';
 
-export interface StatisticsProps {
+function StatisticsTable({statistics}: {statistics: Statistic[]}): JSX.Element {
+  return <table className='ckr-StatisticsTable'>
+    <tbody>
+      {statistics.map(statistic => (
+        <tr key={statistic.name}>
+          <td className='ckr-StatisticsTable-name'>{statistic.label}</td>
+          <td className='ckr-StatisticsTable-value'>{statistic.value}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>;
+}
+
+export interface StatisticsPopupProps {
   statistics?: Statistic[];
-  onExpand?: () => void;
+  onCloseClick?: () => void;
 }
-export interface StatisticsState {
-  expanded: boolean;
-}
-export default class Statistics extends React.Component<StatisticsProps, StatisticsState> {
-  constructor(props: StatisticsProps) {
-    super(props);
-    this.state = {expanded: false};
-  }
-  toggleExpand(): void {
-    this.setState({expanded: !this.state.expanded}, () =>
-      this.state.expanded && this.props.onExpand && this.props.onExpand());
-  }
-  render(): JSX.Element {
-    const { statistics } = this.props;
-    const { expanded } = this.state;
-    return (
-      <div className='ckr-Statistics'>
-        <div className='ckr-Statistics-heading'>
-          <button onClick={() => this.toggleExpand()}>Filing details</button>
-        </div>
-        {expanded && !statistics && <div className='ckr-Statistics-loading' />}
-        {expanded && statistics && (statistics.length > 0 ?
-          <table>
-            <tbody>
-              {statistics.map(statistic => (
-                <tr key={statistic.name}>
-                  <th className='ckr-Statistic-name'>{`${statistic.label}: `}</th>
-                  <td className='ckr-Statistic-value'>{statistic.value}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          : <div>No statistics.</div>
-        )}
+
+export default function StatisticsPopup({statistics, onCloseClick}: StatisticsPopupProps): JSX.Element {
+  const loadingHeight = 240;
+  const rowHeight = 24;
+  const tableHeight = statistics ? Math.max(1, statistics.length) * rowHeight : loadingHeight;
+  const popupHeight = tableHeight + 35;
+  return <div>
+    <div className='ckr-StatisticsPopup-cover' onClick={onCloseClick} />
+    <div className='ckr-StatisticsPopup' style={{marginTop: -popupHeight / 2}}>
+      <div className='ckr-StatisticsPopup-title'>
+        <div className='ckr-StatisticsPopup-title-text'>Filing statistics</div>
+        <button onClick={onCloseClick} title='Close statistics'>
+          <svg width={7} height={8}>
+            <line x1={0} y1={0} x2={7} y2={8} />
+            <line x1={0} y1={8} x2={7} y2={0} />
+          </svg>
+        </button>
       </div>
-    );
-  }
+      {!statistics && <div className='ckr-StatisticsPopup-loading' />}
+      {statistics && (statistics.length > 0 ?
+        <StatisticsTable statistics={statistics} /> :
+        <div className='ckr-StatisticsPopup-noResults'>No statistics.</div>)}
+    </div>
+  </div>;
 }

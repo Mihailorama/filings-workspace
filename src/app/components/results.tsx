@@ -22,7 +22,7 @@ import { QueryableTablePage } from '@cfl/table-viewer';
 
 import Table from './table';
 import Button from './button';
-import Statistics from './statistics';
+import StatisticsPopup from './statistics';
 import TableSelector from './table-selector';
 import ValidationResult from './validation-result';
 import { ValidationStatus } from '../models';
@@ -42,26 +42,47 @@ export interface ResultsProps {
   onResultsDismiss?: () => void;
   onFetchStatistics?: () => void;
 }
-export default function Results(props: ResultsProps): JSX.Element {
-  const {
-    error, status, statistics, tables, metadata, zOptions, table,
-    onChangePage, onChangeTable, onResultsDismiss, onFetchStatistics,
-  } = props;
-  return (
-    <div className='ckr-Results-resultView'>
-      <div className='ckr-Results-resultHeading'>
-        <ValidationResult status={status} error={error}/>
-        {!error && tables && tables.length > 1 && onChangeTable && <TableSelector tables={tables} onChangeTable={onChangeTable}/>}
-        <Button primary className='ckr-Results-resultReset' onClick={onResultsDismiss}>Upload</Button>
-      </div>
-      {!error &&
-        <div>
-          <Statistics statistics={statistics} onExpand={onFetchStatistics}/>
-          {status && onChangePage && onChangeTable
-            && <Table status={status} metadata={metadata} zOptions={zOptions} table={table}
-                      onChangePage={onChangePage} onChangeTable={onChangeTable}/>}
+
+interface ResultsState {
+  showStatistics?: boolean;
+}
+
+export default class Results extends React.Component<ResultsProps, ResultsState> {
+  constructor(props: ResultsProps) {
+    super(props);
+    this.state = {showStatistics: false};
+  }
+  showStatistics(): void {
+    this.setState({showStatistics: true}, () =>
+      this.props.onFetchStatistics && this.props.onFetchStatistics());
+  }
+  hideStatistics(): void {
+    this.setState({showStatistics: false});
+  }
+  render(): JSX.Element {
+    const {
+      error, status, statistics, tables, metadata, zOptions, table,
+      onChangePage, onChangeTable, onResultsDismiss,
+    } = this.props;
+    const { showStatistics } = this.state;
+    return (
+      <div className='ckr-Results-resultView'>
+        <div className='ckr-Results-resultHeading'>
+          <ValidationResult status={status} error={error}/>
+          {!error && tables && tables.length > 1 && onChangeTable &&
+          <TableSelector tables={tables} onChangeTable={onChangeTable}/>}
+          <Button className='ckr-Results-filingStatistics' onClick={() => this.showStatistics()}>Filing statistics</Button>
+          <Button primary className='ckr-Results-resultReset' onClick={onResultsDismiss}>Upload</Button>
         </div>
-      }
-    </div>
-  );
+        {!error &&
+        <div>
+          {showStatistics && <StatisticsPopup statistics={statistics} onCloseClick={() => this.hideStatistics()}/>}
+          {status && onChangePage && onChangeTable
+          && <Table status={status} metadata={metadata} zOptions={zOptions} table={table}
+                    onChangePage={onChangePage} onChangeTable={onChangeTable}/>}
+        </div>
+        }
+      </div>
+    );
+  }
 }
