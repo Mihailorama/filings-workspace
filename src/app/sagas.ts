@@ -51,7 +51,7 @@ import {
   tableRenderingServiceZOptions,
   validationServiceFilingVersion,
   USER,
-  filingStatisticsServiceStatistics,
+  filingStatisticsService,
 } from './urls';
 
 const POLL_MILLIS = 1000;
@@ -154,7 +154,7 @@ export function* filingStatisticsSaga(action: FilingStatisticsAction): IterableI
   const { filingVersionId } = action;
   try {
     yield put(filingStatisticsRequestedAction(filingVersionId));
-    const statistics = yield call(apiFetchJson, filingStatisticsServiceStatistics(filingVersionId));
+    const statistics = yield call(filingStatisticsService.getStatistics, {filingVersionId});
     yield put(filingStatisticsReceivedAction(statistics));
   } catch (res) {
     yield put(failedAction(res.message || res.statusText || `Status: ${res.status}`));
