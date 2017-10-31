@@ -70,8 +70,11 @@ export default class Results extends React.Component<ResultsProps, ResultsState>
         <div className='ckr-Results-resultHeading'>
           <ValidationResult status={status} error={error}/>
           {!error && tables && tables.length > 1 && onChangeTable &&
-          <TableSelector tables={tables} onChangeTable={onChangeTable}/>}
-          <Button className='ckr-Results-filingStatistics' onClick={() => this.showStatistics()}>Filing statistics</Button>
+            [
+              <TableSelector tables={tables} onChangeTable={onChangeTable}/>,
+              <Button className='ckr-Results-filingStatistics' onClick={() => this.showStatistics()}>Filing statistics</Button>,
+            ]
+          }
           <Button primary className='ckr-Results-resultReset' onClick={onResultsDismiss}>Upload</Button>
         </div>
         {!error &&
