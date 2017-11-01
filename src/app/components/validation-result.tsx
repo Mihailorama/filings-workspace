@@ -61,7 +61,7 @@ export default class ValidationResult extends Component<ValidationResultProps> {
     return <div className={classNames('ckr-ValidationResult', `ckr-ValidationResult-${lowerStatus}`)}>
       {label && <b className={classNames('ckr-ValidationResult-status', `ckr-ValidationResult-${lowerStatus}Status`)}>{label}</b>}
       {detail && <p className={classNames('ckr-ValidationResult-detail', `ckr-ValidationResult-${lowerStatus}Detail`)}>{detail}</p>}
-      {error && <p className={classNames('ckr-ValidationResult-error')}>{error}</p>}
+      {error && <p className={classNames('ckr-ValidationResult-errorDetail')}>{error}</p>}
     </div>;
   }
 }

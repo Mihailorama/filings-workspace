@@ -30,8 +30,8 @@ export interface TableProps {
   metadata?: TableMetadata;  // The table we want to show, or undefined if not got any tables.
   zOptions?: Option[][];
   table?: QueryableTablePage;
-  onChangePage: (x: number, y: number, z: number) => void;
-  onChangeTable: (table: TableMetadata) => void;
+  onChangePage?: (x: number, y: number, z: number) => void;
+  onChangeTable?: (table: TableMetadata) => void;
 }
 export default function Table(props: TableProps): JSX.Element {
   const { status, metadata, zOptions, table, onChangePage } = props;
@@ -47,7 +47,7 @@ export default function Table(props: TableProps): JSX.Element {
           breakdowns={metadata.z.breakdowns}
           options={zOptions}
           selected={table.zHeaders}
-          onSelect={z => onChangePage(table.x, table.y, z)}
+          onSelect={z => onChangePage && onChangePage(table.x, table.y, z)}
         />
       </div>}
       {table && table.hasMultiplePages && <div className='ckr-Table-pager'>
@@ -55,7 +55,7 @@ export default function Table(props: TableProps): JSX.Element {
           pages={table.pageCoordinates}
           x={table.x}
           y={table.y}
-          onSelect={(x, y) => onChangePage(x, y, table.z)}
+          onSelect={(x, y) => onChangePage && onChangePage(x, y, table.z)}
         />
       </div>}
       {!table && metadata && <div className={classNames('ckr-Table-loading', tableOffsets)} />}

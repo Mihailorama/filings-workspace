@@ -58,6 +58,15 @@ storiesOf('CheckerApp', module)
       />
     );
   })
+  .add('Fail', () => {
+    return (
+      <CheckerApp
+        profiles={profiles('Profile')}
+        phase={'failed'}
+        status={'FATAL_ERROR'}
+      />
+    );
+  })
   .add('Change page', () => {
     const { metadata, zOptions } = basicTableWithMetadata();
     return (
