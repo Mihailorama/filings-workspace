@@ -35,7 +35,7 @@ storiesOf('Results', module)
     return (
       <Results
         status={'OK'}
-        statistics={[]}
+        statistics={statistics}
         tables={[metadata, {name: 'another table', id: 'uuid-of-another-table'} as TableMetadata]}
         metadata={metadata}
         zOptions={zOptions}
@@ -51,7 +51,6 @@ storiesOf('Results', module)
     return (
       <Results
         status={'OK'}
-        statistics={[]}
         tables={[metadata, {name: 'another table'} as TableMetadata]}
         metadata={metadata}
         zOptions={zOptions}
@@ -74,22 +73,6 @@ storiesOf('Results', module)
     return (
       <Results
         status={'OK'}
-        tables={[metadata, {name: 'another table', id: 'uuid-of-another-table'} as TableMetadata]}
-        metadata={metadata}
-        zOptions={zOptions}
-        table={table}
-        onChangePage={action('onChangePage') as any}
-        onChangeTable={action('onChangeTable') as any}
-        onFetchStatistics={action('onFetchStatistics') as any}
-      />
-    );
-  })
-  .add('With statistics', () => {
-    const { table, metadata, zOptions } = basicTableWithMetadata();
-    return (
-      <Results
-        status={'OK'}
-        statistics={statistics}
         tables={[metadata, {name: 'another table', id: 'uuid-of-another-table'} as TableMetadata]}
         metadata={metadata}
         zOptions={zOptions}
