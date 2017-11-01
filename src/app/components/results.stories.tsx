@@ -107,6 +107,22 @@ storiesOf('Results', module)
       />
     );
   })
+  .add('Error', () => {
+    const { table, metadata, zOptions } = basicTableWithMetadata();
+    return (
+      <Results
+        status={'ERROR'}
+        statistics={[]}
+        tables={[metadata, {name: 'another table with a super long name', id: 'uuid-of-another-table'} as TableMetadata]}
+        metadata={metadata}
+        zOptions={zOptions}
+        table={table}
+        onChangePage={action('onChangePage') as any}
+        onChangeTable={action('onChangeTable') as any}
+        onFetchStatistics={action('onFetchStatistics') as any}
+      />
+    );
+  })
   .add('Warning', () => {
     const { table, metadata, zOptions } = basicTableWithMetadata();
     return (
