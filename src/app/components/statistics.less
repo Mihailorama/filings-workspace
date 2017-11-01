@@ -50,28 +50,35 @@
   }
 }
 
-.ckr-StatisticsPopup-cover {
+.ckr-StatisticsPopup-container {
   position: fixed;
   left: 0px;
   top: 0px;
   width: 100%;
   height: 100%;
 
-  background-color: fade(#30577A, 75%);
-
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
   z-index: 20;
+}
+
+.ckr-StatisticsPopup-background {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-color: fade(#30577A, 75%);
 }
 
 .ckr-StatisticsPopup {
   @width: 400px;
 
-  z-index: 30;
-  position: absolute;
   box-sizing: border-box;
   flex-grow: 0;
-  left: 50%;
-  top: 50%;
-  margin: 0px (-@width / 2);
   box-shadow: 0 6px 12px rgba(0,0,0,.175);
 
   width: @width;
@@ -88,6 +95,7 @@
     font-weight: 300;
     font-size: 18px;
     line-height: @height;
+    position: relative;
 
     &-text {
       display: inline-block;
@@ -105,8 +113,8 @@
       border: none;
       cursor: pointer;
 
-      margin-left: -@height;
-      float: right;
+      position: absolute;
+      right: 0px;
       svg {
         stroke: @primary;
         stroke-width: 1.5px;

@@ -51,18 +51,16 @@ export interface StatisticsPopupProps {
 }
 
 export default function StatisticsPopup({statistics, onCloseClick}: StatisticsPopupProps): JSX.Element {
-  const loadingHeight = 240;
-  const rowHeight = 24;
-  const tableHeight = statistics ? Math.max(1, statistics.length) * rowHeight : loadingHeight;
-  const popupHeight = tableHeight + 35;
   return <div>
-    <div className='ckr-StatisticsPopup-cover' onClick={onCloseClick} />
-    <div className='ckr-StatisticsPopup' style={{marginTop: -popupHeight / 2}}>
-      <StatisticsPopupTitle onCloseClick={onCloseClick}/>
-      {!statistics && <div className='ckr-StatisticsPopup-loading' />}
-      {statistics && (statistics.length > 0 ?
-        <StatisticsTable statistics={statistics} /> :
-        <div className='ckr-StatisticsPopup-noResults'>No statistics.</div>)}
+    <div className='ckr-StatisticsPopup-container'>
+      <div className='ckr-StatisticsPopup-background' onClick={onCloseClick} />
+      <div className='ckr-StatisticsPopup'>
+        <StatisticsPopupTitle onCloseClick={onCloseClick}/>
+        {!statistics && <div className='ckr-StatisticsPopup-loading' />}
+        {statistics && (statistics.length > 0 ?
+          <StatisticsTable statistics={statistics} /> :
+          <div className='ckr-StatisticsPopup-noResults'>No statistics.</div>)}
+      </div>
     </div>
   </div>;
 }
