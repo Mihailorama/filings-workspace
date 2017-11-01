@@ -19,11 +19,12 @@
  */
 
 import { User, App, Profile, ValidationStatus } from './models';
+import { Statistic } from '@cfl/filing-statistics-service';
 import { QueryableTablePage } from '@cfl/table-viewer';
 import { Option, TableMetadata } from '@cfl/table-rendering-service';
 
 export type CheckingPhase = 'startup' | 'startup-failed' | 'form' |
-  'uploading' | 'uploading-failed' | 'checking' | 'results' | 'checking-failed';
+  'uploading' | 'uploading-failed' | 'checking' | 'results' | 'failed';
 
 export interface CheckerState {
   global: GlobalState;
@@ -39,7 +40,9 @@ export interface GlobalState {
 }
 
 export interface FilingState {
+  filingVersionId?: string;
   status?: ValidationStatus;
+  statistics?: Statistic[];
   tables?: TableMetadata[];
   selectedTable?: TableMetadata;
   zOptions?: Option[][];

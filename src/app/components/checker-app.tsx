@@ -16,6 +16,7 @@
 
 import * as classNames from 'classnames';
 import * as React from 'react';
+import { Statistic } from '@cfl/filing-statistics-service';
 import { Option, TableMetadata } from '@cfl/table-rendering-service';
 import { QueryableTablePage } from '@cfl/table-viewer';
 
@@ -38,13 +39,15 @@ export interface CheckerAppProps {
   metadata?: TableMetadata;
   zOptions?: Option[][];
   table?: QueryableTablePage;
+  statistics?: Statistic[];
   onChangePage?: (x: number, y: number, z: number) => void;
   onChangeTable?: (table: TableMetadata) => void;
+  onFetchStatistics?: () => void;
 }
 
 export default function CheckerApp(props: CheckerAppProps): JSX.Element {
-  const { phase, profiles, status, error, onSubmit, onResultsDismiss, tables, metadata, zOptions, table,
-      onChangePage, onChangeTable } = props;
+  const { phase, profiles, status, error, tables, metadata, zOptions, table, statistics,
+    onSubmit, onResultsDismiss, onChangePage, onChangeTable, onFetchStatistics } = props;
 
   let innards: JSX.Element | undefined = undefined;
   switch (phase) {
@@ -63,10 +66,12 @@ export default function CheckerApp(props: CheckerAppProps): JSX.Element {
         <div className='ckr-CheckerApp-loading'>Processing&thinsp;…</div>
       </div>;
       break;
-    case 'checking-failed':
+    case 'failed':
     case 'results':
       innards = <div className='ckr-CheckerApp-resultHolder'>
         <Results
+          error={error}
+          statistics={statistics}
           status={status}
           tables={tables}
           metadata={metadata}
@@ -75,6 +80,7 @@ export default function CheckerApp(props: CheckerAppProps): JSX.Element {
           onChangePage={onChangePage}
           onChangeTable={onChangeTable}
           onResultsDismiss={onResultsDismiss}
+          onFetchStatistics={onFetchStatistics}
         />
         <ContactDetails className='ckr-CheckerApp-resultContact'/>
       </div>;

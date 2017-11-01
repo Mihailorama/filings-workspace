@@ -24,4 +24,5 @@ node_modules
 # Misc
 .ds_store
 .dev
+/.idea/
 design

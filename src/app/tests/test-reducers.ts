@@ -16,7 +16,7 @@
 
 import { startupInfoReceivedAction,
   uploadStartedAction, uploadFailedAction,
-  checkingStartedAction, checkingReceivedAction, checkingFailedAction,
+  checkingStartedAction, checkingReceivedAction, failedAction,
   tablesReceivedAction, tableRenderingRequested, tableRenderingReceivedAction,
   resultsDismissAction } from '../actions';
 import { ValidationParams } from '../models';
@@ -68,19 +68,19 @@ describe('globalReducer', () => {
   });
 
   it('remembers validation status', () => {
-    const after = globalReducer(initial, checkingReceivedAction('OK'));
+    const after = globalReducer(initial, checkingReceivedAction('12345678', 'OK'));
 
     expect(after.phase).toBe('results');
   });
 
   it('treats failing to get status after checking started as fatal error', () => {
-    const after = globalReducer(initial, checkingFailedAction('LOLWAT'));
+    const after = globalReducer(initial, failedAction('LOLWAT'));
 
-    expect(after.phase).toBe('checking-failed');
+    expect(after.phase).toBe('failed');
   });
 
   it('is ready for a new game after user dismisses results', () => {
-    const before = globalReducer(initial, checkingReceivedAction('OK'));
+    const before = globalReducer(initial, checkingReceivedAction('12345678', 'OK'));
 
     const after = globalReducer(before, resultsDismissAction());
 
@@ -88,7 +88,7 @@ describe('globalReducer', () => {
   });
 
   it('is ready for a new game after user dismisses error', () => {
-    const before = globalReducer(initial, checkingFailedAction('LOLWAT'));
+    const before = globalReducer(initial, failedAction('LOLWAT'));
 
     const after = globalReducer(before, resultsDismissAction());
 
@@ -123,7 +123,7 @@ describe('filingReducer', () => {
   });
 
   it('remembers status', () => {
-    const after = filingReducer(initial, checkingReceivedAction('ERROR'));
+    const after = filingReducer(initial, checkingReceivedAction('12345678', 'ERROR'));
     expect(after.status).toEqual('ERROR');
   });
 

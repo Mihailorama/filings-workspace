@@ -49,17 +49,19 @@ const specByStatus: {[status: string]: Spec} = {
 
 export interface ValidationResultProps extends Props<ValidationResult> {
   status?: ValidationStatus;
+  error?: string;
 }
 
 export default class ValidationResult extends Component<ValidationResultProps> {
   render(): JSX.Element {
-    const { status = 'loading' } = this.props;
+    const { status = 'loading', error } = this.props;
     const lowerStatus = toLowerStatus(status);
     const { label, detail } = specByStatus[status];
 
     return <div className={classNames('ckr-ValidationResult', `ckr-ValidationResult-${lowerStatus}`)}>
       {label && <b className={classNames('ckr-ValidationResult-status', `ckr-ValidationResult-${lowerStatus}Status`)}>{label}</b>}
       {detail && <p className={classNames('ckr-ValidationResult-detail', `ckr-ValidationResult-${lowerStatus}Detail`)}>{detail}</p>}
+      {error && <p className={classNames('ckr-ValidationResult-error')}>{error}</p>}
     </div>;
   }
 }

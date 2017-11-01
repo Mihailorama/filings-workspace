@@ -17,9 +17,10 @@
 import { delay, Effect } from 'redux-saga';
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 
-import { CHECKING_START,
+import {
+  CHECKING_START,
   CheckingAction,
-  checkingFailedAction,
+  failedAction,
   checkingReceivedAction,
   checkingStartedAction,
   startupInfoFailedAction,
@@ -31,11 +32,17 @@ import { CHECKING_START,
   tableRenderPageAction,
   tablesReceivedAction,
   uploadFailedAction,
-  uploadStartedAction } from './actions';
+  uploadStartedAction,
+  FILING_STATISTICS_FETCH,
+  FilingStatisticsAction,
+  filingStatisticsRequestedAction,
+  filingStatisticsReceivedAction,
+} from './actions';
 import { apiFetchJson } from './api-fetch';
 import { App, Category, Filing, FilingVersion, User } from './models';
 import QueryableTablePageImpl, { TABLE_WINDOW_HEIGHT } from './models/queryable-table-page-impl';
-import { APPS,
+import {
+  APPS,
   DOCUMENT_SERVICE_FILINGS,
   documentServiceCategories,
   documentServiceFilingVersion,
@@ -43,7 +50,9 @@ import { APPS,
   tableRenderingServiceTables,
   tableRenderingServiceZOptions,
   validationServiceFilingVersion,
-  USER } from './urls';
+  USER,
+  filingStatisticsService,
+} from './urls';
 
 const POLL_MILLIS = 1000;
 
@@ -109,7 +118,7 @@ export function* checkingStartSaga(action: CheckingAction): IterableIterator<Eff
     }
 
     const validationSummary = yield call(apiFetchJson, validationServiceFilingVersion(version));
-    yield put(checkingReceivedAction(validationSummary.severity));
+    yield put(checkingReceivedAction(version.id, validationSummary.severity));
 
     // Fetch table info
     const tables = yield call(apiFetchJson, tableRenderingServiceTables(version.id));
@@ -120,7 +129,7 @@ export function* checkingStartSaga(action: CheckingAction): IterableIterator<Eff
       yield put(tableRenderPageAction(tables[0], 0, 0, 0));
     }
   } catch (res) {
-    yield put(checkingFailedAction(res.message || res.statusText || `Status: ${res.status}`));
+    yield put(failedAction(res.message || res.statusText || `Status: ${res.status}`));
   }
 }
 
@@ -137,7 +146,18 @@ export function* tableRenderingSaga(action: TableRenderPageAction): IterableIter
     ]);
     yield put(tableRenderingReceivedAction(zOptions, new QueryableTablePageImpl(table, tableRendering)));
   } catch (res) {
-    yield put(checkingFailedAction(res.message || res.statusText || `Status: ${res.status}`));
+    yield put(failedAction(res.message || res.statusText || `Status: ${res.status}`));
+  }
+}
+
+export function* filingStatisticsSaga(action: FilingStatisticsAction): IterableIterator<Effect> {
+  const { filingVersionId } = action;
+  try {
+    yield put(filingStatisticsRequestedAction(filingVersionId));
+    const statistics = yield call(filingStatisticsService.getStatistics, {filingVersionId});
+    yield put(filingStatisticsReceivedAction(statistics));
+  } catch (res) {
+    yield put(failedAction(res.message || res.statusText || `Status: ${res.status}`));
   }
 }
 
@@ -148,5 +168,6 @@ export function* checkingSaga(): IterableIterator<Effect> {
   yield all([
     takeEvery(CHECKING_START, checkingStartSaga),
     takeEvery(TABLE_RENDER_PAGE, tableRenderingSaga),
+    takeEvery(FILING_STATISTICS_FETCH, filingStatisticsSaga),
   ]);
 }

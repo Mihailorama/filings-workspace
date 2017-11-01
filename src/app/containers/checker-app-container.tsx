@@ -17,10 +17,11 @@
 import * as React from 'react';
 import { Component, Props } from 'react';
 import { connect, MapDispatchToProps } from 'react-redux';
+import { Statistic } from '@cfl/filing-statistics-service';
 import { Option, TableMetadata } from '@cfl/table-rendering-service';
 import { QueryableTablePage } from '@cfl/table-viewer';
 
-import { tableRenderPageAction, checkingStartAction, resultsDismissAction } from '../actions';
+import { tableRenderPageAction, checkingStartAction, resultsDismissAction, filingStatisticsFetchAction } from '../actions';
 import { Profile, ValidationStatus } from '../models';
 import { CheckingPhase, CheckerState } from '../state';
 import CheckerApp from '../components/checker-app';
@@ -29,6 +30,8 @@ import AppBarContainer from '../corefiling/app-bar-container';
 type OwnProps = Props<CheckerAppContainer>;
 
 interface PropsFromState {
+  filingVersionId?: string;
+  statistics?: Statistic[];
   phase?: CheckingPhase;
   profiles?: Profile[];
   status?: ValidationStatus;
@@ -43,6 +46,7 @@ interface PropsFromDispatch {
   onCheckingStart?: typeof checkingStartAction;
   onResultsDismiss?: typeof resultsDismissAction;
   onTableRenderPage?: typeof tableRenderPageAction;
+  onFetchStatistics?: typeof filingStatisticsFetchAction;
 }
 
 type CheckerAppContainerProps = OwnProps & PropsFromState & PropsFromDispatch;
@@ -50,7 +54,8 @@ type CheckerAppContainerProps = OwnProps & PropsFromState & PropsFromDispatch;
 class CheckerAppContainer extends Component<CheckerAppContainerProps> {
   render(): JSX.Element {
     const {
-      phase, profiles, status, message, onCheckingStart, onResultsDismiss, tables, metadata, zOptions, table, onTableRenderPage,
+      filingVersionId, phase, profiles, status, message, tables, metadata, zOptions, table, statistics,
+      onTableRenderPage, onCheckingStart, onResultsDismiss, onFetchStatistics,
     } = this.props;
     return (
       <div>
@@ -66,8 +71,10 @@ class CheckerAppContainer extends Component<CheckerAppContainerProps> {
           metadata={metadata}
           zOptions={zOptions}
           table={table}
+          statistics={statistics}
           onChangePage={(x, y, z) => onTableRenderPage && metadata && onTableRenderPage(metadata, x, y, z)}
           onChangeTable={newTable => onTableRenderPage && onTableRenderPage(newTable, 0, 0, 0)}
+          onFetchStatistics={() => onFetchStatistics && filingVersionId && !statistics && onFetchStatistics(filingVersionId)}
         />
       </div>
     );
@@ -77,15 +84,16 @@ class CheckerAppContainer extends Component<CheckerAppContainerProps> {
 function propsFromState(state: CheckerState): PropsFromState {
   const {
     global: {phase, profiles, message},
-    filing: {status, tables, selectedTable: metadata, zOptions, tableRendering: table},
+    filing: {filingVersionId, status, tables, selectedTable: metadata, zOptions, tableRendering: table, statistics},
   } = state;
-  return {phase, profiles, message, status, tables, metadata, zOptions, table};
+  return {filingVersionId, phase, profiles, message, status, tables, metadata, zOptions, table, statistics};
 }
 
 const propsFromDispatch: MapDispatchToProps<PropsFromDispatch, {}> = {
   onCheckingStart: checkingStartAction,
   onResultsDismiss: resultsDismissAction,
   onTableRenderPage: tableRenderPageAction,
+  onFetchStatistics: filingStatisticsFetchAction,
 };
 
 export default connect(propsFromState, propsFromDispatch)(CheckerAppContainer);

@@ -48,6 +48,7 @@ storiesOf('CheckerApp', module)
         profiles={profiles('Profile')}
         phase={'results'}
         status={'OK'}
+        statistics={[{name: 'table-count', label: 'Table count', value: 1}]}
         tables={[metadata, {name: 'another table', id: 'uuid-of-another-table'} as TableMetadata]}
         metadata={metadata}
         zOptions={zOptions}
@@ -64,6 +65,7 @@ storiesOf('CheckerApp', module)
         profiles={profiles('Profile')}
         phase={'results'}
         status={'OK'}
+        statistics={[{name: 'table-count', label: 'Table count', value: 1}]}
         tables={[metadata]}
         metadata={metadata}
         zOptions={zOptions}

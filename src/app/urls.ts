@@ -15,7 +15,9 @@
  */
 
 import * as uriTemplates from 'uri-templates';
+import { StatisticsApiFactory } from '@cfl/filing-statistics-service';
 
+import { apiFetch } from './api-fetch';
 import { App, FilingVersion, TableRenderingWindow } from './models';
 
 export const USER = '/api/user';
@@ -51,3 +53,5 @@ export const tableRenderingServiceTables = (filingVersionId: string) => TABLE_RE
 export const tableRenderingServiceZOptions = (tableId: string, z: number) => TABLE_RENDERING_SERVICE_Z_OPTIONS.fillFromObject({tableId, z});
 export const tableRenderingServiceRender = (tableId: string, window: TableRenderingWindow) =>
   TABLE_RENDERING_SERVICE_RENDER.fillFromObject({tableId, ...window});
+
+export const filingStatisticsService = StatisticsApiFactory(apiFetch, '/api/filing-statistics-service/v1/');

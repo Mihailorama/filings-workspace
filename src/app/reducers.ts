@@ -22,11 +22,12 @@ import { Action, combineReducers } from 'redux';
 import {
   STARTUP_INFO_RECEIVED, StartupInfoReceivedAction, STARTUP_INFO_FAILED, FailedAction,
   UPLOAD_STARTED, UPLOAD_FAILED,
-  CHECKING_STARTED, CHECKING_FAILED,
+  CHECKING_STARTED, FAILED,
   CHECKING_RECEIVED, CheckingReceivedAction,
   RESULTS_DISMISS,
   TABLES_RECEIVED, TableRenderingRequestedAction,
   TABLE_RENDERING_RECEIVED, TableRenderingReceivedAction, TablesReceivedAction, TABLE_RENDERING_REQUESTED,
+  FILING_STATISTICS_RECEIVED, FilingStatisticsReceivedAction,
 } from './actions';
 import { GlobalState, FilingState } from './state';
 
@@ -52,9 +53,9 @@ export function globalReducer(state: GlobalState | undefined, action: Action): G
     }
     case CHECKING_STARTED:
       return { ...state, phase: 'checking' };
-    case CHECKING_FAILED: {
+    case FAILED: {
       const { message } = action as FailedAction;
-      return { ...state, phase: 'checking-failed', message };
+      return { ...state, phase: 'failed', message };
     }
     case CHECKING_RECEIVED: {
       return { ...state, phase: 'results'};
@@ -75,12 +76,13 @@ export function filingReducer(state: FilingState | undefined, action: Action): F
     case UPLOAD_STARTED:
     case UPLOAD_FAILED:
     case CHECKING_STARTED:
-    case CHECKING_FAILED:
     case RESULTS_DISMISS:
     return {};
+    case FAILED:
+      return { status: 'FATAL_ERROR' };
     case CHECKING_RECEIVED: {
-      const { status } = action as CheckingReceivedAction;
-      return { ...state, status };
+      const { filingVersionId, status } = action as CheckingReceivedAction;
+      return { ...state, filingVersionId, status };
     }
     case TABLES_RECEIVED: {
       const { tables } = action as TablesReceivedAction;
@@ -93,6 +95,10 @@ export function filingReducer(state: FilingState | undefined, action: Action): F
     case TABLE_RENDERING_RECEIVED: {
       const { zOptions, tableRendering } = action as TableRenderingReceivedAction;
       return { ...state, zOptions, tableRendering };
+    }
+    case FILING_STATISTICS_RECEIVED: {
+      const { statistics } = action as FilingStatisticsReceivedAction;
+      return { ...state, statistics };
     }
     default:
       return state;

@@ -19,7 +19,7 @@ import { all, call, put } from 'redux-saga/effects';
 
 import { startupInfoReceivedAction, startupInfoFailedAction,
   checkingStartAction, uploadStartedAction, uploadFailedAction,
-  checkingStartedAction, checkingReceivedAction, checkingFailedAction } from '../actions';
+  checkingStartedAction, checkingReceivedAction, failedAction } from '../actions';
 import { apiFetchJson } from '../api-fetch';
 import { ValidationParams,  } from '../models';
 import { startupInfoSaga, checkingStartSaga } from '../sagas';
@@ -89,7 +89,8 @@ describe('checkingStartSaga', () => {
       '/api/validation-service/v1/filing-versions/f09be954-1895-4954-b333-6c9c89b833f1'));
 
     // Now results arrive and all is well.
-    expect(saga.next(exampleValidationServiceFilingVersionSummary).value).toEqual(put(checkingReceivedAction('OK')));
+    expect(saga.next(exampleValidationServiceFilingVersionSummary).value).toEqual(put(
+      checkingReceivedAction('f09be954-1895-4954-b333-6c9c89b833f1', 'OK')));
   });
 
   it('dispatches FAILED if initial upload fails', () => {
@@ -106,7 +107,7 @@ describe('checkingStartSaga', () => {
 
     saga.next(); saga.next(); saga.next(exampleFiling); saga.next();  // First few steps as above.
 
-    expect(saga.throw && saga.throw(new Error('LOLWAT')).value).toEqual(put(checkingFailedAction('LOLWAT')));
+    expect(saga.throw && saga.throw(new Error('LOLWAT')).value).toEqual(put(failedAction('LOLWAT')));
   });
 
   it('dispatches FAILED if polling fails with response', () => {
@@ -115,6 +116,6 @@ describe('checkingStartSaga', () => {
     saga.next(); saga.next(); saga.next(exampleFiling); saga.next();  // First few steps as above.
 
     expect(saga.throw && saga.throw({status: 400, statusText: 'Nope.'}).value)
-    .toEqual(put(checkingFailedAction(jasmine.stringMatching(/Nope./) as any)));
+    .toEqual(put(failedAction(jasmine.stringMatching(/Nope./) as any)));
   });
 });

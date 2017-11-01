@@ -33,8 +33,26 @@
     align-items: center;
   }
 
-  &-resultReset {
+  &-filingStatistics {
     margin-left: @gap3;
+    flex-shrink: 0;
+
+    &:before {
+      content: " ";
+      display: inline-block;
+      vertical-align: -6%;
+      width: 14px;
+      height: 19px;
+
+      margin-right: 10px;
+
+      background-image: url(filing-statistics-blue.svg);
+      background-size: 14px 19px;
+    }
+  }
+
+  &-resultReset {
+    margin-left: @gap;
     margin-right: @gap;
     flex-shrink: 0;
 
