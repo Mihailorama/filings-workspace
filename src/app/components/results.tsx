@@ -77,14 +77,10 @@ export default class Results extends React.Component<ResultsProps, ResultsState>
           }
           <Button primary className='ckr-Results-resultReset' onClick={onResultsDismiss}>Upload</Button>
         </div>
-        {!error &&
-        <div>
-          {showStatistics && <StatisticsPopup statistics={statistics} onCloseClick={() => this.hideStatistics()}/>}
-          {status && onChangePage && onChangeTable
-          && <Table status={status} metadata={metadata} zOptions={zOptions} table={table}
-                    onChangePage={onChangePage} onChangeTable={onChangeTable}/>}
-        </div>
-        }
+        {showStatistics && <StatisticsPopup statistics={statistics} onCloseClick={() => this.hideStatistics()}/>}
+        {status
+        && <Table status={status} metadata={metadata} zOptions={zOptions} table={table}
+                  onChangePage={onChangePage} onChangeTable={onChangeTable}/>}
       </div>
     );
   }
