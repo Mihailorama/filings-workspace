@@ -21,12 +21,15 @@ import { Statistic } from '@cfl/filing-statistics-service';
 import './statistics.less';
 
 function StatisticsTable({statistics}: {statistics: Statistic[]}): JSX.Element {
+  const format = new Intl.NumberFormat(window.navigator.language || 'en-US', {maximumFractionDigits: 2});
   return <table className='ckr-StatisticsTable'>
     <tbody>
       {statistics.map(statistic => (
         <tr key={statistic.name}>
           <td className='ckr-StatisticsTable-name'>{statistic.label}</td>
-          <td className='ckr-StatisticsTable-value'>{statistic.value}</td>
+          <td className='ckr-StatisticsTable-value'>{
+            format.format(statistic.value) + (statistic.format === 'percentage' ? '%' : '')
+          }</td>
         </tr>
       ))}
     </tbody>
