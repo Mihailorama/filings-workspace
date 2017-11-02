@@ -48,7 +48,10 @@ storiesOf('CheckerApp', module)
         profiles={profiles('Profile')}
         phase={'results'}
         status={'OK'}
-        statistics={[{name: 'table-count', label: 'Table count', value: 1}]}
+        statistics={[
+          {name: 'table-count', label: 'Table count', format: 'integer', value: 1},
+          {name: 'tagged-percentage', label: 'Percentage of document tagged', format: 'percentage', value: 33.78956712312},
+        ]}
         tables={[metadata, {name: 'another table', id: 'uuid-of-another-table'} as TableMetadata]}
         metadata={metadata}
         zOptions={zOptions}
@@ -74,7 +77,7 @@ storiesOf('CheckerApp', module)
         profiles={profiles('Profile')}
         phase={'results'}
         status={'OK'}
-        statistics={[{name: 'table-count', label: 'Table count', value: 1}]}
+        statistics={[{name: 'table-count', label: 'Table count', format: 'integer', value: 1}]}
         tables={[metadata]}
         metadata={metadata}
         zOptions={zOptions}

@@ -25,8 +25,9 @@ import { basicTableWithMetadata } from '@cfl/table-viewer/lib/test-utils';
 import Results from './results';
 
 const statistics: Statistic[] = [
-  {name: 'table-count', label: 'Table count', value: 12},
-  {name: 'fact-count', label: 'Fact count', value: 123},
+  {name: 'table-count', format: 'integer', label: 'Table count', value: 12},
+  {name: 'fact-count', format: 'integer', label: 'Fact count', value: 123},
+  {name: 'document-tagged-percentage', format: 'percentage', label: 'Percentage of document tagged', value: 9.87654321},
 ];
 
 storiesOf('Results', module)

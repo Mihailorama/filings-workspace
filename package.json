@@ -46,7 +46,7 @@
     "express": "^4.15.2"
   },
   "devDependencies": {
-    "@cfl/filing-statistics-service": "^0.1.0-dev.35614",
+    "@cfl/filing-statistics-service": "^0.1.0-dev.36051",
     "@cfl/react-components": "^1.4.0",
     "@cfl/table-rendering-service": "^1.4.0",
     "@cfl/table-viewer": "^0.2.0",
