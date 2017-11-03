@@ -54,4 +54,4 @@ export const tableRenderingServiceZOptions = (tableId: string, z: number) => TAB
 export const tableRenderingServiceRender = (tableId: string, window: TableRenderingWindow) =>
   TABLE_RENDERING_SERVICE_RENDER.fillFromObject({tableId, ...window});
 
-export const filingStatisticsService = StatisticsApiFactory(apiFetch, '/api/filing-statistics-service/v1/');
+export const filingStatisticsService = StatisticsApiFactory(apiFetch, '/api/filing-statistics-service/v1');
