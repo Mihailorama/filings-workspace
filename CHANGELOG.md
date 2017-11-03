@@ -1,6 +1,7 @@
 # Changelog
 
 ## develop
+- Introduced "Filing Statistics" available after validating a filing.
 
 ## 1.1.2
 - Fixed display of tables for the previous filing when the current filing was
@@ -14,13 +15,8 @@
 - Show table contents in addition to pass/fail status
 
 ## 1.0.0
-### Added
-
 - Compatible with Microsoft IE 11 and Edge
-
-### Changed
-
 - Reorganized Helm charts
 
 ## 0.1.0
-Initial release.
+- Initial release.
