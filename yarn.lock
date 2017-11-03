@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@cfl/filing-statistics-service@^0.1.0-dev.36051":
-  version "0.1.0-dev.36051"
-  resolved "https://artifacts.int.corefiling.com/api/npm/cfl-npm/@cfl/filing-statistics-service/-/@cfl/filing-statistics-service-0.1.0-dev.36051.tgz#821a47a255a5d4cd0f7ac6ef8338b28d63c1759f"
+"@cfl/filing-statistics-service@^1.0.0":
+  version "1.0.0"
+  resolved "https://artifacts.int.corefiling.com/api/npm/cfl-npm/@cfl/filing-statistics-service/-/@cfl/filing-statistics-service-1.0.0.tgz#b122fce2916d2b63bb88aeff03c94200196e079e"
   dependencies:
     core-js "^2.4.0"
     isomorphic-fetch "^2.2.1"
