@@ -1,7 +1,8 @@
 # Changelog
 
 ## 1.2.0
-- Introduced "Filing Statistics" available after validating a filing.
+- Introduced "Filing Statistics". These are available after validating a
+  filing.
 
 ## 1.1.2
 - Fixed display of tables for the previous filing when the current filing was
