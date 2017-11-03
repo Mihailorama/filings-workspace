@@ -1,6 +1,6 @@
 # Changelog
 
-## develop
+## 1.2.0
 - Introduced "Filing Statistics" available after validating a filing.
 
 ## 1.1.2
