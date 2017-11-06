@@ -4,18 +4,18 @@
 
 "@cfl/filing-statistics-service@^1.0.0":
   version "1.0.0"
-  resolved "https://registry.npmjs.org/@cfl/filing-statistics-service/-/@cfl/filing-statistics-service-1.0.0.tgz#b122fce2916d2b63bb88aeff03c94200196e079e"
+  resolved "https://registry.npmjs.org/@cfl/filing-statistics-service/-/filing-statistics-service-1.0.0.tgz#b122fce2916d2b63bb88aeff03c94200196e079e"
   dependencies:
     core-js "^2.4.0"
     isomorphic-fetch "^2.2.1"
 
-"@cfl/react-components@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.npmjs.org/@cfl/react-components/-/@cfl/react-components-1.4.0.tgz#7da7dbaa78dc99b5f096c1d7753d416ef5e31d9e"
+"@cfl/react-components@^1.4.2":
+  version "1.4.2"
+  resolved "https://registry.npmjs.org/@cfl/react-components/-/react-components-1.4.2.tgz#b1d73d7954986abf49bb154c3aa71fa1fbaea728"
 
-"@cfl/table-rendering-service@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.npmjs.org/@cfl/table-rendering-service/-/@cfl/table-rendering-service-1.4.0.tgz#c09c3460919d8950a571433b8c3b0c659e95800e"
+"@cfl/table-rendering-service@^1.4.3":
+  version "1.4.3"
+  resolved "https://registry.npmjs.org/@cfl/table-rendering-service/-/table-rendering-service-1.4.3.tgz#453a35dfee0b27b9ee9e0975c73c9d8ab3ae61a2"
   dependencies:
     core-js "^2.4.0"
     isomorphic-fetch "^2.2.1"
@@ -26,15 +26,15 @@
   dependencies:
     react-virtualized "~9.9.0"
 
-"@cfl/tslint-config@^0.6.0":
-  version "0.6.0"
-  resolved "https://registry.npmjs.org/@cfl/tslint-config/-/@cfl/tslint-config-0.6.0.tgz#7ed9cfdb33b42764badc552d81e04dfceabf896e"
+"@cfl/tslint-config@^0.6.1":
+  version "0.6.1"
+  resolved "https://registry.npmjs.org/@cfl/tslint-config/-/tslint-config-0.6.1.tgz#97557599980a1f863962ff719f9ef56543991916"
 
 "@hypnosphi/fuse.js@^3.0.9":
   version "3.0.9"
   resolved "https://registry.npmjs.org/@hypnosphi/fuse.js/-/fuse.js-3.0.9.tgz#ea99f6121b4a8f065b4c71f85595db2714498807"
 
-"@janslow/ci-build-version@^0.1.0":
+"@janslow/ci-build-version@^0.1.1":
   version "0.1.1"
   resolved "https://registry.npmjs.org/@janslow/ci-build-version/-/ci-build-version-0.1.1.tgz#7790e193fe3c8e6c4a42a70484e6f5abed49f90a"
   dependencies:
