@@ -5,6 +5,13 @@ We wanted to avoid committing keys or certs into Git, so to use the dev server t
 fakes up the gateway & authentication, you will need to copy the `.dev` directory
 from the Beacon UI project.
 
+Registry
+--------
+
+You need to make `yarn` use the public registry, not our proxy:
+
+    echo >> .npmrc registry = "https://registry.npmjs.org/"
+
 
 Updating SSL certificates
 -------------------------
@@ -19,4 +26,3 @@ Just in case we want to update the app logo, here is how I converted it to .ICO 
 
     inkscape -z -e app-logo.png -w 512 -h 512 app-logo.svg
     convert app-logo.png -define icon:auto-resize=64,48,32,16 app-logo.ico
-
