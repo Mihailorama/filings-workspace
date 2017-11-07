@@ -32,7 +32,7 @@ cache:
   <<: *template_npm
   stage: build
   before_script:
-    - time yarn install
+    - time yarn install --frozen-lockfile
     - npm config set git-tag-version false
     - npm run set-build-version
   script:
