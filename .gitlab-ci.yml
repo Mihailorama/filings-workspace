@@ -62,7 +62,7 @@ check yarn.lock:
     grep -e 'int\.corefiling\.com' yarn.lock && exit 1
   only:
   - tags
-  - ^(release|hotfix)\/
+  - /^(release|hotfix)\//
 
 compile:webpack:
   <<: *template_npm_script
