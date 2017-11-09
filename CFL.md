@@ -10,7 +10,7 @@ Registry
 --------
 
 We need to make `yarn` use the public registry, not our proxy, so the `yarn.lock`
-makes sense outside out network. To temporarily use a locval development build
+makes sense outside out network. To temporarily use a local development build
 of one of our packages, use a command like this:
 
 ```shell
