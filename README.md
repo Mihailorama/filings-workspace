@@ -13,7 +13,7 @@ A simple demonstration of how the CoreFiling Platform can be used to validate a 
 
 ## Synopsis
 
-It starts by using the CoreFiling Platform API to request a list of validation
+It starts by using the [CoreFiling True North Platform][] API to request a list of validation
 profiles, then presents a form for choosing one and uploading a file. It submits this
 to the Document Service and polls for the validation status.
 
@@ -22,18 +22,7 @@ and displays table renderings provided by the Table Rendering API.
 This uses Table Linkbase if the taxonomy includes it, otherwise
 synthesizes table layouts automatically.
 
-
-## Licence
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this software except in compliance with the License.
-You may obtain a copy of the License at <http://www.apache.org/licenses/LICENSE-2.0>.
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+  [CoreFiling True North Platform]: https://www.corefiling.com/products/true-north/
 
 
 ## Stack
@@ -44,6 +33,9 @@ limitations under the License.
 - [Redux-Saga](https://redux-saga.js.org/)
 - [Storybook](https://storybook.js.org)
 - [Webpack](https://github.com/webpack/webpack)
+
+
+## Running the server
 
 
 ## Development prerequisites
@@ -63,7 +55,7 @@ yarn storybook
 
 and visit <http://localhost:6006/>.
 
-If and when creating new modules in `./src/stories`, add an import from `src/stories/index.ts`.
+Storybook entries are for a component in module `foo.tsx` go in a module next to it called `foo-stories.tsx`.
 
 
 ## Unit tests
@@ -80,14 +72,28 @@ Watch files:
 yarn test-debug
 ```
 
+## Simple server
+
+This uses a simple Express-based server to stand in for the facilities supplied
+by the gateway to the CoreFiling production cluster.
+
+```bash
+yarn start
+```
+
+Then open <http://localhost:8080/quick-xbrl-validator/>.
+
 
 ## Development server
+
+This watches the source files and reruns the Webpack build when they change.
+It attempts hot reloading of modules and style sheets.
 
 You need `HOST` to be a name for your development machine for which SSL certificates are available.
 
 ```bash
 npm config set @cfl/quick-xbrl-validator:devserver-host $HOST
-npm start
+npm run dev:server
 ```
 
 Then open `https://$HOST:9091/quick-xbrl-validator/`
@@ -109,3 +115,16 @@ yarn compile
 ```bash
 yarn pack # Produces cfl-quick-xbrl-validator-$VERSION.tgz
 ```
+
+
+## Licence
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this software except in compliance with the License.
+You may obtain a copy of the License at <http://www.apache.org/licenses/LICENSE-2.0>.
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
