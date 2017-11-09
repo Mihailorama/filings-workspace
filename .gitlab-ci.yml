@@ -53,6 +53,17 @@ build:version:
     - ci-build-version -f package.json > build.version
     - echo `cat build.version`
 
+check yarn.lock:
+  stage: build
+  image: alpine
+  tags:
+  - docker
+  script:
+    grep -e 'int\.corefiling\.com' yarn.lock && exit 1
+  only:
+  - tags
+  - /^(release|hotfix)\//
+
 compile:webpack:
   <<: *template_npm_script
   artifacts:
