@@ -42,7 +42,7 @@
     "npm": ">=4.0.0"
   },
   "dependencies": {
-    "@cfl/simple-platform-server": "0.1.0-ci.feature.inv.111.server.cli.36711"
+    "@cfl/simple-platform-server": "^0.1.0-dev.36928"
   },
   "devDependencies": {
     "@cfl/filing-statistics-service": "^1.0.0",
