@@ -13,9 +13,22 @@ We need to make `yarn` use the public registry, not our proxy, so the `yarn.lock
 makes sense outside out network. To temporarily use a local development build
 of one of our packages, use a command like this:
 
-```shell
+```bash
 yarn add @cfl/simple-platform-server --registry https://artifacts.int.corefiling.com/api/npm/cfl-npm/
 ```
+
+
+Simple server
+-------------
+
+To use the simple server with the realm `dev` rather than `platform`, do
+
+```bash
+echo CFL_DEV=t >> .env
+```
+
+There is a public client `pdc-inv-109` that can be used rather than creating a
+new one from scratch.
 
 
 Updating SSL certificates
