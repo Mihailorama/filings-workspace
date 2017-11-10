@@ -29,7 +29,7 @@ interface TableSelectorProps {
 export default function TableSelector({ tables, onChangeTable, className }: TableSelectorProps): JSX.Element {
   return (
     <select onChange={e => onChangeTable(tables[+e.currentTarget.value])}
-        className={classNames('ckr-Table-tableSelect', className)}>
+        className={classNames('app-Table-tableSelect', className)}>
       {tables.sort((a, b) => a.name.localeCompare(b.name)).map((t, i) => <option key={t.id} value={i}>{t.name}</option>)}
     </select>
   );

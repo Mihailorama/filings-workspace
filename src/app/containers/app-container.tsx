@@ -24,7 +24,7 @@ import { QueryableTablePage } from '@cfl/table-viewer';
 import { tableRenderPageAction, checkingStartAction, resultsDismissAction, filingStatisticsFetchAction } from '../actions';
 import { Profile, ValidationStatus } from '../models';
 import { CheckingPhase, CheckerState } from '../state';
-import CheckerApp from '../components/checker-app';
+import CheckerApp from '../components/app';
 import AppBarContainer from '../corefiling/app-bar-container';
 
 type OwnProps = Props<CheckerAppContainer>;
@@ -59,7 +59,7 @@ class CheckerAppContainer extends Component<CheckerAppContainerProps> {
     } = this.props;
     return (
       <div>
-        <AppBarContainer className='ckr-CheckerApp-appBar'/>
+        <AppBarContainer className='app-CheckerApp-appBar'/>
         <CheckerApp
           phase={phase}
           profiles={profiles}

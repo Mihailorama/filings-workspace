@@ -46,7 +46,7 @@ export default class CoreFilingLogo extends Component<CoreFilingLogoProps> {
     return <svg xmlns='http://www.w3.org/2000/svg' width={width} height={height}
         viewBox='0 0 4429.1341 1358.2678'
         version='1.1'
-        className={classNames('ckr-CoreFilingLogo', className)}
+        className={classNames('app-CoreFilingLogo', className)}
         style={style}>
       <g id='Layer_x0020_1' transform='translate(0,-141.73217)'>
         <g id='_151976504'>

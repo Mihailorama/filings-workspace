@@ -23,7 +23,7 @@ import { profiles, profile } from '../../stories/util';
 import ValidationForm from './validation-form';
 
 storiesOf('ValidationForm', module)
-  .addDecorator(story => <div className='ckr-CheckerApp ckr-CheckerApp-form'>{story()}</div>)
+  .addDecorator(story => <div className='app-CheckerApp app-CheckerApp-form'>{story()}</div>)
   .add('Loading', () => <ValidationForm onSubmit={action('submit')}/>)
   .add('Startup failed', () => <ValidationForm error='Startup failed (401).'/>)
   .add('Form', () => <ValidationForm onSubmit={action('submit')} profiles={profiles('CRD IV 2.7.3', 'Solvency III')}/>)

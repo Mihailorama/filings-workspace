@@ -26,7 +26,7 @@ import ContactDetails from './contact-details';
 import Results from './results';
 import ValidationForm from './validation-form';
 
-import './checker-app.less';
+import './app.less';
 
 export interface CheckerAppProps {
   phase?: CheckingPhase;
@@ -55,20 +55,20 @@ export default function CheckerApp(props: CheckerAppProps): JSX.Element {
     case 'startup-failed':
     case 'uploading-failed':
     case 'form':
-      innards = <div className='ckr-CheckerApp-formHolder'>
+      innards = <div className='app-CheckerApp-formHolder'>
         <ValidationForm profiles={profiles} error={error} onSubmit={phase === 'form' ? onSubmit : undefined}/>
-        <ContactDetails className='ckr-CheckerApp-formContact'/>
+        <ContactDetails className='app-CheckerApp-formContact'/>
       </div>;
       break;
     case 'checking':
     case 'uploading':
-      innards = <div className='ckr-CheckerApp-loadingOverlay'>
-        <div className='ckr-CheckerApp-loading'>Processing&thinsp;…</div>
+      innards = <div className='app-CheckerApp-loadingOverlay'>
+        <div className='app-CheckerApp-loading'>Processing&thinsp;…</div>
       </div>;
       break;
     case 'failed':
     case 'results':
-      innards = <div className='ckr-CheckerApp-resultHolder'>
+      innards = <div className='app-CheckerApp-resultHolder'>
         <Results
           error={error}
           statistics={statistics}
@@ -82,7 +82,7 @@ export default function CheckerApp(props: CheckerAppProps): JSX.Element {
           onResultsDismiss={onResultsDismiss}
           onFetchStatistics={onFetchStatistics}
         />
-        <ContactDetails className='ckr-CheckerApp-resultContact'/>
+        <ContactDetails className='app-CheckerApp-resultContact'/>
       </div>;
       break;
     default:
@@ -90,7 +90,7 @@ export default function CheckerApp(props: CheckerAppProps): JSX.Element {
       break;
   }
 
-  return <div className={classNames('ckr-CheckerApp', `ckr-CheckerApp-${phase}`)}>
+  return <div className={classNames('app-CheckerApp', `app-CheckerApp-${phase}`)}>
     {innards}
   </div>;
 }

@@ -66,16 +66,16 @@ export default class Results extends React.Component<ResultsProps, ResultsState>
     } = this.props;
     const { showStatistics } = this.state;
     return (
-      <div className='ckr-Results-resultView'>
-        <div className='ckr-Results-resultHeading'>
+      <div className='app-Results-resultView'>
+        <div className='app-Results-resultHeading'>
           <ValidationResult status={status} error={error}/>
           {!error && tables && tables.length > 1 && onChangeTable &&
             [
               <TableSelector tables={tables} onChangeTable={onChangeTable}/>,
-              <Button className='ckr-Results-filingStatistics' onClick={() => this.showStatistics()}>Filing statistics</Button>,
+              <Button className='app-Results-filingStatistics' onClick={() => this.showStatistics()}>Filing statistics</Button>,
             ]
           }
-          <Button primary className='ckr-Results-resultReset' onClick={onResultsDismiss}>Upload</Button>
+          <Button primary className='app-Results-resultReset' onClick={onResultsDismiss}>Upload</Button>
         </div>
         {showStatistics && <StatisticsPopup statistics={statistics} onCloseClick={() => this.hideStatistics()}/>}
         {status

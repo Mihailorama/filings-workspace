@@ -49,18 +49,18 @@ export default class NavMenu extends Component<NavMenuProps, State> {
     const { itemGroups, className } = this.props;
     const { isActive } = this.state;
 
-    return <div className={classNames('ckr-NavMenu', className)}>
-      <span className={classNames('ckr-NavMenu-btn', {'ckr-NavMenu-activeBtn': isActive})}
+    return <div className={classNames('app-NavMenu', className)}>
+      <span className={classNames('app-NavMenu-btn', {'app-NavMenu-activeBtn': isActive})}
           onClick={() => this.setState({isActive: !isActive})}>
-        <svg className='ckr-NavMenu-btnIcon' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 10'>
+        <svg className='app-NavMenu-btnIcon' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 10'>
           <rect x='0' y='0' width='14' height='2'/>
           <rect x='0' y='4' width='14' height='2'/>
           <rect x='0' y='8' width='14' height='2'/>
         </svg>
       </span>
       {isActive &&
-        <ul className='ckr-NavMenu-menu'>
-          {itemGroups.map((x, i) => <li key={i} className='ckr-NavMenu-itemGroup'>
+        <ul className='app-NavMenu-menu'>
+          {itemGroups.map((x, i) => <li key={i} className='app-NavMenu-itemGroup'>
             {isSingleton(x)
             ? <MenuItemLink {...x}/>
             : <ul>
@@ -75,6 +75,6 @@ export default class NavMenu extends Component<NavMenuProps, State> {
 }
 
 // tslint:disable-next-line:variable-name
-const MenuItemLink = ({label, href}: MenuItem): JSX.Element => <a className='ckr-NavMenu-link' href={href}>{label}</a>;
+const MenuItemLink = ({label, href}: MenuItem): JSX.Element => <a className='app-NavMenu-link' href={href}>{label}</a>;
 
 const isSingleton = (x: MenuItem | MenuItem[]): x is MenuItem => 'label' in x;

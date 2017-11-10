@@ -23,7 +23,7 @@ import { action } from '@storybook/addon-actions';
 
 import { apps, profiles } from '../../stories/util';
 import { CheckerState } from '../state';
-import CheckerAppContainer from './checker-app-container';
+import CheckerAppContainer from './app-container';
 
 const etc: CheckerState = {
   global: {

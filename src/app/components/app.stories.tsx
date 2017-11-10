@@ -22,7 +22,7 @@ import { TableMetadata } from '@cfl/table-rendering-service';
 import { basicTableWithMetadata } from '@cfl/table-viewer/lib/test-utils';
 
 import { profiles } from '../../stories/util';
-import CheckerApp from './checker-app';
+import CheckerApp from './app';
 
 storiesOf('CheckerApp', module)
   .add('Form', () => {

@@ -19,7 +19,7 @@ import { Component } from 'react';
 import { Provider } from 'react-redux';
 
 import store from './store';
-import CheckerAppContainer from './containers/checker-app-container';
+import CheckerAppContainer from './containers/app-container';
 
 export default class App extends Component<{}> {
   render(): JSX.Element {

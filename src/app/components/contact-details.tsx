@@ -20,14 +20,14 @@ import * as React from 'react';
 import './contact-details.less';
 
 export default function ContactDetails({className}: {className?: string}): JSX.Element {
-  return <div className={classNames('ckr-ContactDetails', className)}>
-    <a className='ckr-ContactDetails-link ckr-ContactDetails-primaryLink'
+  return <div className={classNames('app-ContactDetails', className)}>
+    <a className='app-ContactDetails-link app-ContactDetails-primaryLink'
         href='https://www.corefiling.com/standing/contactus/' target='_blank'>
-      <b className='ckr-Link'>Contact us</b> to find out more!
+      <b className='app-Link'>Contact us</b> to find out more!
     </a>
-    <a className='ckr-ContactDetails-link ckr-ContactDetails-secondaryLink'
+    <a className='app-ContactDetails-link app-ContactDetails-secondaryLink'
         href='https://github.com/CoreFiling/quick-xbrl-validator' target='_blank'>
-        <b className='ckr-Link'>API available</b>
+        <b className='app-Link'>API available</b>
     </a>
   </div>;
 }
