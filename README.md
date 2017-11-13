@@ -86,7 +86,7 @@ CLIENT_ID=id-of-client
 CLIENT_SECRET=secret
 ```
 
-And pass it to `yarn start` as as follows:
+And pass it to `yarn start` as follows:
 
 ```bash
 env `cat .env` yarn start
