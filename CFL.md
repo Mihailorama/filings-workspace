@@ -21,14 +21,15 @@ yarn add @cfl/simple-platform-server --registry https://artifacts.int.corefiling
 Simple server
 -------------
 
-To use the simple server with the realm `dev` rather than `platform`, do
+To use the simple server with the realm `dev` rather than `platform`, create a
+client in the Keycloak admin intgerface, then create a `.env` file like the
+following:
 
 ```bash
-echo CFL_DEV=t >> .env
+CLIENT_ID=id-of-your-client
+CLIENT_SECRET=secret
+CFL_DEV=t
 ```
-
-There is a public client `pdc-inv-109` that can be used rather than creating a
-new one from scratch.
 
 
 Updating SSL certificates
