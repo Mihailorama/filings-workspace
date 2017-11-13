@@ -22,7 +22,7 @@ Simple server
 -------------
 
 To use the simple server with the realm `dev` rather than `platform`, create a
-client in the Keycloak admin intgerface, then create a `.env` file like the
+client in the Keycloak admin interface, then create a `.env` file like the
 following:
 
 ```bash
