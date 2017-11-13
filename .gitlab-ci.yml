@@ -59,7 +59,7 @@ check yarn.lock:
   tags:
   - docker
   script:
-    grep -e 'int\.corefiling\.com' yarn.lock && exit 1
+    grep -v -e 'int\.corefiling\.com' yarn.lock
   only:
   - tags
   - /^(release|hotfix)\//
