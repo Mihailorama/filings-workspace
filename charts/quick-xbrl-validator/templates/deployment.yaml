@@ -17,4 +17,4 @@ spec:
           image: {{ .Values.global.registry }}/{{ .Values.image }}:{{ .Values.imageTag }}
           imagePullPolicy: {{default "IfNotPresent" .Values.pullPolicy}}
           ports:
-            - containerPort: 8080
+            - containerPort: 80

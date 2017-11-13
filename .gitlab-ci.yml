@@ -19,7 +19,7 @@ cache:
     - docker-privileged
 
 .template_npm: &template_npm
-  image: artifacts.int.corefiling.com:5000/nimbus-tools/build-npm-package:0.6.0
+  image: artifacts.int.corefiling.com:5000/nimbus-tools/build-npm-package:0.10.0
 
 .template_kube_deploy: &template_kube_deploy
   <<: *template_docker
@@ -102,3 +102,17 @@ publish:chart:
   only:
     - develop@labs/quick-xbrl-validator
     - tags@labs/quick-xbrl-validator
+
+docker image:
+  <<: *template_docker_privileged
+  stage: publish
+  dependencies:
+  - compile:webpack
+  only:
+    - develop@labs/quick-xbrl-validator
+    - tags@labs/quick-xbrl-validator
+  image: artifacts.int.corefiling.com:5000/nimbus-tools/build-dockerfile:0.8.1-dev.169648
+  script:
+    - /app/scripts/build.py
+  variables:
+    publish: "true"
