@@ -8,7 +8,14 @@ module.exports = (config) => {
   config.set({
     logLevel: config.LOG_INFO,
     port: 3334,
-    browsers: ['ChromeHeadless'],
+    browsers: ['ChromeCustom'],
+    customLaunchers: {
+      ChromeCustom: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox'],
+        debug: false
+      },
+    },
     concurrency: Infinity,
     singleRun: true, //just run once by default
     frameworks: ['jasmine'], //use jasmine as framework
