@@ -89,7 +89,6 @@ publish:npm:
   only:
     - develop@labs/quick-xbrl-validator
     - tags@labs/quick-xbrl-validator
-    - feature/inv-109-latest-server
 
 publish:chart:
   <<: *template_kube_deploy
@@ -112,7 +111,6 @@ docker image:
   only:
     - develop@labs/quick-xbrl-validator
     - tags@labs/quick-xbrl-validator
-    - feature/inv-109-latest-server
   image: artifacts.int.corefiling.com:5000/nimbus-tools/build-dockerfile:0.8.1-dev.169648
   script:
     - /app/scripts/build.py
