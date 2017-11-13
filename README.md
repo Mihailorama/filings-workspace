@@ -75,13 +75,34 @@ yarn test-debug
 ## Simple server
 
 This uses a simple Express-based server to stand in for the facilities supplied
-by the gateway to the CoreFiling production cluster. You need anOAuth2
+by the gateway to the CoreFiling production cluster.
+
+You need an OAuth2
 client ID and  secret obtaiend from CoreFiling to make this work; these are
-passed in as environment variables. One way to do this is as follows:
+passed in as environment variables. One way to do this is to crfeate a file
+`.env` with these settings and pass it to `yarn start` as follows:
 
 ```bash
 echo CLIENT_ID=… CLIENT_SECRET=… >> .env
 env `cat .env` yarn start
+```
+
+Then open <http://localhost:8080/quick-xbrl-validator/>.
+
+
+## Dockerized server
+
+Build the image like this:
+
+```bash
+docker build -t quick-xbrl-validator .
+```
+
+Create a `.env` file with `CLIENT_ID` and `CLIENT_SECRET`, and run the sever
+like this:
+
+```bash
+docker run --rm -ti --env-file .env -p 8080:80 quick-xbrl-validator
 ```
 
 Then open <http://localhost:8080/quick-xbrl-validator/>.

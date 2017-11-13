@@ -2,6 +2,7 @@
   "name": "@cfl/quick-xbrl-validator",
   "version": "1.2.1-local",
   "cfl": {
+    "name": "quick-xbrl-validator",
     "group": {
       "name": "labs"
     }
