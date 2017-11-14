@@ -13,10 +13,11 @@
   version "1.4.2"
   resolved "https://registry.npmjs.org/@cfl/react-components/-/react-components-1.4.2.tgz#b1d73d7954986abf49bb154c3aa71fa1fbaea728"
 
-"@cfl/simple-platform-server@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.npmjs.org/@cfl/simple-platform-server/-/simple-platform-server-0.1.1.tgz#c39ad2eaae35e9bbcdf1bd9f972ea22d68d118cb"
+"@cfl/simple-platform-server@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/@cfl/simple-platform-server/-/simple-platform-server-1.0.0.tgz#4319785bd988f17b33f7378b05d8d55b9a5306a5"
   dependencies:
+    "@types/cli" "^0.11.19"
     "@types/express" "^4.0.39"
     "@types/express-session" "^1.15.5"
     "@types/morgan" "^1.7.35"
@@ -212,6 +213,12 @@
   version "2.2.3"
   resolved "https://registry.npmjs.org/@types/classnames/-/classnames-2.2.3.tgz#3f0ff6873da793870e20a260cada55982f38a9e5"
 
+"@types/cli@^0.11.19":
+  version "0.11.19"
+  resolved "https://registry.npmjs.org/@types/cli/-/cli-0.11.19.tgz#31ff7d006734c0b6647aa2b3d87d21d62eadb54b"
+  dependencies:
+    "@types/node" "*"
+
 "@types/cookie@^0.3.1":
   version "0.3.1"
   resolved "https://registry.npmjs.org/@types/cookie/-/cookie-0.3.1.tgz#720a756ea8e760a258708b52441bd341f1ef4296"
@@ -262,8 +269,8 @@
     "@types/express" "*"
 
 "@types/node@*":
-  version "8.0.50"
-  resolved "https://registry.npmjs.org/@types/node/-/node-8.0.50.tgz#dc545448e128c88c4eec7cd64025fcc3b7604541"
+  version "8.0.51"
+  resolved "https://registry.npmjs.org/@types/node/-/node-8.0.51.tgz#b31d716fb8d58eeb95c068a039b9b6292817d5fb"
 
 "@types/node@^6.0.46":
   version "6.0.72"
@@ -312,8 +319,8 @@
     "@types/request" "*"
 
 "@types/request@*", "@types/request@^2.0.7":
-  version "2.0.7"
-  resolved "https://registry.npmjs.org/@types/request/-/request-2.0.7.tgz#a2aa5a57317c21971d9b024e393091ab2c99ab98"
+  version "2.0.8"
+  resolved "https://registry.npmjs.org/@types/request/-/request-2.0.8.tgz#424d3de255868107ed4dd6695c65c5f1766aba80"
   dependencies:
     "@types/form-data" "*"
     "@types/node" "*"
@@ -3349,8 +3356,8 @@ exports-loader@^0.6.4:
     source-map "0.5.x"
 
 express-http-proxy@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.npmjs.org/express-http-proxy/-/express-http-proxy-1.0.7.tgz#dc170de05c46c9a8a9550cff7f9d1e44cc9b7907"
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/express-http-proxy/-/express-http-proxy-1.1.0.tgz#b533842add15b7021d78d248c80b53578a7b6ba0"
   dependencies:
     debug "^3.0.1"
     es6-promise "^4.1.1"

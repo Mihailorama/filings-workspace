@@ -74,43 +74,20 @@ yarn test-debug
 
 ## Simple server
 
-This uses a simple Express-based server to stand in for the facilities supplied
-by the gateway to the CoreFiling production cluster.
-
-To make this work, you need an OAuth2 client ID and  secret obtained from
-CoreFiling. These are passed in as environment variables. One way to do this is
-to create a file `.env` with these settings:
+A [simple server][1] provides authentication on the CoreFiling True North
+Platform and adds credentials to API calls.
+You need an OAuth2 client ID and  secret obtained from
+CoreFiling. Pass these to the server as environment variables:
 
 ```bash
-CLIENT_ID=id-of-client
-CLIENT_SECRET=secret
-```
-
-And pass it to `yarn start` as follows:
-
-```bash
-env `cat .env` yarn start
+export CLIENT_ID=id-of-client
+export CLIENT_SECRET=secret
+yarn start
 ```
 
 Then open <http://localhost:8080/quick-xbrl-validator/>.
 
-
-## Dockerized server
-
-Build the image like this:
-
-```bash
-docker build -t quick-xbrl-validator .
-```
-
-Create a `.env` file with `CLIENT_ID` and `CLIENT_SECRET`, and run the sever
-like this:
-
-```bash
-docker run --rm -ti --env-file .env -p 8080:80 quick-xbrl-validator
-```
-
-Then open <http://localhost:8080/quick-xbrl-validator/>.
+  [1]: https://github.com/CoreFiling/simple-platform-server
 
 
 ## Development server
@@ -118,7 +95,8 @@ Then open <http://localhost:8080/quick-xbrl-validator/>.
 This watches the source files and reruns the Webpack build when they change.
 It attempts hot reloading of modules and style sheets.
 
-You need `HOST` to be a name for your development machine for which SSL certificates are available.
+You need `HOST` to be a name for your development machine for which SSL
+certificates are available.
 
 ```bash
 npm config set @cfl/quick-xbrl-validator:devserver-host $HOST
