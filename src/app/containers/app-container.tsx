@@ -23,16 +23,16 @@ import { QueryableTablePage } from '@cfl/table-viewer';
 
 import { tableRenderPageAction, checkingStartAction, resultsDismissAction, filingStatisticsFetchAction } from '../actions';
 import { Profile, ValidationStatus } from '../models';
-import { CheckingPhase, CheckerState } from '../state';
-import CheckerApp from '../components/app';
+import { Phase, State } from '../state';
+import App from '../components/app';
 import AppBarContainer from '../corefiling/app-bar-container';
 
-type OwnProps = Props<CheckerAppContainer>;
+type OwnProps = Props<AppContainer>;
 
 interface PropsFromState {
   filingVersionId?: string;
   statistics?: Statistic[];
-  phase?: CheckingPhase;
+  phase?: Phase;
   profiles?: Profile[];
   status?: ValidationStatus;
   message?: string;
@@ -49,9 +49,9 @@ interface PropsFromDispatch {
   onFetchStatistics?: typeof filingStatisticsFetchAction;
 }
 
-type CheckerAppContainerProps = OwnProps & PropsFromState & PropsFromDispatch;
+type AppContainerProps = OwnProps & PropsFromState & PropsFromDispatch;
 
-class CheckerAppContainer extends Component<CheckerAppContainerProps> {
+class AppContainer extends Component<AppContainerProps> {
   render(): JSX.Element {
     const {
       filingVersionId, phase, profiles, status, message, tables, metadata, zOptions, table, statistics,
@@ -59,8 +59,8 @@ class CheckerAppContainer extends Component<CheckerAppContainerProps> {
     } = this.props;
     return (
       <div>
-        <AppBarContainer className='app-CheckerApp-appBar'/>
-        <CheckerApp
+        <AppBarContainer className='app-App-appBar'/>
+        <App
           phase={phase}
           profiles={profiles}
           status={status}
@@ -81,7 +81,7 @@ class CheckerAppContainer extends Component<CheckerAppContainerProps> {
   }
 }
 
-function propsFromState(state: CheckerState): PropsFromState {
+function propsFromState(state: State): PropsFromState {
   const {
     global: {phase, profiles, message},
     filing: {filingVersionId, status, tables, selectedTable: metadata, zOptions, tableRendering: table, statistics},
@@ -96,4 +96,4 @@ const propsFromDispatch: MapDispatchToProps<PropsFromDispatch, {}> = {
   onFetchStatistics: filingStatisticsFetchAction,
 };
 
-export default connect(propsFromState, propsFromDispatch)(CheckerAppContainer);
+export default connect(propsFromState, propsFromDispatch)(AppContainer);

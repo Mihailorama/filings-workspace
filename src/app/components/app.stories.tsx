@@ -22,12 +22,12 @@ import { TableMetadata } from '@cfl/table-rendering-service';
 import { basicTableWithMetadata } from '@cfl/table-viewer/lib/test-utils';
 
 import { profiles } from '../../stories/util';
-import CheckerApp from './app';
+import App from './app';
 
-storiesOf('CheckerApp', module)
+storiesOf('App', module)
   .add('Form', () => {
     return (
-      <CheckerApp
+      <App
         profiles={profiles('Profile')}
         phase={'form'}
       />
@@ -35,7 +35,7 @@ storiesOf('CheckerApp', module)
   })
   .add('Checking', () => {
     return (
-      <CheckerApp
+      <App
         profiles={profiles('Profile')}
         phase={'checking'}
       />
@@ -44,7 +44,7 @@ storiesOf('CheckerApp', module)
   .add('Result', () => {
     const { table, metadata, zOptions } = basicTableWithMetadata();
     return (
-      <CheckerApp
+      <App
         profiles={profiles('Profile')}
         phase={'results'}
         status={'OK'}
@@ -63,7 +63,7 @@ storiesOf('CheckerApp', module)
   })
   .add('Fail', () => {
     return (
-      <CheckerApp
+      <App
         profiles={profiles('Profile')}
         phase={'failed'}
         status={'FATAL_ERROR'}
@@ -73,7 +73,7 @@ storiesOf('CheckerApp', module)
   .add('Change page', () => {
     const { metadata, zOptions } = basicTableWithMetadata();
     return (
-      <CheckerApp
+      <App
         profiles={profiles('Profile')}
         phase={'results'}
         status={'OK'}

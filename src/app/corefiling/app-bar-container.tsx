@@ -19,7 +19,7 @@ import { Component, Props } from 'react';
 import { connect } from 'react-redux';
 
 import { User, App } from '../models';
-import { CheckerState } from '../state';
+import { State } from '../state';
 import AppBar from './app-bar';
 
 export const HOME = `/${location.pathname.split('/')[1]}/`;
@@ -42,6 +42,6 @@ class AppBarContainer extends Component<AppBarContainerProps> {
   }
 }
 
-const propsFromState = ({ global: { user, apps } }: CheckerState): PropsFromState => ({user, apps});
+const propsFromState = ({ global: { user, apps } }: State): PropsFromState => ({user, apps});
 
 export default connect(propsFromState)(AppBarContainer);
