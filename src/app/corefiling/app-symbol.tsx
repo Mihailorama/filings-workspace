@@ -35,7 +35,7 @@ export default class AppSymbol extends Component<AppSymbolProps> {
     const width = 43;
     const r = height / 2;
     return <svg xmlns='http://www.w3.org/2000/svg' width={width} height={height} viewBox={`0 0 ${width} ${height}`}
-        className={classNames('ckr-AppLogo', className)} style={style}>
+        className={classNames('app-AppLogo', className)} style={style}>
       <circle cx={r} cy={r} r={r}/>
       <circle cx={width - r} cy={r} r={r}/>
     </svg>;

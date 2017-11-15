@@ -21,15 +21,15 @@ import { Option, TableMetadata } from '@cfl/table-rendering-service';
 import { QueryableTablePage } from '@cfl/table-viewer';
 
 import { Profile, ValidationParams, ValidationStatus } from '../models';
-import { CheckingPhase } from '../state';
+import { Phase } from '../state';
 import ContactDetails from './contact-details';
 import Results from './results';
 import ValidationForm from './validation-form';
 
-import './checker-app.less';
+import './app.less';
 
-export interface CheckerAppProps {
-  phase?: CheckingPhase;
+export interface AppProps {
+  phase?: Phase;
   profiles?: Profile[];
   status?: ValidationStatus;
   error?: string;
@@ -45,7 +45,7 @@ export interface CheckerAppProps {
   onFetchStatistics?: () => void;
 }
 
-export default function CheckerApp(props: CheckerAppProps): JSX.Element {
+export default function App(props: AppProps): JSX.Element {
   const { phase, profiles, status, error, tables, metadata, zOptions, table, statistics,
     onSubmit, onResultsDismiss, onChangePage, onChangeTable, onFetchStatistics } = props;
 
@@ -55,20 +55,20 @@ export default function CheckerApp(props: CheckerAppProps): JSX.Element {
     case 'startup-failed':
     case 'uploading-failed':
     case 'form':
-      innards = <div className='ckr-CheckerApp-formHolder'>
+      innards = <div className='app-App-formHolder'>
         <ValidationForm profiles={profiles} error={error} onSubmit={phase === 'form' ? onSubmit : undefined}/>
-        <ContactDetails className='ckr-CheckerApp-formContact'/>
+        <ContactDetails className='app-App-formContact'/>
       </div>;
       break;
     case 'checking':
     case 'uploading':
-      innards = <div className='ckr-CheckerApp-loadingOverlay'>
-        <div className='ckr-CheckerApp-loading'>Processing&thinsp;…</div>
+      innards = <div className='app-App-loadingOverlay'>
+        <div className='app-App-loading'>Processing&thinsp;…</div>
       </div>;
       break;
     case 'failed':
     case 'results':
-      innards = <div className='ckr-CheckerApp-resultHolder'>
+      innards = <div className='app-App-resultHolder'>
         <Results
           error={error}
           statistics={statistics}
@@ -82,7 +82,7 @@ export default function CheckerApp(props: CheckerAppProps): JSX.Element {
           onResultsDismiss={onResultsDismiss}
           onFetchStatistics={onFetchStatistics}
         />
-        <ContactDetails className='ckr-CheckerApp-resultContact'/>
+        <ContactDetails className='app-App-resultContact'/>
       </div>;
       break;
     default:
@@ -90,7 +90,7 @@ export default function CheckerApp(props: CheckerAppProps): JSX.Element {
       break;
   }
 
-  return <div className={classNames('ckr-CheckerApp', `ckr-CheckerApp-${phase}`)}>
+  return <div className={classNames('app-App', `app-App-${phase}`)}>
     {innards}
   </div>;
 }

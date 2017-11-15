@@ -23,10 +23,10 @@ import { Statistic } from '@cfl/filing-statistics-service';
 import { QueryableTablePage } from '@cfl/table-viewer';
 import { Option, TableMetadata } from '@cfl/table-rendering-service';
 
-export type CheckingPhase = 'startup' | 'startup-failed' | 'form' |
+export type Phase = 'startup' | 'startup-failed' | 'form' |
   'uploading' | 'uploading-failed' | 'checking' | 'results' | 'failed';
 
-export interface CheckerState {
+export interface State {
   global: GlobalState;
   filing: FilingState;
 }
@@ -35,7 +35,7 @@ export interface GlobalState {
   user?: User;
   apps?: App[];
   profiles?: Profile[];
-  phase: CheckingPhase;
+  phase: Phase;
   message?: string;  // May be defined if in failed phase.
 }
 

@@ -21,8 +21,8 @@ import { storiesOf } from '@storybook/react';
 import ValidationResult from './validation-result';
 
 storiesOf('ValidationResult', module)
-  .addDecorator(story => <div className='ckr-Results'>
-    <div className='ckr-Results-resultHeading'>
+  .addDecorator(story => <div className='app-Results'>
+    <div className='app-Results-resultHeading'>
       {story()}
     </div>
   </div>)

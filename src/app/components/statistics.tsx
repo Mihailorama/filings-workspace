@@ -20,14 +20,14 @@ import { Statistic } from '@cfl/filing-statistics-service';
 
 import './statistics.less';
 
-function StatisticsTable({statistics}: {statistics: Statistic[]}): JSX.Element {
+export function StatisticsTable({statistics}: {statistics: Statistic[]}): JSX.Element {
   const format = new Intl.NumberFormat(window.navigator.language || 'en-US', {maximumFractionDigits: 2});
-  return <table className='ckr-StatisticsTable'>
+  return <table className='app-StatisticsTable'>
     <tbody>
       {statistics.map(statistic => (
         <tr key={statistic.name}>
-          <td className='ckr-StatisticsTable-name'>{statistic.label}</td>
-          <td className='ckr-StatisticsTable-value'>{
+          <td className='app-StatisticsTable-name'>{statistic.label}</td>
+          <td className='app-StatisticsTable-value'>{
             format.format(statistic.value) + (statistic.format === 'percentage' ? '%' : '')
           }</td>
         </tr>
@@ -37,8 +37,8 @@ function StatisticsTable({statistics}: {statistics: Statistic[]}): JSX.Element {
 }
 
 function StatisticsPopupTitle({onCloseClick}: {onCloseClick?: () => void}): JSX.Element {
-  return <div className='ckr-StatisticsPopup-title'>
-    <div className='ckr-StatisticsPopup-title-text'>Filing statistics</div>
+  return <div className='app-StatisticsPopup-title'>
+    <div className='app-StatisticsPopup-title-text'>Filing statistics</div>
     <button onClick={onCloseClick} title='Close statistics'>
       <svg width={7} height={8}>
         <line x1={0} y1={0} x2={7} y2={8} />
@@ -55,14 +55,14 @@ export interface StatisticsPopupProps {
 
 export default function StatisticsPopup({statistics, onCloseClick}: StatisticsPopupProps): JSX.Element {
   return <div>
-    <div className='ckr-StatisticsPopup-container'>
-      <div className='ckr-StatisticsPopup-background' onClick={onCloseClick} />
-      <div className='ckr-StatisticsPopup'>
+    <div className='app-StatisticsPopup-container'>
+      <div className='app-StatisticsPopup-background' onClick={onCloseClick} />
+      <div className='app-StatisticsPopup'>
         <StatisticsPopupTitle onCloseClick={onCloseClick}/>
-        {!statistics && <div className='ckr-StatisticsPopup-loading' />}
+        {!statistics && <div className='app-StatisticsPopup-loading' />}
         {statistics && (statistics.length > 0 ?
           <StatisticsTable statistics={statistics} /> :
-          <div className='ckr-StatisticsPopup-noResults'>No statistics.</div>)}
+          <div className='app-StatisticsPopup-noResults'>No statistics.</div>)}
       </div>
     </div>
   </div>;

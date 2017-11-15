@@ -18,4 +18,4 @@
 // This file just ensures the global styles are imported.
 
 import '../app/styles/style.less';
-import '../app/components/checker-app.less';
+import '../app/components/app.less';

@@ -51,19 +51,19 @@ export default class AppBar extends Component<AppBarProps> {
     }
     itemGroups.push([{label: 'Log out', href: AUTH_LOGOUT}]);
 
-    return <header className={classNames('ckr-AppBar', className)}>
-      <div className='ckr-AppBar-brand'>
-        <a href={path} className='ckr-AppBar-appLogo'>
-          <AppSymbol className='ckr-AppBar-appSymbol'/>
+    return <header className={classNames('app-AppBar', className)}>
+      <div className='app-AppBar-brand'>
+        <a href={path} className='app-AppBar-appLogo'>
+          <AppSymbol className='app-AppBar-appSymbol'/>
           Quick XBRL Validator
         </a>
-        <CoreFilingLogo className='ckr-AppBar-corefilingLogo'/>
+        <CoreFilingLogo className='app-AppBar-corefilingLogo'/>
       </div>
-      <nav className='ckr-AppBar-nav'>
-        <ul className='ckr-AppBar-breadcrumbNav'>
-          <li><a href={path} className='ckr-AppBar-breadcrumbLink'>Home</a></li>
+      <nav className='app-AppBar-nav'>
+        <ul className='app-AppBar-breadcrumbNav'>
+          <li><a href={path} className='app-AppBar-breadcrumbLink'>Home</a></li>
         </ul>
-        {user && <span className='ckr-AppBar-userName'>{user.email}</span>}
+        {user && <span className='app-AppBar-userName'>{user.email}</span>}
         <NavMenu itemGroups={itemGroups}/>
       </nav>
     </header>;

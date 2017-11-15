@@ -28,7 +28,7 @@ interface ButtonProps {
 }
 
 export default function Button({className, primary, children, onClick}: ButtonProps): JSX.Element {
-  return <button className={classNames(className, 'ckr-Button', {'ckr-Button-primary': primary})} onClick={onClick}>
+  return <button className={classNames(className, 'app-Button', {'app-Button-primary': primary})} onClick={onClick}>
     {children}
   </button>;
 }

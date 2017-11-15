@@ -37,12 +37,12 @@ export default function Table(props: TableProps): JSX.Element {
   const { status, metadata, zOptions, table, onChangePage } = props;
   const withZOptions = zOptions && zOptions.length > 1;
   const tableOffsets = {
-    'ckr-Table-withZOptions': withZOptions,
-    'ckr-Table-withPager': table && table.hasMultiplePages,
+    'app-Table-withZOptions': withZOptions,
+    'app-Table-withPager': table && table.hasMultiplePages,
   };
   return (
-    <div className={'ckr-Table'}>
-      {withZOptions && zOptions && table && metadata && <div className='ckr-Table-nav'>
+    <div className={'app-Table'}>
+      {withZOptions && zOptions && table && metadata && <div className='app-Table-nav'>
         <ZAxisNavigation
           breakdowns={metadata.z.breakdowns}
           options={zOptions}
@@ -50,7 +50,7 @@ export default function Table(props: TableProps): JSX.Element {
           onSelect={z => onChangePage && onChangePage(table.x, table.y, z)}
         />
       </div>}
-      {table && table.hasMultiplePages && <div className='ckr-Table-pager'>
+      {table && table.hasMultiplePages && <div className='app-Table-pager'>
         <Pager
           pages={table.pageCoordinates}
           x={table.x}
@@ -58,10 +58,10 @@ export default function Table(props: TableProps): JSX.Element {
           onSelect={(x, y) => onChangePage && onChangePage(x, y, table.z)}
         />
       </div>}
-      {!table && metadata && <div className={classNames('ckr-Table-loading', tableOffsets)} />}
-      {!table && !metadata && <div className={'ckr-Table-noTable'} />}
-      {table && <div className={classNames('ckr-Table-table', `ckr-Table-table-${toLowerStatus(status)}Status`, tableOffsets)}>
-        <div className={classNames('ckr-Table-table-inner', tableOffsets)}>
+      {!table && metadata && <div className={classNames('app-Table-loading', tableOffsets)} />}
+      {!table && !metadata && <div className={'app-Table-noTable'} />}
+      {table && <div className={classNames('app-Table-table', `app-Table-table-${toLowerStatus(status)}Status`, tableOffsets)}>
+        <div className={classNames('app-Table-table-inner', tableOffsets)}>
           <TableViewer
             data={table}
             autoWidth

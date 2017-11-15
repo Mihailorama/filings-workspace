@@ -59,21 +59,21 @@ export default class ValidationForm extends Component<ValidationFormProps, Valid
     const { params } = this.state;
 
     if (!profiles) {
-      return <div  className='ckr-ValidationForm-loading'>
+      return <div  className='app-ValidationForm-loading'>
           <span>{error || 'Loading\u2009…'}</span>
         </div>;
     }
 
-    return <Form className='ckr-ValidationForm' onSubmit={() => this.onSubmit()}>
+    return <Form className='app-ValidationForm' onSubmit={() => this.onSubmit()}>
       <FormItem>
         {
           error
-          ? <div className='ckr-ValidationForm-dropzone ckr-ValidationForm-errorDropzone'>
-              <span  className='ckr-ValidationForm-error'>{error}</span>
+          ? <div className='app-ValidationForm-dropzone app-ValidationForm-errorDropzone'>
+              <span  className='app-ValidationForm-error'>{error}</span>
             </div>
           : <Dropzone
-              className='ckr-ValidationForm-dropzone'
-              activeClassName='ckr-ValidationForm-dropzoneActive'
+              className='app-ValidationForm-dropzone'
+              activeClassName='app-ValidationForm-dropzoneActive'
               multiple={false}
               accept='.xml,.xbrl,.html,.htm,.zip'
               maxSize={5 * 1024 * 1024}
@@ -82,13 +82,13 @@ export default class ValidationForm extends Component<ValidationFormProps, Valid
             >
               <div>
                 {params.file
-                ? <FileReference className='ckr-ValidationForm-file' file={params.file}/>
+                ? <FileReference className='app-ValidationForm-file' file={params.file}/>
                 : <div>
-                    <h2 className='ckr-ValidationForm-heading'>Drag &amp; Drop</h2>
-                    <div className='ckr-ValidationForm-prompt'>
-                      your file here, or <span className='ckr-ValidationForm-btn'>browse</span>
+                    <h2 className='app-ValidationForm-heading'>Drag &amp; Drop</h2>
+                    <div className='app-ValidationForm-prompt'>
+                      your file here, or <span className='app-ValidationForm-btn'>browse</span>
                     </div>
-                    <div className='ckr-ValidationForm-hint'>XBRL, Inline XBRL, or ZIP. 5&thinsp;MB max.</div>
+                    <div className='app-ValidationForm-hint'>XBRL, Inline XBRL, or ZIP. 5&thinsp;MB max.</div>
                   </div>}
                 </div>
             </Dropzone>

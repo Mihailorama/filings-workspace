@@ -22,10 +22,10 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import { apps, profiles } from '../../stories/util';
-import { CheckerState } from '../state';
-import CheckerAppContainer from './checker-app-container';
+import { State } from '../state';
+import AppContainer from './app-container';
 
-const etc: CheckerState = {
+const etc: State = {
   global: {
     user: {sub: 'uuid-of-user', email: 'b@example.com'},
     apps: apps('Pass/Fail Validator'),
@@ -35,7 +35,7 @@ const etc: CheckerState = {
   filing: {
   },
 };
-const funcs: Store<CheckerState> = {
+const funcs: Store<State> = {
   getState: () => etc,
   dispatch: action('dispatch') as any,
   subscribe: action('subscribe') as any,
@@ -47,6 +47,6 @@ storiesOf('App layout', module)
       ...funcs,
       getState: () => ({...etc,  phase: 'form'}),
     }}>
-      <CheckerAppContainer/>
+      <AppContainer/>
     </Provider>,
   );
