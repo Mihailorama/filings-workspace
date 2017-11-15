@@ -105,4 +105,6 @@ export function filingReducer(state: FilingState | undefined, action: Action): F
   }
 }
 
-export const checker = combineReducers({global: globalReducer, filing: filingReducer});
+const reducers = combineReducers({global: globalReducer, filing: filingReducer});
+
+export default reducers;
