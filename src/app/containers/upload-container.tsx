@@ -25,9 +25,8 @@ import { tableRenderPageAction, checkingStartAction, resultsDismissAction, filin
 import { Profile, ValidationStatus } from '../models';
 import { Phase, State } from '../state';
 import App from '../components/app';
-import AppBarContainer from '../corefiling/app-bar-container';
 
-type OwnProps = Props<AppContainer>;
+type OwnProps = Props<UploadContainer>;
 
 interface PropsFromState {
   filingVersionId?: string;
@@ -51,32 +50,30 @@ interface PropsFromDispatch {
 
 type AppContainerProps = OwnProps & PropsFromState & PropsFromDispatch;
 
-class AppContainer extends Component<AppContainerProps> {
+class UploadContainer extends Component<AppContainerProps> {
   render(): JSX.Element {
     const {
       filingVersionId, phase, profiles, status, message, tables, metadata, zOptions, table, statistics,
       onTableRenderPage, onCheckingStart, onResultsDismiss, onFetchStatistics,
     } = this.props;
     return (
-      <div>
-        <AppBarContainer className='app-App-appBar'/>
-        <App
-          phase={phase}
-          profiles={profiles}
-          status={status}
-          error={message}
-          onSubmit={onCheckingStart}
-          onResultsDismiss={onResultsDismiss}
-          tables={tables}
-          metadata={metadata}
-          zOptions={zOptions}
-          table={table}
-          statistics={statistics}
-          onChangePage={(x, y, z) => onTableRenderPage && metadata && onTableRenderPage(metadata, x, y, z)}
-          onChangeTable={newTable => onTableRenderPage && onTableRenderPage(newTable, 0, 0, 0)}
-          onFetchStatistics={() => onFetchStatistics && filingVersionId && !statistics && onFetchStatistics(filingVersionId)}
-        />
-      </div>
+      // We definitely want less than this!
+      <App
+        phase={phase}
+        profiles={profiles}
+        status={status}
+        error={message}
+        onSubmit={onCheckingStart}
+        onResultsDismiss={onResultsDismiss}
+        tables={tables}
+        metadata={metadata}
+        zOptions={zOptions}
+        table={table}
+        statistics={statistics}
+        onChangePage={(x, y, z) => onTableRenderPage && metadata && onTableRenderPage(metadata, x, y, z)}
+        onChangeTable={newTable => onTableRenderPage && onTableRenderPage(newTable, 0, 0, 0)}
+        onFetchStatistics={() => onFetchStatistics && filingVersionId && !statistics && onFetchStatistics(filingVersionId)}
+      />
     );
   }
 }
@@ -96,4 +93,4 @@ const propsFromDispatch: MapDispatchToProps<PropsFromDispatch, {}> = {
   onFetchStatistics: filingStatisticsFetchAction,
 };
 
-export default connect(propsFromState, propsFromDispatch)(AppContainer);
+export default connect(propsFromState, propsFromDispatch)(UploadContainer);

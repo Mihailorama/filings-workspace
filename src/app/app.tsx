@@ -17,15 +17,18 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 
 import store from './store';
-import AppContainer from './containers/app-container';
+import Main from './containers/main';
 
 export default class App extends Component<{}> {
   render(): JSX.Element {
     return (
       <Provider store={store}>
-        <AppContainer/>
+        <BrowserRouter>
+          <Main/>
+        </BrowserRouter>
       </Provider>
     );
   }

@@ -23,7 +23,7 @@ import { action } from '@storybook/addon-actions';
 
 import { apps, profiles } from '../../stories/util';
 import { State } from '../state';
-import AppContainer from './app-container';
+import UploadContainer from './upload-container';
 
 const etc: State = {
   global: {
@@ -47,6 +47,6 @@ storiesOf('App layout', module)
       ...funcs,
       getState: () => ({...etc,  phase: 'form'}),
     }}>
-      <AppContainer/>
+      <UploadContainer/>
     </Provider>,
   );
