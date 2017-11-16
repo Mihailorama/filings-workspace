@@ -36,15 +36,16 @@ function WorkspaceContainer(): JSX.Element {
 }
 
 export default function Main(): JSX.Element {
+  const base = '/quick-xbrl-validator';
   return (
     <div>
       <AppBarContainer />
         <Switch>
-          <Route path='/quick-xbrl-validator/upload' component={UploadContainer} />
-          <Route path='/quick-xbrl-validator/filing/:id/validation' component={ValidationResultsContainer} />
-          <Route path='/quick-xbrl-validator/filing/:id/tables' component={TablesContainer} />
-          <Route path='/quick-xbrl-validator/filing/:id/statistics' component={StatisticsContainer} />
-          <Route path='/quick-xbrl-validator/' component={WorkspaceContainer} />
+          <Route path={`${base}/upload`} component={UploadContainer} />
+          <Route path={`${base}/filing/:id/validation`} component={ValidationResultsContainer} />
+          <Route path={`${base}/filing/:id/tables`} component={TablesContainer} />
+          <Route path={`${base}/filing/:id/statistics`} component={StatisticsContainer} />
+          <Route path={`${base}/`} component={WorkspaceContainer} />
         </Switch>
     </div>
   );
