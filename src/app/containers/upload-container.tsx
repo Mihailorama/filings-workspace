@@ -17,35 +17,23 @@
 import * as React from 'react';
 import { Component, Props } from 'react';
 import { connect, MapDispatchToProps } from 'react-redux';
-import { Statistic } from '@cfl/filing-statistics-service';
-import { Option, TableMetadata } from '@cfl/table-rendering-service';
-import { QueryableTablePage } from '@cfl/table-viewer';
 
-import { tableRenderPageAction, checkingStartAction, resultsDismissAction, filingStatisticsFetchAction } from '../actions';
+import { checkingStartAction } from '../actions';
 import { Profile, ValidationStatus } from '../models';
 import { Phase, State } from '../state';
-import App from '../components/app';
+import Upload from '../components/upload';
 
 type OwnProps = Props<UploadContainer>;
 
 interface PropsFromState {
-  filingVersionId?: string;
-  statistics?: Statistic[];
   phase?: Phase;
   profiles?: Profile[];
   status?: ValidationStatus;
   message?: string;
-  tables?: TableMetadata[];
-  metadata?: TableMetadata;
-  zOptions?: Option[][];
-  table?: QueryableTablePage;
 }
 
 interface PropsFromDispatch {
   onCheckingStart?: typeof checkingStartAction;
-  onResultsDismiss?: typeof resultsDismissAction;
-  onTableRenderPage?: typeof tableRenderPageAction;
-  onFetchStatistics?: typeof filingStatisticsFetchAction;
 }
 
 type AppContainerProps = OwnProps & PropsFromState & PropsFromDispatch;
@@ -53,26 +41,15 @@ type AppContainerProps = OwnProps & PropsFromState & PropsFromDispatch;
 class UploadContainer extends Component<AppContainerProps> {
   render(): JSX.Element {
     const {
-      filingVersionId, phase, profiles, status, message, tables, metadata, zOptions, table, statistics,
-      onTableRenderPage, onCheckingStart, onResultsDismiss, onFetchStatistics,
+      phase, profiles, status, message, onCheckingStart,
     } = this.props;
     return (
-      // We definitely want less than this!
-      <App
+      <Upload
         phase={phase}
         profiles={profiles}
         status={status}
         error={message}
         onSubmit={onCheckingStart}
-        onResultsDismiss={onResultsDismiss}
-        tables={tables}
-        metadata={metadata}
-        zOptions={zOptions}
-        table={table}
-        statistics={statistics}
-        onChangePage={(x, y, z) => onTableRenderPage && metadata && onTableRenderPage(metadata, x, y, z)}
-        onChangeTable={newTable => onTableRenderPage && onTableRenderPage(newTable, 0, 0, 0)}
-        onFetchStatistics={() => onFetchStatistics && filingVersionId && !statistics && onFetchStatistics(filingVersionId)}
       />
     );
   }
@@ -81,16 +58,13 @@ class UploadContainer extends Component<AppContainerProps> {
 function propsFromState(state: State): PropsFromState {
   const {
     global: {phase, profiles, message},
-    filing: {filingVersionId, status, tables, selectedTable: metadata, zOptions, tableRendering: table, statistics},
+    filing: {status},
   } = state;
-  return {filingVersionId, phase, profiles, message, status, tables, metadata, zOptions, table, statistics};
+  return {phase, profiles, message, status};
 }
 
 const propsFromDispatch: MapDispatchToProps<PropsFromDispatch, {}> = {
   onCheckingStart: checkingStartAction,
-  onResultsDismiss: resultsDismissAction,
-  onTableRenderPage: tableRenderPageAction,
-  onFetchStatistics: filingStatisticsFetchAction,
 };
 
 export default connect(propsFromState, propsFromDispatch)(UploadContainer);

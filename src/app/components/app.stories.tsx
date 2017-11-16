@@ -22,12 +22,13 @@ import { TableMetadata } from '@cfl/table-rendering-service';
 import { basicTableWithMetadata } from '@cfl/table-viewer/lib/test-utils';
 
 import { profiles } from '../../stories/util';
-import App from './app';
+import Upload from './upload';
+import Results from './results';
 
 storiesOf('App', module)
   .add('Form', () => {
     return (
-      <App
+      <Upload
         profiles={profiles('Profile')}
         phase={'form'}
       />
@@ -35,7 +36,7 @@ storiesOf('App', module)
   })
   .add('Checking', () => {
     return (
-      <App
+      <Upload
         profiles={profiles('Profile')}
         phase={'checking'}
       />
@@ -44,9 +45,7 @@ storiesOf('App', module)
   .add('Result', () => {
     const { table, metadata, zOptions } = basicTableWithMetadata();
     return (
-      <App
-        profiles={profiles('Profile')}
-        phase={'results'}
+      <Results
         status={'OK'}
         statistics={[
           {name: 'table-count', label: 'Table count', format: 'integer', value: 1},
@@ -63,9 +62,7 @@ storiesOf('App', module)
   })
   .add('Fail', () => {
     return (
-      <App
-        profiles={profiles('Profile')}
-        phase={'failed'}
+      <Results
         status={'FATAL_ERROR'}
       />
     );
@@ -73,9 +70,7 @@ storiesOf('App', module)
   .add('Change page', () => {
     const { metadata, zOptions } = basicTableWithMetadata();
     return (
-      <App
-        profiles={profiles('Profile')}
-        phase={'results'}
+      <Results
         status={'OK'}
         statistics={[{name: 'table-count', label: 'Table count', format: 'integer', value: 1}]}
         tables={[metadata]}
