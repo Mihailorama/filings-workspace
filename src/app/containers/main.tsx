@@ -16,23 +16,49 @@
 
 import * as React from 'react';
 import AppBarContainer from '../corefiling/app-bar-container';
-import { Switch, Route } from 'react-router';
+import { Switch, Route,  } from 'react-router';
+import { Link, RouteComponentProps } from 'react-router-dom';
 import UploadContainer from './upload-container';
 
-function ValidationResultsContainer(): JSX.Element {
-  return <div>Validation Results</div>;
+interface FilingRouteParams {
+  filingVersionId: string;
 }
 
-function TablesContainer(): JSX.Element {
-  return <div>Tables</div>;
+type FilingRouteProps = RouteComponentProps<FilingRouteParams>;
+
+function ValidationResultsContainer(props: FilingRouteProps): JSX.Element {
+  // Just talks to the validation API for an uploaded filing.
+  const {match: {params: {filingVersionId}}} = props;
+  return <div>Validation Results for {filingVersionId}</div>;
 }
 
-function StatisticsContainer(): JSX.Element {
-  return <div>Statistics</div>;
+function TablesContainer(props: FilingRouteProps): JSX.Element {
+  // Just talks to the validation API for an uploaded filing.
+  const {match: {params: {filingVersionId}}} = props;
+  return <div>Tables for {filingVersionId}</div>;
+}
+
+function StatisticsContainer(props: FilingRouteProps): JSX.Element {
+  // Just talks to the validation API for an uploaded filing.
+  const {match: {params: {filingVersionId}}} = props;
+  return <div>Statistics for {filingVersionId}</div>;
 }
 
 function WorkspaceContainer(): JSX.Element {
-  return <div>Workspace</div>;
+  // Should load list of recent filings etc.
+  // Let's hardcode a filing ID for the moment and link directly.
+  // All QnD.
+  const filingVersionId = 'e5b34781-7b23-4aeb-97b4-8cb66967d04e';
+  return (
+    <div>
+      <h2>Workspace</h2>
+      <ul>
+      <li><Link to={'/quick-xbrl-validator/filing/' + filingVersionId + '/validation'}>Validation Results</Link></li>
+      <li><Link to={'/quick-xbrl-validator/filing/' + filingVersionId + '/tables'}>Tables</Link></li>
+      <li><Link to={'/quick-xbrl-validator/filing/' + filingVersionId + '/statistics'}>Statistics</Link></li>
+      </ul>
+    </div>
+  );
 }
 
 export default function Main(): JSX.Element {
@@ -42,9 +68,9 @@ export default function Main(): JSX.Element {
       <AppBarContainer />
         <Switch>
           <Route path={`${base}/upload`} component={UploadContainer} />
-          <Route path={`${base}/filing/:id/validation`} component={ValidationResultsContainer} />
-          <Route path={`${base}/filing/:id/tables`} component={TablesContainer} />
-          <Route path={`${base}/filing/:id/statistics`} component={StatisticsContainer} />
+          <Route path={`${base}/filing/:filingVersionId/validation`} component={ValidationResultsContainer} />
+          <Route path={`${base}/filing/:filingVersionId/tables`} component={TablesContainer} />
+          <Route path={`${base}/filing/:filingVersionId/statistics`} component={StatisticsContainer} />
           <Route path={`${base}/`} component={WorkspaceContainer} />
         </Switch>
     </div>
