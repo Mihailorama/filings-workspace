@@ -16,7 +16,7 @@
 
 import * as React from 'react';
 import AppBarContainer from '../corefiling/app-bar-container';
-import { Switch, Route, Redirect } from 'react-router';
+import { Switch, Route } from 'react-router';
 import UploadContainer from './upload-container';
 
 function ValidationResultsContainer(): JSX.Element {
@@ -35,25 +35,17 @@ function WorkspaceContainer(): JSX.Element {
   return <div>Workspace</div>;
 }
 
-function NoMatch(): JSX.Element {
-  return <div>No such page.</div>;
-}
-
 export default function Main(): JSX.Element {
   return (
     <div>
       <AppBarContainer />
-        <Route path='quick-xbrl-validator'>
-          <Switch>
-            <Route path='workspace' component={WorkspaceContainer} />
-            <Route path='workspace/upload' component={UploadContainer} />
-            <Route path='filing/:id/validation' component={ValidationResultsContainer} />
-            <Route path='filing/:id/tables' component={TablesContainer} />
-            <Route path='filing/:id/statistics' component={StatisticsContainer} />
-            <Redirect from='/' to='workspace' />
-            <Route component={NoMatch} />
-          </Switch>
-        </Route>
+        <Switch>
+          <Route path='/quick-xbrl-validator/upload' component={UploadContainer} />
+          <Route path='/quick-xbrl-validator/filing/:id/validation' component={ValidationResultsContainer} />
+          <Route path='/quick-xbrl-validator/filing/:id/tables' component={TablesContainer} />
+          <Route path='/quick-xbrl-validator/filing/:id/statistics' component={StatisticsContainer} />
+          <Route path='/quick-xbrl-validator/' component={WorkspaceContainer} />
+        </Switch>
     </div>
   );
 }

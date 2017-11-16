@@ -39,7 +39,7 @@ const mergedConfig = merge.smart(mainConfig, {
     ca: fs.readFileSync(path.resolve(devDir, 'digicert.pem')),
     key: fs.readFileSync(path.resolve(devDir, 'star_cfl_io.key')),
     historyApiFallback: {
-      index: `${mainConfig.output.publicPath}/index.html`,
+      index: `${baseUrl}/quick-xbrl-validator/index.html`,
     },
     proxy: {
       '/api/user': {
