@@ -15,56 +15,36 @@
  */
 
 import * as React from 'react';
-import { Component, Props } from 'react';
-import { connect, MapDispatchToProps } from 'react-redux';
+import { Component } from 'react';
+import { connect } from 'react-redux';
 
+import { Profile } from '../models';
 import { checkingStartAction } from '../actions';
-import { Profile, ValidationStatus } from '../models';
-import { Phase, State } from '../state';
+import { Item, State, UploadStatus} from '../state';
 import Upload from '../components/upload';
 
-type OwnProps = Props<UploadContainer>;
-
-interface PropsFromState {
-  phase?: Phase;
-  profiles?: Profile[];
-  status?: ValidationStatus;
-  message?: string;
+interface UploadContainerProps {
+  profiles: Item<Profile[]>;
+  upload: UploadStatus;
+  onUpload: typeof checkingStartAction;
 }
 
-interface PropsFromDispatch {
-  onCheckingStart?: typeof checkingStartAction;
-}
-
-type AppContainerProps = OwnProps & PropsFromState & PropsFromDispatch;
-
-class UploadContainer extends Component<AppContainerProps> {
+class UploadContainer extends Component<UploadContainerProps> {
   render(): JSX.Element {
     const {
-      phase, profiles, status, message, onCheckingStart,
+      profiles, upload, onUpload,
     } = this.props;
     return (
       <Upload
-        phase={phase}
         profiles={profiles}
-        status={status}
-        error={message}
-        onSubmit={onCheckingStart}
+        upload={upload}
+        onSubmit={onUpload}
       />
     );
   }
 }
 
-function propsFromState(state: State): PropsFromState {
-  const {
-    global: {phase, profiles, message},
-    filing: {status},
-  } = state;
-  return {phase, profiles, message, status};
-}
-
-const propsFromDispatch: MapDispatchToProps<PropsFromDispatch, {}> = {
-  onCheckingStart: checkingStartAction,
-};
-
-export default connect(propsFromState, propsFromDispatch)(UploadContainer);
+export default connect(
+  ({profiles, upload}: State) => ({profiles, upload}),
+  {onUpload: checkingStartAction},
+)(UploadContainer);

@@ -17,38 +17,27 @@
 import * as React from 'react';
 import AppBarContainer from '../corefiling/app-bar-container';
 import { Switch, Route,  } from 'react-router';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import UploadContainer from './upload-container';
+import { default as StatisticsContainer, RouterProps } from './statistics-container';
 
-interface FilingRouteParams {
-  filingVersionId: string;
-}
-
-type FilingRouteProps = RouteComponentProps<FilingRouteParams>;
-
-function ValidationResultsContainer(props: FilingRouteProps): JSX.Element {
+function ValidationResultsContainer(props: RouterProps): JSX.Element {
   // Just talks to the validation API for an uploaded filing.
   const {match: {params: {filingVersionId}}} = props;
   return <div>Validation Results for {filingVersionId}</div>;
 }
 
-function TablesContainer(props: FilingRouteProps): JSX.Element {
+function TablesContainer(props: RouterProps): JSX.Element {
   // Just talks to the validation API for an uploaded filing.
   const {match: {params: {filingVersionId}}} = props;
   return <div>Tables for {filingVersionId}</div>;
-}
-
-function StatisticsContainer(props: FilingRouteProps): JSX.Element {
-  // Just talks to the validation API for an uploaded filing.
-  const {match: {params: {filingVersionId}}} = props;
-  return <div>Statistics for {filingVersionId}</div>;
 }
 
 function WorkspaceContainer(): JSX.Element {
   // Should load list of recent filings etc.
   // Let's hardcode a filing ID for the moment and link directly.
   // All QnD.
-  const filingVersionId = 'e5b34781-7b23-4aeb-97b4-8cb66967d04e';
+  const filingVersionId = '606208e3-10f8-4ada-a753-56e5a27a2f88';
   return (
     <div>
       <h2>Workspace</h2>

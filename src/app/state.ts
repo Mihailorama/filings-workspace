@@ -23,28 +23,38 @@ import { Statistic } from '@cfl/filing-statistics-service';
 import { QueryableTablePage } from '@cfl/table-viewer';
 import { Option, TableMetadata } from '@cfl/table-rendering-service';
 
-export type Phase = 'startup' | 'startup-failed' | 'form' |
-  'uploading' | 'uploading-failed' | 'checking' | 'results' | 'failed';
+export interface Item<T> {
+  loading: boolean;
+  error?: string;
+  value?: T;
+}
+
+export interface UploadStatus {
+  uploading: boolean;
+  error?: string;
+}
 
 export interface State {
-  global: GlobalState;
-  filing: FilingState;
-}
+  apps: Item<App[]>;
+  profiles: Item<Profile[]>;
+  user: Item<User>;
 
-export interface GlobalState {
-  user?: User;
-  apps?: App[];
-  profiles?: Profile[];
-  phase: Phase;
-  message?: string;  // May be defined if in failed phase.
-}
+  // UI state tracking an in-progress upload.
+  upload: UploadStatus;
+  // The recent files.
+  recentFiles: Item<string[]>;
 
-export interface FilingState {
-  filingVersionId?: string;
-  status?: ValidationStatus;
-  statistics?: Statistic[];
-  tables?: TableMetadata[];
-  selectedTable?: TableMetadata;
-  zOptions?: Option[][];
-  tableRendering?: QueryableTablePage;
+  // The various details we can display for a filing
+  status: {[filingVersionId: string]: Item<ValidationStatus>};
+  statistics: {[filingVersionId: string]: Item<Statistic[]> | undefined};
+  tables: {[filingVersionId: string]: Item<TableMetadata[]>};
+  // UI state tracking the selected table
+  selectedTable: {[filingVersionId: string]: TableMetadata | undefined};
+
+  // UI state tracking the table rendering options.
+  zOptions: {[tableId: string]: Option[][] | undefined};
+
+  // Per-table rendering details.  Does this vary with z-options?
+  tableRendering: {[tableId: string]: Item<QueryableTablePage>};
+
 }

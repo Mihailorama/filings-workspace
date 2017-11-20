@@ -29,18 +29,24 @@ storiesOf('App', module)
   .add('Form', () => {
     return (
       <Upload
-        profiles={profiles('Profile')}
-        phase={'form'}
+        profiles={{
+          loading: false,
+          value: profiles('Profile'),
+        }}
+        upload={{uploading: false}}
       />
     );
   })
   .add('Checking', () => {
     return (
       <Upload
-        profiles={profiles('Profile')}
-        phase={'checking'}
-      />
-    );
+      profiles={{
+        loading: false,
+        value: profiles('Profile'),
+      }}
+      upload={{uploading: true}}
+    />
+  );
   })
   .add('Result', () => {
     const { table, metadata, zOptions } = basicTableWithMetadata();

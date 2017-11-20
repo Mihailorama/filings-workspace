@@ -19,7 +19,7 @@ import { Component, Props } from 'react';
 import { connect } from 'react-redux';
 
 import { User, App } from '../models';
-import { State } from '../state';
+import { State, Item } from '../state';
 import AppBar from './app-bar';
 
 export const HOME = `/${location.pathname.split('/')[1]}/`;
@@ -29,8 +29,8 @@ interface OwnProps extends Props<AppBarContainer> {
 }
 
 interface PropsFromState {
-  user?: User;
-  apps?: App[];
+  user: Item<User>;
+  apps: Item<App[]>;
 }
 
 type AppBarContainerProps = OwnProps & PropsFromState;
@@ -38,10 +38,10 @@ type AppBarContainerProps = OwnProps & PropsFromState;
 class AppBarContainer extends Component<AppBarContainerProps> {
   render(): JSX.Element {
     const { className, user, apps } = this.props;
-    return <AppBar className={className} path={HOME} user={user} apps={apps}/>;
+    return <AppBar className={className} path={HOME} user={user.value} apps={apps.value}/>;
   }
 }
 
-const propsFromState = ({ global: { user, apps } }: State): PropsFromState => ({user, apps});
-
-export default connect(propsFromState)(AppBarContainer);
+export default connect(
+  ({ user, apps }: State) => ({user, apps}),
+)(AppBarContainer);

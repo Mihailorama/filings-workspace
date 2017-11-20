@@ -21,20 +21,11 @@ import { Provider } from 'react-redux';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import { apps, profiles } from '../../stories/util';
 import { State } from '../state';
 import UploadContainer from './upload-container';
 
-const etc: State = {
-  global: {
-    user: {sub: 'uuid-of-user', email: 'b@example.com'},
-    apps: apps('Pass/Fail Validator'),
-    profiles: profiles('Profile'),
-    phase: 'startup',
-  },
-  filing: {
-  },
-};
+const etc: State = {} as any;
+
 const funcs: Store<State> = {
   getState: () => etc,
   dispatch: action('dispatch') as any,

@@ -76,12 +76,12 @@ export function uploadFailedAction(message?: string): FailedAction {
   return {type: UPLOAD_FAILED, message};
 }
 
-export interface CheckingReceivedAction extends Action {
+export interface ValidationResultsReceivedAction extends Action {
   filingVersionId: string;
   status: ValidationStatus;
 }
 
-export function checkingReceivedAction(filingVersionId: string, status: ValidationStatus): CheckingReceivedAction {
+export function validationResultsReceivedAction(filingVersionId: string, status: ValidationStatus): ValidationResultsReceivedAction {
   return {type: CHECKING_RECEIVED, filingVersionId, status};
 }
 
@@ -89,24 +89,17 @@ export function failedAction(message: string): FailedAction {
   return {type: FAILED, message};
 }
 
-// Action sent when user tires of the results.
-
-export const RESULTS_DISMISS = 'RESULTS_DISMISS';
-
-export function resultsDismissAction(): FailedAction {
-  return {type: RESULTS_DISMISS};
-}
-
 // Action sent when metadata for all tables is received.
 
 export const TABLES_RECEIVED = 'TABLES_RECEIVED';
 
 export interface TablesReceivedAction extends Action {
+  filingVersionId: string;
   tables: TableMetadata[];
 }
 
-export function tablesReceivedAction(tables: TableMetadata[]): TablesReceivedAction {
-  return {type: TABLES_RECEIVED, tables};
+export function tablesReceivedAction(filingVersionId: string, tables: TableMetadata[]): TablesReceivedAction {
+  return {type: TABLES_RECEIVED, filingVersionId, tables};
 }
 
 // Action sent when a table is selected.
@@ -127,12 +120,14 @@ export function tableRenderingRequested(table: TableMetadata, window: TableRende
 export const TABLE_RENDERING_RECEIVED = 'TABLE_RENDERING_RECEIVED';
 
 export interface TableRenderingReceivedAction extends Action {
+  table: TableMetadata;
   zOptions: Option[][];
   tableRendering: QueryableTablePage;
 }
 
-export function tableRenderingReceivedAction(zOptions: Option[][], tableRendering: QueryableTablePage): TableRenderingReceivedAction {
-  return {type: TABLE_RENDERING_RECEIVED, zOptions, tableRendering};
+export function tableRenderingReceivedAction(
+  table: TableMetadata, zOptions: Option[][], tableRendering: QueryableTablePage): TableRenderingReceivedAction {
+  return {type: TABLE_RENDERING_RECEIVED, table, zOptions, tableRendering};
 }
 
 // Action for navigating the table.
@@ -167,11 +162,12 @@ export function filingStatisticsRequestedAction(filingVersionId: string): Filing
 export const FILING_STATISTICS_RECEIVED = 'FILING_STATISTICS_RECEIVED';
 
 export interface FilingStatisticsReceivedAction extends Action {
+  filingVersionId: string;
   statistics: Statistic[];
 }
 
-export function filingStatisticsReceivedAction(statistics: Statistic[]): FilingStatisticsReceivedAction {
-  return {type: FILING_STATISTICS_RECEIVED, statistics};
+export function filingStatisticsReceivedAction(filingVersionId: string, statistics: Statistic[]): FilingStatisticsReceivedAction {
+  return {type: FILING_STATISTICS_RECEIVED, filingVersionId, statistics};
 }
 
 // Action for fetching statistics.

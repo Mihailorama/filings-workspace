@@ -17,27 +17,26 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
 
-import { Profile, ValidationParams, ValidationStatus } from '../models';
-import { Phase } from '../state';
+import { Item, UploadStatus } from '../state';
+import { ValidationParams, Profile } from '../models';
 import ContactDetails from './contact-details';
 import ValidationForm from './validation-form';
 
 import './app.less';
 
-export interface AppProps {
-  phase?: Phase;
-  profiles?: Profile[];
-  status?: ValidationStatus;
-  error?: string;
+export interface UploadProps {
+  profiles: Item<Profile[]>;
+  upload: UploadStatus;
   onSubmit?: (params: ValidationParams) => void;
 }
 
-export default function App(props: AppProps): JSX.Element {
-  const { phase, profiles, error, onSubmit, } = props;
+export default function Upload(props: UploadProps): JSX.Element {
+  const { profiles, upload, onSubmit } = props;
+  const loading = profiles.loading;
   return (
-    <div className={classNames('app-App', `app-App-${phase}`)}>
+    <div className={classNames('app-App', {'app-App-loading': loading})}>
       <div className='app-App-formHolder'>
-        <ValidationForm profiles={profiles} error={error} onSubmit={phase === 'form' ? onSubmit : undefined}/>
+        <ValidationForm profiles={profiles.value} error={upload.error} onSubmit={onSubmit}/>
         <ContactDetails className='app-App-formContact'/>
       </div>
     </div>
