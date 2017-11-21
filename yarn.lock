@@ -13,9 +13,9 @@
   version "1.4.2"
   resolved "https://registry.npmjs.org/@cfl/react-components/-/react-components-1.4.2.tgz#b1d73d7954986abf49bb154c3aa71fa1fbaea728"
 
-"@cfl/simple-platform-server@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/@cfl/simple-platform-server/-/simple-platform-server-1.0.0.tgz#4319785bd988f17b33f7378b05d8d55b9a5306a5"
+"@cfl/simple-platform-server@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/@cfl/simple-platform-server/-/simple-platform-server-2.0.0.tgz#c2bacc450555d1d75d005a695e451c4623be4611"
   dependencies:
     "@types/cli" "^0.11.19"
     "@types/express" "^4.0.39"
