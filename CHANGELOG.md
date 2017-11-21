@@ -1,6 +1,7 @@
 # Changelog
 
 ## develop
+- Upgrade simple-platform-server to 2.0.0 and add sign-up instructions.
 
 ## 1.2.0
 - Introduced "Filing Statistics". These are available after validating a
