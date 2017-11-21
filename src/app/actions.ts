@@ -145,7 +145,7 @@ export function tableRenderPageAction(table: TableMetadata, x: number, y: number
   return {type: TABLE_RENDER_PAGE, table, x, y, z};
 }
 
-// Action sent when statistics are requested.
+// Statistics actions
 
 export const FILING_STATISTICS_REQUESTED = 'FILING_STATISTICS_REQUESTED';
 
@@ -156,8 +156,6 @@ export interface FilingStatisticsAction extends Action {
 export function filingStatisticsRequestedAction(filingVersionId: string): FilingStatisticsAction {
   return {type: FILING_STATISTICS_REQUESTED, filingVersionId};
 }
-
-// Action sent when filing version's statistics are received.
 
 export const FILING_STATISTICS_RECEIVED = 'FILING_STATISTICS_RECEIVED';
 
@@ -170,10 +168,37 @@ export function filingStatisticsReceivedAction(filingVersionId: string, statisti
   return {type: FILING_STATISTICS_RECEIVED, filingVersionId, statistics};
 }
 
-// Action for fetching statistics.
-
 export const FILING_STATISTICS_FETCH = 'FILING_STATISTICS_FETCH';
 
 export function filingStatisticsFetchAction(filingVersionId: string): FilingStatisticsAction {
   return {type: FILING_STATISTICS_FETCH, filingVersionId};
+}
+
+// Validation results actions
+
+export const VALIDATION_STATUS_REQUESTED = 'VALIDATION_STATUS_REQUESTED';
+
+export interface ValidationStatusAction extends Action {
+  filingVersionId: string;
+}
+
+export function validationStatusRequestedAction(filingVersionId: string): ValidationStatusAction {
+  return {type: VALIDATION_STATUS_REQUESTED, filingVersionId};
+}
+
+export const VALIDATION_STATUS_RECEIVED = 'VALIDATION_STATUS_RECEIVED';
+
+export interface ValidationStatusReceivedAction extends Action {
+  filingVersionId: string;
+  status: ValidationStatus;
+}
+
+export function validationStatusReceivedAction(filingVersionId: string, status: ValidationStatus): ValidationStatusReceivedAction {
+  return {type: VALIDATION_STATUS_RECEIVED, filingVersionId, status};
+}
+
+export const VALIDATION_STATUS_FETCH = 'VALIDATION_STATUS_FETCH';
+
+export function validationStatusFetchAction(filingVersionId: string): ValidationStatusAction {
+  return {type: VALIDATION_STATUS_FETCH, filingVersionId};
 }

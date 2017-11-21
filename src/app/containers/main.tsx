@@ -19,13 +19,9 @@ import AppBarContainer from '../corefiling/app-bar-container';
 import { Switch, Route,  } from 'react-router';
 import { Link } from 'react-router-dom';
 import UploadContainer from './upload-container';
-import { default as StatisticsContainer, RouterProps } from './statistics-container';
-
-function ValidationResultsContainer(props: RouterProps): JSX.Element {
-  // Just talks to the validation API for an uploaded filing.
-  const {match: {params: {filingVersionId}}} = props;
-  return <div>Validation Results for {filingVersionId}</div>;
-}
+import { RouterProps } from './filing-version-route';
+import StatisticsContainer from './statistics-container';
+import ValidatorContainer from './validator-container';
 
 function TablesContainer(props: RouterProps): JSX.Element {
   // Just talks to the validation API for an uploaded filing.
@@ -33,34 +29,37 @@ function TablesContainer(props: RouterProps): JSX.Element {
   return <div>Tables for {filingVersionId}</div>;
 }
 
+const appBaseUri = '/quick-xbrl-validator/';
+
 function WorkspaceContainer(): JSX.Element {
-  // Should load list of recent filings etc.
   // Let's hardcode a filing ID for the moment and link directly.
-  // All QnD.
   const filingVersionId = '606208e3-10f8-4ada-a753-56e5a27a2f88';
   return (
     <div>
       <h2>Workspace</h2>
       <ul>
-      <li><Link to={'/quick-xbrl-validator/filing/' + filingVersionId + '/validation'}>Validation Results</Link></li>
-      <li><Link to={'/quick-xbrl-validator/filing/' + filingVersionId + '/tables'}>Tables</Link></li>
-      <li><Link to={'/quick-xbrl-validator/filing/' + filingVersionId + '/statistics'}>Statistics</Link></li>
+        <li><Link to='/benfords-report-analyser/'>Benford's Report Analyser</Link></li>
+        <li><Link to='/taxonomy-packager/'>Taxonomy Packager</Link></li>
+        <li><Link to='/xbrl-document-change-report/'>XBRL Document Change Report</Link></li>
+        <li><Link to={`${appBaseUri}filing-version/${filingVersionId}/validator`}>Quick XBRL Validator</Link></li>
+        <li><Link to={`${appBaseUri}filing-version/${filingVersionId}/viewer`}>Quick Viewer</Link></li>
+        <li><Link to={`${appBaseUri}filing-version/${filingVersionId}/statistics`}>Filing Statistics</Link></li>
+        <li><Link to={`/api/document-service/filing-version/${filingVersionId}/some-oim-please`}>OIM/JSON Converter</Link></li>
       </ul>
     </div>
   );
 }
 
 export default function Main(): JSX.Element {
-  const base = '/quick-xbrl-validator';
   return (
     <div>
       <AppBarContainer />
         <Switch>
-          <Route path={`${base}/upload`} component={UploadContainer} />
-          <Route path={`${base}/filing/:filingVersionId/validation`} component={ValidationResultsContainer} />
-          <Route path={`${base}/filing/:filingVersionId/tables`} component={TablesContainer} />
-          <Route path={`${base}/filing/:filingVersionId/statistics`} component={StatisticsContainer} />
-          <Route path={`${base}/`} component={WorkspaceContainer} />
+          <Route path={`${appBaseUri}upload`} component={UploadContainer} />
+          <Route path={`${appBaseUri}filing-version/:filingVersionId/validator`} component={ValidatorContainer} />
+          <Route path={`${appBaseUri}filing-version/:filingVersionId/viewer`} component={TablesContainer} />
+          <Route path={`${appBaseUri}filing-version/:filingVersionId/statistics`} component={StatisticsContainer} />
+          <Route path={`${appBaseUri}`} component={WorkspaceContainer} />
         </Switch>
     </div>
   );

@@ -17,24 +17,23 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { filingStatisticsFetchAction } from '../actions';
+import { validationStatusFetchAction } from '../actions';
 import { State, Item } from '../state';
-import { Statistic } from '@cfl/filing-statistics-service';
 import { filingVersionId, RouterProps } from './filing-version-route';
-import Statistics from '../components/statistics';
+import { ValidationStatus } from '../models';
 
-export interface StatisticsContainerProps extends RouterProps {
-  statistics: Item<Statistic[]>;
-  fetchAction: typeof filingStatisticsFetchAction;
+export interface ValidatorContainerProps extends RouterProps {
+  status: Item<ValidationStatus>;
+  fetchAction: typeof validationStatusFetchAction;
 }
 
-class StatisticsContainer extends Component<StatisticsContainerProps> {
+class ValidatorContainer extends Component<ValidatorContainerProps> {
 
   componentDidMount(): void {
     this.props.fetchAction(filingVersionId(this.props));
   }
 
-  componentWillReceiveProps(nextProps: StatisticsContainerProps): void {
+  componentWillReceiveProps(nextProps: ValidatorContainerProps): void {
     const nextFilingVersionId = filingVersionId(nextProps);
     if (nextFilingVersionId !== filingVersionId(this.props)) {
       this.props.fetchAction(nextFilingVersionId);
@@ -42,16 +41,16 @@ class StatisticsContainer extends Component<StatisticsContainerProps> {
   }
 
   render(): JSX.Element {
-    const {statistics} = this.props;
-    return <Statistics statistics={statistics && statistics.value} />;
+    const {status} = this.props;
+    return <div>{status.value && status.value}</div>;
   }
 
 }
 
 export default connect(
   (state: State, ownProps: RouterProps) => {
-    const statistics = state.statistics[filingVersionId(ownProps)] || {loading: true};
-    return {statistics};
+    const status = state.status[filingVersionId(ownProps)] || {loading: true};
+    return {status};
   },
-  {fetchAction: filingStatisticsFetchAction},
-)(StatisticsContainer);
+  {fetchAction: validationStatusFetchAction},
+)(ValidatorContainer);
