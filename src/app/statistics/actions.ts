@@ -21,7 +21,7 @@ export const FETCH = 'FILING_STATISTICS_FETCH';
 export const RECEIVED = 'FILING_STATISTICS_RECEIVED';
 export const FAILED = 'FILING_STATISTICS_FAILED';
 
-export interface FilingStatisticsAction extends Action {
+export interface FetchAction extends Action {
   filingVersionId: string;
 }
 
@@ -35,7 +35,7 @@ export interface FailedAction extends Action {
   error: string;
 }
 
-export function fetchAction(filingVersionId: string): FilingStatisticsAction {
+export function fetchAction(filingVersionId: string): FetchAction {
   return {type: FETCH, filingVersionId};
 }
 

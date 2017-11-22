@@ -17,10 +17,10 @@
 import { Effect } from 'redux-saga';
 import { call, put, takeEvery } from 'redux-saga/effects';
 
-import { FilingStatisticsAction, receivedAction, failedAction, FETCH } from './actions';
+import { FetchAction, receivedAction, failedAction, FETCH } from './actions';
 import { filingStatisticsService } from '../urls';
 
-export function* fetchSaga(action: FilingStatisticsAction): IterableIterator<Effect> {
+export function* fetchSaga(action: FetchAction): IterableIterator<Effect> {
   const { filingVersionId } = action;
   try {
     const statistics = yield call(filingStatisticsService.getStatistics, {filingVersionId});

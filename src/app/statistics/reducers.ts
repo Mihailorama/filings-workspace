@@ -17,13 +17,17 @@
 import { Action } from 'redux';
 
 import { State } from '../state';
-import { FAILED, RECEIVED, FailedAction, ReceivedAction } from './actions';
+import { FETCH, FAILED, RECEIVED, FetchAction, FailedAction, ReceivedAction } from './actions';
 
 export function reducer(state: State | undefined, action: Action): State | undefined {
   if (!state) {
     return undefined;
   }
   switch (action.type) {
+    case FETCH: {
+      const { filingVersionId } = action as FetchAction;
+      return { ...state, statistics: { ... state.statistics, [filingVersionId]: {loading: true} }};
+    }
     case RECEIVED: {
       const { filingVersionId, statistics } = action as ReceivedAction;
       return { ...state, statistics: { ... state.statistics, [filingVersionId]: {loading: false, value: statistics} }};
