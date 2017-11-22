@@ -19,7 +19,6 @@ import * as React from 'react';
 import { Component, Props } from 'react';
 
 import { ValidationStatus } from '../models';
-import { toLowerStatus } from '../utils';
 
 import './validation-result.less';
 
@@ -46,6 +45,10 @@ const specByStatus: {[status: string]: Spec} = {
     label: 'Fail',
   },
 };
+
+function toLowerStatus(status: string): string {
+  return status.toLowerCase().split('_').map((x, i) => i === 0 ? x : x.charAt(0).toUpperCase() + x.substr(1)).join('');
+}
 
 export interface ValidationResultProps extends Props<ValidationResult> {
   status?: ValidationStatus;

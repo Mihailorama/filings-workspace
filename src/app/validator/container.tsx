@@ -22,7 +22,7 @@ import { ValidationStatus } from '../models';
 import { fetchAction } from './actions';
 import { State, Item } from '../state';
 import { filingVersionId, RouterProps } from '../containers/filing-version-route';
-import ValidationResult from '../components/validation-result';
+import ValidationResult from './validation-result';
 
 export interface ValidatorContainerProps extends RouterProps {
   status: Item<ValidationStatus>;

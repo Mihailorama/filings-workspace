@@ -22,8 +22,8 @@ import { TableMetadata, Option } from '@cfl/table-rendering-service';
 import { QueryableTablePage } from '@cfl/table-viewer';
 
 import { fetchTablesAction, fetchPageAction } from './actions';
-import Table from '../components/table';
-import TableSelector from '../components/table-selector';
+import Table from './table';
+import TableSelector from './table-selector';
 import { RouterProps, filingVersionId } from '../containers/filing-version-route';
 import { Item, State, tablePageKey } from '../state';
 

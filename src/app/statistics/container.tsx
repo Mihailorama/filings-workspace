@@ -21,7 +21,7 @@ import { fetchAction } from './actions';
 import { State, Item } from '../state';
 import { Statistic } from '@cfl/filing-statistics-service';
 import { filingVersionId, RouterProps } from '../containers/filing-version-route';
-import Statistics from '../components/statistics';
+import Statistics from './statistics';
 
 export interface StatisticsContainerProps extends RouterProps {
   statistics: Item<Statistic[]>;

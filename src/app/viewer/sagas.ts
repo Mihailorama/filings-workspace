@@ -22,7 +22,7 @@ import {
   receivedTablesAction, fetchPageAction, failedTablesAction, failedPageAction, receivedPageAction,
 } from './actions';
 import { apiFetchJson } from '../api-fetch';
-import QueryableTablePageImpl, { TABLE_WINDOW_HEIGHT } from '../models/queryable-table-page-impl';
+import QueryableTablePageImpl, { TABLE_WINDOW_HEIGHT } from './models//queryable-table-page-impl';
 import { tableRenderingServiceZOptions, tableRenderingServiceRender, tableRenderingServiceTables } from '../urls';
 
 export function* fetchTablesSaga(action: FetchTablesAction): IterableIterator<Effect> {
