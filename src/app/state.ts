@@ -34,6 +34,18 @@ export interface UploadStatus {
   error?: string;
 }
 
+export interface TablePage {
+  table: TableMetadata;
+  x: number;
+  y: number;
+  z: number;
+}
+
+export function tablePageKey(page: TablePage): string {
+  const { table: {id}, x, y, z } = page;
+  return `${id}(${x},${y},${z})`;
+};
+
 export interface State {
   apps: Item<App[]>;
   profiles: Item<Profile[]>;
@@ -49,12 +61,12 @@ export interface State {
   statistics: {[filingVersionId: string]: Item<Statistic[]> | undefined};
   tables: {[filingVersionId: string]: Item<TableMetadata[]>};
   // UI state tracking the selected table
-  selectedTable: {[filingVersionId: string]: TableMetadata | undefined};
+  selectedTablePage: {[filingVersionId: string]: TablePage | undefined};
 
   // UI state tracking the table rendering options.
   zOptions: {[tableId: string]: Option[][] | undefined};
 
   // Per-table rendering details.  Does this vary with z-options?
-  tableRendering: {[tableId: string]: Item<QueryableTablePage>};
+  tableRendering: {[tablePageKey: string]: Item<QueryableTablePage>};
 
 }

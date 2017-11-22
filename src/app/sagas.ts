@@ -18,21 +18,14 @@ import { Effect } from 'redux-saga';
 import { all, call, put } from 'redux-saga/effects';
 
 import {
-  failedAction,
   startupInfoFailedAction,
   startupInfoReceivedAction,
-  tableRenderingReceivedAction,
-  tableRenderingRequested,
-  TableRenderPageAction,
 } from './actions';
 import { apiFetchJson } from './api-fetch';
 import { App, Category, User } from './models';
-import QueryableTablePageImpl, { TABLE_WINDOW_HEIGHT } from './models/queryable-table-page-impl';
 import {
   APPS,
   documentServiceCategories,
-  tableRenderingServiceRender,
-  tableRenderingServiceZOptions,
   USER,
 } from './urls';
 
@@ -54,22 +47,5 @@ export function* startupInfoSaga(): IterableIterator<Effect> {
     yield put(startupInfoReceivedAction(user, apps, profiles));
   } catch (res) {
     yield put(startupInfoFailedAction(`Startup failed (${res.message || res.statusText || res.status}).`));
-  }
-}
-
-export function* tableRenderingSaga(action: TableRenderPageAction): IterableIterator<Effect> {
-  const { table, x, y, z } = action;
-  try {
-    const width = table.x.sliceCount > 0 && table.x.depth > 0 ? table.x.sliceCount : 1;
-    const window = {x, y, z, width, height: TABLE_WINDOW_HEIGHT};
-    yield put(tableRenderingRequested(table, window));
-
-    const [ zOptions, tableRendering ] = yield all([
-      call(apiFetchJson, tableRenderingServiceZOptions(table.id, 0)),
-      call(apiFetchJson, tableRenderingServiceRender(table.id, window)),
-    ]);
-    yield put(tableRenderingReceivedAction(table, zOptions, new QueryableTablePageImpl(table, tableRendering)));
-  } catch (res) {
-    yield put(failedAction(res.message || res.statusText || `Status: ${res.status}`));
   }
 }

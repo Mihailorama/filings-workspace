@@ -19,15 +19,9 @@ import AppBarContainer from '../corefiling/app-bar-container';
 import { Switch, Route,  } from 'react-router';
 import { Link } from 'react-router-dom';
 import UploadContainer from './upload-container';
-import { RouterProps } from './filing-version-route';
 import StatisticsContainer from '../statistics/container';
 import ValidatorContainer from '../validator/container';
-
-function TablesContainer(props: RouterProps): JSX.Element {
-  // Just talks to the validation API for an uploaded filing.
-  const {match: {params: {filingVersionId}}} = props;
-  return <div>Tables for {filingVersionId}</div>;
-}
+import ViewerContainer from '../viewer/container';
 
 const appBaseUri = '/quick-xbrl-validator/';
 
@@ -57,7 +51,7 @@ export default function Main(): JSX.Element {
         <Switch>
           <Route path={`${appBaseUri}upload`} component={UploadContainer} />
           <Route path={`${appBaseUri}filing-version/:filingVersionId/validator`} component={ValidatorContainer} />
-          <Route path={`${appBaseUri}filing-version/:filingVersionId/viewer`} component={TablesContainer} />
+          <Route path={`${appBaseUri}filing-version/:filingVersionId/viewer`} component={ViewerContainer} />
           <Route path={`${appBaseUri}filing-version/:filingVersionId/statistics`} component={StatisticsContainer} />
           <Route path={`${appBaseUri}`} component={WorkspaceContainer} />
         </Switch>

@@ -21,6 +21,7 @@ import reducers from './reducers';
 import { startupInfoSaga } from './sagas';
 import { saga as statisticsSaga } from './statistics/sagas';
 import { saga as validatorSaga } from './validator/sagas';
+import { saga as viewerSaga } from './viewer/sagas';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -39,5 +40,6 @@ const store = createStore(
 sagaMiddleware.run(startupInfoSaga);
 sagaMiddleware.run(statisticsSaga);
 sagaMiddleware.run(validatorSaga);
+sagaMiddleware.run(viewerSaga);
 
 export default store;

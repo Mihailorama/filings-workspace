@@ -22,12 +22,11 @@ import { Action } from 'redux';
 import {
   STARTUP_INFO_RECEIVED, StartupInfoReceivedAction, STARTUP_INFO_FAILED, FailedAction,
   UPLOAD_STARTED, UPLOAD_FAILED,
-  TABLES_RECEIVED, TableRenderingRequestedAction,
-  TABLE_RENDERING_RECEIVED, TableRenderingReceivedAction, TablesReceivedAction, TABLE_RENDERING_REQUESTED,
 } from './actions';
 import { State } from './state';
 import { reducer as statisticsReducer } from './statistics/reducers';
 import { reducer as validatorReducer } from './validator/reducers';
+import { reducer as viewerReducer } from './viewer/reducers';
 
 export function globalReducer(state: State | undefined, action: Action): State {
   if (!state) {
@@ -38,7 +37,7 @@ export function globalReducer(state: State | undefined, action: Action): State {
       recentFiles: {loading: false, value: []},
       upload: {uploading: false},
       status: {},
-      selectedTable: {},
+      selectedTablePage: {},
       statistics: {},
       tableRendering: {},
       tables: {},
@@ -52,6 +51,10 @@ export function globalReducer(state: State | undefined, action: Action): State {
     return newState;
   }
   newState = validatorReducer(state, action);
+  if (newState) {
+    return newState;
+  }
+  newState = viewerReducer(state, action);
   if (newState) {
     return newState;
   }
@@ -79,28 +82,6 @@ export function globalReducer(state: State | undefined, action: Action): State {
     case UPLOAD_FAILED: {
       const { message } = action as FailedAction;
       return { ...state, upload: {uploading: false, error: message}};
-    }
-    case TABLES_RECEIVED: {
-      const { filingVersionId, tables } = action as TablesReceivedAction;
-      return { ...state,
-        tables: { ... state.tables, [filingVersionId]: {loading: false, value: tables} },
-        selectedTable: { ... state.selectedTable, [filingVersionId]: tables.length > 0 ? tables[0] : undefined},
-        zOptions: {... state.zOptions, [filingVersionId]: []},
-      };
-    }
-    case TABLE_RENDERING_REQUESTED: {
-      const { table } = action as TableRenderingRequestedAction;
-      return { ...state,
-        tableRendering: { ... state.tableRendering, [table.id]: {loading: true} },
-        zOptions: {... state.zOptions, [table.id]: []},
-      };
-    }
-    case TABLE_RENDERING_RECEIVED: {
-      const { table, tableRendering, zOptions } = action as TableRenderingReceivedAction;
-      return { ...state,
-        tableRendering: { ... state.tableRendering, [table.id]: {loading: false, value: tableRendering} },
-        zOptions: {... state.zOptions, [table.id]: zOptions},
-      };
     }
     default:
       return state;

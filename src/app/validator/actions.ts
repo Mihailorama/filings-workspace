@@ -21,7 +21,7 @@ export const FETCH = 'VALIDATOR_FETCH';
 export const RECEIVED = 'VALIDATOR_RECEIVED';
 export const FAILED = 'VALIDATOR_FAILED';
 
-export interface ValidatorAction extends Action {
+export interface FetchAction extends Action {
   filingVersionId: string;
 }
 
@@ -35,7 +35,7 @@ export interface FailedAction extends Action {
   error: string;
 }
 
-export function fetchAction(filingVersionId: string): ValidatorAction {
+export function fetchAction(filingVersionId: string): FetchAction {
   return {type: FETCH, filingVersionId};
 }
 

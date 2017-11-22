@@ -23,31 +23,15 @@ import QueryableTablePageImpl from '../models/queryable-table-page-impl';
 import Table from './table';
 
 storiesOf('Table', module)
-  .add('Simple pass', () => {
+  .add('Simple table', () => {
     const { table, metadata, zOptions} = lShapedTableWithMetadata();
 
     return (
       <Table
-        status={'OK'}
         metadata={metadata}
         zOptions={zOptions}
         table={table}
         onChangePage={action('onChangePage')}
-        onChangeTable={action('onChangeTable')}
-      />
-    );
-  })
-  .add('Simple fail', () => {
-    const { table, metadata, zOptions} = lShapedTableWithMetadata();
-
-    return (
-      <Table
-        status={'ERROR'}
-        metadata={metadata}
-        zOptions={zOptions}
-        table={table}
-        onChangePage={action('onChangePage')}
-        onChangeTable={action('onChangeTable')}
       />
     );
   })
@@ -56,12 +40,10 @@ storiesOf('Table', module)
     const table = new QueryableTablePageImpl(tables[0], tableChunk);
     return (
       <Table
-        status={'OK'}
         metadata={tables[0]}
         zOptions={zOptions}
         table={table}
         onChangePage={action('onChangePage')}
-        onChangeTable={action('onChangeTable')}
       />
     );
   });

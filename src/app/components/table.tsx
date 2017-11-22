@@ -20,21 +20,16 @@ import TableViewer, { Pager, ZAxisNavigation } from '@cfl/table-viewer';
 import { QueryableTablePage } from '@cfl/table-viewer';
 import { Option, TableMetadata } from '@cfl/table-rendering-service';
 
-import { ValidationStatus } from '../models';
-import { toLowerStatus } from '../utils';
-
 import './table.less';
 
 export interface TableProps {
-  status: ValidationStatus;
   metadata?: TableMetadata;  // The table we want to show, or undefined if not got any tables.
   zOptions?: Option[][];
   table?: QueryableTablePage;
   onChangePage?: (x: number, y: number, z: number) => void;
-  onChangeTable?: (table: TableMetadata) => void;
 }
 export default function Table(props: TableProps): JSX.Element {
-  const { status, metadata, zOptions, table, onChangePage } = props;
+  const { metadata, zOptions, table, onChangePage } = props;
   const withZOptions = zOptions && zOptions.length > 1;
   const tableOffsets = {
     'app-Table-withZOptions': withZOptions,
@@ -60,7 +55,7 @@ export default function Table(props: TableProps): JSX.Element {
       </div>}
       {!table && metadata && <div className={classNames('app-Table-loading', tableOffsets)} />}
       {!table && !metadata && <div className={'app-Table-noTable'} />}
-      {table && <div className={classNames('app-Table-table', `app-Table-table-${toLowerStatus(status)}Status`, tableOffsets)}>
+      {table && <div className={classNames('app-Table-table', tableOffsets)}>
         <div className={classNames('app-Table-table-inner', tableOffsets)}>
           <TableViewer
             data={table}

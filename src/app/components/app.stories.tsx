@@ -17,13 +17,9 @@
 import * as React from 'react';
 
 import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
-import { TableMetadata } from '@cfl/table-rendering-service';
-import { basicTableWithMetadata } from '@cfl/table-viewer/lib/test-utils';
 
 import { profiles } from '../../stories/util';
 import Upload from './upload';
-import Results from './results';
 
 storiesOf('App', module)
   .add('Form', () => {
@@ -47,43 +43,4 @@ storiesOf('App', module)
       upload={{uploading: true}}
     />
   );
-  })
-  .add('Result', () => {
-    const { table, metadata, zOptions } = basicTableWithMetadata();
-    return (
-      <Results
-        status={'OK'}
-        statistics={[
-          {name: 'table-count', label: 'Table count', format: 'integer', value: 1},
-          {name: 'tagged-percentage', label: 'Percentage of document tagged', format: 'percentage', value: 33.78956712312},
-        ]}
-        tables={[metadata, {name: 'another table', id: 'uuid-of-another-table'} as TableMetadata]}
-        metadata={metadata}
-        zOptions={zOptions}
-        table={table}
-        onChangePage={action('onChangePage') as any}
-        onChangeTable={action('onChangeTable') as any}
-      />
-    );
-  })
-  .add('Fail', () => {
-    return (
-      <Results
-        status={'FATAL_ERROR'}
-      />
-    );
-  })
-  .add('Change page', () => {
-    const { metadata, zOptions } = basicTableWithMetadata();
-    return (
-      <Results
-        status={'OK'}
-        statistics={[{name: 'table-count', label: 'Table count', format: 'integer', value: 1}]}
-        tables={[metadata]}
-        metadata={metadata}
-        zOptions={zOptions}
-        onChangePage={action('onChangePage') as any}
-        onChangeTable={action('onChangeTable') as any}
-      />
-    );
   });

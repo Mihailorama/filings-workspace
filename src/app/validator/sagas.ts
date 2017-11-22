@@ -1,6 +1,6 @@
 import { Effect, delay } from 'redux-saga';
 import { call, put, takeEvery } from 'redux-saga/effects';
-import { receivedAction, failedAction, FETCH, ValidatorAction } from './actions';
+import { receivedAction, failedAction, FETCH, FetchAction } from './actions';
 import {
   documentServiceFilingVersion,
   validationServiceFilingVersion,
@@ -10,7 +10,7 @@ import { apiFetchJson } from '../api-fetch';
 
 const POLL_MILLIS = 1000;
 
-export function* fetchSaga(action: ValidatorAction): IterableIterator<Effect> {
+export function* fetchSaga(action: FetchAction): IterableIterator<Effect> {
   const { filingVersionId } = action;
   try {
     // Poll for filing completion status.
