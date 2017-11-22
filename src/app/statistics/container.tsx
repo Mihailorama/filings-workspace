@@ -17,23 +17,24 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { validationStatusFetchAction } from '../actions';
+import { fetchAction } from './actions';
 import { State, Item } from '../state';
-import { filingVersionId, RouterProps } from './filing-version-route';
-import { ValidationStatus } from '../models';
+import { Statistic } from '@cfl/filing-statistics-service';
+import { filingVersionId, RouterProps } from '../containers/filing-version-route';
+import Statistics from '../components/statistics';
 
-export interface ValidatorContainerProps extends RouterProps {
-  status: Item<ValidationStatus>;
-  fetchAction: typeof validationStatusFetchAction;
+export interface StatisticsContainerProps extends RouterProps {
+  statistics: Item<Statistic[]>;
+  fetchAction: typeof fetchAction;
 }
 
-class ValidatorContainer extends Component<ValidatorContainerProps> {
+class StatisticsContainer extends Component<StatisticsContainerProps> {
 
   componentDidMount(): void {
     this.props.fetchAction(filingVersionId(this.props));
   }
 
-  componentWillReceiveProps(nextProps: ValidatorContainerProps): void {
+  componentWillReceiveProps(nextProps: StatisticsContainerProps): void {
     const nextFilingVersionId = filingVersionId(nextProps);
     if (nextFilingVersionId !== filingVersionId(this.props)) {
       this.props.fetchAction(nextFilingVersionId);
@@ -41,16 +42,16 @@ class ValidatorContainer extends Component<ValidatorContainerProps> {
   }
 
   render(): JSX.Element {
-    const {status} = this.props;
-    return <div>{status.value && status.value}</div>;
+    const {statistics} = this.props;
+    return <Statistics statistics={statistics && statistics.value} />;
   }
 
 }
 
 export default connect(
   (state: State, ownProps: RouterProps) => {
-    const status = state.status[filingVersionId(ownProps)] || {loading: true};
-    return {status};
+    const statistics = state.statistics[filingVersionId(ownProps)] || {loading: true};
+    return {statistics};
   },
-  {fetchAction: validationStatusFetchAction},
-)(ValidatorContainer);
+  {fetchAction},
+)(StatisticsContainer);

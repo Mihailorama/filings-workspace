@@ -15,20 +15,15 @@
  */
 
 import { Effect } from 'redux-saga';
-import { all, call, put, takeEvery } from 'redux-saga/effects';
+import { all, call, put } from 'redux-saga/effects';
 
 import {
   failedAction,
   startupInfoFailedAction,
   startupInfoReceivedAction,
-  TABLE_RENDER_PAGE,
   tableRenderingReceivedAction,
   tableRenderingRequested,
   TableRenderPageAction,
-  FILING_STATISTICS_FETCH,
-  FilingStatisticsAction,
-  filingStatisticsRequestedAction,
-  filingStatisticsReceivedAction,
 } from './actions';
 import { apiFetchJson } from './api-fetch';
 import { App, Category, User } from './models';
@@ -39,7 +34,6 @@ import {
   tableRenderingServiceRender,
   tableRenderingServiceZOptions,
   USER,
-  filingStatisticsService,
 } from './urls';
 
 /**
@@ -78,25 +72,4 @@ export function* tableRenderingSaga(action: TableRenderPageAction): IterableIter
   } catch (res) {
     yield put(failedAction(res.message || res.statusText || `Status: ${res.status}`));
   }
-}
-
-export function* filingStatisticsSaga(action: FilingStatisticsAction): IterableIterator<Effect> {
-  const { filingVersionId } = action;
-  try {
-    yield put(filingStatisticsRequestedAction(filingVersionId));
-    const statistics = yield call(filingStatisticsService.getStatistics, {filingVersionId});
-    yield put(filingStatisticsReceivedAction(filingVersionId, statistics));
-  } catch (res) {
-    yield put(failedAction(res.message || res.statusText || `Status: ${res.status}`));
-  }
-}
-
-/**
- * Watch for actions.
- */
-export function* checkingSaga(): IterableIterator<Effect> {
-  yield all([
-    takeEvery(TABLE_RENDER_PAGE, tableRenderingSaga),
-    takeEvery(FILING_STATISTICS_FETCH, filingStatisticsSaga),
-  ]);
 }

@@ -25,9 +25,9 @@ import {
   CHECKING_RECEIVED, ValidationResultsReceivedAction,
   TABLES_RECEIVED, TableRenderingRequestedAction,
   TABLE_RENDERING_RECEIVED, TableRenderingReceivedAction, TablesReceivedAction, TABLE_RENDERING_REQUESTED,
-  FILING_STATISTICS_RECEIVED, FilingStatisticsReceivedAction,
 } from './actions';
 import { State } from './state';
+import { reducer as statisticsReducer } from './statistics/reducers';
 
 export function globalReducer(state: State | undefined, action: Action): State {
   if (!state) {
@@ -44,6 +44,11 @@ export function globalReducer(state: State | undefined, action: Action): State {
       tables: {},
       zOptions: {},
     };
+  }
+
+  const newState = statisticsReducer(state, action);
+  if (newState) {
+    return newState;
   }
 
   switch (action.type) {
@@ -95,10 +100,6 @@ export function globalReducer(state: State | undefined, action: Action): State {
         tableRendering: { ... state.tableRendering, [table.id]: {loading: false, value: tableRendering} },
         zOptions: {... state.zOptions, [table.id]: zOptions},
       };
-    }
-    case FILING_STATISTICS_RECEIVED: {
-      const { filingVersionId, statistics } = action as FilingStatisticsReceivedAction;
-      return { ...state, statistics: { ... state.statistics, [filingVersionId]: {loading: false, value: statistics} }};
     }
     default:
       return state;
