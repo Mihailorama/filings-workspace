@@ -19,9 +19,7 @@
  */
 import { Action } from 'redux';
 
-import { App, Profile, TableRenderingWindow, User, ValidationParams } from './models';
-import { Option, TableMetadata } from '@cfl/table-rendering-service';
-import { QueryableTablePage } from '@cfl/table-viewer';
+import { App, Profile, User, ValidationParams } from './models';
 
 // Actions for acquiring the list of profiles needed by the form.
 
@@ -66,60 +64,4 @@ export function uploadFailedAction(message?: string): FailedAction {
 
 export function failedAction(message: string): FailedAction {
   return {type: FAILED, message};
-}
-
-// Action sent when metadata for all tables is received.
-
-export const TABLES_RECEIVED = 'TABLES_RECEIVED';
-
-export interface TablesReceivedAction extends Action {
-  filingVersionId: string;
-  tables: TableMetadata[];
-}
-
-export function tablesReceivedAction(filingVersionId: string, tables: TableMetadata[]): TablesReceivedAction {
-  return {type: TABLES_RECEIVED, filingVersionId, tables};
-}
-
-// Action sent when a table is selected.
-
-export const TABLE_RENDERING_REQUESTED = 'TABLE_RENDERING_REQUESTED';
-
-export interface TableRenderingRequestedAction extends Action {
-  table: TableMetadata;
-  window: TableRenderingWindow;
-}
-
-export function tableRenderingRequested(table: TableMetadata, window: TableRenderingWindow): TableRenderingRequestedAction {
-  return {type: TABLE_RENDERING_REQUESTED, table, window};
-}
-
-// Action sent when table's rendering is received.
-
-export const TABLE_RENDERING_RECEIVED = 'TABLE_RENDERING_RECEIVED';
-
-export interface TableRenderingReceivedAction extends Action {
-  table: TableMetadata;
-  zOptions: Option[][];
-  tableRendering: QueryableTablePage;
-}
-
-export function tableRenderingReceivedAction(
-  table: TableMetadata, zOptions: Option[][], tableRendering: QueryableTablePage): TableRenderingReceivedAction {
-  return {type: TABLE_RENDERING_RECEIVED, table, zOptions, tableRendering};
-}
-
-// Action for navigating the table.
-
-export const TABLE_RENDER_PAGE = 'TABLE_RENDER_PAGE';
-
-export interface TableRenderPageAction extends Action {
-  table: TableMetadata;
-  x: number;
-  y: number;
-  z: number;
-}
-
-export function tableRenderPageAction(table: TableMetadata, x: number, y: number, z: number): TableRenderPageAction {
-  return {type: TABLE_RENDER_PAGE, table, x, y, z};
 }
