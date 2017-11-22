@@ -22,12 +22,12 @@ import { Action } from 'redux';
 import {
   STARTUP_INFO_RECEIVED, StartupInfoReceivedAction, STARTUP_INFO_FAILED, FailedAction,
   UPLOAD_STARTED, UPLOAD_FAILED,
-  CHECKING_RECEIVED, ValidationResultsReceivedAction,
   TABLES_RECEIVED, TableRenderingRequestedAction,
   TABLE_RENDERING_RECEIVED, TableRenderingReceivedAction, TablesReceivedAction, TABLE_RENDERING_REQUESTED,
 } from './actions';
 import { State } from './state';
 import { reducer as statisticsReducer } from './statistics/reducers';
+import { reducer as validatorReducer } from './validator/reducers';
 
 export function globalReducer(state: State | undefined, action: Action): State {
   if (!state) {
@@ -46,7 +46,12 @@ export function globalReducer(state: State | undefined, action: Action): State {
     };
   }
 
-  const newState = statisticsReducer(state, action);
+  let newState;
+  newState = statisticsReducer(state, action);
+  if (newState) {
+    return newState;
+  }
+  newState = validatorReducer(state, action);
   if (newState) {
     return newState;
   }
@@ -74,10 +79,6 @@ export function globalReducer(state: State | undefined, action: Action): State {
     case UPLOAD_FAILED: {
       const { message } = action as FailedAction;
       return { ...state, upload: {uploading: false, error: message}};
-    }
-    case CHECKING_RECEIVED: {
-      const { filingVersionId, status } = action as ValidationResultsReceivedAction;
-      return { ...state, status: { ... state.status, [filingVersionId]: {loading: false, value: status} }};
     }
     case TABLES_RECEIVED: {
       const { filingVersionId, tables } = action as TablesReceivedAction;

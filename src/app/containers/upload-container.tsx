@@ -19,14 +19,14 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { Profile } from '../models';
-import { checkingStartAction } from '../actions';
+import { uploadStartedAction } from '../actions';
 import { Item, State, UploadStatus} from '../state';
 import Upload from '../components/upload';
 
 interface UploadContainerProps {
   profiles: Item<Profile[]>;
   upload: UploadStatus;
-  onUpload: typeof checkingStartAction;
+  onUpload: typeof uploadStartedAction;
 }
 
 class UploadContainer extends Component<UploadContainerProps> {
@@ -46,5 +46,5 @@ class UploadContainer extends Component<UploadContainerProps> {
 
 export default connect(
   ({profiles, upload}: State) => ({profiles, upload}),
-  {onUpload: checkingStartAction},
+  {onUpload: uploadStartedAction},
 )(UploadContainer);

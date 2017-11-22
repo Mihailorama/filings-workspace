@@ -20,6 +20,7 @@ import createSagaMiddleware from 'redux-saga';
 import reducers from './reducers';
 import { startupInfoSaga } from './sagas';
 import { saga as statisticsSaga } from './statistics/sagas';
+import { saga as validatorSaga } from './validator/sagas';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -37,5 +38,6 @@ const store = createStore(
 
 sagaMiddleware.run(startupInfoSaga);
 sagaMiddleware.run(statisticsSaga);
+sagaMiddleware.run(validatorSaga);
 
 export default store;
