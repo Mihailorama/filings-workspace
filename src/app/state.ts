@@ -41,6 +41,18 @@ export interface TablePage {
   z: number;
 }
 
+export interface WorkspaceAppSpec {
+  name: string;
+  urlTemplate: string;
+  useFilingList?: boolean;
+  external?: boolean;
+}
+
+export interface WorkspaceFiling {
+  id: string;
+  name: string;
+}
+
 export function tablePageKey(page: TablePage): string {
   const { table: {id}, x, y, z } = page;
   return `${id}(${x},${y},${z})`;
@@ -51,10 +63,13 @@ export interface State {
   profiles: Item<Profile[]>;
   user: Item<User>;
 
+  // App that was clicked on
+  app?: WorkspaceAppSpec;
+
   // UI state tracking an in-progress upload.
   upload: UploadStatus;
-  // The recent files.
-  recentFiles: Item<string[]>;
+  // The recent filings.
+  recentFilings: Item<WorkspaceFiling[]>;
 
   // The various details we can display for a filing
   status: {[filingVersionId: string]: Item<ValidationStatus>};

@@ -19,7 +19,6 @@ import * as React from 'react';
 
 import { Item, UploadStatus } from '../state';
 import { ValidationParams, Profile } from '../models';
-import ContactDetails from './contact-details';
 import ValidationForm from './validation-form';
 
 import './app.less';
@@ -37,7 +36,6 @@ export default function Upload(props: UploadProps): JSX.Element {
     <div className={classNames('app-App', {'app-App-loading': loading})}>
       <div className='app-App-formHolder'>
         <ValidationForm profiles={profiles.value} error={upload.error} onSubmit={onSubmit}/>
-        <ContactDetails className='app-App-formContact'/>
       </div>
     </div>
   );

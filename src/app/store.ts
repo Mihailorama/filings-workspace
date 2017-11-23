@@ -22,6 +22,7 @@ import { startupInfoSaga } from './sagas';
 import { saga as statisticsSaga } from './statistics/sagas';
 import { saga as validatorSaga } from './validator/sagas';
 import { saga as viewerSaga } from './viewer/sagas';
+import { saga as workspaceSaga } from './workspace/sagas';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -41,5 +42,6 @@ sagaMiddleware.run(startupInfoSaga);
 sagaMiddleware.run(statisticsSaga);
 sagaMiddleware.run(validatorSaga);
 sagaMiddleware.run(viewerSaga);
+sagaMiddleware.run(workspaceSaga);
 
 export default store;

@@ -21,12 +21,12 @@ import { Action } from 'redux';
 
 import {
   STARTUP_INFO_RECEIVED, StartupInfoReceivedAction, STARTUP_INFO_FAILED, FailedAction,
-  UPLOAD_STARTED, UPLOAD_FAILED,
 } from './actions';
 import { State } from './state';
 import { reducer as statisticsReducer } from './statistics/reducers';
 import { reducer as validatorReducer } from './validator/reducers';
 import { reducer as viewerReducer } from './viewer/reducers';
+import { reducer as workspaceReducer } from './workspace/reducers';
 
 export function globalReducer(state: State | undefined, action: Action): State {
   if (!state) {
@@ -34,7 +34,7 @@ export function globalReducer(state: State | undefined, action: Action): State {
       apps: {loading: false, value: []},
       user: {loading: false},
       profiles: {loading: false, value: []},
-      recentFiles: {loading: false, value: []},
+      recentFilings: {loading: false, value: []},
       upload: {uploading: false},
       status: {},
       selectedTablePage: {},
@@ -58,6 +58,10 @@ export function globalReducer(state: State | undefined, action: Action): State {
   if (newState) {
     return newState;
   }
+  newState = workspaceReducer(state, action);
+  if (newState) {
+    return newState;
+  }
 
   switch (action.type) {
     case STARTUP_INFO_FAILED: {
@@ -75,13 +79,6 @@ export function globalReducer(state: State | undefined, action: Action): State {
         user: {loading: false, value: user},
         profiles: {loading: false, value: profiles},
       };
-    }
-    case UPLOAD_STARTED: {
-      return { ...state, upload: {uploading: true}};
-    }
-    case UPLOAD_FAILED: {
-      const { message } = action as FailedAction;
-      return { ...state, upload: {uploading: false, error: message}};
     }
     default:
       return state;

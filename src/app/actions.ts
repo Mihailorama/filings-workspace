@@ -19,7 +19,7 @@
  */
 import { Action } from 'redux';
 
-import { App, Profile, User, ValidationParams } from './models';
+import { App, Profile, User } from './models';
 
 // Actions for acquiring the list of profiles needed by the form.
 
@@ -42,26 +42,4 @@ export interface FailedAction extends Action {
 
 export function startupInfoFailedAction(message: string): FailedAction {
   return {type: STARTUP_INFO_FAILED, message};
-}
-
-// Actions for performing the upload operation itself.
-
-export const UPLOAD_STARTED = 'UPLOAD_STARTED';  // from saga when upload begins
-export const UPLOAD_FAILED = 'UPLOAD_FAILED';  // From saga if uplaod fails.
-export const FAILED = 'FAILED';
-
-export interface UploadAction extends Action {
-  params: ValidationParams;
-}
-
-export function uploadStartedAction(params: ValidationParams): UploadAction {
-  return {type: UPLOAD_STARTED, params};
-}
-
-export function uploadFailedAction(message?: string): FailedAction {
-  return {type: UPLOAD_FAILED, message};
-}
-
-export function failedAction(message: string): FailedAction {
-  return {type: FAILED, message};
 }
