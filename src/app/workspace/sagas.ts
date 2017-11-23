@@ -69,7 +69,7 @@ export function* uploadSaga(action: UploadAction): IterableIterator<Effect> {
       version = yield call(apiFetchJson, documentServiceFilingVersion(version.id));
     }
 
-    const url = app.urlTemplate.replace('{id}', version.id);
+    const url = app.filingHref!.replace('{id}', version.id);
     yield call(() => window.location.href = url);
   } catch (res) {
     yield put(uploadFailedAction(res.message || res.statusText || `Status: ${res.status}`));

@@ -27,7 +27,7 @@ const filings: WorkspaceFiling[] = [
   {id: '3', name: 'Filing 3'},
 ];
 
-const app: WorkspaceAppSpec = {name: 'Test App', urlTemplate: '/test-app/{id}/', useFilingList: true};
+const app: WorkspaceAppSpec = {name: 'Test App', href: '/test-app', filingHref: '/test-app/{id}'};
 
 storiesOf('FilingList', module)
   .add('Not loaded', () => {

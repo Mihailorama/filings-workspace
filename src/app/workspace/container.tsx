@@ -39,12 +39,9 @@ export interface WorkspaceContainerProps extends OwnProps {
 
 class WorkspaceContainer extends Component<WorkspaceContainerProps> {
 
-  appClick(app: WorkspaceAppSpec): void {
-    if (app.useFilingList) {
-      this.props.fetchFilingsAction(app);
-    }
-    else {
-      window.location.href = app.urlTemplate;
+  componentWillReceiveProps(nextProps: WorkspaceContainerProps): void {
+    if (nextProps.app) {
+      this.props.fetchFilingsAction();
     }
   }
 
@@ -61,7 +58,7 @@ class WorkspaceContainer extends Component<WorkspaceContainerProps> {
       }
       return <FilingList app={app} filings={filings && filings.value} showUpload={showUpload} />;
     }
-    return <WorkspaceApps onAppClick={a => this.appClick(a)} />;
+    return <WorkspaceApps />;
   }
 
 }

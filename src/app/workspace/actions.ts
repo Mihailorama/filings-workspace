@@ -27,10 +27,6 @@ export const SHOW_UPLOAD = 'WORKSPACE_SHOW_UPLOAD';
 export const UPLOAD = 'WORKSPACE_UPLOAD';
 export const UPLOAD_FAILED = 'WORKSPACE_UPLOAD_FAILED';
 
-export interface FetchFilingsAction extends Action {
-  app: WorkspaceAppSpec;
-}
-
 export interface ReceivedFilingsAction extends Action {
   filings: WorkspaceFiling[];
 }
@@ -52,8 +48,8 @@ export interface FailedUploadAction extends Action {
   error: string;
 }
 
-export function fetchFilingsAction(app: WorkspaceAppSpec): FetchFilingsAction {
-  return {type: FILINGS_FETCH, app};
+export function fetchFilingsAction(): Action {
+  return {type: FILINGS_FETCH};
 }
 
 export function receivedFilingsAction(filings: WorkspaceFiling[]): ReceivedFilingsAction {

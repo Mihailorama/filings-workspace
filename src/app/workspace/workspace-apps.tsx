@@ -16,60 +16,66 @@
 
 import * as React from 'react';
 import { WorkspaceAppSpec } from '../state';
+import { HOME } from '../corefiling/app-bar';
+import { Link } from 'react-router-dom';
 
-const appBaseUri = '/quick-xbrl-validator/';
-
-const apps: {[key: string]: WorkspaceAppSpec} = {
+export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
   validator: {
-    name: 'Quick XBRL Validator', useFilingList: true,
-    urlTemplate: `${appBaseUri}filing-version/{id}/validator`,
+    name: 'Quick XBRL Validator',
+    href: `${HOME}validator`,
+    filingHref: `${HOME}validator/filing-version/{id}`,
   },
   viewer: {
-    name: 'Quick Viewer', useFilingList: true,
-    urlTemplate: `${appBaseUri}filing-version/{id}/viewer`,
+    name: 'Quick Viewer',
+    href: `${HOME}viewer`,
+    filingHref: `${HOME}viewer/filing-version/{id}`,
   },
   statistics: {
-    name: 'Filing Statistics', useFilingList: true,
-    urlTemplate: `${appBaseUri}filing-version/{id}/statistics`,
+    name: 'Filing Statistics',
+    href: `${HOME}statistics`,
+    filingHref: `${HOME}statistics/filing-version/{id}`,
   },
   benford: {
-    name: 'Benford\'s Analyser', external: true, useFilingList: true,
-    urlTemplate: '/benfords-analyser/filing-version/{id}/analyse',
+    name: 'Benford\'s Analyser', external: true,
+    href: `/benfords-analyser`,
+    filingHref: '/benfords-analyser/filing-version/{id}',
   },
   changeReport: {
     name: 'XBRL Document Change Report', external: true,
-    urlTemplate: '/xbrl-document-change-report/',
+    href: '/xbrl-document-change-report/',
   },
   taxonomyInfo: {
     name: 'Quick Taxonomy Info', external: true,
-    urlTemplate: '/quick-taxonomy-info/',
+    href: '/quick-taxonomy-info/',
   },
   taxonomyPackager: {
     name: 'Taxonomy Packager', external: true,
-    urlTemplate: '/taxonomy-packager/',
+    href: '/taxonomy-packager/',
   },
   oimConverter: {
     name: 'OIM/JSON Converter', external: true,
-    urlTemplate: '/api/document-service/filing-version/{id}/some-oim-please',
+    href: '/api/document-service/filing-version/{id}/some-oim-please',
   },
 };
 
-function WorkspaceAppTile(props: {app: WorkspaceAppSpec, onClick: (app: WorkspaceAppSpec) => void}): JSX.Element {
+function WorkspaceAppTile({app}: {app: WorkspaceAppSpec}): JSX.Element {
   return <div>
-    <a onClick={() => props.onClick(props.app)}>{props.app.name}</a>
+    {app.external ?
+      <a href={app.href}>{app.name}</a> :
+      <Link to={app.href}>{app.name}</Link>
+    }
   </div>;
 }
 
-export default function WorkspaceApps(props: {onAppClick: (app: WorkspaceAppSpec) => void}): JSX.Element {
+export default function WorkspaceApps(): JSX.Element {
   return <div>
-    <h2>Workspace</h2>
-    <WorkspaceAppTile app={apps.validator} onClick={props.onAppClick} />
-    <WorkspaceAppTile app={apps.viewer} onClick={props.onAppClick} />
-    <WorkspaceAppTile app={apps.statistics} onClick={props.onAppClick} />
-    <WorkspaceAppTile app={apps.benford} onClick={props.onAppClick} />
-    <WorkspaceAppTile app={apps.changeReport} onClick={props.onAppClick} />
-    <WorkspaceAppTile app={apps.taxonomyInfo} onClick={props.onAppClick} />
-    <WorkspaceAppTile app={apps.taxonomyPackager} onClick={props.onAppClick} />
-    <WorkspaceAppTile app={apps.oimConverter} onClick={props.onAppClick} />
+    <WorkspaceAppTile app={WORKSPACE_APPS.validator} />
+    <WorkspaceAppTile app={WORKSPACE_APPS.viewer} />
+    <WorkspaceAppTile app={WORKSPACE_APPS.statistics} />
+    <WorkspaceAppTile app={WORKSPACE_APPS.benford} />
+    <WorkspaceAppTile app={WORKSPACE_APPS.changeReport} />
+    <WorkspaceAppTile app={WORKSPACE_APPS.taxonomyInfo} />
+    <WorkspaceAppTile app={WORKSPACE_APPS.taxonomyPackager}/>
+    <WorkspaceAppTile app={WORKSPACE_APPS.oimConverter} />
   </div>;
 }

@@ -22,46 +22,54 @@ import * as classNames from 'classnames';
 import * as React from 'react';
 import { Component, Props } from 'react';
 
-import { User, App } from '../models';
+import { User } from '../models';
 import { AUTH_LOGOUT } from '../urls';
 import AppSymbol from './app-symbol';
 import CoreFilingLogo from './corefiling-logo';
 import NavMenu, { MenuItem } from './nav-menu';
 
 import './app-bar.less';
+import { WorkspaceAppSpec } from '../state';
+
+export const HOME = `/${location.pathname.split('/')[1]}/`;
 
 export interface AppBarProps extends Props<AppBar> {
-  path: string;
+  apps: {[key: string]: WorkspaceAppSpec};
+  app?: WorkspaceAppSpec;
   user?: User;
-  apps?: App[];
   className?: string;
 }
 
 export default class AppBar extends Component<AppBarProps> {
   render(): JSX.Element {
-    const { path, user, apps, className } = this.props;
+    const { app, user, className } = this.props;
+    const apps = Object.keys(this.props.apps).map(key => this.props.apps[key]);
 
     // Assemble the menu.
     const itemGroups: MenuItem[][] = [];
     if (apps) {
-      const appItems = apps.filter(x => x.href !== path).map(x => ({label: x.name || x.id, href: x.href}));
+      const appItems = apps.filter(x => x !== app).map(x => ({label: x.name, href: x.href}));
       if (appItems.length > 0) {
         itemGroups.push(appItems);
       }
     }
     itemGroups.push([{label: 'Log out', href: AUTH_LOGOUT}]);
 
+    const name = app ? app.name : 'Workspace';
+    const href = app ? app.href : HOME;
+
     return <header className={classNames('app-AppBar', className)}>
       <div className='app-AppBar-brand'>
-        <a href={path} className='app-AppBar-appLogo'>
+        <a href={href} className='app-AppBar-appLogo'>
+          {/* TODO: choose symbol by app */}
           <AppSymbol className='app-AppBar-appSymbol'/>
-          Quick XBRL Validator
+          {name}
         </a>
         <CoreFilingLogo className='app-AppBar-corefilingLogo'/>
       </div>
       <nav className='app-AppBar-nav'>
         <ul className='app-AppBar-breadcrumbNav'>
-          <li><a href={path} className='app-AppBar-breadcrumbLink'>Home</a></li>
+          <li><a href={href} className='app-AppBar-breadcrumbLink'>Home</a></li>
         </ul>
         {user && <span className='app-AppBar-userName'>{user.email}</span>}
         <NavMenu itemGroups={itemGroups}/>

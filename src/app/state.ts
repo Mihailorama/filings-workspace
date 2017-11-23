@@ -43,8 +43,8 @@ export interface TablePage {
 
 export interface WorkspaceAppSpec {
   name: string;
-  urlTemplate: string;
-  useFilingList?: boolean;
+  href: string;
+  filingHref?: string;
   external?: boolean;
 }
 

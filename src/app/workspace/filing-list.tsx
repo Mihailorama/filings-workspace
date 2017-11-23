@@ -32,8 +32,13 @@ export default function FilingList({app, filings, showUpload}: FilingListProps):
   return <div>
     <h2>{app.name}</h2>
     <div><Button onClick={showUpload}>Upload</Button></div>
-    {filings ? filings.map(filing =>
-        <div key={filing.id}><Link to={app.urlTemplate.replace('{id}', filing.id)}>{filing.name}</Link></div>,
+    {filings ?
+      filings.map(filing =>
+        <div key={filing.id}>
+          <Link to={app.filingHref!.replace('{id}', filing.id)}>
+            {filing.name}
+          </Link>
+        </div>,
       ) :
       <div>Loading ...</div>
     }

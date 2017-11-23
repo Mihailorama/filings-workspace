@@ -17,7 +17,6 @@
 import { Action } from 'redux';
 
 import {
-  FetchFilingsAction,
   ReceivedFilingsAction,
   FailedFilingsAction,
   FILINGS_FAILED,
@@ -36,8 +35,7 @@ export function reducer(state: State | undefined, action: Action): State | undef
   }
   switch (action.type) {
     case FILINGS_FETCH: {
-      const { app } = action as FetchFilingsAction;
-      return { ...state, recentFilings: {loading: true}, app };
+      return { ...state, recentFilings: {loading: true} };
     }
     case FILINGS_RECEIVED: {
       const { filings } = action as ReceivedFilingsAction;
