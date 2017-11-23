@@ -18,45 +18,24 @@ import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-import { UploadStatus, WorkspaceAppSpec, WorkspaceFiling, Item } from '../state';
-import Upload from './upload';
-import { Profile, ValidationParams } from '../models';
+import { WorkspaceAppSpec, WorkspaceFiling } from '../state';
 
 import './app.less';
 
-interface FilingListProps extends React.Props<FilingList> {
+interface FilingListProps {
   app: WorkspaceAppSpec;
   filings?: WorkspaceFiling[];
-  profiles: Item<Profile[]>;
-  upload: UploadStatus;
-  onUpload: (params: ValidationParams) => void;
+  showUpload: () => void;
 }
 
-interface FilingListState {
-  showUpload: boolean;
-}
-
-export default class FilingList extends React.Component<FilingListProps, FilingListState> {
-  constructor(props: FilingListProps) {
-    super(props);
-    this.state = {showUpload: false};
-  }
-
-  render(): JSX.Element {
-    const {app, filings, profiles, upload, onUpload} = this.props;
-    const {showUpload} = this.state;
-    return <div>
-      <h2>{app.name}</h2>
-      <div><Button onClick={() => this.setState({showUpload: true})}>Upload</Button></div>
-      {filings ? filings.map(filing =>
-          <div key={filing.id}><Link to={app.urlTemplate.replace('{id}', filing.id)}>{filing.name}</Link></div>,
-        ) :
-        <div>Loading ...</div>
-      }
-      {showUpload && <Upload onSubmit={onUpload} profiles={profiles} upload={upload} />}
-      {upload.uploading && <div className='app-App-loadingOverlay'>
-        <div className='app-App-loading'>Processing&thinsp;…</div>
-      </div>}
-    </div>;
-  }
+export default function FilingList({app, filings, showUpload}: FilingListProps): JSX.Element {
+  return <div>
+    <h2>{app.name}</h2>
+    <div><Button onClick={showUpload}>Upload</Button></div>
+    {filings ? filings.map(filing =>
+        <div key={filing.id}><Link to={app.urlTemplate.replace('{id}', filing.id)}>{filing.name}</Link></div>,
+      ) :
+      <div>Loading ...</div>
+    }
+  </div>;
 }

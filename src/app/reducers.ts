@@ -35,7 +35,6 @@ export function globalReducer(state: State | undefined, action: Action): State {
       user: {loading: false},
       profiles: {loading: false, value: []},
       recentFilings: {loading: false, value: []},
-      upload: {uploading: false},
       status: {},
       selectedTablePage: {},
       statistics: {},

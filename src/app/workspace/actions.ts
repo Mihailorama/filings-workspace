@@ -22,6 +22,8 @@ export const FILINGS_FETCH = 'WORKSPACE_FILINGS_FETCH';
 export const FILINGS_RECEIVED = 'WORKSPACE_FILINGS_RECEIVED';
 export const FILINGS_FAILED = 'WORKSPACE_FILINGS_FAILED';
 
+export const SHOW_UPLOAD = 'WORKSPACE_SHOW_UPLOAD';
+
 export const UPLOAD = 'WORKSPACE_UPLOAD';
 export const UPLOAD_FAILED = 'WORKSPACE_UPLOAD_FAILED';
 
@@ -60,6 +62,10 @@ export function receivedFilingsAction(filings: WorkspaceFiling[]): ReceivedFilin
 
 export function failedFilingsAction(error: string): FailedFilingsAction {
   return {type: FILINGS_FAILED, error};
+}
+
+export function showUpload(): Action {
+  return {type: SHOW_UPLOAD};
 }
 
 export function uploadAction(app: WorkspaceAppSpec, params: ValidationParams): UploadAction {

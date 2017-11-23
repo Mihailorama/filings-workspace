@@ -19,8 +19,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import FilingList from './filing-list';
-import { Profile } from '../models';
-import { WorkspaceAppSpec, WorkspaceFiling, UploadStatus, Item } from '../state';
+import { WorkspaceAppSpec, WorkspaceFiling } from '../state';
 
 const filings: WorkspaceFiling[] = [
   {id: '1', name: 'Filing 1'},
@@ -30,22 +29,19 @@ const filings: WorkspaceFiling[] = [
 
 const app: WorkspaceAppSpec = {name: 'Test App', urlTemplate: '/test-app/{id}/', useFilingList: true};
 
-const profiles: Item<Profile[]> = {loading: false, value: [{id: 'profile1', name: 'Profile 1'}]};
-const upload: UploadStatus = {uploading: false};
-
 storiesOf('FilingList', module)
   .add('Not loaded', () => {
     return (
-      <FilingList profiles={profiles} app={app} upload={upload} onUpload={action('Upload')} />
+      <FilingList app={app} showUpload={action('Upload')} />
     );
   })
   .add('No filings', () => {
     return (
-      <FilingList filings={[]} profiles={profiles} app={app} upload={upload} onUpload={action('Upload')} />
+      <FilingList filings={[]} app={app} showUpload={action('Upload')} />
     );
   })
   .add('With filings', () => {
     return (
-      <FilingList filings={filings} profiles={profiles} app={app} upload={upload} onUpload={action('Upload')} />
+      <FilingList filings={filings} app={app} showUpload={action('Upload')} />
     );
   });

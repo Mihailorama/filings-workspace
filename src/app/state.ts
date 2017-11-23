@@ -67,7 +67,7 @@ export interface State {
   app?: WorkspaceAppSpec;
 
   // UI state tracking an in-progress upload.
-  upload: UploadStatus;
+  upload?: UploadStatus;
   // The recent filings.
   recentFilings: Item<WorkspaceFiling[]>;
 

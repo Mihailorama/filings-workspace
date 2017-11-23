@@ -24,6 +24,7 @@ import {
   FILINGS_FETCH,
   FILINGS_RECEIVED,
   FailedUploadAction,
+  SHOW_UPLOAD,
   UPLOAD,
   UPLOAD_FAILED,
 } from './actions';
@@ -45,6 +46,9 @@ export function reducer(state: State | undefined, action: Action): State | undef
     case FILINGS_FAILED: {
       const { error } = action as FailedFilingsAction;
       return { ...state, recentFilings: {loading: false, error} };
+    }
+    case SHOW_UPLOAD: {
+      return { ...state, upload: {uploading: false} };
     }
     case UPLOAD: {
       return { ...state, upload: {uploading: true} };

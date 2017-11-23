@@ -17,22 +17,24 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchFilingsAction, uploadAction } from './actions';
+import { fetchFilingsAction, uploadAction, showUpload } from './actions';
 import { Item, State, WorkspaceAppSpec, WorkspaceFiling, UploadStatus } from '../state';
 import WorkspaceApps from './workspace-apps';
 import FilingList from './filing-list';
+import Upload from './upload';
 import { Profile } from '../models';
 
 interface OwnProps {
   app?: WorkspaceAppSpec;
   filings: Item<WorkspaceFiling[]>;
   profiles: Item<Profile[]>;
-  upload: UploadStatus;
+  upload?: UploadStatus;
 }
 
 export interface WorkspaceContainerProps extends OwnProps {
   fetchFilingsAction: typeof fetchFilingsAction;
   uploadAction: typeof uploadAction;
+  showUpload: typeof showUpload;
 }
 
 class WorkspaceContainer extends Component<WorkspaceContainerProps> {
@@ -47,15 +49,17 @@ class WorkspaceContainer extends Component<WorkspaceContainerProps> {
   }
 
   render(): JSX.Element {
-    const {app, filings, profiles, upload, uploadAction} = this.props;
+    const {app, filings, profiles, showUpload, upload, uploadAction} = this.props;
     if (app) {
-      return <FilingList
-        app={app}
-        filings={filings && filings.value}
-        profiles={profiles}
-        upload={upload}
-        onUpload={params => uploadAction(app, params)}
-      />;
+      if (upload) {
+        if (upload.uploading) {
+          return <div className='app-App-loadingOverlay'>
+            <div className='app-App-loading'>Processing&thinsp;…</div>
+          </div>;
+        }
+        return <Upload profiles={profiles} upload={upload} onSubmit={params => uploadAction(app, params)} />;
+      }
+      return <FilingList app={app} filings={filings && filings.value} showUpload={showUpload} />;
     }
     return <WorkspaceApps onAppClick={a => this.appClick(a)} />;
   }
@@ -70,5 +74,5 @@ export default connect(
     const upload = state.upload;
     return {app, filings, profiles, upload};
   },
-  {fetchFilingsAction, uploadAction},
+  {fetchFilingsAction, uploadAction, showUpload},
 )(WorkspaceContainer);
