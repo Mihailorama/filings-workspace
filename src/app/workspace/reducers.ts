@@ -26,6 +26,7 @@ import {
   SHOW_UPLOAD,
   UPLOAD,
   UPLOAD_FAILED,
+  ShowUploadAction,
 } from './actions';
 import { State } from '../state';
 
@@ -46,7 +47,9 @@ export function reducer(state: State | undefined, action: Action): State | undef
       return { ...state, recentFilings: {loading: false, error} };
     }
     case SHOW_UPLOAD: {
-      return { ...state, upload: {uploading: false} };
+      const { show } = action as ShowUploadAction;
+      const upload = show ? {uploading: false} : undefined;
+      return { ...state, upload };
     }
     case UPLOAD: {
       return { ...state, upload: {uploading: true} };

@@ -47,11 +47,19 @@ class WorkspaceContainer extends Component<WorkspaceContainerProps> {
     if (props.app) {
       this.props.fetchFilingsAction();
     }
+    else {
+      this.props.showUpload(false);
+    }
   }
 
   componentWillReceiveProps(nextProps: WorkspaceContainerProps): void {
-    if (nextProps.app && nextProps.app !== this.props.app) {
-      this.props.fetchFilingsAction();
+    if (nextProps.app !== this.props.app) {
+      if (nextProps.app) {
+        this.props.fetchFilingsAction();
+      }
+      else {
+        this.props.showUpload(false);
+      }
     }
   }
 
@@ -66,7 +74,7 @@ class WorkspaceContainer extends Component<WorkspaceContainerProps> {
         }
         return <Upload profiles={profiles} upload={upload} onSubmit={params => uploadAction(app, params)} />;
       }
-      return <FilingList app={app} filings={filings && filings.value} showUpload={showUpload} />;
+      return <FilingList app={app} filings={filings && filings.value} showUpload={() => showUpload(true)} />;
     }
     return <WorkspaceApps />;
   }

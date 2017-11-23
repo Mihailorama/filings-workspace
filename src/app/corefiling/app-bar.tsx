@@ -30,6 +30,7 @@ import NavMenu, { MenuItem } from './nav-menu';
 
 import './app-bar.less';
 import { WorkspaceAppSpec } from '../state';
+import { Link } from 'react-router-dom';
 
 export const HOME = `/${location.pathname.split('/')[1]}/`;
 
@@ -48,28 +49,28 @@ export default class AppBar extends Component<AppBarProps> {
     // Assemble the menu.
     const itemGroups: MenuItem[][] = [];
     if (apps) {
-      const appItems = apps.filter(x => x !== app).map(x => ({label: x.name, href: x.href}));
+      const appItems = apps.filter(x => x !== app).map(x => ({label: x.name, href: x.href, external: !!x.external}));
       if (appItems.length > 0) {
         itemGroups.push(appItems);
       }
     }
-    itemGroups.push([{label: 'Log out', href: AUTH_LOGOUT}]);
+    itemGroups.push([{label: 'Log out', href: AUTH_LOGOUT, external: true}]);
 
     const name = app ? app.name : 'Workspace';
     const href = app ? app.href : HOME;
 
     return <header className={classNames('app-AppBar', className)}>
       <div className='app-AppBar-brand'>
-        <a href={href} className='app-AppBar-appLogo'>
+        <Link to={href} className='app-AppBar-appLogo'>
           {/* TODO: choose symbol by app */}
           <AppSymbol className='app-AppBar-appSymbol'/>
           {name}
-        </a>
+        </Link>
         <CoreFilingLogo className='app-AppBar-corefilingLogo'/>
       </div>
       <nav className='app-AppBar-nav'>
         <ul className='app-AppBar-breadcrumbNav'>
-          <li><a href={href} className='app-AppBar-breadcrumbLink'>Home</a></li>
+          <li><Link to={HOME} className='app-AppBar-breadcrumbLink'>Home</Link></li>
         </ul>
         {user && <span className='app-AppBar-userName'>{user.email}</span>}
         <NavMenu itemGroups={itemGroups}/>

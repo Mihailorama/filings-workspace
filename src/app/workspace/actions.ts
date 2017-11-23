@@ -35,6 +35,10 @@ export interface FailedFilingsAction extends Action {
   error: string;
 }
 
+export interface ShowUploadAction extends Action {
+  show: boolean;
+}
+
 export interface UploadAction extends Action {
   app: WorkspaceAppSpec;
   params: ValidationParams;
@@ -60,8 +64,8 @@ export function failedFilingsAction(error: string): FailedFilingsAction {
   return {type: FILINGS_FAILED, error};
 }
 
-export function showUpload(): Action {
-  return {type: SHOW_UPLOAD};
+export function showUpload(show: boolean): ShowUploadAction {
+  return {type: SHOW_UPLOAD, show};
 }
 
 export function uploadAction(app: WorkspaceAppSpec, params: ValidationParams): UploadAction {
