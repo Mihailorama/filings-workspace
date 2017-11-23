@@ -15,9 +15,17 @@
  */
 
 import { RouteComponentProps } from 'react-router-dom';
+import { WorkspaceAppSpec } from '../state';
+import { WORKSPACE_APPS } from '../workspace/workspace-apps';
 
-export type RouterProps = RouteComponentProps<{filingVersionId: string}>;
+export type AppRouterProps = RouteComponentProps<{app?: string}>;
+export type FilingRouterProps = RouteComponentProps<{filingVersionId: string}>;
 
-export function filingVersionId(props: RouterProps): string {
+export function app(props: AppRouterProps): WorkspaceAppSpec | undefined {
+  const appId = props.match.params.app;
+  return appId ? WORKSPACE_APPS[appId] : undefined;
+}
+
+export function filingVersionId(props: FilingRouterProps): string {
   return props.match.params.filingVersionId;
 }

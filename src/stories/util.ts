@@ -18,7 +18,7 @@
   * Create fake instances of models, for use in stories.
   */
 
-import { App, Profile } from '../app/models';
+import { Profile } from '../app/models';
 
 function id(label: string): string {
   let hash = 0;
@@ -39,14 +39,3 @@ export function profile(label: string): Profile {
 export function profiles(...labels: string[]): Profile[] {
   return labels.map(x => profile(x));
 }
-
-export const app = (name: string): App => {
-  const id = name.toLowerCase().replace(/[^a-z]+/g, '-');
-  return {
-    id,
-    name,
-    href: `/${id}/`,
-  };
-};
-
-export const apps = (...names: string[]): App[] => names.map(name => app(name));

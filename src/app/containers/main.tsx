@@ -16,22 +16,31 @@
 
 import * as React from 'react';
 import AppBarContainer from '../corefiling/app-bar-container';
-import { Switch, Route } from 'react-router';
+import { Switch, Route, RouteComponentProps } from 'react-router';
 import StatisticsContainer from '../statistics/container';
 import ValidatorContainer from '../validator/container';
 import ViewerContainer from '../viewer/container';
 import WorkspaceContainer from '../workspace/container';
+import { WORKSPACE_APPS } from '../workspace/workspace-apps';
+import { WorkspaceAppSpec } from '../state';
 
 const appBaseUri = '/quick-xbrl-validator/';
+
+function workspaceContainerForApp(app: WorkspaceAppSpec): (props: RouteComponentProps<any>) => JSX.Element {
+  return props => <WorkspaceContainer {... props} app={app} />;
+}
 
 export default function Main(): JSX.Element {
   return (
     <div>
-      <AppBarContainer />
+      <Route path={`${appBaseUri}:app?`} component={AppBarContainer} />
       <Switch>
-        <Route path={`${appBaseUri}filing-version/:filingVersionId/validator`} component={ValidatorContainer} />
-        <Route path={`${appBaseUri}filing-version/:filingVersionId/viewer`} component={ViewerContainer} />
-        <Route path={`${appBaseUri}filing-version/:filingVersionId/statistics`} component={StatisticsContainer} />
+        <Route path={`${appBaseUri}validator/filing-version/:filingVersionId`} component={ValidatorContainer} />
+        <Route path={`${appBaseUri}viewer/filing-version/:filingVersionId`} component={ViewerContainer} />
+        <Route path={`${appBaseUri}statistics/filing-version/:filingVersionId`} component={StatisticsContainer} />
+        <Route path={`${appBaseUri}validator`} render={workspaceContainerForApp(WORKSPACE_APPS.validator)} />
+        <Route path={`${appBaseUri}viewer`} render={workspaceContainerForApp(WORKSPACE_APPS.viewer)} />
+        <Route path={`${appBaseUri}statistics`} render={workspaceContainerForApp(WORKSPACE_APPS.statistics)} />
         <Route path={`${appBaseUri}`} component={WorkspaceContainer} />
       </Switch>
     </div>

@@ -20,10 +20,10 @@ import { connect } from 'react-redux';
 import { fetchAction } from './actions';
 import { State, Item } from '../state';
 import { Statistic } from '@cfl/filing-statistics-service';
-import { filingVersionId, RouterProps } from '../containers/filing-version-route';
+import { filingVersionId, FilingRouterProps } from '../containers/filing-version-route';
 import Statistics from './statistics';
 
-export interface StatisticsContainerProps extends RouterProps {
+export interface StatisticsContainerProps extends FilingRouterProps {
   statistics: Item<Statistic[]>;
   fetchAction: typeof fetchAction;
 }
@@ -49,7 +49,7 @@ class StatisticsContainer extends Component<StatisticsContainerProps> {
 }
 
 export default connect(
-  (state: State, ownProps: RouterProps) => {
+  (state: State, ownProps: FilingRouterProps) => {
     const statistics = state.statistics[filingVersionId(ownProps)] || {loading: true};
     return {statistics};
   },

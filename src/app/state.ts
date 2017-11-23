@@ -63,9 +63,6 @@ export interface State {
   profiles: Item<Profile[]>;
   user: Item<User>;
 
-  // App that was clicked on
-  app?: WorkspaceAppSpec;
-
   // UI state tracking an in-progress upload.
   upload?: UploadStatus;
   // The recent filings.

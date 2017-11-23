@@ -18,20 +18,23 @@ import * as React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchFilingsAction, uploadAction, showUpload } from './actions';
-import { Item, State, WorkspaceAppSpec, WorkspaceFiling, UploadStatus } from '../state';
+import { Item, State, WorkspaceFiling, UploadStatus, WorkspaceAppSpec } from '../state';
 import WorkspaceApps from './workspace-apps';
 import FilingList from './filing-list';
 import Upload from './upload';
 import { Profile } from '../models';
 
-interface OwnProps {
-  app?: WorkspaceAppSpec;
+interface PropsFromState {
   filings: Item<WorkspaceFiling[]>;
   profiles: Item<Profile[]>;
   upload?: UploadStatus;
 }
 
-export interface WorkspaceContainerProps extends OwnProps {
+interface OwnProps {
+  app: WorkspaceAppSpec;
+}
+
+export interface WorkspaceContainerProps extends PropsFromState, OwnProps {
   fetchFilingsAction: typeof fetchFilingsAction;
   uploadAction: typeof uploadAction;
   showUpload: typeof showUpload;
@@ -39,8 +42,15 @@ export interface WorkspaceContainerProps extends OwnProps {
 
 class WorkspaceContainer extends Component<WorkspaceContainerProps> {
 
+  constructor(props: WorkspaceContainerProps) {
+    super(props);
+    if (props.app) {
+      this.props.fetchFilingsAction();
+    }
+  }
+
   componentWillReceiveProps(nextProps: WorkspaceContainerProps): void {
-    if (nextProps.app) {
+    if (nextProps.app && nextProps.app !== this.props.app) {
       this.props.fetchFilingsAction();
     }
   }
@@ -64,12 +74,11 @@ class WorkspaceContainer extends Component<WorkspaceContainerProps> {
 }
 
 export default connect(
-  (state: State): OwnProps => {
-    const app = state.app;
+  (state: State): PropsFromState => {
     const filings = state.recentFilings || {loading: true};
     const profiles = state.profiles;
     const upload = state.upload;
-    return {app, filings, profiles, upload};
+    return {filings, profiles, upload};
   },
   {fetchFilingsAction, uploadAction, showUpload},
 )(WorkspaceContainer);

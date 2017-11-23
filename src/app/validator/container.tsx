@@ -21,10 +21,10 @@ import { connect } from 'react-redux';
 import { ValidationStatus } from '../models';
 import { fetchAction } from './actions';
 import { State, Item } from '../state';
-import { filingVersionId, RouterProps } from '../containers/filing-version-route';
+import { filingVersionId, FilingRouterProps } from '../containers/filing-version-route';
 import ValidationResult from './validation-result';
 
-export interface ValidatorContainerProps extends RouterProps {
+export interface ValidatorContainerProps extends FilingRouterProps {
   status: Item<ValidationStatus>;
   fetchAction: typeof fetchAction;
 }
@@ -50,7 +50,7 @@ class ValidatorContainer extends Component<ValidatorContainerProps> {
 }
 
 export default connect(
-  (state: State, ownProps: RouterProps) => {
+  (state: State, ownProps: FilingRouterProps) => {
     const status = state.status[filingVersionId(ownProps)] || {loading: true};
     return {status};
   },

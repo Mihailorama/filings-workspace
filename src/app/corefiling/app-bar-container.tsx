@@ -20,8 +20,9 @@ import { connect } from 'react-redux';
 
 import AppBar from './app-bar';
 import { User } from '../models';
-import { State, Item, WorkspaceAppSpec } from '../state';
+import { State, Item } from '../state';
 import { WORKSPACE_APPS } from '../workspace/workspace-apps';
+import { app, AppRouterProps } from '../containers/filing-version-route';
 
 interface OwnProps extends Props<AppBarContainer> {
   className?: string;
@@ -29,18 +30,17 @@ interface OwnProps extends Props<AppBarContainer> {
 
 interface PropsFromState {
   user: Item<User>;
-  app?: WorkspaceAppSpec;
 }
 
-type AppBarContainerProps = OwnProps & PropsFromState;
+type AppBarContainerProps = OwnProps & AppRouterProps & PropsFromState;
 
 class AppBarContainer extends Component<AppBarContainerProps> {
   render(): JSX.Element {
-    const { className, user, app } = this.props;
-    return <AppBar className={className} apps={WORKSPACE_APPS} app={app} user={user.value}/>;
+    const { className, user } = this.props;
+    return <AppBar className={className} apps={WORKSPACE_APPS} app={app(this.props)} user={user.value}/>;
   }
 }
 
 export default connect(
-  ({ user, app }: State): PropsFromState => ({user, app}),
+  ({ user }: State): PropsFromState => ({user}),
 )(AppBarContainer);
