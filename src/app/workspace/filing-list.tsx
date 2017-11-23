@@ -19,6 +19,7 @@ import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 import { WorkspaceAppSpec, WorkspaceFiling } from '../state';
+import { linkForFiling, LinkDef } from './workspace-apps';
 
 import './app.less';
 
@@ -28,6 +29,12 @@ interface FilingListProps {
   showUpload: () => void;
 }
 
+function createLink({href, external}: LinkDef, name: string): JSX.Element {
+  return external ?
+    <a href={href}>{name}</a> :
+    <Link to={href}>{name}</Link>;
+}
+
 export default function FilingList({app, filings, showUpload}: FilingListProps): JSX.Element {
   return <div>
     <h2>{app.name}</h2>
@@ -35,9 +42,7 @@ export default function FilingList({app, filings, showUpload}: FilingListProps):
     {filings ?
       filings.map(filing =>
         <div key={filing.id}>
-          <Link to={app.filingHref!.replace('{id}', filing.id)}>
-            {filing.name}
-          </Link>
+          {createLink(linkForFiling(app, filing.id), filing.name)}
         </div>,
       ) :
       <div>Loading ...</div>

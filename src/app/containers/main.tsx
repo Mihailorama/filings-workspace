@@ -33,14 +33,17 @@ function workspaceContainerForApp(app: WorkspaceAppSpec): (props: RouteComponent
 export default function Main(): JSX.Element {
   return (
     <div>
-      <Route path={`${appBaseUri}:app?`} component={AppBarContainer} />
+      <Route path={`${appBaseUri}:app/filing-version/:filingVersionId`} component={AppBarContainer} />
+      <Route path={`${appBaseUri}:app?`} exact={true} component={AppBarContainer} />
       <Switch>
         <Route path={`${appBaseUri}validator/filing-version/:filingVersionId`} component={ValidatorContainer} />
         <Route path={`${appBaseUri}viewer/filing-version/:filingVersionId`} component={ViewerContainer} />
         <Route path={`${appBaseUri}statistics/filing-version/:filingVersionId`} component={StatisticsContainer} />
         <Route path={`${appBaseUri}validator`} render={workspaceContainerForApp(WORKSPACE_APPS.validator)} />
+        <Route path={`${appBaseUri}benfords-analyser`} render={workspaceContainerForApp(WORKSPACE_APPS.benford)} />
         <Route path={`${appBaseUri}viewer`} render={workspaceContainerForApp(WORKSPACE_APPS.viewer)} />
         <Route path={`${appBaseUri}statistics`} render={workspaceContainerForApp(WORKSPACE_APPS.statistics)} />
+        <Route path={`${appBaseUri}oimConverter`} render={workspaceContainerForApp(WORKSPACE_APPS.oimConverter)} />
         <Route path={`${appBaseUri}`} component={WorkspaceContainer} />
       </Switch>
     </div>

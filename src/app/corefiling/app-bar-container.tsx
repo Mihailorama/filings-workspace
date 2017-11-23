@@ -22,7 +22,8 @@ import AppBar from './app-bar';
 import { User } from '../models';
 import { State, Item } from '../state';
 import { WORKSPACE_APPS } from '../workspace/workspace-apps';
-import { app, AppRouterProps } from '../containers/filing-version-route';
+import { app } from '../containers/filing-version-route';
+import { RouteComponentProps } from 'react-router';
 
 interface OwnProps extends Props<AppBarContainer> {
   className?: string;
@@ -32,12 +33,15 @@ interface PropsFromState {
   user: Item<User>;
 }
 
-type AppBarContainerProps = OwnProps & AppRouterProps & PropsFromState;
+type AppBarContainerProps = OwnProps & RouteComponentProps<{app?: string, filingVersionId?: string}> & PropsFromState;
 
 class AppBarContainer extends Component<AppBarContainerProps> {
   render(): JSX.Element {
     const { className, user } = this.props;
-    return <AppBar className={className} apps={WORKSPACE_APPS} app={app(this.props)} user={user.value}/>;
+    return <AppBar
+      className={className} apps={WORKSPACE_APPS} user={user.value}
+      app={app(this.props)} filingVersionId={this.props.match.params.filingVersionId}
+    />;
   }
 }
 

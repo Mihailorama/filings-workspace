@@ -31,25 +31,29 @@ import NavMenu, { MenuItem } from './nav-menu';
 import './app-bar.less';
 import { WorkspaceAppSpec } from '../state';
 import { Link } from 'react-router-dom';
-
-export const HOME = `/${location.pathname.split('/')[1]}/`;
+import { linkForFiling, HOME } from '../workspace/workspace-apps';
 
 export interface AppBarProps extends Props<AppBar> {
   apps: {[key: string]: WorkspaceAppSpec};
   app?: WorkspaceAppSpec;
+  filingVersionId?: string;
   user?: User;
   className?: string;
 }
 
 export default class AppBar extends Component<AppBarProps> {
   render(): JSX.Element {
-    const { app, user, className } = this.props;
+    const { app, filingVersionId, user, className } = this.props;
     const apps = Object.keys(this.props.apps).map(key => this.props.apps[key]);
 
     // Assemble the menu.
     const itemGroups: MenuItem[][] = [];
     if (apps) {
-      const appItems = apps.filter(x => x !== app).map(x => ({label: x.name, href: x.href, external: !!x.external}));
+      const appItems = apps.filter(x => x !== app)
+        .map(x => {
+          const link = linkForFiling(x, filingVersionId);
+          return {label: x.name, href: link.href, external: link.external};
+        });
       if (appItems.length > 0) {
         itemGroups.push(appItems);
       }

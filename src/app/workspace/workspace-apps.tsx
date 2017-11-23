@@ -16,8 +16,9 @@
 
 import * as React from 'react';
 import { WorkspaceAppSpec } from '../state';
-import { HOME } from '../corefiling/app-bar';
 import { Link } from 'react-router-dom';
+
+export const HOME = `/${location.pathname.split('/')[1]}/`;
 
 export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
   validator: {
@@ -37,7 +38,7 @@ export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
   },
   benford: {
     name: 'Benford\'s Analyser', external: true,
-    href: `/benfords-analyser`,
+    href: `${HOME}benfords-analyser`,
     filingHref: '/benfords-analyser/filing-version/{id}',
   },
   changeReport: {
@@ -54,15 +55,36 @@ export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
   },
   oimConverter: {
     name: 'OIM/JSON Converter', external: true,
-    href: '/api/document-service/filing-version/{id}/some-oim-please',
+    href: `${HOME}oimConverter`,
+    filingHref: '/api/document-service/filing-version/{id}/some-oim-please',
   },
 };
 
+export interface LinkDef {
+  href: string;
+  external: boolean;
+}
+
+export function linkForFiling(app: WorkspaceAppSpec, filingVersionId?: string): LinkDef {
+  if (filingVersionId && app.filingHref) {
+    return {
+      href: app.filingHref.replace('{id}', filingVersionId),
+      external: !!app.external,
+    };
+  }
+  return {
+    href: app.href,
+    // If there's a filing list but we haven't chosen a filing, it's never external
+    external: !!app.external && !app.filingHref,
+  };
+}
+
 function WorkspaceAppTile({app}: {app: WorkspaceAppSpec}): JSX.Element {
+  const { href, external } = linkForFiling(app);
   return <div>
-    {app.external ?
-      <a href={app.href}>{app.name}</a> :
-      <Link to={app.href}>{app.name}</Link>
+    { external ?
+      <a href={href}>{app.name}</a> :
+      <Link to={href}>{app.name}</Link>
     }
   </div>;
 }
