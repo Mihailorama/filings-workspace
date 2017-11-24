@@ -14,7 +14,13 @@
  *  limitations under the License.
  */
 
-// Actual stories are alongside their respective components.
-// This file just ensures the global styles are imported.
+@import (reference) '../styles/defs';
 
-import '../app/styles/style.less';
+.app-Main {
+  display: flex;
+  flex-direction: column;
+
+  .app-AppBar {
+    flex-shrink: 0;
+  }
+}

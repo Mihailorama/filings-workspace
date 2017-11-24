@@ -21,7 +21,7 @@ import { Item, UploadStatus } from '../state';
 import { ValidationParams, Profile } from '../models';
 import ValidationForm from './validation-form';
 
-import './app.less';
+import './upload.less';
 
 export interface UploadProps {
   profiles: Item<Profile[]>;
@@ -33,8 +33,8 @@ export default function Upload(props: UploadProps): JSX.Element {
   const { profiles, upload, onSubmit } = props;
   const loading = profiles.loading;
   return (
-    <div className={classNames('app-App', {'app-App-loading': loading})}>
-      <div className='app-App-formHolder'>
+    <div className={classNames('app-Upload', {'app-Upload-loading': loading})}>
+      <div className='app-Upload-formHolder'>
         <ValidationForm profiles={profiles.value} error={upload.error} onSubmit={onSubmit}/>
       </div>
     </div>

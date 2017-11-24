@@ -21,8 +21,6 @@ import { Link } from 'react-router-dom';
 import { WorkspaceAppSpec, WorkspaceFiling } from '../state';
 import { linkForFiling, LinkDef } from './workspace-apps';
 
-import './app.less';
-
 interface FilingListProps {
   app: WorkspaceAppSpec;
   filings?: WorkspaceFiling[];

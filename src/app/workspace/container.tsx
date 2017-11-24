@@ -24,6 +24,8 @@ import FilingList from './filing-list';
 import Upload from './upload';
 import { Profile } from '../models';
 
+import './container.less';
+
 interface PropsFromState {
   filings: Item<WorkspaceFiling[]>;
   profiles: Item<Profile[]>;
@@ -31,7 +33,7 @@ interface PropsFromState {
 }
 
 interface OwnProps {
-  app: WorkspaceAppSpec;
+  app?: WorkspaceAppSpec;
 }
 
 export interface WorkspaceContainerProps extends PropsFromState, OwnProps {
@@ -68,8 +70,8 @@ class WorkspaceContainer extends Component<WorkspaceContainerProps> {
     if (app) {
       if (upload) {
         if (upload.uploading) {
-          return <div className='app-App-loadingOverlay'>
-            <div className='app-App-loading'>Processing&thinsp;…</div>
+          return <div className='app-WorkspaceContainer-loadingOverlay'>
+            <div className='app-WorkspaceContainer-loading'>Processing&thinsp;…</div>
           </div>;
         }
         return <Upload profiles={profiles} upload={upload} onSubmit={params => uploadAction(app, params)} />;

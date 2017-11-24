@@ -21,7 +21,17 @@ import { storiesOf } from '@storybook/react';
 import { profiles } from '../../stories/util';
 import Upload from './upload';
 
-storiesOf('App', module)
+storiesOf('Upload', module)
+  .add('Loading profiles', () => {
+    return (
+      <Upload
+        profiles={{
+          loading: true,
+        }}
+        upload={{uploading: false}}
+      />
+    );
+  })
   .add('Form', () => {
     return (
       <Upload
@@ -33,14 +43,14 @@ storiesOf('App', module)
       />
     );
   })
-  .add('Checking', () => {
+  .add('Error', () => {
     return (
       <Upload
-      profiles={{
-        loading: false,
-        value: profiles('Profile'),
-      }}
-      upload={{uploading: true}}
-    />
-  );
+        profiles={{
+          loading: true,
+          value: profiles('Profile'),
+        }}
+        upload={{uploading: false, error: 'Oh no'}}
+      />
+    );
   });

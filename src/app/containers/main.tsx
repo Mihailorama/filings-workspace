@@ -24,7 +24,9 @@ import WorkspaceContainer from '../workspace/container';
 import { WORKSPACE_APPS } from '../workspace/workspace-apps';
 import { WorkspaceAppSpec } from '../state';
 
-const appBaseUri = '/quick-xbrl-validator/';
+import './main.less';
+
+export const appBaseUri = '/quick-xbrl-validator/';
 
 function workspaceContainerForApp(app: WorkspaceAppSpec): (props: RouteComponentProps<any>) => JSX.Element {
   return props => <WorkspaceContainer {... props} app={app} />;
@@ -32,7 +34,7 @@ function workspaceContainerForApp(app: WorkspaceAppSpec): (props: RouteComponent
 
 export default function Main(): JSX.Element {
   return (
-    <div>
+    <div className='app-Main'>
       <Route path={`${appBaseUri}:app/filing-version/:filingVersionId`} component={AppBarContainer} />
       <Route path={`${appBaseUri}:app?`} exact={true} component={AppBarContainer} />
       <Switch>

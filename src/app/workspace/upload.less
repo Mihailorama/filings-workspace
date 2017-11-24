@@ -14,7 +14,23 @@
  *  limitations under the License.
  */
 
-// Actual stories are alongside their respective components.
-// This file just ensures the global styles are imported.
+ @import (reference) '../styles/defs';
 
-import '../app/styles/style.less';
+ .app-Upload {
+  flex-grow: 1;
+  flex-shrink: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin: @gap3 0px;
+  height: calc(~ "100vh" - (@bar-ht + @gap3 + @gap3));
+
+  &:before,
+  &:after {
+      content: ' ';
+      flex-shrink: 1;
+      flex-grow: 0;
+      height: @big-gap;
+  }
+}

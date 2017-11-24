@@ -20,6 +20,7 @@ import { action } from '@storybook/addon-actions';
 
 import FilingList from './filing-list';
 import { WorkspaceAppSpec, WorkspaceFiling } from '../state';
+import { MemoryRouter } from 'react-router';
 
 const filings: WorkspaceFiling[] = [
   {id: '1', name: 'Filing 1'},
@@ -30,6 +31,9 @@ const filings: WorkspaceFiling[] = [
 const app: WorkspaceAppSpec = {name: 'Test App', href: '/test-app', filingHref: '/test-app/{id}'};
 
 storiesOf('FilingList', module)
+  .addDecorator(story => <MemoryRouter initialEntries={['/']}>
+    {story()}
+  </MemoryRouter>)
   .add('Not loaded', () => {
     return (
       <FilingList app={app} showUpload={action('Upload')} />

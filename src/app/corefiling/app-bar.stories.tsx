@@ -20,11 +20,16 @@ import { storiesOf } from '@storybook/react';
 
 import AppBar from './app-bar';
 import { WORKSPACE_APPS } from '../workspace/workspace-apps';
+import { MemoryRouter } from 'react-router';
 
 const sub = 'uuid-of-user';
 
 storiesOf('AppBar', module)
-  .addDecorator(story => <div style={{height: '400px', backgroundColor: '#DDD'}}>{story()}</div>)
+  .addDecorator(story => <MemoryRouter initialEntries={['/']}>
+    <div style={{height: '400px', backgroundColor: '#DDD'}}>
+      {story()}
+    </div>
+  </MemoryRouter>)
   .add('User with email only', () => <AppBar app={WORKSPACE_APPS.validator}
     apps={{validator: WORKSPACE_APPS.validator}}
     user={{sub, email: 'b@example.com'}}/>)
