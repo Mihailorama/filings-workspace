@@ -19,7 +19,7 @@
  */
 import { Action } from 'redux';
 
-import { App, Profile, User } from './models';
+import { Profile } from './models';
 
 // Actions for acquiring the list of profiles needed by the form.
 
@@ -27,13 +27,11 @@ export const STARTUP_INFO_RECEIVED = 'STARTUP_INFO_RECEIVED';
 export const STARTUP_INFO_FAILED = 'STARTUP_INFO_FAILED';
 
 export interface StartupInfoReceivedAction extends Action {
-  user: User;
-  apps: App[];
   profiles: Profile[];
 }
 
-export function startupInfoReceivedAction(user: User, apps: App[], profiles: Profile[]): StartupInfoReceivedAction {
-  return {type: STARTUP_INFO_RECEIVED, user, apps, profiles};
+export function startupInfoReceivedAction(profiles: Profile[]): StartupInfoReceivedAction {
+  return {type: STARTUP_INFO_RECEIVED, profiles};
 }
 
 export interface FailedAction extends Action {

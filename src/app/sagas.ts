@@ -15,18 +15,16 @@
  */
 
 import { Effect } from 'redux-saga';
-import { all, call, put } from 'redux-saga/effects';
+import { call, put } from 'redux-saga/effects';
 
 import {
   startupInfoFailedAction,
   startupInfoReceivedAction,
 } from './actions';
 import { apiFetchJson } from './api-fetch';
-import { App, Category, User } from './models';
+import { Category } from './models';
 import {
-  APPS,
   documentServiceCategories,
-  USER,
 } from './urls';
 
 /**
@@ -34,17 +32,13 @@ import {
  */
 export function* startupInfoSaga(): IterableIterator<Effect> {
   try {
-    const [user, category, apps]: [User, Category, App[]] = yield all([
-      call(apiFetchJson, USER),
-      call(apiFetchJson, documentServiceCategories('validation')),
-      call(apiFetchJson, APPS),
-    ]);
+    const category: Category = yield call(apiFetchJson, documentServiceCategories('validation'));
     const { profiles } = category;
     if (!profiles || profiles.length === 0) {
       yield put(startupInfoFailedAction('Startup failed (No profiles)'));
       return;
     }
-    yield put(startupInfoReceivedAction(user, apps, profiles));
+    yield put(startupInfoReceivedAction(profiles));
   } catch (res) {
     yield put(startupInfoFailedAction(`Startup failed (${res.message || res.statusText || res.status}).`));
   }

@@ -23,6 +23,7 @@ import {
   STARTUP_INFO_RECEIVED, StartupInfoReceivedAction, STARTUP_INFO_FAILED, FailedAction,
 } from './actions';
 import { State } from './state';
+import { reducer as appBarReducer } from './corefiling/reducers';
 import { reducer as statisticsReducer } from './statistics/reducers';
 import { reducer as validatorReducer } from './validator/reducers';
 import { reducer as viewerReducer } from './viewer/reducers';
@@ -45,6 +46,10 @@ export function globalReducer(state: State | undefined, action: Action): State {
   }
 
   let newState;
+  newState = appBarReducer(state, action);
+  if (newState) {
+    return newState;
+  }
   newState = statisticsReducer(state, action);
   if (newState) {
     return newState;
@@ -66,16 +71,12 @@ export function globalReducer(state: State | undefined, action: Action): State {
     case STARTUP_INFO_FAILED: {
       const { message } = action as FailedAction;
       return { ...state,
-        apps: {loading: false, error: message},
-        user: {loading: false, error: message},
         profiles: {loading: false, error: message},
       };
     }
     case STARTUP_INFO_RECEIVED: {
-      const { apps, user, profiles } = action as StartupInfoReceivedAction;
+      const { profiles } = action as StartupInfoReceivedAction;
       return { ...state,
-        apps: {loading: false, value: apps},
-        user: {loading: false, value: user},
         profiles: {loading: false, value: profiles},
       };
     }
