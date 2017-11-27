@@ -41,7 +41,11 @@ describe('fetchFilingsSaga', () => {
       {...exampleFiling, versions: [exampleFilingVersion, {...exampleFilingVersion, status: 'RUNNING'}]},
     ];
     expect(saga.next(filings).value).toEqual(put(
-      receivedFilingsAction([{id: 'f09be954-1895-4954-b333-6c9c89b833f1', name: 'report.xbrl'}])));
+      receivedFilingsAction([{
+        id: 'f09be954-1895-4954-b333-6c9c89b833f1',
+        name: 'report.xbrl',
+        date: new Date('2017-09-12T10:09:49.915Z'),
+      }])));
   });
 
   it('limits to the latest 10 filing versions', () => {
@@ -53,7 +57,11 @@ describe('fetchFilingsSaga', () => {
       {...exampleFiling, versions: [exampleFilingVersion]},
     );
     expect(saga.next(filings).value).toEqual(put(
-      receivedFilingsAction(new Array(10).fill({id: 'f09be954-1895-4954-b333-6c9c89b833f1', name: 'report.xbrl'}))));
+      receivedFilingsAction(new Array(10).fill({
+          id: 'f09be954-1895-4954-b333-6c9c89b833f1',
+          name: 'report.xbrl',
+          date: new Date('2017-09-12T10:09:49.915Z'),
+        }))));
   });
 
   it('dispatches FAILED if call to service fails', () => {

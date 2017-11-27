@@ -56,7 +56,7 @@ export function* fetchFilingsSaga(): IterableIterator<Effect> {
       .filter(filing => filing.versions && filing.versions.length)
       .map(filing => {
         const latestVersion = filing.versions![filing.versions!.length - 1];
-        return {id: latestVersion.id, name: filing.name};
+        return {id: latestVersion.id, name: filing.name, date: new Date(latestVersion.created)};
       }).slice(0, 10);
 
     yield put(receivedFilingsAction(workspaceFilings));

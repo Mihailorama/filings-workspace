@@ -52,6 +52,7 @@ export interface WorkspaceAppSpec {
 export interface WorkspaceFiling {
   id: string;
   name: string;
+  date: Date;
 }
 
 export function tablePageKey(page: TablePage): string {

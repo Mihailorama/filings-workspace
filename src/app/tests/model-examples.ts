@@ -157,10 +157,12 @@ export const exampleRecentFilings: WorkspaceFiling[] = [
   {
     id: 'f09be954-1895-4954-b333-6c9c89b833f1',
     name: 'Filing 1',
+    date: new Date('2017-01-01'),
   },
   {
     id: 'f09be954-1895-4954-b333-6c9c89b833f2',
     name: 'Filing 2',
+    date: new Date('2017-01-02'),
   },
 ];
 
