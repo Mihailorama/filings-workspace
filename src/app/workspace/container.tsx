@@ -44,13 +44,11 @@ export interface WorkspaceContainerProps extends PropsFromState, OwnProps {
 }
 
 class WorkspaceContainer extends Component<WorkspaceContainerProps> {
-
-  constructor(props: WorkspaceContainerProps) {
-    super(props);
-    if (props.upload) {
+  componentWillMount(): void {
+    if (this.props.upload) {
       this.props.fetchProfilesAction();
     }
-    else if (props.app) {
+    else if (this.props.app) {
       this.props.fetchFilingsAction();
     }
     else {
