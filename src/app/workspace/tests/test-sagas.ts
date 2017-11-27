@@ -2,21 +2,36 @@ import { put, call } from 'redux-saga/effects';
 import { delay } from 'redux-saga';
 
 import { failedFilingsAction, receivedFilingsAction, uploadAction, uploadFailedAction } from '../actions';
-import { fetchFilingsSaga, uploadSaga, navigate } from '../sagas';
+import { fetchFilingsSaga, uploadSaga, navigate, LATEST_FILINGS, POLL_MILLIS } from '../sagas';
 import { WORKSPACE_APPS } from '../workspace-apps';
 import { exampleFiling, exampleFilingVersion } from '../../tests/model-examples';
 import { ValidationParams } from '../../models';
 import { apiFetchJson } from '../../api-fetch';
 
-// TODO: doesn't actually call the service yet.
-xdescribe('fetchFilingsSaga', () => {
+describe('fetchFilingsSaga', () => {
   it('dispatches RECEIVED if all goes well', () => {
     const saga = fetchFilingsSaga();
 
-    // expect(saga.next()).toEqual(call(something));
+    expect(saga.next().value).toEqual(call(apiFetchJson, LATEST_FILINGS));
 
-    expect(saga.next([exampleFiling]).value).toEqual(put(
-      receivedFilingsAction([exampleFiling])));
+    const filings = [
+      exampleFiling,
+      {...exampleFiling, versions: [exampleFilingVersion, {...exampleFilingVersion, status: 'RUNNING'}]},
+    ];
+    expect(saga.next(filings).value).toEqual(put(
+      receivedFilingsAction([{id: 'f09be954-1895-4954-b333-6c9c89b833f1', name: 'report.xbrl'}])));
+  });
+
+  it('limits to the latest 10 filing versions', () => {
+    const saga = fetchFilingsSaga();
+
+    expect(saga.next().value).toEqual(call(apiFetchJson, LATEST_FILINGS));
+
+    const filings = new Array(20).fill(
+      {...exampleFiling, versions: [exampleFilingVersion]},
+    );
+    expect(saga.next(filings).value).toEqual(put(
+      receivedFilingsAction(new Array(10).fill({id: 'f09be954-1895-4954-b333-6c9c89b833f1', name: 'report.xbrl'}))));
   });
 
   it('dispatches FAILED if call to service fails', () => {
@@ -52,15 +67,17 @@ describe('uploadSaga', () => {
     const inProgress = {...exampleFilingVersion, status: 'RUNNING'};
 
     // Then poll for updates after 1 second.
-    expect(saga.next({versions: [inProgress]}).value).toEqual(call(delay, 1000));
+    expect(saga.next({versions: [inProgress]}).value).toEqual(call(delay, POLL_MILLIS));
     expect(saga.next().value).toEqual(call(apiFetchJson, '/api/document-service/v1/filing-versions/f09be954-1895-4954-b333-6c9c89b833f1'));
     const url = app.filingHref!.replace('{id}', 'f09be954-1895-4954-b333-6c9c89b833f1');
     expect(saga.next(exampleFilingVersion).value).toEqual(call(
       navigate, url));
   });
 
-  xit('dispatches FAILED if call to service fails', () => {
+  it('dispatches FAILED if call to service fails', () => {
     const saga = fetchFilingsSaga();
+
+    saga.next(); // First few steps as above.
 
     expect(saga.throw && saga.throw(new Error('LOLWAT')).value).toEqual(put(
       failedFilingsAction(jasmine.stringMatching(/LOLWAT/) as any)));

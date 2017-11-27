@@ -20,15 +20,27 @@ import { all, call, put, takeEvery } from 'redux-saga/effects';
 import { receivedFilingsAction, FILINGS_FETCH, failedFilingsAction, UPLOAD, UploadAction, uploadFailedAction } from './actions';
 import { apiFetchJson } from '../api-fetch';
 import { documentServiceFilingVersion, DOCUMENT_SERVICE_FILINGS } from '../urls';
-import { FilingVersion, Filing } from '../models';
+import { Filing, FilingVersion } from '../models';
+import { WorkspaceFiling } from '../state';
 
-const POLL_MILLIS = 1000;
+export const POLL_MILLIS = 1000;
+
+export const LATEST_FILINGS = `${DOCUMENT_SERVICE_FILINGS}?pageNumber=1&pageSize=20&sort=creationDate&sortOrder=desc`;
 
 export function* fetchFilingsSaga(): IterableIterator<Effect> {
   try {
-    // Let's hardcode a filing ID for the moment.
-    const filingVersionId = '606208e3-10f8-4ada-a753-56e5a27a2f88';
-    yield put(receivedFilingsAction([{id: filingVersionId, name: 'Filing 1'}]));
+    const filings: Filing[] = yield call(apiFetchJson, LATEST_FILINGS);
+    const workspaceFilings: WorkspaceFiling[] = filings
+    .map(filing => ({...filing,
+        versions: filing.versions && filing.versions.filter(version => version.status === 'DONE'),
+      }))
+      .filter(filing => filing.versions && filing.versions.length)
+      .map(filing => {
+        const latestVersion = filing.versions![filing.versions!.length - 1];
+        return {id: latestVersion.id, name: filing.name};
+      }).slice(0, 10);
+
+    yield put(receivedFilingsAction(workspaceFilings));
   } catch (res) {
     yield put(failedFilingsAction(res.message || res.statusText || `Status: ${res.status}`));
   }
