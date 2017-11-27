@@ -34,6 +34,10 @@ export function* fetchFilingsSaga(): IterableIterator<Effect> {
   }
 }
 
+export function navigate(href: string): void {
+  window.location.href = href;
+}
+
 export function* uploadSaga(action: UploadAction): IterableIterator<Effect> {
   const { app, params } = action;
 
@@ -70,7 +74,7 @@ export function* uploadSaga(action: UploadAction): IterableIterator<Effect> {
     }
 
     const url = app.filingHref!.replace('{id}', version.id);
-    yield call(() => window.location.href = url);
+    yield call(navigate, url);
   } catch (res) {
     yield put(uploadFailedAction(res.message || res.statusText || `Status: ${res.status}`));
   }
