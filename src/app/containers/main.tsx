@@ -35,8 +35,10 @@ function workspaceContainerForApp(app: WorkspaceAppSpec): (props: RouteComponent
 export default function Main(): JSX.Element {
   return (
     <div className='app-Main'>
-      <Route path={`${appBaseUri}:app/filing-version/:filingVersionId`} component={AppBarContainer} />
-      <Route path={`${appBaseUri}:app?`} exact={true} component={AppBarContainer} />
+      <Switch>
+        <Route path={`${appBaseUri}:app/filing-version/:filingVersionId`} component={AppBarContainer} />
+        <Route path={`${appBaseUri}:app?`} component={AppBarContainer} />
+      </Switch>
       <Switch>
         <Route path={`${appBaseUri}validator/filing-version/:filingVersionId`} component={ValidatorContainer} />
         <Route path={`${appBaseUri}viewer/filing-version/:filingVersionId`} component={ViewerContainer} />
