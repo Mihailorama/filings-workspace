@@ -43,7 +43,7 @@
     "npm": ">=4.0.0"
   },
   "dependencies": {
-    "@cfl/simple-platform-server": "^2.1.0"
+    "@cfl/simple-platform-server": "^2.1.0",
     "@types/react-helmet": "^5.0.3",
     "react-helmet": "^5.2.0"
   },
