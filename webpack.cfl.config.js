@@ -15,7 +15,6 @@ const port = parseInt(process.env.npm_package_config_devserver_port, 10);
 const https = process.env.npm_package_config_devserver_https === 'true';
 const baseUrl = `${https ? 'https' : 'http'}://${host}:${port}`;
 const apiProxyUrl = process.env.npm_package_config_api_proxy;
-const externalAppProxyUrl = process.env.npm_package_config_external_app_proxy;
 
 const proxyHeaders = {};
 oauthToken.load(token => proxyHeaders['Authorization'] = `Bearer ${token.access_token}`);
@@ -70,17 +69,6 @@ const mergedConfig = merge.smart(mainConfig, {
           proxyReq.setHeader('Authorization', isLoggedIn ? proxyHeaders['Authorization'] : 'Bearer invalid');
         },
       },
-      // '/!filings-app/**': {
-      //   target: externalAppProxyUrl,
-      //   changeOrigin: true,
-      //   headers: proxyHeaders,
-      //   onProxyRes: (proxyRes) => {
-      //     proxyRes.headers['x-frame-options'] = 'SAMEORIGIN'
-      //   },
-      //   onProxyReq: (proxyReq) => {
-      //     proxyReq.setHeader('Authorization', isLoggedIn ? proxyHeaders['Authorization'] : 'Bearer invalid');
-      //   },
-      // }
     },
     setup: function (app) {
       app.get('/auth/logout', (req, res) => {
