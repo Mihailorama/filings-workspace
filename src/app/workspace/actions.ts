@@ -16,7 +16,11 @@
 
 import { Action } from 'redux';
 import { WorkspaceFiling, WorkspaceAppSpec } from '../state';
-import { ValidationParams } from '../models';
+import { Profile, ValidationParams } from '../models';
+
+export const PROFILES_FETCH = 'WORKSPACE_PROFILES_FETCH';
+export const PROFILES_RECEIVED = 'WORKSPACE_PROFILES_RECEIVED';
+export const PROFILES_FAILED = 'WORKSPACE_PROFILES_FAILED';
 
 export const FILINGS_FETCH = 'WORKSPACE_FILINGS_FETCH';
 export const FILINGS_RECEIVED = 'WORKSPACE_FILINGS_RECEIVED';
@@ -26,6 +30,14 @@ export const SHOW_UPLOAD = 'WORKSPACE_SHOW_UPLOAD';
 
 export const UPLOAD = 'WORKSPACE_UPLOAD';
 export const UPLOAD_FAILED = 'WORKSPACE_UPLOAD_FAILED';
+
+export interface ReceivedProfilesAction extends Action {
+  profiles: Profile[];
+}
+
+export interface FailedProfilesAction extends Action {
+  error: string;
+}
 
 export interface ReceivedFilingsAction extends Action {
   filings: WorkspaceFiling[];
@@ -50,6 +62,18 @@ export interface ReceivedUploadAction extends Action {
 
 export interface FailedUploadAction extends Action {
   error: string;
+}
+
+export function fetchProfilesAction(): Action {
+  return {type: PROFILES_FETCH};
+}
+
+export function receivedProfilesAction(profiles: Profile[]): ReceivedProfilesAction {
+  return {type: PROFILES_RECEIVED, profiles};
+}
+
+export function failedProfilesAction(error: string): FailedProfilesAction {
+  return {type: PROFILES_FAILED, error};
 }
 
 export function fetchFilingsAction(): Action {

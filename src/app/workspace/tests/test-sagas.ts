@@ -1,12 +1,34 @@
 import { put, call } from 'redux-saga/effects';
 import { delay } from 'redux-saga';
 
-import { failedFilingsAction, receivedFilingsAction, uploadAction, uploadFailedAction } from '../actions';
-import { fetchFilingsSaga, uploadSaga, navigate, LATEST_FILINGS, POLL_MILLIS } from '../sagas';
+import {
+  receivedProfilesAction, failedProfilesAction,
+  receivedFilingsAction, failedFilingsAction,
+  uploadAction, uploadFailedAction,
+} from '../actions';
+import { fetchFilingsSaga, uploadSaga, navigate, LATEST_FILINGS, POLL_MILLIS, fetchProfilesSaga } from '../sagas';
 import { WORKSPACE_APPS } from '../workspace-apps';
-import { exampleFiling, exampleFilingVersion } from '../../tests/model-examples';
+import { exampleFiling, exampleFilingVersion, exampleCategory } from '../../tests/model-examples';
 import { ValidationParams } from '../../models';
 import { apiFetchJson } from '../../api-fetch';
+
+describe('profilesSaga', () => {
+  it('calls APIs in parallel and dispatches', () => {
+    const saga = fetchProfilesSaga();
+
+    expect(saga.next().value).toEqual(call(apiFetchJson, '/api/document-service/v1/categories/validation'));
+    expect(saga.next(exampleCategory).value)
+      .toEqual(put(receivedProfilesAction(exampleCategory.profiles)));
+  });
+
+  it('is sad if error fetching', () => {
+    const saga = fetchProfilesSaga();
+
+    saga.next();
+    expect(saga.throw && saga.throw({status: 403, statusText: 'LOLWAT'}).value)
+    .toEqual(put(failedProfilesAction(jasmine.stringMatching(/LOLWAT/) as any)));
+  });
+});
 
 describe('fetchFilingsSaga', () => {
   it('dispatches RECEIVED if all goes well', () => {

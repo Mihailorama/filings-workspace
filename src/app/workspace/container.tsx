@@ -17,7 +17,7 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchFilingsAction, uploadAction, showUpload } from './actions';
+import { fetchProfilesAction, fetchFilingsAction, uploadAction, showUpload } from './actions';
 import { Item, State, WorkspaceFiling, UploadStatus, WorkspaceAppSpec } from '../state';
 import WorkspaceApps from './workspace-apps';
 import FilingList from './filing-list';
@@ -37,6 +37,7 @@ interface OwnProps {
 }
 
 export interface WorkspaceContainerProps extends PropsFromState, OwnProps {
+  fetchProfilesAction: typeof fetchProfilesAction;
   fetchFilingsAction: typeof fetchFilingsAction;
   uploadAction: typeof uploadAction;
   showUpload: typeof showUpload;
@@ -46,7 +47,10 @@ class WorkspaceContainer extends Component<WorkspaceContainerProps> {
 
   constructor(props: WorkspaceContainerProps) {
     super(props);
-    if (props.app) {
+    if (props.upload) {
+      this.props.fetchProfilesAction();
+    }
+    else if (props.app) {
       this.props.fetchFilingsAction();
     }
     else {
@@ -55,6 +59,9 @@ class WorkspaceContainer extends Component<WorkspaceContainerProps> {
   }
 
   componentWillReceiveProps(nextProps: WorkspaceContainerProps): void {
+    if (!!nextProps.upload && !this.props.upload) {
+      this.props.fetchProfilesAction();
+    }
     if (nextProps.app !== this.props.app) {
       if (nextProps.app) {
         this.props.fetchFilingsAction();
@@ -90,5 +97,5 @@ export default connect(
     const upload = state.upload;
     return {filings, profiles, upload};
   },
-  {fetchFilingsAction, uploadAction, showUpload},
+  {fetchProfilesAction, fetchFilingsAction, uploadAction, showUpload},
 )(WorkspaceContainer);

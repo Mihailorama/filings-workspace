@@ -17,15 +17,34 @@
 import { Effect, delay } from 'redux-saga';
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 
-import { receivedFilingsAction, FILINGS_FETCH, failedFilingsAction, UPLOAD, UploadAction, uploadFailedAction } from './actions';
+import {
+  PROFILES_FETCH, FILINGS_FETCH, UPLOAD,
+  receivedProfilesAction, failedProfilesAction,
+  receivedFilingsAction, failedFilingsAction,
+  UploadAction, uploadFailedAction,
+} from './actions';
 import { apiFetchJson } from '../api-fetch';
-import { documentServiceFilingVersion, DOCUMENT_SERVICE_FILINGS } from '../urls';
-import { Filing, FilingVersion } from '../models';
+import { documentServiceFilingVersion, documentServiceCategories, DOCUMENT_SERVICE_FILINGS } from '../urls';
+import { Filing, FilingVersion, Category } from '../models';
 import { WorkspaceFiling } from '../state';
 
 export const POLL_MILLIS = 1000;
 
 export const LATEST_FILINGS = `${DOCUMENT_SERVICE_FILINGS}?pageNumber=1&pageSize=20&sort=creationDate&sortOrder=desc`;
+
+export function* fetchProfilesSaga(): IterableIterator<Effect> {
+  try {
+    const category: Category = yield call(apiFetchJson, documentServiceCategories('validation'));
+    const { profiles } = category;
+    if (!profiles || profiles.length === 0) {
+      yield put(failedProfilesAction('Startup failed (No profiles)'));
+      return;
+    }
+    yield put(receivedProfilesAction(profiles));
+  } catch (res) {
+    yield put(failedProfilesAction(`Startup failed (${res.message || res.statusText || res.status}).`));
+  }
+}
 
 export function* fetchFilingsSaga(): IterableIterator<Effect> {
   try {
@@ -94,6 +113,7 @@ export function* uploadSaga(action: UploadAction): IterableIterator<Effect> {
 
 export function* saga(): IterableIterator<Effect> {
   yield all([
+    takeEvery(PROFILES_FETCH, fetchProfilesSaga),
     takeEvery(FILINGS_FETCH, fetchFilingsSaga),
     takeEvery(UPLOAD, uploadSaga),
   ]);

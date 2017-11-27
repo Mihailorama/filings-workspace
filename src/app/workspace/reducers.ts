@@ -17,6 +17,11 @@
 import { Action } from 'redux';
 
 import {
+  ReceivedProfilesAction,
+  FailedProfilesAction,
+  PROFILES_FETCH,
+  PROFILES_RECEIVED,
+  PROFILES_FAILED,
   ReceivedFilingsAction,
   FailedFilingsAction,
   FILINGS_FAILED,
@@ -35,6 +40,17 @@ export function reducer(state: State | undefined, action: Action): State | undef
     return undefined;
   }
   switch (action.type) {
+    case PROFILES_FETCH: {
+      return { ...state, profiles: {loading: true} };
+    }
+    case PROFILES_RECEIVED: {
+      const { profiles } = action as ReceivedProfilesAction;
+      return { ...state, profiles: {loading: false, value: profiles} };
+    }
+    case PROFILES_FAILED: {
+      const { error } = action as FailedProfilesAction;
+      return { ...state, profiles: {loading: false, error} };
+    }
     case FILINGS_FETCH: {
       return { ...state, recentFilings: {loading: true} };
     }

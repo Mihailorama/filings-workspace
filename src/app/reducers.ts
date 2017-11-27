@@ -19,9 +19,6 @@
  */
 import { Action } from 'redux';
 
-import {
-  STARTUP_INFO_RECEIVED, StartupInfoReceivedAction, STARTUP_INFO_FAILED, FailedAction,
-} from './actions';
 import { State } from './state';
 import { reducer as appBarReducer } from './corefiling/reducers';
 import { reducer as statisticsReducer } from './statistics/reducers';
@@ -67,21 +64,6 @@ export function globalReducer(state: State | undefined, action: Action): State {
     return newState;
   }
 
-  switch (action.type) {
-    case STARTUP_INFO_FAILED: {
-      const { message } = action as FailedAction;
-      return { ...state,
-        profiles: {loading: false, error: message},
-      };
-    }
-    case STARTUP_INFO_RECEIVED: {
-      const { profiles } = action as StartupInfoReceivedAction;
-      return { ...state,
-        profiles: {loading: false, value: profiles},
-      };
-    }
-    default:
-      return state;
-  }
+  return state;
 }
 export default globalReducer;
