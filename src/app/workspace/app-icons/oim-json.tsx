@@ -27,7 +27,7 @@ export default class Icon extends Component<IconProps> {
     const {className, style} = this.props;
     /* tslint:disable */
     return <svg width="65px" height="82px" viewBox="0 0 65 82" className={className} style={style} xmlns="http://www.w3.org/2000/svg">
-      <g stroke="none" stroke-width="1" fill="#2D5578" fill-rule="evenodd">
+      <g stroke="none" strokeWidth="1" fill="#2D5578" fillRule="evenodd">
         <path d="M34.8156749,9 L18.1843251,9 C17.5297533,9 17,9.44730392 17,10 C17,10.5526961 17.5297533,11 18.1843251,11 L34.8156749,11 C35.4702467,11 36,10.5526961 36,10 C36,9.44730392 35.4702467,9 34.8156749,9"></path>
         <path d="M34.8156749,16 L18.1843251,16 C17.5297533,16 17,16.44703 17,16.9993876 C17,17.55297 17.5297533,18 18.1843251,18 L34.8156749,18 C35.4702467,18 36,17.55297 36,16.9993876 C36,16.44703 35.4702467,16 34.8156749,16"></path>
         <path d="M36,23.9993869 C36,23.4475782 35.4830761,23 34.8443563,23 L7.15564368,23 C6.51692395,23 6,23.4475782 6,23.9993869 C6,24.5524218 6.51692395,25 7.15564368,25 L34.8443563,25 C35.4830761,25 36,24.5524218 36,23.9993869"></path>
