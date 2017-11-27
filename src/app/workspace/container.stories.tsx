@@ -31,7 +31,10 @@ const etc: State = {
   apps: {loading: false, value: []},
   user: {loading: false, value: {email: 'a@b.com', name: 'A Butler', sub: '1234'} },
   profiles: {loading: false, value: profiles('Profile')},
-  recentFilings: {loading: false, value: [{id: '1', name: 'Filing 1'}, {id: '2', name: 'Filing 2'}]},
+  recentFilings: {loading: false, value: [
+    {id: '1', name: 'Filing 1', date: new Date('2017-01-01')},
+    {id: '2', name: 'Filing 2', date: new Date('2017-01-02')},
+  ]},
   status: {},
   statistics: {},
   tables: {},

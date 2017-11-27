@@ -23,9 +23,9 @@ import { WorkspaceAppSpec, WorkspaceFiling } from '../state';
 import { MemoryRouter } from 'react-router';
 
 const filings: WorkspaceFiling[] = [
-  {id: '1', name: 'Filing 1'},
-  {id: '2', name: 'Filing 2'},
-  {id: '3', name: 'Filing 3'},
+  {id: '1', name: 'Filing 1', date: new Date('2017-01-01')},
+  {id: '2', name: 'Filing 2', date: new Date('2017-01-02')},
+  {id: '3', name: 'Filing 3', date: new Date('2017-01-03')},
 ];
 
 const app: WorkspaceAppSpec = {name: 'Test App', href: '/test-app', filingHref: '/test-app/{id}'};
