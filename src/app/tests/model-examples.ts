@@ -14,10 +14,13 @@
  *  limitations under the License.
  */
 
-import { User, App, Category, Filing, FilingVersion,
+import { User, App, Category, Filing, FilingVersion, Profile,
   TableRenderingWindow, ValidationServiceFilingVersionSummary } from '../models';
+import { Statistic } from '@cfl/filing-statistics-service';
 import { QueryableTablePage } from '@cfl/table-viewer';
-import { Breakdown, Option, TableHeader, TableMetadata } from '@cfl/table-rendering-service';
+import { Breakdown, Option, TableHeader, TableMetadata, TableChunk } from '@cfl/table-rendering-service';
+
+import { State, TablePage, WorkspaceFiling } from '../state';
 
 export const exampleUser: User = {
   sub: 'ecdc0363-976d-4a42-a4cc-ae5d63f3a806',
@@ -128,6 +131,16 @@ export const exampleTableMetadata: TableMetadata = {
   z: exampleTableHeader,
 };
 
+export const exampleTableChunk: TableChunk = {
+  data: [[]],
+  x: 1,
+  y: 1,
+  z: 1,
+  xAxis: [],
+  yAxis: [],
+  zAxis: [],
+};
+
 // So far just used in equality checks.
 export const exampleQueryableTablePage: QueryableTablePage = {
 } as any;
@@ -138,4 +151,52 @@ export const exampleTableRenderingWindow: TableRenderingWindow = {
   x: 1,
   y: 1,
   z: 1,
+};
+
+export const exampleRecentFilings: WorkspaceFiling[] = [
+  {
+    id: 'f09be954-1895-4954-b333-6c9c89b833f1',
+    name: 'Filing 1',
+  },
+  {
+    id: 'f09be954-1895-4954-b333-6c9c89b833f2',
+    name: 'Filing 2',
+  },
+];
+
+export const exampleProfiles: Profile[] = [
+  {
+    id: '1',
+    name: 'Profile 1',
+    category: 'validation',
+  },
+];
+
+export const exampleStatistics: Statistic[] = [
+  {
+    name: 'Fact count',
+    label: 'Fact count',
+    value: 123,
+    format: 'integer',
+  },
+];
+
+export const exampleTablePage: TablePage = {
+  table: exampleTableMetadata,
+  x: 0,
+  y: 0,
+  z: 0,
+};
+
+export const exampleState: State = {
+  apps: {loading: false, value: exampleApps},
+  profiles: {loading: false, value: exampleProfiles},
+  user: {loading: false, value: exampleUser},
+  recentFilings: {loading: false, value: exampleRecentFilings},
+  status: {'f09be954-1895-4954-b333-6c9c89b833f1': {loading: false, value: 'OK'}},
+  statistics: {'f09be954-1895-4954-b333-6c9c89b833f1': {loading: false, value: exampleStatistics}},
+  tables: {'f09be954-1895-4954-b333-6c9c89b833f1': {loading: false, value: [exampleTableMetadata]}},
+  selectedTablePage: {'f09be954-1895-4954-b333-6c9c89b833f1': exampleTablePage},
+  zOptions: {'f09be954-1895-4954-b333-6c9c89b833f1': [[exampleZOption]]},
+  tableRendering: {'foo(0,0,0)': {loading: false, value: exampleQueryableTablePage}},
 };
