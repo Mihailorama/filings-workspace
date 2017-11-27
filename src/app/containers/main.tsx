@@ -26,7 +26,7 @@ import { WorkspaceAppSpec } from '../state';
 
 import './main.less';
 
-export const appBaseUri = '/quick-xbrl-validator/';
+export const appBaseUri = '/filings-app/';
 
 function workspaceContainerForApp(app: WorkspaceAppSpec): (props: RouteComponentProps<any>) => JSX.Element {
   return props => <WorkspaceContainer {... props} app={app} />;

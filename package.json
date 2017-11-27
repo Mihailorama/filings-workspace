@@ -1,5 +1,5 @@
 {
-  "name": "@cfl/quick-xbrl-validator",
+  "name": "@cfl/filings-app",
   "version": "1.2.1-local",
   "cfl": {
     "group": {
@@ -8,10 +8,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/CoreFiling/quick-xbrl-validator.git"
+    "url": "https://github.com/CoreFiling/filings-app.git"
   },
   "license": "Apache-2.0",
-  "homepage": "https://github.com/CoreFiling/quick-xbrl-validator",
+  "homepage": "https://github.com/CoreFiling/filings-app",
   "scripts": {
     "prepublishOnly": "rm -rf www && npm run compile",
     "compile": "npm run compile:webpack",
@@ -26,13 +26,14 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "prestart": "npm run compile:webpack",
-    "start": "simple-platform-server -d www -a quick-xbrl-validator -p 8080"
+    "start": "simple-platform-server -d www -a filings-app -p 8080"
   },
   "config": {
     "devserver-https": true,
     "devserver-host": "localhost",
     "devserver-port": 9091,
-    "api-proxy": "https://platform-api.cfl.io/"
+    "api-proxy": "https://platform-api.cfl.io/",
+    "external-app-proxy": "https://platform.cfl.io/"
   },
   "files": [
     "www"
@@ -42,7 +43,9 @@
     "npm": ">=4.0.0"
   },
   "dependencies": {
-    "@cfl/simple-platform-server": "^1.0.0"
+    "@cfl/simple-platform-server": "^1.0.0",
+    "@types/react-helmet": "^5.0.3",
+    "react-helmet": "^5.2.0"
   },
   "devDependencies": {
     "@cfl/filing-statistics-service": "^1.0.0",

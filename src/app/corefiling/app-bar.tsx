@@ -21,17 +21,18 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
 import { Component, Props } from 'react';
+import { Link } from 'react-router-dom';
+import Helmet from 'react-helmet';
 
-import { User } from '../models';
-import { AUTH_LOGOUT } from '../urls';
-import AppSymbol from './app-symbol';
 import CoreFilingLogo from './corefiling-logo';
 import NavMenu, { MenuItem } from './nav-menu';
+import WorkspaceIcon from './workspace-icon';
+import { User } from '../models';
+import { WorkspaceAppSpec } from '../state';
+import { AUTH_LOGOUT } from '../urls';
+import { linkForFiling, HOME } from '../workspace/workspace-apps';
 
 import './app-bar.less';
-import { WorkspaceAppSpec } from '../state';
-import { Link } from 'react-router-dom';
-import { linkForFiling, HOME } from '../workspace/workspace-apps';
 
 export interface AppBarProps extends Props<AppBar> {
   apps: {[key: string]: WorkspaceAppSpec};
@@ -62,12 +63,15 @@ export default class AppBar extends Component<AppBarProps> {
 
     const name = app ? app.name : 'Workspace';
     const href = app ? app.href : HOME;
+    const icon = app && app.icon ? app.icon : (props: any) => <WorkspaceIcon {... props} />;
 
     return <header className={classNames('app-AppBar', className)}>
+      <Helmet>
+        <title>{name}</title>
+      </Helmet>
       <div className='app-AppBar-brand'>
         <Link to={href} className='app-AppBar-appLogo'>
-          {/* TODO: choose symbol by app */}
-          <AppSymbol className='app-AppBar-appSymbol'/>
+          {icon({className: 'app-AppBar-appSymbol'})}
           {name}
         </Link>
         <CoreFilingLogo className='app-AppBar-corefilingLogo'/>

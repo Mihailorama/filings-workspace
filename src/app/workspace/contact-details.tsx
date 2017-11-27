@@ -26,7 +26,7 @@ export default function ContactDetails({className}: {className?: string}): JSX.E
       <b className='app-Link'>Contact us</b> to find out more!
     </a>
     <a className='app-ContactDetails-link app-ContactDetails-secondaryLink'
-        href='https://github.com/CoreFiling/quick-xbrl-validator' target='_blank'>
+        href='https://github.com/CoreFiling/filings-app' target='_blank'>
         <b className='app-Link'>API available</b>
     </a>
   </div>;

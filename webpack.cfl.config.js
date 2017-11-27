@@ -15,6 +15,7 @@ const port = parseInt(process.env.npm_package_config_devserver_port, 10);
 const https = process.env.npm_package_config_devserver_https === 'true';
 const baseUrl = `${https ? 'https' : 'http'}://${host}:${port}`;
 const apiProxyUrl = process.env.npm_package_config_api_proxy;
+const externalAppProxyUrl = process.env.npm_package_config_external_app_proxy;
 
 const proxyHeaders = {};
 oauthToken.load(token => proxyHeaders['Authorization'] = `Bearer ${token.access_token}`);
@@ -23,7 +24,7 @@ let isLoggedIn = true;
 
 const mergedConfig = merge.smart(mainConfig, {
   output: {
-    publicPath: `${baseUrl}/quick-xbrl-validator/`,
+    publicPath: `${baseUrl}/filings-app/`,
   },
   devtool: 'inline-source-map',
   watch: true,
@@ -39,7 +40,7 @@ const mergedConfig = merge.smart(mainConfig, {
     ca: fs.readFileSync(path.resolve(devDir, 'digicert.pem')),
     key: fs.readFileSync(path.resolve(devDir, 'star_cfl_io.key')),
     historyApiFallback: {
-      index: `${baseUrl}/quick-xbrl-validator/index.html`,
+      index: `${baseUrl}/filings-app/index.html`,
     },
     proxy: {
       '/api/user': {
@@ -69,6 +70,17 @@ const mergedConfig = merge.smart(mainConfig, {
           proxyReq.setHeader('Authorization', isLoggedIn ? proxyHeaders['Authorization'] : 'Bearer invalid');
         },
       },
+      '/*/**': {
+        target: externalAppProxyUrl,
+        changeOrigin: true,
+        headers: proxyHeaders,
+        onProxyRes: (proxyRes) => {
+          proxyRes.headers['x-frame-options'] = 'SAMEORIGIN'
+        },
+        onProxyReq: (proxyReq) => {
+          proxyReq.setHeader('Authorization', isLoggedIn ? proxyHeaders['Authorization'] : 'Bearer invalid');
+        },
+      }
     },
     setup: function (app) {
       app.get('/auth/logout', (req, res) => {
@@ -81,7 +93,7 @@ const mergedConfig = merge.smart(mainConfig, {
       });
       app.get('/api/apps', (req, res) => {
         res.json([
-          {"id":"quick-xbrl-validator","name":"Quick XBRL Validator","href":"/quick-xbrl-validator/","colour":"#69BEAB","iconHref":"/img/logo-beacon.svg","features":[]},
+          {"id":"filings-app","name":"Filings App","href":"/filings-app/","colour":"#69BEAB","iconHref":"/img/logo-beacon.svg","features":[]},
           {"id":"beacon","name":"Beacon","href":"/beacon/","colour":"#3c7c34","iconHref":"/img/logo-beacon.svg","features":[]},
           {"id":"account","name":"Manage account","href":"/auth/account","colour":"#3A75C4","features":[]},
           {"id":"sms","name":"Manage organisation","href":"/sms/","colour":"#3A75C4","features":[]},

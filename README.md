@@ -85,7 +85,7 @@ export CLIENT_SECRET=secret
 yarn start
 ```
 
-Then open <http://localhost:8080/quick-xbrl-validator/>.
+Then open <http://localhost:8080/filings-app/>.
 
   [1]: https://github.com/CoreFiling/simple-platform-server
 
@@ -99,11 +99,11 @@ You need `HOST` to be a name for your development machine for which SSL
 certificates are available.
 
 ```bash
-npm config set @cfl/quick-xbrl-validator:devserver-host $HOST
+npm config set @cfl/filings-app:devserver-host $HOST
 npm run dev:server
 ```
 
-Then open `https://$HOST:9091/quick-xbrl-validator/`
+Then open `https://$HOST:9091/filings-app/`
 
 ### SSL
 
@@ -120,7 +120,7 @@ yarn compile
 ## Package
 
 ```bash
-yarn pack # Produces cfl-quick-xbrl-validator-$VERSION.tgz
+yarn pack # Produces cfl-filings-app-$VERSION.tgz
 ```
 
 

@@ -46,6 +46,7 @@ export interface WorkspaceAppSpec {
   href: string;
   filingHref?: string;
   external?: boolean;
+  icon?: (extraProps: any) => JSX.Element;
 }
 
 export interface WorkspaceFiling {

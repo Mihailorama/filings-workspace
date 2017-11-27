@@ -166,7 +166,7 @@ function* generatePlugins() {
   yield new HtmlWebpackPlugin({
     template: 'src/index.ejs',
     appVersion: `${require('./package.json').version}`,
-    favicon: 'src/www/app-logo.ico',
+    favicon: 'src/www/logo.ico',
   });
 }
 
