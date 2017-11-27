@@ -70,17 +70,17 @@ const mergedConfig = merge.smart(mainConfig, {
           proxyReq.setHeader('Authorization', isLoggedIn ? proxyHeaders['Authorization'] : 'Bearer invalid');
         },
       },
-      '/*/**': {
-        target: externalAppProxyUrl,
-        changeOrigin: true,
-        headers: proxyHeaders,
-        onProxyRes: (proxyRes) => {
-          proxyRes.headers['x-frame-options'] = 'SAMEORIGIN'
-        },
-        onProxyReq: (proxyReq) => {
-          proxyReq.setHeader('Authorization', isLoggedIn ? proxyHeaders['Authorization'] : 'Bearer invalid');
-        },
-      }
+      // '/!filings-app/**': {
+      //   target: externalAppProxyUrl,
+      //   changeOrigin: true,
+      //   headers: proxyHeaders,
+      //   onProxyRes: (proxyRes) => {
+      //     proxyRes.headers['x-frame-options'] = 'SAMEORIGIN'
+      //   },
+      //   onProxyReq: (proxyReq) => {
+      //     proxyReq.setHeader('Authorization', isLoggedIn ? proxyHeaders['Authorization'] : 'Bearer invalid');
+      //   },
+      // }
     },
     setup: function (app) {
       app.get('/auth/logout', (req, res) => {
