@@ -24,8 +24,36 @@ synthesizes table layouts automatically.
 
   [CoreFiling True North Platform]: https://www.corefiling.com/products/true-north/
 
+## Quick start
 
-## Stack
+Sign-up for the True North Data Platform at <https://www.corefiling.com/platform/>.
+
+Install node@>=6.0.0, npm@>=4.0.0 and yarn@>=1.0.0.
+
+```bash
+$ yarn install
+$ yarn start
+```
+
+The application will be available on <http://localhost:8080/quick-xbrl-validator/>.
+
+When prompted, log in using the email address and password for your CoreFiling account.
+
+### Configuring authentication (not required)
+
+To configure non-default OAuth 2 client credentials (supplied by CoreFiling)
+export the following variables before starting the application with `yarn start`.
+
+```bash
+$ export CLIENT_ID="your-client-id"
+$ export CLIENT_SECRET="your-client-secret"
+```
+
+## Development
+
+See [Getting Started](#getting-started) for the dependencies.
+
+### Stack
 
 - [Typescript](https://github.com/Microsoft/TypeScript)
 - [React](https://github.com/facebook/react)
@@ -34,20 +62,7 @@ synthesizes table layouts automatically.
 - [Storybook](https://storybook.js.org)
 - [Webpack](https://github.com/webpack/webpack)
 
-
-## Running the server
-
-
-## Development prerequisites
-
-Install node@>=6.0.0, npm@>=4.0.0 and yarn@>=1.0.0
-
-```bash
-yarn install
-```
-
-
-## Storybook
+### Storybook
 
 ```bash
 yarn storybook
@@ -55,10 +70,7 @@ yarn storybook
 
 and visit <http://localhost:6006/>.
 
-Storybook entries are for a component in module `foo.tsx` go in a module next to it called `foo-stories.tsx`.
-
-
-## Unit tests
+### Unit tests
 
 Single run:
 
@@ -72,57 +84,22 @@ Watch files:
 yarn test-debug
 ```
 
-## Simple server
-
-A [simple server][1] provides authentication on the CoreFiling True North
-Platform and adds credentials to API calls.
-You need an OAuth2 client ID and  secret obtained from
-CoreFiling. Pass these to the server as environment variables:
-
-```bash
-export CLIENT_ID=id-of-client
-export CLIENT_SECRET=secret
-yarn start
-```
-
-Then open <http://localhost:8080/filings-app/>.
-
-  [1]: https://github.com/CoreFiling/simple-platform-server
-
-
-## Development server
-
-This watches the source files and reruns the Webpack build when they change.
-It attempts hot reloading of modules and style sheets.
-
-You need `HOST` to be a name for your development machine for which SSL
-certificates are available.
-
-```bash
-npm config set @cfl/filings-app:devserver-host $HOST
-npm run dev:server
-```
-
-Then open `https://$HOST:9091/filings-app/`
-
-### SSL
-
-The dev server uses HTTPS, with certificates copied in to `.dev/`.
-
-
-## Build
+### Build
 
 ```bash
 yarn compile
 ```
 
-
-## Package
+### Package
 
 ```bash
 yarn pack # Produces cfl-filings-app-$VERSION.tgz
 ```
 
+### Development server
+
+The webpack development server is currently optimised for running in CoreFiling's
+development environment and cannot easily be used externally.
 
 ## Licence
 
