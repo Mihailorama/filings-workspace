@@ -130,17 +130,17 @@ export default function WorkspaceApps(): JSX.Element {
     <Grid className='app-WorkspaceAppsGrid'>
       <Row className='app-WorkspaceAppsRow'>
         <WorkspaceAppTile app={WORKSPACE_APPS.validator} />
-        <WorkspaceAppTile app={WORKSPACE_APPS.viewer} />
-        <WorkspaceAppTile app={WORKSPACE_APPS.statistics} />
-      </Row>
-      <Row className='app-WorkspaceAppsRow'>
-        <WorkspaceAppTile app={WORKSPACE_APPS.benford} />
-        <WorkspaceAppTile app={WORKSPACE_APPS.changeReport} />
         <WorkspaceAppTile app={WORKSPACE_APPS.taxonomyInfo} />
+        <WorkspaceAppTile app={WORKSPACE_APPS.benford} />
       </Row>
       <Row className='app-WorkspaceAppsRow'>
         <WorkspaceAppTile app={WORKSPACE_APPS.taxonomyPackager}/>
         <WorkspaceAppTile app={WORKSPACE_APPS.oimConverter} />
+        <WorkspaceAppTile app={WORKSPACE_APPS.viewer} />
+      </Row>
+      <Row className='app-WorkspaceAppsRow'>
+        <WorkspaceAppTile app={WORKSPACE_APPS.statistics} />
+        <WorkspaceAppTile app={WORKSPACE_APPS.changeReport} />
       </Row>
     </Grid>
   </div>;
