@@ -15,7 +15,7 @@
  */
 
 @import (reference) '../styles/defs';
-
+@import (reference) './file-input';
 
 .form-boxiness() {
   box-sizing: border-box;
@@ -43,10 +43,14 @@
   }
 
   &-errorDropzone {
+    .app-FileInput;
+    cursor: not-allowed;
+
     font-style: italic;
     color: #E74C3C;
 
     &:before {
+      content: '';
       margin-top: 50px;
       margin-bottom: @gap;
       width: 122px;
