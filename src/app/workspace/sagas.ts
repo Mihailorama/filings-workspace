@@ -87,7 +87,6 @@ export function* uploadSaga(action: UploadAction): IterableIterator<Effect> {
   try {
     filing = yield call(apiFetchJson, DOCUMENT_SERVICE_FILINGS, init);
   } catch (res) {
-    console.log(res);
     yield put(uploadFailedAction(`File error (${res.message || res.statusText || res.status}).`));
     return;
   }
