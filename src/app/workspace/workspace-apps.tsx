@@ -100,8 +100,8 @@ export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
   },
 };
 
-function WorkspaceTile({icon, name, action, href, external, description, linkProps}:
-  {icon: any, name: string, action: string, href: string, external: boolean, description?: string, linkProps?: any}): JSX.Element {
+function WorkspaceTile({icon, name, description, action, href, external, linkProps}:
+  {icon?: JSX.Element, name: string, description?: string, action: string, href: string, external: boolean, linkProps?: any}): JSX.Element {
   return <Col className='app-WorkspaceAppTile'>
     <div className='app-WorkspaceAppTile-icon'>{icon}</div>
     <div className='app-WorkspaceAppTile-name'>{name}</div>
