@@ -51,6 +51,7 @@ const etc: State = {
   zOptions: {1: zOptions},
   tableRendering: {},
   router: undefined as any,
+  benford: undefined as any,
 };
 
 etc.tableRendering[tablePageKey(page)] = {loading: false, value: table};
@@ -101,7 +102,7 @@ storiesOf('Main', module)
   })
   .add('Validator', () => {
     return (
-      <MemoryRouter initialEntries={[`${appBaseUri}validator/filing-version/1`]}>
+      <MemoryRouter initialEntries={[`${appBaseUri}validator/filing-versions/1`]}>
         <Provider store={{...funcs, getState: () => ({...etc})}}>
           <Main />
         </Provider>
@@ -110,7 +111,7 @@ storiesOf('Main', module)
   })
   .add('Viewer', () => {
     return (
-      <MemoryRouter initialEntries={[`${appBaseUri}viewer/filing-version/1`]}>
+      <MemoryRouter initialEntries={[`${appBaseUri}viewer/filing-versions/1`]}>
         <Provider store={{...funcs, getState: () => ({...etc})}}>
           <Main />
         </Provider>
@@ -119,7 +120,7 @@ storiesOf('Main', module)
   })
   .add('Statistics', () => {
     return (
-      <MemoryRouter initialEntries={[`${appBaseUri}statistics/filing-version/1`]}>
+      <MemoryRouter initialEntries={[`${appBaseUri}statistics/filing-versions/1`]}>
         <Provider store={{...funcs, getState: () => ({...etc})}}>
           <Main />
         </Provider>

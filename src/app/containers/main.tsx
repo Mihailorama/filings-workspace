@@ -21,6 +21,7 @@ import StatisticsContainer from '../statistics/container';
 import ValidatorContainer from '../validator/container';
 import ViewerContainer from '../viewer/container';
 import WorkspaceContainer from '../workspace/container';
+import BenfordsAnalyserContainer from '../benford/benfords-analysis-container';
 import { WORKSPACE_APPS } from '../workspace/workspace-apps';
 import { WorkspaceAppSpec } from '../state';
 
@@ -36,18 +37,24 @@ export default function Main(): JSX.Element {
   return (
     <div className='app-Main'>
       <Switch>
-        <Route path={`${appBaseUri}:app/filing-version/:filingVersionId`} component={AppBarContainer} />
+        <Route path={`${appBaseUri}:app/filing-versions/:filingVersionId`} component={AppBarContainer} />
         <Route path={`${appBaseUri}:app?`} component={AppBarContainer} />
       </Switch>
       <Switch>
-        <Route path={`${appBaseUri}validator/filing-version/:filingVersionId`} component={ValidatorContainer} />
-        <Route path={`${appBaseUri}viewer/filing-version/:filingVersionId`} component={ViewerContainer} />
-        <Route path={`${appBaseUri}statistics/filing-version/:filingVersionId`} component={StatisticsContainer} />
+        <Route path={`${appBaseUri}benfords-analyser-report/filing-versions/:filingVersionId`} component={BenfordsAnalyserContainer} />
+        <Route path={`${appBaseUri}benfords-analyser-report`} render={workspaceContainerForApp(WORKSPACE_APPS.benford)} />
+
+        <Route path={`${appBaseUri}validator/filing-versions/:filingVersionId`} component={ValidatorContainer} />
         <Route path={`${appBaseUri}validator`} render={workspaceContainerForApp(WORKSPACE_APPS.validator)} />
-        <Route path={`${appBaseUri}benfords-analyser`} render={workspaceContainerForApp(WORKSPACE_APPS.benford)} />
-        <Route path={`${appBaseUri}viewer`} render={workspaceContainerForApp(WORKSPACE_APPS.viewer)} />
+
+        <Route path={`${appBaseUri}statistics/filing-versions/:filingVersionId`} component={StatisticsContainer} />
         <Route path={`${appBaseUri}statistics`} render={workspaceContainerForApp(WORKSPACE_APPS.statistics)} />
+
+        <Route path={`${appBaseUri}viewer/filing-versions/:filingVersionId`} component={ViewerContainer} />
+        <Route path={`${appBaseUri}viewer`} render={workspaceContainerForApp(WORKSPACE_APPS.viewer)} />
+
         <Route path={`${appBaseUri}oimConverter`} render={workspaceContainerForApp(WORKSPACE_APPS.oimConverter)} />
+
         <Route path={`${appBaseUri}`} component={WorkspaceContainer} />
       </Switch>
     </div>

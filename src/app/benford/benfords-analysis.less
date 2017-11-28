@@ -1,0 +1,182 @@
+/*
+ *  Copyright 2017 CoreFiling S.A.R.L.
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
+ @import (reference) '../styles/defs';
+
+ .app-BenfordsAnalysis {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 979px;
+  margin: 30px auto 30px auto;
+
+  &-explanation {
+    margin-top: 18px;
+    margin-bottom: 7px;
+    line-height: 21px;
+
+    height: 129px;
+    background-color: @secondary;
+    border-radius: 3px;
+    box-shadow: 0px 3px 10px rgba(0,0,0,0.25);
+    display: flex;
+    flex-direction: row;
+
+    &-logo {
+      margin: 30px 30px 35px 33px;
+    }
+
+    &-what {
+      margin-top: 18px;
+      color: @primary;
+      width: 569px;
+    }
+
+    &-how {
+      margin-top: 7px;
+      width: 409px;
+    }
+  }
+
+  &-interactive {
+    padding: @gap2;
+    height: 384px;
+    border-radius: 3px;
+    color: @ink;
+    background-color: @paper;
+    box-shadow: 0px 3px 10px rgba(0,0,0,0.25);
+  }
+
+  &-intro {
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+  }
+
+}
+
+.app-BenfordsResults {
+  @minHeight: 350px;
+  min-height: @minHeight;
+
+  &-loading {
+    background-image: url(loading.gif);
+    background-position: center;
+    background-repeat: no-repeat;
+    height: @minHeight;
+  }
+  &-details {
+    display: flex;
+    flex-flow: row wrap;
+    margin-top: @gap2;
+  }
+}
+
+.app-FilingHeader {
+  display: flex;
+  flex-grow: 1;
+  @height: 39px;
+  position: relative;
+  max-width: 568px;
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: percentage(1.59/2.95);
+    width: 100%;
+    border-radius: 3px;
+    box-shadow: 0 3px 20px rgba(0,0,0,0.23);
+  }
+
+  &-inner {
+    flex-grow: 1;
+    border: 1px solid @primary;
+    border-radius: 3px;
+    background-color: @secondary;
+    padding-left: 17px;
+    padding-right: 17px;
+    height: @height;
+    line-height: @height;
+    color: white;
+    z-index: 5;
+
+    font-size: 18px;
+    font-weight: 300;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+}
+
+.app-Stats {
+  flex-grow: 1;
+
+  &-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+
+  &-count {
+    font-weight: lighter;
+    width: 478px;
+    border: 1px solid @primary;
+    border-radius: 3px;
+    background-color: @secondary;
+    line-height: 14px;
+    padding-top: 3px;
+    padding-bottom: 4px;
+    text-align: center;
+    margin-top: 11px;
+    margin-left: 13px;
+    color: white;
+  }
+
+}
+
+.app-Stat {
+  @height: 288px;
+  @headerHeight: 36px;
+
+  margin-left: 13px;
+  height: @height;
+  width: 232px;
+  border: 1px solid @primary;
+  border-radius: 3px;
+  background-color: @tablePaper;
+  font-weight: 300;
+  flex-grow: 0;
+
+  &-main {
+    text-align: center;
+    font-size: 60px;
+    line-height: @height - @headerHeight;
+  }
+
+  &-name {
+    height: @headerHeight;
+    line-height: @headerHeight;
+    width: 232px;
+    color: white;
+    text-align: center;
+    background-color: @primary;
+  }
+}
+

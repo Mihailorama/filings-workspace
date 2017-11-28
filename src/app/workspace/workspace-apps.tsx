@@ -32,25 +32,25 @@ export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
   validator: {
     name: 'Quick XBRL Validator',
     href: `${HOME}validator`,
-    filingHref: `${HOME}validator/filing-version/{id}`,
+    filingHref: `${HOME}validator/filing-versions/{id}`,
     icon: props => <ValidatorIcon {... props } />,
   },
   viewer: {
     name: 'Quick Viewer',
     href: `${HOME}viewer`,
-    filingHref: `${HOME}viewer/filing-version/{id}`,
+    filingHref: `${HOME}viewer/filing-versions/{id}`,
     icon: props => <ViewerIcon {... props } />,
   },
   statistics: {
     name: 'Filing Statistics',
     href: `${HOME}statistics`,
-    filingHref: `${HOME}statistics/filing-version/{id}`,
+    filingHref: `${HOME}statistics/filing-versions/{id}`,
     icon: props => <StatisticsIcon {... props } />,
   },
   benford: {
-    name: 'Benford\'s Analyser', external: true,
-    href: `${HOME}benfords-analyser`,
-    filingHref: '/benfords-analyser/filing-version/{id}',
+    name: 'Benford\'s Analyser',
+    href: `${HOME}benfords-analyser-report/`,
+    filingHref: `${HOME}benfords-analyser-report/filing-versions/{id}`,
     icon: props => <BenfordIcon {... props } />,
   },
   changeReport: {
@@ -71,7 +71,7 @@ export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
   oimConverter: {
     name: 'OIM/JSON Converter', external: true,
     href: `${HOME}oimConverter`,
-    filingHref: '/api/document-service/filing-version/{id}/some-oim-please',
+    filingHref: '/api/document-service/filing-versions/{id}/some-oim-please',
     icon: props => <OIMJsonIcon {... props } />,
   },
 };

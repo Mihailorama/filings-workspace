@@ -202,4 +202,5 @@ export const exampleState: State = {
   zOptions: {'f09be954-1895-4954-b333-6c9c89b833f1': [[exampleZOption]]},
   tableRendering: {'foo(0,0,0)': {loading: false, value: exampleQueryableTablePage}},
   router: undefined as any,
+  benford: undefined as any,
 };

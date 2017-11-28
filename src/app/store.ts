@@ -21,6 +21,7 @@ import { routerMiddleware as createRouterMiddleware } from 'react-router-redux';
 
 import mainReducer from './reducers';
 import { saga as appBarSaga } from './corefiling/sagas';
+import { saga as benfordsSaga } from './benford/sagas';
 import { saga as statisticsSaga } from './statistics/sagas';
 import { saga as validatorSaga } from './validator/sagas';
 import { saga as viewerSaga } from './viewer/sagas';
@@ -42,10 +43,7 @@ const store = createStore(
   composeEnhancers(
     applyMiddleware(sagaMiddleware, routerMiddleware)));
 
-sagaMiddleware.run(appBarSaga);
-sagaMiddleware.run(statisticsSaga);
-sagaMiddleware.run(validatorSaga);
-sagaMiddleware.run(viewerSaga);
-sagaMiddleware.run(workspaceSaga);
+[appBarSaga, benfordsSaga, statisticsSaga, validatorSaga, viewerSaga, workspaceSaga]
+  .forEach(s => sagaMiddleware.run(s));
 
 export default store;

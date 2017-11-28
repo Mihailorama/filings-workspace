@@ -1,0 +1,75 @@
+/*
+ *  Copyright 2017 CoreFiling S.A.R.L.
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
+ @import (reference) '../styles/defs';
+
+.app-SearchBox {
+  display: flex;
+  align-items: center;
+  color: @ink;
+  width: 309px;
+  margin-right: 54px;
+
+  &-search input[type=text] {
+    position: relative;
+    border: 1px solid @primary;
+    border-radius: 3px;
+    font-size: 14px;
+    padding: 10px 32px 10px 12px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  &-searchButton {
+    display: block;
+    position: absolute;
+    right: 6px;
+    top: 6px;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    background-color: #FFF;
+    background-image: url(search-disabled.svg);
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    border: none;
+    z-index: 5;
+  }
+
+  &-searchEnabled &-searchButton {
+    background-image: url(search-enabled.svg);
+    cursor: pointer;
+  }
+
+  &-search {
+    flex-grow: 1;
+    position: relative;
+
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      height: percentage(1.59/2.95);
+      width: 100%;
+      border-radius: 3px;
+      box-shadow: 0 3px 20px 0 rgba(0,0,0,0.23);
+    }
+  }
+
+}

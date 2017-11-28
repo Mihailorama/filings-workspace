@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="70px" height="70px" viewBox="0 0 70 70" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>Info-incon Copy</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+        <g id="Main-Window" transform="translate(-58.000000, -613.000000)">
+            <g id="Info-incon-Copy" transform="translate(59.000000, 614.000000)">
+                <circle id="Oval-2" stroke="#69BEAB" stroke-width="1.5" cx="34" cy="34" r="34"></circle>
+                <rect id="Rectangle-9" fill="#69BEAB" x="32" y="24" width="5" height="35" rx="2.5"></rect>
+                <circle id="Oval" fill="#69BEAB" cx="34.5" cy="14.5" r="2.5"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

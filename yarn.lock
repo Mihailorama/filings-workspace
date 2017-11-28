@@ -2,6 +2,27 @@
 # yarn lockfile v1
 
 
+"@cfl/beacon-link-service-api@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.npmjs.org/@cfl/beacon-link-service-api/-/beacon-link-service-api-1.1.1.tgz#f3adb7e0293b8e5870faac3dc07ce6dc66a7c5a8"
+  dependencies:
+    core-js "^2.4.0"
+    isomorphic-fetch "^2.2.1"
+
+"@cfl/digit-frequency-analysis-service@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/@cfl/digit-frequency-analysis-service/-/digit-frequency-analysis-service-1.0.0.tgz#94abf58c757f15546f50029c2802524a9d797b73"
+  dependencies:
+    core-js "^2.4.0"
+    isomorphic-fetch "^2.2.1"
+
+"@cfl/document-service@^1.7.1":
+  version "1.7.1"
+  resolved "https://registry.npmjs.org/@cfl/document-service/-/document-service-1.7.1.tgz#65cbbbbf1febc09d203a363d8439dd4604b6052f"
+  dependencies:
+    core-js "^2.4.0"
+    isomorphic-fetch "^2.2.1"
+
 "@cfl/filing-statistics-service@^1.0.0":
   version "1.0.0"
   resolved "https://registry.npmjs.org/@cfl/filing-statistics-service/-/filing-statistics-service-1.0.0.tgz#b122fce2916d2b63bb88aeff03c94200196e079e"
@@ -2775,6 +2796,78 @@ currently-unhandled@^0.4.1:
 custom-event@~1.0.0:
   version "1.0.1"
   resolved "https://registry.npmjs.org/custom-event/-/custom-event-1.0.1.tgz#5d02a46850adf1b4a317946a3928fccb5bfd0425"
+
+d3-array@^1.2.0:
+  version "1.2.1"
+  resolved "https://registry.npmjs.org/d3-array/-/d3-array-1.2.1.tgz#d1ca33de2f6ac31efadb8e050a021d7e2396d5dc"
+
+d3-cloud@^1.2.4:
+  version "1.2.4"
+  resolved "https://registry.npmjs.org/d3-cloud/-/d3-cloud-1.2.4.tgz#3e169403adab74fdb0c867638d7f0bb8e6ae71ff"
+  dependencies:
+    d3-dispatch "1"
+
+d3-collection@1:
+  version "1.0.4"
+  resolved "https://registry.npmjs.org/d3-collection/-/d3-collection-1.0.4.tgz#342dfd12837c90974f33f1cc0a785aea570dcdc2"
+
+d3-color@1, d3-color@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/d3-color/-/d3-color-1.0.3.tgz#bc7643fca8e53a8347e2fbdaffa236796b58509b"
+
+d3-dispatch@1:
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/d3-dispatch/-/d3-dispatch-1.0.3.tgz#46e1491eaa9b58c358fce5be4e8bed626e7871f8"
+
+d3-ease@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/d3-ease/-/d3-ease-1.0.3.tgz#68bfbc349338a380c44d8acc4fbc3304aa2d8c0e"
+
+d3-format@1:
+  version "1.2.1"
+  resolved "https://registry.npmjs.org/d3-format/-/d3-format-1.2.1.tgz#4e19ecdb081a341dafaf5f555ee956bcfdbf167f"
+
+d3-interpolate@1, d3-interpolate@^1.1.5:
+  version "1.1.6"
+  resolved "https://registry.npmjs.org/d3-interpolate/-/d3-interpolate-1.1.6.tgz#2cf395ae2381804df08aa1bf766b7f97b5f68fb6"
+  dependencies:
+    d3-color "1"
+
+d3-path@1:
+  version "1.0.5"
+  resolved "https://registry.npmjs.org/d3-path/-/d3-path-1.0.5.tgz#241eb1849bd9e9e8021c0d0a799f8a0e8e441764"
+
+d3-scale@^1.0.6:
+  version "1.0.7"
+  resolved "https://registry.npmjs.org/d3-scale/-/d3-scale-1.0.7.tgz#fa90324b3ea8a776422bd0472afab0b252a0945d"
+  dependencies:
+    d3-array "^1.2.0"
+    d3-collection "1"
+    d3-color "1"
+    d3-format "1"
+    d3-interpolate "1"
+    d3-time "1"
+    d3-time-format "2"
+
+d3-shape@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/d3-shape/-/d3-shape-1.2.0.tgz#45d01538f064bafd05ea3d6d2cb748fd8c41f777"
+  dependencies:
+    d3-path "1"
+
+d3-time-format@2:
+  version "2.1.1"
+  resolved "https://registry.npmjs.org/d3-time-format/-/d3-time-format-2.1.1.tgz#85b7cdfbc9ffca187f14d3c456ffda268081bb31"
+  dependencies:
+    d3-time "1"
+
+d3-time@1:
+  version "1.0.8"
+  resolved "https://registry.npmjs.org/d3-time/-/d3-time-1.0.8.tgz#dbd2d6007bf416fe67a76d17947b784bffea1e84"
+
+d3-timer@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.npmjs.org/d3-timer/-/d3-timer-1.0.7.tgz#df9650ca587f6c96607ff4e60cc38229e8dd8531"
 
 d@1:
   version "1.0.0"
@@ -7095,6 +7188,20 @@ rimraf@2, rimraf@^2.2.8, rimraf@^2.4.4, rimraf@^2.5.1, rimraf@^2.6.0, rimraf@^2.
 ripemd160@^1.0.0:
   version "1.0.1"
   resolved "https://registry.npmjs.org/ripemd160/-/ripemd160-1.0.1.tgz#93a4bbd4942bc574b69a8fa57c71de10ecca7d6e"
+
+rumble-charts@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/rumble-charts/-/rumble-charts-2.0.0.tgz#de7af612c1b2a5c53065237926a1f8111f55a17e"
+  dependencies:
+    d3-cloud "^1.2.4"
+    d3-color "^1.0.3"
+    d3-ease "^1.0.3"
+    d3-interpolate "^1.1.5"
+    d3-scale "^1.0.6"
+    d3-shape "^1.2.0"
+    d3-timer "^1.0.7"
+    lodash "^4.17.4"
+    prop-types "^15.6.0"
 
 safe-buffer@5.0.1, safe-buffer@^5.0.1:
   version "5.0.1"

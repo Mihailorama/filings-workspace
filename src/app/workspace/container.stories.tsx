@@ -42,6 +42,7 @@ const etc: State = {
   zOptions: {},
   tableRendering: {},
   router: undefined as any,
+  benford: undefined as any,
 };
 
 const funcs: Store<State> = {

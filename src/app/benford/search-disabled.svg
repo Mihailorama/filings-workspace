@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+  <title>search</title>
+  <g stroke-width='2' stroke='#ccc' fill='none'>
+    <circle cx='8' cy='8' r='7'/>
+    <line x1='13' y1='13' x2='19' y2='19' stroke-linecap='round' />
+  </g>
+</svg>

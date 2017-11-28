@@ -25,6 +25,7 @@ import { reducer as statisticsReducer } from './statistics/reducers';
 import { reducer as validatorReducer } from './validator/reducers';
 import { reducer as viewerReducer } from './viewer/reducers';
 import { reducer as workspaceReducer } from './workspace/reducers';
+import { reducer as benfordsReducer } from './benford/reducers';
 import { routerReducer } from 'react-router-redux';
 
 export function globalReducer(state: State | undefined, action: Action): State {
@@ -41,6 +42,11 @@ export function globalReducer(state: State | undefined, action: Action): State {
       tables: {},
       zOptions: {},
       router: routerReducer(undefined as any, undefined as any),
+      benford: {
+        phase: 'ready',
+        searchText: '',
+        filingName: undefined,
+      },
     };
   }
 
@@ -62,6 +68,10 @@ export function globalReducer(state: State | undefined, action: Action): State {
     return newState;
   }
   newState = workspaceReducer(state, action);
+  if (newState) {
+    return newState;
+  }
+  newState = benfordsReducer(state, action);
   if (newState) {
     return newState;
   }
