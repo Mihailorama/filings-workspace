@@ -26,6 +26,7 @@ import TaxonomyInfoIcon from './app-icons/taxonomy-info';
 import TaxonomyPackagerIcon from './app-icons/taxonomy-packager';
 import ValidatorIcon from './app-icons/validator';
 import ViewerIcon from './app-icons/viewer';
+import LinkToGitHubIcon from './link-to-github-icon';
 
 import './workspace-apps.less';
 
@@ -157,7 +158,7 @@ export default function WorkspaceApps(): JSX.Element {
         <WorkspaceAppTile app={WORKSPACE_APPS.statistics} />
         <WorkspaceAppTile app={WORKSPACE_APPS.changeReport} />
         <WorkspaceTile
-          icon={undefined} name='CoreFiling GitHub' action='VIEW'
+          icon={<LinkToGitHubIcon/>} name='CoreFiling GitHub' action='VIEW'
           description={'Visit CoreFiling\'s GitHub page'}
           href='https://github.com/CoreFiling' external={true} linkProps={{target: '_blank'}} />
       </Row>
