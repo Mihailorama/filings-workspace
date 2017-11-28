@@ -100,6 +100,19 @@ export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
   },
 };
 
+function WorkspaceTile({icon, name, description, action, href, external, linkProps}:
+  {icon?: JSX.Element, name: string, description?: string, action: string, href: string, external: boolean, linkProps?: any}): JSX.Element {
+  return <Col className='app-WorkspaceAppTile'>
+    <div className='app-WorkspaceAppTile-icon'>{icon}</div>
+    <div className='app-WorkspaceAppTile-name'>{name}</div>
+    <div className='app-WorkspaceAppTile-description'>{description}</div>
+    { external ?
+      <a {...linkProps} className='app-WorkspaceAppTile-button' href={href}>{action}</a> :
+      <Link {...linkProps} className='app-WorkspaceAppTile-button' to={href}>{action}</Link>
+    }
+  </Col>;
+}
+
 export interface LinkDef {
   href: string;
   external: boolean;
@@ -120,16 +133,11 @@ export function linkForFiling(app: WorkspaceAppSpec, filingVersionId?: string): 
 }
 
 function WorkspaceAppTile({app}: {app: WorkspaceAppSpec}): JSX.Element {
-  const { href } = linkForFiling(app);
-  return <Col className='app-WorkspaceAppTile'>
-    <div className='app-WorkspaceAppTile-icon'>{app.icon ? app.icon({}) : undefined}</div>
-    <div className='app-WorkspaceAppTile-name'>{app.name}</div>
-    <div className='app-WorkspaceAppTile-description'>{app.description}</div>
-    { external ?
-      <a className='app-WorkspaceAppTile-button' href={href}>{app.action}</a> :
-      <Link className='app-WorkspaceAppTile-button' to={href}>{app.action}</Link>
-    }
-  </Col>;
+  const { href, external } = linkForFiling(app);
+  return <WorkspaceTile
+    icon={app.icon ? app.icon({}) : undefined}
+    name={app.name} description={app.description}
+    action={app.action} href={href} external={external}/>;
 }
 
 export default function WorkspaceApps(): JSX.Element {
@@ -148,6 +156,10 @@ export default function WorkspaceApps(): JSX.Element {
       <Row className='app-WorkspaceAppsRow'>
         <WorkspaceAppTile app={WORKSPACE_APPS.statistics} />
         <WorkspaceAppTile app={WORKSPACE_APPS.changeReport} />
+        <WorkspaceTile
+          icon={undefined} name='CoreFiling GitHub' action='VIEW'
+          description={'Visit CoreFiling\'s GitHub page'}
+          href='https://github.com/CoreFiling' external={true} linkProps={{target: '_blank'}} />
       </Row>
     </Grid>
   </div>;
