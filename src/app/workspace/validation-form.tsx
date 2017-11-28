@@ -19,6 +19,7 @@ import { Component, Props } from 'react';
 
 import { Profile, ValidationParams, paramsAreComplete } from '../models';
 import { Form, FormItem, FormActionList, FormAction } from './form';
+import ContactDetails from './contact-details';
 import FileInput from './file-input';
 
 import './validation-form.less';
@@ -87,6 +88,7 @@ export default class ValidationForm extends Component<ValidationFormProps, Valid
       <FormActionList>
         <FormAction enabled={onSubmit && paramsAreComplete(params)} primary>Validate</FormAction>
       </FormActionList>
+      <ContactDetails />
     </Form>;
   }
 
