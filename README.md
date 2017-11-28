@@ -35,7 +35,7 @@ $ yarn install
 $ yarn start
 ```
 
-The application will be available on <http://localhost:8080/quick-xbrl-validator/>.
+The application will be available on <http://localhost:8080/filings-app/>.
 
 When prompted, log in using the email address and password for your CoreFiling account.
 
