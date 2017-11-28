@@ -29,8 +29,12 @@ const file = (name?: string, size: number = 1024 * 20, type?: string): File => {
 };
 
 storiesOf('FileReference', module)
-  .addDecorator(story => <div style={{margin: '1em auto', maxWidth: '400px'}}>{story()}</div>)
-  .add('No file', () => <FileReference/>)
+  .addDecorator(story => <div className='app-FileInput' style={{
+    margin: '1em auto', padding: '20px', maxWidth: '400px',
+    color: 'rgba(0, 0, 0, .86)', background: '#F7F7F7',
+  }}>
+    {story()}
+  </div>)
   .add('Bytes', () => <FileReference file={file('Best Soufflé Company 2017.xml', 69, 'application/xml')}/>)
   .add('Kilobytes', () => <FileReference file={file('Amalagmated Holdings (Group).xml', 42 * 1024, 'application/xml')}/>)
   .add('Megabytes', () => <FileReference file={file('accts.xml', 13 * 1024 * 1024, 'application/xml')}/>)
