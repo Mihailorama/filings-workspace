@@ -18,14 +18,15 @@ import * as React from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { WorkspaceAppSpec } from '../state';
 import { Link } from 'react-router-dom';
-import BenfordIcon from './app-icons/benford';
-import ChangeReportIcon from './app-icons/change-report';
-import StatisticsIcon from './app-icons/statistics';
-import OIMJsonIcon from './app-icons/oim-json';
-import TaxonomyInfoIcon from './app-icons/taxonomy-info';
-import TaxonomyPackagerIcon from './app-icons/taxonomy-packager';
-import ValidatorIcon from './app-icons/validator';
-import ViewerIcon from './app-icons/viewer';
+import BenfordIcon from './icons/benford';
+import ChangeReportIcon from './icons/change-report';
+import StatisticsIcon from './icons/statistics';
+import OIMJsonIcon from './icons/oim-json';
+import TaxonomyInfoIcon from './icons/taxonomy-info';
+import TaxonomyPackagerIcon from './icons/taxonomy-packager';
+import ValidatorIcon from './icons/validator';
+import ViewerIcon from './icons/viewer';
+import LinkToGitHubIcon from './icons/link-to-github';
 
 import './workspace-apps.less';
 
@@ -157,7 +158,7 @@ export default function WorkspaceApps(): JSX.Element {
         <WorkspaceAppTile app={WORKSPACE_APPS.statistics} />
         <WorkspaceAppTile app={WORKSPACE_APPS.changeReport} />
         <WorkspaceTile
-          icon={undefined} name='CoreFiling GitHub' action='VIEW'
+          icon={<LinkToGitHubIcon/>} name='CoreFiling GitHub' action='VIEW'
           description={'Visit CoreFiling\'s GitHub page'}
           href='https://github.com/CoreFiling' external={true} linkProps={{target: '_blank'}} />
       </Row>
