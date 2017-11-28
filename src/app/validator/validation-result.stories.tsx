@@ -27,7 +27,7 @@ storiesOf('ValidationResult', module)
     </div>
   </div>)
   .add('Loading', () => <ValidationResult/>)
-  .add('Error', () => <ValidationResult status='ERROR'/>)
+  .add('Error', () => <ValidationResult status='ERROR' error='Something went boom'/>)
   .add('Valid with warnings', () => <ValidationResult status='WARNING'/>)
   .add('Valid', () => <ValidationResult status='OK'/>)
   .add('Failed', () => <ValidationResult status='FATAL_ERROR'/>);

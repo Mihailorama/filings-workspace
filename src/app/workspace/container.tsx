@@ -76,7 +76,7 @@ class WorkspaceContainer extends Component<WorkspaceContainerProps> {
       if (upload) {
         if (upload.uploading) {
           return <div className='app-WorkspaceContainer-loadingOverlay'>
-            <div className='app-WorkspaceContainer-loading'>Processing&thinsp;…</div>
+            <div className='app-WorkspaceContainer-loading'>processing…</div>
           </div>;
         }
         return <Upload profiles={profiles} upload={upload} onSubmit={params => uploadAction(app, params)} />;

@@ -20,86 +20,89 @@
 @statusBd: 0px;
 @statusTotal: 60px + @gap;
 
-.app-ValidationResult {
+.app-ValidationResult-container {
+  flex-grow: 1;
+  flex-shrink: 1;
   display: flex;
-  flex-flow: row nowrap;
-  justify-content: flex-end;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
-  margin: 12px @gap3 10px @gap2;
-  color: @secondary;
+  padding: @gap3 0px;
+  height: calc(~ "100vh" - (@bar-ht + @gap3 + @gap3));
+
+  background-color: @secondary;
+  color: white;
+
+  &:before,
+  &:after {
+    content: ' ';
+    flex-shrink: 1;
+    flex-grow: 0;
+    height: @big-gap;
+  }
+}
+
+.app-ValidationResult {
+  flex-shrink: 0;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
   line-height: 1;
 
-  &-loading {
-    box-sizing: border-box;
-    height: @form-ht;
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: center;
-
-    &:before {
-      content: " ";
-      display: block;
-      width: 240px;
-      height: 240px;
-      background-image: url(../assets/Progress_Animation.gif);
-      background-position: 50% 50%;
-      background-repeat: no-repeat;
-      background-size: 300px 300px;
-    }
-  }
-
-  &-status {
+  &:before {
+    content: " ";
+    flex-shrink: 0;
     display: block;
-
-    white-space: nowrap;
-    font-size: 36px;
-    font-weight: 300;
-
-    margin-right: 5px;
-
-    &:before {
-      content: " ";
-      margin-right: 8px;
-      display: inline-block;
-      vertical-align: -18%;
-      height: @statusIcon;
-      width: @statusIcon;
-      max-height: @status-ht;
-      background-size: auto 100%;
-      background-position: 50% 50%;
-      background-repeat: no-repeat;
-      border: @statusBd solid #FFF;
-    }
+    width: 208px;
+    height: 208px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: 208px 208px;
+    margin-bottom: 30px;
   }
 
-  &-okStatus:before {
+  &-loading:before {
+    background-image: url(./loading.gif);
+    width: 120px;
+    height: 120px;
+    background-size: 267px 267px;
+    margin-bottom: 10px;
+  }
+
+  &-ok:before {
     background-image: url(validation-result-ok.svg);
   }
-  &-warningStatus:before {
+  &-warning:before {
     background-image: url(validation-result-warning.svg);
-    height: 41px;
-    width: 47px;
+    width: 208px;
+    height: 182px;
   }
-  &-errorStatus:before,
-  &-fatalErrorStatus:before {
+  &-error:before,
+  &-fatalError:before {
     background-image: url(validation-result-error.svg);
   }
 
+  &-status {
+    font-size: 36px;
+    font-weight: 300;
+  }
+
   &-detail {
-    width: 50px; // Force line breaks
     font-weight: 500;
-    margin: 0;
+    margin: 10px;
   }
 
   &-loadingDetail {
     font-weight: 300;
     font-style: italic;
+    margin: 0px;
   }
 
-  &-errorDetail {
+  &-error {
     font-weight: 300;
-    margin: 0px 0px 0px 20px;
     font-size: 20px;
+    margin: 10px;
   }
 }
 
