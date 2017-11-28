@@ -17,17 +17,16 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
 
+import ContactLink from './contact-link';
+
 import './contact-details.less';
 
 export default function ContactDetails({className}: {className?: string}): JSX.Element {
   return <div className={classNames('app-ContactDetails', className)}>
-    <a className='app-ContactDetails-link app-ContactDetails-primaryLink'
-        href='https://www.corefiling.com/standing/contactus/' target='_blank'>
-      <b className='app-Link'>Contact us</b> to find out more!
-    </a>
     <a className='app-ContactDetails-link app-ContactDetails-secondaryLink'
         href='https://github.com/CoreFiling/filings-app' target='_blank'>
-        <b className='app-Link'>API available</b>
+      <b className='app-Link'>API available</b>
     </a>
+    <ContactLink className='app-ContactDetails-link app-ContactDetails-primaryLink' />
   </div>;
 }

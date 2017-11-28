@@ -1,6 +1,6 @@
 /*
- *  Copyright 2017 CoreFiling S.A.R.L.
- *
+*  Copyright 2017 CoreFiling S.A.R.L.
+*
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
@@ -19,6 +19,7 @@ import * as React from 'react';
 
 import { Item, UploadStatus } from '../state';
 import { ValidationParams, Profile } from '../models';
+import ContactDetails from '../components/contact-details';
 import ValidationForm from './validation-form';
 
 import './upload.less';
@@ -36,6 +37,7 @@ export default function Upload(props: UploadProps): JSX.Element {
     <div className={classNames('app-Upload', {'app-Upload-loading': loading})}>
       <div className='app-Upload-formHolder'>
         <ValidationForm profiles={profiles.value} error={upload.error} onSubmit={onSubmit}/>
+        <ContactDetails />
       </div>
     </div>
   );
