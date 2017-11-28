@@ -48,6 +48,9 @@
     "react-helmet": "^5.2.0"
   },
   "devDependencies": {
+    "@cfl/beacon-link-service-api": "^1.1.1",
+    "@cfl/digit-frequency-analysis-service": "^1.0.0",
+    "@cfl/document-service": "^1.7.1",
     "@cfl/filing-statistics-service": "^1.0.0",
     "@cfl/react-components": "^1.4.2",
     "@cfl/table-rendering-service": "^1.4.3",
@@ -118,6 +121,7 @@
     "react-test-renderer": "^15.5.0",
     "redux": "^3.7.2",
     "redux-saga": "^0.15.6",
+    "rumble-charts": "^2.0.0",
     "simple-oauth2": "^1.4.0",
     "skin-deep": "^1.0.0-alpha2",
     "source-map-support": "^0.4.14",

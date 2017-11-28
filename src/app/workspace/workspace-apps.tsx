@@ -37,7 +37,7 @@ export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
     description: 'Quickly validate your XBRL filing against a chosen taxonomy',
     action: 'UPLOAD',
     href: `${HOME}validator`,
-    filingHref: `${HOME}validator/filing-version/{id}`,
+    filingHref: `${HOME}validator/filing-versions/{id}`,
     icon: props => <ValidatorIcon {... props } />,
   },
   viewer: {
@@ -45,7 +45,7 @@ export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
     description: 'View your XBRL filing in table format',
     action: 'VIEW',
     href: `${HOME}viewer`,
-    filingHref: `${HOME}viewer/filing-version/{id}`,
+    filingHref: `${HOME}viewer/filing-versions/{id}`,
     icon: props => <ViewerIcon {... props } />,
   },
   statistics: {
@@ -53,16 +53,16 @@ export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
     description: 'View key statistics about your filing',
     action: 'VIEW',
     href: `${HOME}statistics`,
-    filingHref: `${HOME}statistics/filing-version/{id}`,
+    filingHref: `${HOME}statistics/filing-versions/{id}`,
     icon: props => <StatisticsIcon {... props } />,
   },
   benford: {
     name: 'Benford\'s Analyser',
-    description: 'Analyse US SEC filings using Benford’s law',
+    description: 'Analyse XBRL filings using Benford’s law',
     action: 'ANALYSE',
-    external: true,
-    href: `${HOME}benfords-analyser`,
-    filingHref: '/benfords-analyser/filing-version/{id}',
+    external: false,
+    href: `${HOME}benfords-analyser-report`,
+    filingHref: `${HOME}benfords-analyser-report/filing-version/{id}`,
     icon: props => <BenfordIcon {... props } />,
   },
   changeReport: {
@@ -95,7 +95,7 @@ export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
     action: 'DOWNLOAD',
     external: true,
     href: `${HOME}oimConverter`,
-    filingHref: '/api/document-service/filing-version/{id}/some-oim-please',
+    filingHref: '/api/document-service/filing-versions/{id}/some-oim-please',
     icon: props => <OIMJsonIcon {... props } />,
   },
 };

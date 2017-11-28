@@ -1,0 +1,118 @@
+/*
+ *  Copyright 2017 CoreFiling S.A.R.L.
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
+@import (reference) '../styles/defs';
+
+.app-GraphDetails {
+  @width: 150px;
+  @height: 80px;
+  @headerHeight: 36px;
+
+  position: relative;
+
+  &-inner {
+    pointer-events: none;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+
+    width: @width;
+    height: @height;
+    border: 1px solid @primary;
+    border-radius: 3px;
+    background-color: @tablePaper;
+    font-weight: 300;
+  }
+
+  &-main {
+    text-align: center;
+    font-size: 30px;
+    line-height: @height - @headerHeight;
+  }
+
+  &-name {
+    height: @headerHeight;
+    line-height: @headerHeight;
+    width: @width;
+    color: white;
+    text-align: center;
+    background-color: @primary;
+  }
+}
+
+.app-Graph {
+  @width: 435px;
+  @headerHeight: 36px;
+
+  flex-grow: 1;
+  position: relative;
+
+  border: 1px solid @primary;
+  border-radius: 3px;
+  font-weight: 300;
+
+  width: @width;
+
+  &-name {
+    height: @headerHeight;
+    line-height: @headerHeight;
+    width: @width;
+    color: white;
+    text-align: center;
+    background-color: @primary;
+  }
+
+  &-axis-line {
+    stroke: @paper-line;
+  }
+
+  &-axis-label {
+    fill: @secondary;
+  }
+
+  &-axis-title {
+    fill: @secondary;
+  }
+
+  &-line-expected path {
+    stroke-dasharray: 6px;
+    stroke: @primary;
+  }
+
+  &-line-actual path {
+    stroke: @secondary;
+  }
+
+  &-dots circle {
+    fill: @secondary;
+  }
+
+  &-area-series-0 path {
+    fill: darken(@tablePaper, 7%);
+  }
+
+  &-area-series-1 path {
+    fill: lighten(@primary, 20%);
+  }
+
+  &-area-series-3 path {
+    fill: darken(@tablePaper, 7%);
+  }
+
+  &-area-series-4 path {
+    fill: @paper;
+  }
+}
