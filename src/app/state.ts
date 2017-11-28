@@ -44,6 +44,8 @@ export interface TablePage {
 export interface WorkspaceAppSpec {
   name: string;
   href: string;
+  action: string;
+  description?: string;
   filingHref?: string;
   external?: boolean;
   icon?: (extraProps: any) => JSX.Element;

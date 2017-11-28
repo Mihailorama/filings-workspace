@@ -25,7 +25,7 @@ import { WorkspaceAppSpec, State } from '../state';
 import { profiles } from '../../stories/util';
 import { action } from '@storybook/addon-actions';
 
-const app: WorkspaceAppSpec = {name: 'Test App', href: '/test-app', filingHref: '/test-app/{id}'};
+const app: WorkspaceAppSpec = {name: 'Test App', action: 'Do', href: '/test-app', filingHref: '/test-app/{id}'};
 
 const etc: State = {
   apps: {loading: false, value: []},
