@@ -46,6 +46,27 @@
     margin: 12px 12px 0px 12px;
   }
 
+  &-loading {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+
+    font-weight: 300;
+    font-style: italic;
+
+    &:before {
+      content: " ";
+      margin-top: 20px;
+      display: block;
+      width: 140px;
+      height: 140px;
+      background-image: url(../assets/loading.gif);
+      background-position: 50% 50%;
+      background-repeat: no-repeat;
+    }
+  }
+
   &-tableSelector {
     width: 100%;
   }

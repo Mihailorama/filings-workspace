@@ -42,19 +42,19 @@ export default class Viewer extends React.Component<ViewerProps> {
     return <div className='app-Viewer-container'>
       <section className='app-Viewer'>
         <header className='app-Viewer-resultHeading'>
-          {error ?
-            <div className='app-Viewer-error'>{error}</div> :
-            tables.value ?
-            <TableSelector className='app-Viewer-tableSelector'
-              tables={tables.value}
-              selectedTable={selectedTable}
-              onChangeTable={onChangeTable}
-            /> :
-            <div className='app-Viewer-loading'>Loading...</div>
-          }
+          <TableSelector className='app-Viewer-tableSelector'
+            tables={tables.value || []}
+            selectedTable={selectedTable}
+            onChangeTable={onChangeTable}
+          />
         </header>
-        <Table metadata={selectedTable} zOptions={zOptions} table={table.value}
-                  onChangePage={onChangePage} onChangeTable={onChangeTable}/>
+        {(tables.loading || table.loading) ?
+          <div className='app-Viewer-loading'>loading…</div> :
+          error ?
+            <div className='app-Viewer-error'>{error}</div> :
+            <Table metadata={selectedTable} zOptions={zOptions} table={table.value}
+              onChangePage={onChangePage} onChangeTable={onChangeTable}/>
+        }
       </section>
       <ContactDetails />
     </div>;
