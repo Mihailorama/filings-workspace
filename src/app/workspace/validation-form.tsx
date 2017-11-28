@@ -59,7 +59,7 @@ export default class ValidationForm extends Component<ValidationFormProps, Valid
     const { params } = this.state;
 
     if (!profiles) {
-      return <div  className='app-ValidationForm-loading'>
+      return <div className='app-ValidationForm app-ValidationForm-loading'>
           <span>{error || 'Loading\u2009…'}</span>
         </div>;
     }
