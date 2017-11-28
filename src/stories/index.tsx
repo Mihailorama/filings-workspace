@@ -18,4 +18,3 @@
 // This file just ensures the global styles are imported.
 
 import '../app/styles/style.less';
-import '../app/components/app.less';

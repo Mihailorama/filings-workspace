@@ -21,47 +21,64 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
 import { Component, Props } from 'react';
+import { Link } from 'react-router-dom';
+import Helmet from 'react-helmet';
 
-import { User, App } from '../models';
-import { AUTH_LOGOUT } from '../urls';
-import AppSymbol from './app-symbol';
 import CoreFilingLogo from './corefiling-logo';
 import NavMenu, { MenuItem } from './nav-menu';
+import WorkspaceIcon from './workspace-icon';
+import { User } from '../models';
+import { WorkspaceAppSpec } from '../state';
+import { AUTH_LOGOUT } from '../urls';
+import { linkForFiling, HOME } from '../workspace/workspace-apps';
 
 import './app-bar.less';
 
 export interface AppBarProps extends Props<AppBar> {
-  path: string;
+  apps: {[key: string]: WorkspaceAppSpec};
+  app?: WorkspaceAppSpec;
+  filingVersionId?: string;
   user?: User;
-  apps?: App[];
   className?: string;
 }
 
 export default class AppBar extends Component<AppBarProps> {
   render(): JSX.Element {
-    const { path, user, apps, className } = this.props;
+    const { app, filingVersionId, user, className } = this.props;
+    const apps = Object.keys(this.props.apps).map(key => this.props.apps[key]);
 
     // Assemble the menu.
     const itemGroups: MenuItem[][] = [];
     if (apps) {
-      const appItems = apps.filter(x => x.href !== path).map(x => ({label: x.name || x.id, href: x.href}));
+      const appItems = apps.filter(x => x !== app)
+        .map(x => {
+          const link = linkForFiling(x, filingVersionId);
+          return {label: x.name, href: link.href, external: link.external};
+        });
       if (appItems.length > 0) {
         itemGroups.push(appItems);
       }
     }
-    itemGroups.push([{label: 'Log out', href: AUTH_LOGOUT}]);
+    itemGroups.push([{label: 'Log out', href: AUTH_LOGOUT, external: true}]);
+
+    const name = app ? app.name : 'Workspace';
+    const href = app ? app.href : HOME;
+    const icon = app && app.icon ? app.icon : (props: any) => <WorkspaceIcon {... props} />;
 
     return <header className={classNames('app-AppBar', className)}>
+      <Helmet>
+        <title>{name}</title>
+      </Helmet>
       <div className='app-AppBar-brand'>
-        <a href={path} className='app-AppBar-appLogo'>
-          <AppSymbol className='app-AppBar-appSymbol'/>
-          Quick XBRL Validator
-        </a>
+        <Link to={href} className='app-AppBar-appLogo'>
+          {icon({className: 'app-AppBar-appSymbol'})}
+          {name}
+        </Link>
         <CoreFilingLogo className='app-AppBar-corefilingLogo'/>
       </div>
       <nav className='app-AppBar-nav'>
         <ul className='app-AppBar-breadcrumbNav'>
-          <li><a href={path} className='app-AppBar-breadcrumbLink'>Home</a></li>
+          <li><Link to={HOME} className='app-AppBar-breadcrumbLink'>Home</Link></li>
         </ul>
         {user && <span className='app-AppBar-userName'>{user.email}</span>}
         <NavMenu itemGroups={itemGroups}/>

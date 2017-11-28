@@ -21,10 +21,12 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
 import { Component, Props } from 'react';
+import { Link } from 'react-router-dom';
 
 export interface MenuItem {
   label: string;
   href: string;
+  external: boolean;
 }
 
 export interface NavMenuProps extends Props<NavMenu> {
@@ -48,6 +50,7 @@ export default class NavMenu extends Component<NavMenuProps, State> {
   render(): JSX.Element {
     const { itemGroups, className } = this.props;
     const { isActive } = this.state;
+    const closeMenu = () => this.setState({isActive: false});
 
     return <div className={classNames('app-NavMenu', className)}>
       <span className={classNames('app-NavMenu-btn', {'app-NavMenu-activeBtn': isActive})}
@@ -62,9 +65,9 @@ export default class NavMenu extends Component<NavMenuProps, State> {
         <ul className='app-NavMenu-menu'>
           {itemGroups.map((x, i) => <li key={i} className='app-NavMenu-itemGroup'>
             {isSingleton(x)
-            ? <MenuItemLink {...x}/>
+            ? <MenuItemLink {...x} onClick={closeMenu} />
             : <ul>
-                {x.map((it, j) => <li key={j}><MenuItemLink {...it}/></li>)}
+                {x.map((it, j) => <li key={j}><MenuItemLink {...it} onClick={closeMenu}/></li>)}
               </ul>
             }
           </li>)}
@@ -75,6 +78,9 @@ export default class NavMenu extends Component<NavMenuProps, State> {
 }
 
 // tslint:disable-next-line:variable-name
-const MenuItemLink = ({label, href}: MenuItem): JSX.Element => <a className='app-NavMenu-link' href={href}>{label}</a>;
+const MenuItemLink = ({label, href, external, onClick}: MenuItem & {onClick: () => void}): JSX.Element =>
+  external ?
+    <a className='app-NavMenu-link' href={href} onClick={onClick}>{label}</a> :
+    <Link className='app-NavMenu-link' to={href} onClick={onClick}>{label}</Link>;
 
 const isSingleton = (x: MenuItem | MenuItem[]): x is MenuItem => 'label' in x;

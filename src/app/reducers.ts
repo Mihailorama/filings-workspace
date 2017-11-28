@@ -17,94 +17,53 @@
 /**
  * Reducers (in the Redux sense).
  */
-import { Action, combineReducers } from 'redux';
+import { Action } from 'redux';
 
-import {
-  STARTUP_INFO_RECEIVED, StartupInfoReceivedAction, STARTUP_INFO_FAILED, FailedAction,
-  UPLOAD_STARTED, UPLOAD_FAILED,
-  CHECKING_STARTED, FAILED,
-  CHECKING_RECEIVED, CheckingReceivedAction,
-  RESULTS_DISMISS,
-  TABLES_RECEIVED, TableRenderingRequestedAction,
-  TABLE_RENDERING_RECEIVED, TableRenderingReceivedAction, TablesReceivedAction, TABLE_RENDERING_REQUESTED,
-  FILING_STATISTICS_RECEIVED, FilingStatisticsReceivedAction,
-} from './actions';
-import { GlobalState, FilingState } from './state';
+import { State } from './state';
+import { reducer as appBarReducer } from './corefiling/reducers';
+import { reducer as statisticsReducer } from './statistics/reducers';
+import { reducer as validatorReducer } from './validator/reducers';
+import { reducer as viewerReducer } from './viewer/reducers';
+import { reducer as workspaceReducer } from './workspace/reducers';
 
-export function globalReducer(state: GlobalState | undefined, action: Action): GlobalState {
+export function globalReducer(state: State | undefined, action: Action): State {
   if (!state) {
-    return {phase: 'startup'};
+    return {
+      apps: {loading: false, value: []},
+      user: {loading: false},
+      profiles: {loading: false, value: []},
+      recentFilings: {loading: false, value: []},
+      status: {},
+      selectedTablePage: {},
+      statistics: {},
+      tableRendering: {},
+      tables: {},
+      zOptions: {},
+    };
   }
 
-  switch (action.type) {
-    case STARTUP_INFO_FAILED: {
-      const { message } = action as FailedAction;
-      return { ...state, phase: 'startup-failed', message };
-    }
-    case STARTUP_INFO_RECEIVED: {
-      const { user, apps, profiles } = action as StartupInfoReceivedAction;
-      return { ...state, phase: 'form', user, apps, profiles };
-    }
-    case UPLOAD_STARTED:
-      return { ...state, phase: 'uploading'};
-    case UPLOAD_FAILED: {
-      const { message } = action as FailedAction;
-      return { ...state, phase: 'uploading-failed', message };
-    }
-    case CHECKING_STARTED:
-      return { ...state, phase: 'checking' };
-    case FAILED: {
-      const { message } = action as FailedAction;
-      return { ...state, phase: 'failed', message };
-    }
-    case CHECKING_RECEIVED: {
-      return { ...state, phase: 'results'};
-    }
-    case RESULTS_DISMISS:
-      return { ...state, phase: 'form', message: undefined };
-    default:
-      return state;
+  let newState;
+  newState = appBarReducer(state, action);
+  if (newState) {
+    return newState;
   }
+  newState = statisticsReducer(state, action);
+  if (newState) {
+    return newState;
+  }
+  newState = validatorReducer(state, action);
+  if (newState) {
+    return newState;
+  }
+  newState = viewerReducer(state, action);
+  if (newState) {
+    return newState;
+  }
+  newState = workspaceReducer(state, action);
+  if (newState) {
+    return newState;
+  }
+
+  return state;
 }
-
-export function filingReducer(state: FilingState | undefined, action: Action): FilingState {
-  if (!state) {
-    return {};
-  }
-
-  switch (action.type) {
-    case UPLOAD_STARTED:
-    case UPLOAD_FAILED:
-    case CHECKING_STARTED:
-    case RESULTS_DISMISS:
-    return {};
-    case FAILED:
-      return { status: 'FATAL_ERROR' };
-    case CHECKING_RECEIVED: {
-      const { filingVersionId, status } = action as CheckingReceivedAction;
-      return { ...state, filingVersionId, status };
-    }
-    case TABLES_RECEIVED: {
-      const { tables } = action as TablesReceivedAction;
-      return { ...state, tables, selectedTable: tables.length > 0 ? tables[0] : undefined, zOptions: [] };
-    }
-    case TABLE_RENDERING_REQUESTED: {
-      const { table } = action as TableRenderingRequestedAction;
-      return { ...state, selectedTable: table, zOptions: [], tableRendering: undefined };
-    }
-    case TABLE_RENDERING_RECEIVED: {
-      const { zOptions, tableRendering } = action as TableRenderingReceivedAction;
-      return { ...state, zOptions, tableRendering };
-    }
-    case FILING_STATISTICS_RECEIVED: {
-      const { statistics } = action as FilingStatisticsReceivedAction;
-      return { ...state, statistics };
-    }
-    default:
-      return state;
-  }
-}
-
-const reducers = combineReducers({global: globalReducer, filing: filingReducer});
-
-export default reducers;
+export default globalReducer;

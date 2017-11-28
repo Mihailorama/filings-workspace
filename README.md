@@ -93,7 +93,7 @@ yarn compile
 ### Package
 
 ```bash
-yarn pack # Produces cfl-quick-xbrl-validator-$VERSION.tgz
+yarn pack # Produces cfl-filings-app-$VERSION.tgz
 ```
 
 ### Development server

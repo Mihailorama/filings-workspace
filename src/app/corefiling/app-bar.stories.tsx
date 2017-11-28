@@ -18,20 +18,24 @@ import * as React from 'react';
 
 import { storiesOf } from '@storybook/react';
 
-import { apps } from '../../stories/util';
 import AppBar from './app-bar';
+import { WORKSPACE_APPS } from '../workspace/workspace-apps';
+import { MemoryRouter } from 'react-router';
 
 const sub = 'uuid-of-user';
 
 storiesOf('AppBar', module)
-  .addDecorator(story => <div style={{height: '400px', backgroundColor: '#DDD'}}>{story()}</div>)
-  .add('Loading', () => <AppBar path='/quick-xbrl-validator/'/>)
-  .add('User with email only', () => <AppBar path='/quick-xbrl-validator/'
-    apps={apps('Quick XBRL Validator')}
+  .addDecorator(story => <MemoryRouter initialEntries={['/']}>
+    <div style={{height: '400px', backgroundColor: '#DDD'}}>
+      {story()}
+    </div>
+  </MemoryRouter>)
+  .add('User with email only', () => <AppBar app={WORKSPACE_APPS.validator}
+    apps={{validator: WORKSPACE_APPS.validator}}
     user={{sub, email: 'b@example.com'}}/>)
-  .add('User with name', () => <AppBar path='/quick-xbrl-validator/'
-    apps={apps('Quick XBRL Validator')}
+  .add('User with name', () => <AppBar app={WORKSPACE_APPS.validator}
+    apps={{validator: WORKSPACE_APPS.validator}}
     user={{sub, name: 'Tamandani Pleško', email: 'tp@example.com'}}/>)
-  .add('Multiple apps', () => <AppBar path='/quick-xbrl-validator/'
-    apps={apps('Quick XBRL Validator', 'Beacon', 'Full Beam', 'Manage Account')}
+  .add('Multiple apps', () => <AppBar app={WORKSPACE_APPS.validator}
+    apps={WORKSPACE_APPS}
     user={{sub, email: 'tp@example.com'}}/>);

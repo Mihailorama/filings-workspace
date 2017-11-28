@@ -18,30 +18,33 @@ import * as React from 'react';
 import { Component, Props } from 'react';
 import { connect } from 'react-redux';
 
-import { User, App } from '../models';
-import { State } from '../state';
 import AppBar from './app-bar';
-
-export const HOME = `/${location.pathname.split('/')[1]}/`;
+import { User } from '../models';
+import { State, Item } from '../state';
+import { WORKSPACE_APPS } from '../workspace/workspace-apps';
+import { app } from '../containers/filing-version-route';
+import { RouteComponentProps } from 'react-router';
 
 interface OwnProps extends Props<AppBarContainer> {
   className?: string;
 }
 
 interface PropsFromState {
-  user?: User;
-  apps?: App[];
+  user: Item<User>;
 }
 
-type AppBarContainerProps = OwnProps & PropsFromState;
+type AppBarContainerProps = OwnProps & RouteComponentProps<{app?: string, filingVersionId?: string}> & PropsFromState;
 
 class AppBarContainer extends Component<AppBarContainerProps> {
   render(): JSX.Element {
-    const { className, user, apps } = this.props;
-    return <AppBar className={className} path={HOME} user={user} apps={apps}/>;
+    const { className, user } = this.props;
+    return <AppBar
+      className={className} apps={WORKSPACE_APPS} user={user.value}
+      app={app(this.props)} filingVersionId={this.props.match.params.filingVersionId}
+    />;
   }
 }
 
-const propsFromState = ({ global: { user, apps } }: State): PropsFromState => ({user, apps});
-
-export default connect(propsFromState)(AppBarContainer);
+export default connect(
+  ({ user }: State): PropsFromState => ({user}),
+)(AppBarContainer);

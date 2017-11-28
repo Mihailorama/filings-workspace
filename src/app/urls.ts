@@ -18,7 +18,7 @@ import * as uriTemplates from 'uri-templates';
 import { StatisticsApiFactory } from '@cfl/filing-statistics-service';
 
 import { apiFetch } from './api-fetch';
-import { App, FilingVersion, TableRenderingWindow } from './models';
+import { App, TableRenderingWindow } from './models';
 
 export const USER = '/api/user';
 export const APPS = '/api/apps';
@@ -33,16 +33,16 @@ export const appHelp = ({href}: App) => APP_HELP.fillFromObject({base: href});
 const DOCUMENT_SERVICE_BASE = '/api/document-service/v1/';
 const DOCUMENT_SERVICE_CATEGORIES = uriTemplates(DOCUMENT_SERVICE_BASE + 'categories/{category}');
 export const DOCUMENT_SERVICE_FILINGS = DOCUMENT_SERVICE_BASE + 'filings/';
-const DOCUMENT_SERVICE_FILING_VERSION = uriTemplates(DOCUMENT_SERVICE_BASE + 'filing-versions/{id}');
+const DOCUMENT_SERVICE_FILING_VERSION = uriTemplates(DOCUMENT_SERVICE_BASE + 'filing-versions/{filingVersionId}');
 
 export const documentServiceCategories = (category: 'validation') => DOCUMENT_SERVICE_CATEGORIES.fillFromObject({category});
-export const documentServiceFilingVersion = (filingVersion: FilingVersion) => DOCUMENT_SERVICE_FILING_VERSION.fillFromObject(filingVersion);
+export const documentServiceFilingVersion = (filingVersionId: string) => DOCUMENT_SERVICE_FILING_VERSION.fillFromObject({filingVersionId});
 
 const VALIDATION_SERVICE_BASE = '/api/validation-service/v1/';
-const VALIDATION_SERVICE_FILING_VERSION = uriTemplates(VALIDATION_SERVICE_BASE + 'filing-versions/{id}');
+const VALIDATION_SERVICE_FILING_VERSION = uriTemplates(VALIDATION_SERVICE_BASE + 'filing-versions/{filingVersionId}');
 
-export const validationServiceFilingVersion = (filingVersion: FilingVersion) =>
-  VALIDATION_SERVICE_FILING_VERSION.fillFromObject(filingVersion);
+export const validationServiceFilingVersion = (filingVersionId: string) =>
+  VALIDATION_SERVICE_FILING_VERSION.fillFromObject({filingVersionId});
 
 const TABLE_RENDERING_SERVICE_BASE = '/api/table-rendering-service/v1/';
 const TABLE_RENDERING_SERVICE_TABLES = uriTemplates(TABLE_RENDERING_SERVICE_BASE + 'filing-versions/{filingVersionId}/tables/');

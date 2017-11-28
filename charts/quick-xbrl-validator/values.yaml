@@ -3,7 +3,7 @@
 global:
   registry: REGISTRY
 
-image: labs/quick-xbrl-validator
+image: labs/filings-app
 # When building the chart in CI, the tag will be automatically populated
 imageTag: TAG
 

@@ -13,7 +13,3 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
-export function toLowerStatus(status: string): string {
-  return status.toLowerCase().split('_').map((x, i) => i === 0 ? x : x.charAt(0).toUpperCase() + x.substr(1)).join('');
-}

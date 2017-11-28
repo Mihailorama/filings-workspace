@@ -18,7 +18,11 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
 import reducers from './reducers';
-import { startupInfoSaga, checkingSaga } from './sagas';
+import { saga as appBarSaga } from './corefiling/sagas';
+import { saga as statisticsSaga } from './statistics/sagas';
+import { saga as validatorSaga } from './validator/sagas';
+import { saga as viewerSaga } from './viewer/sagas';
+import { saga as workspaceSaga } from './workspace/sagas';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -34,7 +38,10 @@ const store = createStore(
   composeEnhancers(
     applyMiddleware(sagaMiddleware)));
 
-sagaMiddleware.run(startupInfoSaga);
-sagaMiddleware.run(checkingSaga);
+sagaMiddleware.run(appBarSaga);
+sagaMiddleware.run(statisticsSaga);
+sagaMiddleware.run(validatorSaga);
+sagaMiddleware.run(viewerSaga);
+sagaMiddleware.run(workspaceSaga);
 
 export default store;
