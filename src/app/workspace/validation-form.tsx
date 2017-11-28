@@ -15,12 +15,11 @@
  */
 
 import * as React from 'react';
-import * as Dropzone from 'react-dropzone';
 import { Component, Props } from 'react';
 
 import { Profile, ValidationParams, paramsAreComplete } from '../models';
-import FileReference from './file-reference';
 import { Form, FormItem, FormActionList, FormAction } from './form';
+import FileInput from './file-input';
 
 import './validation-form.less';
 
@@ -71,27 +70,7 @@ export default class ValidationForm extends Component<ValidationFormProps, Valid
           ? <div className='app-ValidationForm-dropzone app-ValidationForm-errorDropzone'>
               <span  className='app-ValidationForm-error'>{error}</span>
             </div>
-          : <Dropzone
-              className='app-ValidationForm-dropzone'
-              activeClassName='app-ValidationForm-dropzoneActive'
-              multiple={false}
-              accept='.xml,.xbrl,.html,.htm,.zip'
-              maxSize={5 * 1024 * 1024}
-              aria-label='File to validate'
-              onDrop={(files: File[]) => this.onChange({file: files[0]})}
-            >
-              <div>
-                {params.file
-                ? <FileReference className='app-ValidationForm-file' file={params.file}/>
-                : <div>
-                    <h2 className='app-ValidationForm-heading'>Drag &amp; Drop</h2>
-                    <div className='app-ValidationForm-prompt'>
-                      your file here, or <span className='app-ValidationForm-btn'>browse</span>
-                    </div>
-                    <div className='app-ValidationForm-hint'>XBRL, Inline XBRL, or ZIP. 5&thinsp;MB max.</div>
-                  </div>}
-                </div>
-            </Dropzone>
+          : <FileInput file={params.file} onChange={file => this.onChange({file})}/>
         }
       </FormItem>
       <FormItem>
