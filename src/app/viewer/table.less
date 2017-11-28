@@ -16,9 +16,6 @@
 
 @import (reference) '../styles/defs';
 
-@resultsHeadingHt: 60px;
-@contact-ht: 60px;
-
 .clearfix() {  // Needed because Bootstrap implements grid with floats like some kind of cave person.
   &:after {
     clear: both;
@@ -31,12 +28,14 @@
 
 .app-Table {
   flex-grow: 1;
+  flex-shrink: 0;
   margin: 12px;
-  width: 100%;
-  width: calc(~"100vw - " (2 * @gap + 2 * 12px));
 
   color: @ink;
   background: @paper;
+
+  display: flex;
+  flex-direction: column;
 
   &-nav,
   &-pager {
@@ -67,10 +66,6 @@
     flex-basis: auto;
     flex-grow: 0;
     flex-shrink: 1;
-
-    // I seem to need the following to get it to shrink to fit narrow screen.
-    // But it sadly has the effect of making flex-grow act as if set to 1.
-    width: 100%;
   }
 
   &-nav {
@@ -86,6 +81,12 @@
   }
 
   &-table {
+    flex-grow: 1;
+    flex-shrink: 0;
+
+    display: flex;
+    flex-direction: column;
+
     border-radius: 3px;
     background-color: @tablePaper;
 
@@ -96,32 +97,9 @@
     }
   }
 
-  &-loading,
-  &-noTable {
-    border: 1px solid transparent;  // To make geometry match the table when it appears.
-  }
-
-
-  // We have to calculate the remaining space ourselves.
-  // This varies ccording to what other UI elements are present.
-  // This is conveyed through additional classes.
-
-  &-table,
-  &-table-inner,
-  &-loading,
-  &-noTable {
-    height: calc(~"100vh - " (@bar-ht + @gap + @resultsHeadingHt + @gap + @gap + @contact-ht + 2px));
-  }
-
-  &-withPager {
-    height: calc(~"100vh - " (@bar-ht + @gap + @resultsHeadingHt + @gap + @gap + 34px + @gap + @contact-ht + 2px));
-  }
-
-  &-withZOptions {
-    height: calc(~"100vh - " (@bar-ht + @gap + @resultsHeadingHt + @gap + @gap + 32px + @gap + @contact-ht + 2px));
-  }
-
-  &-withZOptions&-withPager {
-    height: calc(~"100vh - " (@bar-ht + @gap + @resultsHeadingHt + @gap + @gap + 32px + @gap + 34px + @gap + @contact-ht + 2px));
+  &-table-inner {
+    height: 200px;
+    flex-grow: 1;
+    flex-shrink: 0;
   }
 }

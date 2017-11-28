@@ -21,7 +21,7 @@ import { action } from '@storybook/addon-actions';
 import Viewer from './viewer';
 import QueryableTablePageImpl from './models/queryable-table-page-impl';
 
-const { metadata, tables, zOptions, tableChunk } = (require('../../stories/table-a.json'));
+const { tables, zOptions, tableChunk } = (require('../../stories/table-a.json'));
 const table = new QueryableTablePageImpl(tables[0], tableChunk);
 
 storiesOf('Viewer', module)
@@ -39,7 +39,7 @@ storiesOf('Viewer', module)
     return (
       <Viewer
         tables={{loading: false, value: tables}}
-        selectedTable={metadata}
+        selectedTable={tables[0]}
         zOptions={zOptions}
         table={{loading: false, value: table}}
         onChangePage={action('onChangePage') as any}
@@ -51,7 +51,7 @@ storiesOf('Viewer', module)
     return (
       <Viewer
         tables={{loading: false, value: tables}}
-        selectedTable={metadata}
+        selectedTable={tables[0]}
         zOptions={zOptions}
         table={{loading: true}}
         onChangePage={action('onChangePage') as any}
@@ -83,7 +83,7 @@ storiesOf('Viewer', module)
     return (
       <Viewer
         tables={{loading: false, value: tables}}
-        selectedTable={metadata}
+        selectedTable={tables[0]}
         zOptions={zOptions}
         table={{loading: false, error: 'Something went wrong'}}
         onChangePage={action('onChangePage') as any}

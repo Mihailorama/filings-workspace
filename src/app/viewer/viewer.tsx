@@ -22,6 +22,7 @@ import { QueryableTablePage } from '@cfl/table-viewer';
 import Table from './table';
 import TableSelector from './table-selector';
 import { Item } from '../state';
+import ContactDetails from '../components/contact-details';
 
 import './viewer.less';
 
@@ -35,33 +36,27 @@ export interface ViewerProps extends React.Props<Viewer> {
 }
 
 export default class Viewer extends React.Component<ViewerProps> {
-  renderTable(): JSX.Element | undefined {
-    const {table, zOptions, selectedTable, onChangePage} = this.props;
-    if (selectedTable) {
-      return <Table metadata={selectedTable} zOptions={zOptions} table={table && table.value}
-                    onChangePage={onChangePage} />;
-    }
-    return undefined;
-  }
-
   render(): JSX.Element {
     const {tables, selectedTable, table, zOptions, onChangeTable, onChangePage} = this.props;
     const error = tables.error || (table && table.error);
-    return <section className='app-Viewer'>
-      <header className='app-Viewer-resultHeading'>
-        {error ?
-          <div className='app-Viewer-error'>{error}</div> :
-          tables.value ?
-          <TableSelector className='app-Viewer-tableSelector'
-            tables={tables.value}
-            selectedTable={selectedTable}
-            onChangeTable={onChangeTable}
-          /> :
-          <div className='app-Viewer-loading'>Loading...</div>
-        }
-      </header>
-      <Table metadata={selectedTable} zOptions={zOptions} table={table.value}
-                onChangePage={onChangePage} onChangeTable={onChangeTable}/>
-    </section>;
+    return <div className='app-Viewer-container'>
+      <section className='app-Viewer'>
+        <header className='app-Viewer-resultHeading'>
+          {error ?
+            <div className='app-Viewer-error'>{error}</div> :
+            tables.value ?
+            <TableSelector className='app-Viewer-tableSelector'
+              tables={tables.value}
+              selectedTable={selectedTable}
+              onChangeTable={onChangeTable}
+            /> :
+            <div className='app-Viewer-loading'>Loading...</div>
+          }
+        </header>
+        <Table metadata={selectedTable} zOptions={zOptions} table={table.value}
+                  onChangePage={onChangePage} onChangeTable={onChangeTable}/>
+      </section>
+      <ContactDetails />
+    </div>;
   }
 }
