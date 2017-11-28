@@ -50,6 +50,7 @@ const etc: State = {
   selectedTablePage: {1: page},
   zOptions: {1: zOptions},
   tableRendering: {},
+  router: undefined as any,
 };
 
 etc.tableRendering[tablePageKey(page)] = {loading: false, value: table};

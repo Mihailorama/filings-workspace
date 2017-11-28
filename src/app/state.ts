@@ -22,6 +22,7 @@ import { User, App, Profile, ValidationStatus } from './models';
 import { Statistic } from '@cfl/filing-statistics-service';
 import { QueryableTablePage } from '@cfl/table-viewer';
 import { Option, TableMetadata } from '@cfl/table-rendering-service';
+import { RouterState } from 'react-router-redux';
 
 export interface Item<T> {
   loading: boolean;
@@ -83,4 +84,5 @@ export interface State {
   // Per-table rendering details.  Does this vary with z-options?
   tableRendering: {[tablePageKey: string]: Item<QueryableTablePage>};
 
+  router: RouterState;
 }
