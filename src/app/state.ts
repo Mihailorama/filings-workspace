@@ -44,7 +44,7 @@ export interface TablePage {
 export interface WorkspaceAppSpec {
   name: string;
   href: string;
-  action: string;
+  action: 'VIEW' | 'UPLOAD' | 'ANALYSE' | 'CHECK' | 'DOWNLOAD' | 'COMPARE';
   description?: string;
   filingHref?: string;
   external?: boolean;
