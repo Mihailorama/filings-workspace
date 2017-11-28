@@ -28,7 +28,7 @@ const filings: WorkspaceFiling[] = [
   {id: '3', name: 'Filing 3', date: new Date('2017-01-03')},
 ];
 
-const app: WorkspaceAppSpec = {name: 'Test App', href: '/test-app', filingHref: '/test-app/{id}'};
+const app: WorkspaceAppSpec = {name: 'Test App', action: 'CHECK', href: '/test-app', filingHref: '/test-app/{id}'};
 
 storiesOf('FilingList', module)
   .addDecorator(story => <MemoryRouter initialEntries={['/']}>

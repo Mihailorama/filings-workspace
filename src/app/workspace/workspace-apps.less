@@ -1,0 +1,86 @@
+@import (reference) '../styles/defs';
+
+.app-WorkspaceApps {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.app-WorkspaceAppsGrid {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-WorkspaceAppsRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.app-WorkspaceAppTile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  border-radius: 3px;
+  box-shadow: 0 3px 7px 0 rgba(0,0,0,0.3);
+
+  padding-top: 40px;
+  padding-bottom: 27px;
+  height: 223px;
+  padding-left: 13px;
+  padding-right: 13px;
+  width: 235px;
+  background-color: #FFF;
+  margin: 30px;
+
+  &-icon {
+    min-height: 82px;
+    margin-bottom: 27px;
+  }
+
+  &-name {
+    font-weight: 500;
+    line-height: 18px;
+    font-size: 12px;
+    text-align: center;
+    margin-bottom: 9px;
+
+    color: #234265;
+  }
+
+  &-description {
+    height: 36px;
+    line-height: 18px;
+    font-size: 12px;
+    text-align: center;
+    margin-bottom: 24px;
+
+    color: #535353;
+  }
+
+  &-button {
+    border: 0.5px solid @primary2;
+    border-radius: 3px;
+    background-color: @primary;
+    color: #FFF;
+    text-decoration: none;
+    line-height: 27px;
+    font-weight: 500;
+    font-size: 14px;
+    text-align: center;
+
+    padding: 2px 1em;
+    min-width: 85px;
+
+    user-select: none;
+    cursor: pointer;
+
+    &:hover,
+    &:active {
+      text-decoration: none;
+      border-color: @primary;
+      background-color: @secondary;
+    }
+  }
+
+}
