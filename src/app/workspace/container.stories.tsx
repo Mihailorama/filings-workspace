@@ -41,6 +41,7 @@ const etc: State = {
   selectedTablePage: {},
   zOptions: {},
   tableRendering: {},
+  router: undefined as any,
 };
 
 const funcs: Store<State> = {
