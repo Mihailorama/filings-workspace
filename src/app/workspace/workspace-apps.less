@@ -59,16 +59,28 @@
   }
 
   &-button {
-    border: 0.5px solid @secondary;
+    border: 0.5px solid @primary2;
     border-radius: 3px;
     background-color: @primary;
     color: #FFF;
     text-decoration: none;
     line-height: 27px;
     font-weight: 500;
+    font-size: 14px;
     text-align: center;
 
-    width: 110px
+    padding: 2px 1em;
+    min-width: 85px;
+
+    user-select: none;
+    cursor: pointer;
+
+    &:hover,
+    &:active {
+      text-decoration: none;
+      border-color: @primary;
+      background-color: @secondary;
+    }
   }
 
 }
