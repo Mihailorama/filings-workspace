@@ -54,7 +54,7 @@
     "@cfl/filing-statistics-service": "^1.0.0",
     "@cfl/react-components": "^1.4.2",
     "@cfl/table-rendering-service": "^1.4.3",
-    "@cfl/table-viewer": "^0.2.0",
+    "@cfl/table-viewer": "^0.3.0",
     "@cfl/tslint-config": "^0.6.1",
     "@janslow/ci-build-version": "^0.1.1",
     "@storybook/addon-actions": "^3.2.6",
