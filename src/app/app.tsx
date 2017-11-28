@@ -17,18 +17,18 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
 
-import store from './store';
+import {default as store, history} from './store';
 import Main from './containers/main';
+import { ConnectedRouter } from 'react-router-redux';
 
 export default class App extends Component<{}> {
   render(): JSX.Element {
     return (
       <Provider store={store}>
-        <BrowserRouter>
+        <ConnectedRouter history={history}>
           <Main/>
-        </BrowserRouter>
+        </ConnectedRouter>
       </Provider>
     );
   }

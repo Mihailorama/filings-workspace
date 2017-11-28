@@ -16,14 +16,18 @@
 
 import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
+import createHistory from 'history/createBrowserHistory';
+import { routerMiddleware as createRouterMiddleware } from 'react-router-redux';
 
-import reducers from './reducers';
+import mainReducer from './reducers';
 import { saga as appBarSaga } from './corefiling/sagas';
 import { saga as statisticsSaga } from './statistics/sagas';
 import { saga as validatorSaga } from './validator/sagas';
 import { saga as viewerSaga } from './viewer/sagas';
 import { saga as workspaceSaga } from './workspace/sagas';
 
+export const history = createHistory();
+const routerMiddleware = createRouterMiddleware(history);
 const sagaMiddleware = createSagaMiddleware();
 
 const windowPlus: {
@@ -34,9 +38,9 @@ const windowPlus: {
 const composeEnhancers = windowPlus.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
-  reducers,
+  mainReducer,
   composeEnhancers(
-    applyMiddleware(sagaMiddleware)));
+    applyMiddleware(sagaMiddleware, routerMiddleware)));
 
 sagaMiddleware.run(appBarSaga);
 sagaMiddleware.run(statisticsSaga);

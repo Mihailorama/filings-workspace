@@ -25,6 +25,7 @@ import { reducer as statisticsReducer } from './statistics/reducers';
 import { reducer as validatorReducer } from './validator/reducers';
 import { reducer as viewerReducer } from './viewer/reducers';
 import { reducer as workspaceReducer } from './workspace/reducers';
+import { routerReducer } from 'react-router-redux';
 
 export function globalReducer(state: State | undefined, action: Action): State {
   if (!state) {
@@ -39,6 +40,7 @@ export function globalReducer(state: State | undefined, action: Action): State {
       tableRendering: {},
       tables: {},
       zOptions: {},
+      router: routerReducer(undefined as any, undefined as any),
     };
   }
 
@@ -62,6 +64,12 @@ export function globalReducer(state: State | undefined, action: Action): State {
   newState = workspaceReducer(state, action);
   if (newState) {
     return newState;
+  }
+
+  // We should restructure the state so we can switch to using combineReducers.
+  const newRouterState = routerReducer(state.router, action);
+  if (newRouterState) {
+    return {... state, router: newRouterState};
   }
 
   return state;
