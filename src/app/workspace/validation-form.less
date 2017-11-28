@@ -82,7 +82,7 @@
   }
 
   select {
-    width: (@form-wd - 2 * @gap - 110px - @gap);
+    width: @form-wd / @golden;
   }
 
   &-heading {
@@ -99,13 +99,14 @@
     font-size: 14px;
     font-weight: 500;
     line-height: 17px;
-    color: @muted;
+    color: @disabled;
   }
   &-hint {
     margin-top: @gap;
     font-size: 12px;
     font-weight: 300;
     line-height: (14/12);
+    color: @muted;
   }
   &-btn {
     color: @primary;

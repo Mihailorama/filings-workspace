@@ -95,8 +95,13 @@ export default class ValidationForm extends Component<ValidationFormProps, Valid
         }
       </FormItem>
       <FormItem>
-        <label htmlFor='profile-pickr'>Validation profile</label>
-        <select id='profile-pickr' disabled={!onSubmit} onChange={e => this.onChange({profile: e.currentTarget.value})}>
+        <select
+          id='profile-pickr'
+          disabled={!onSubmit}
+          required
+          defaultValue=''
+          onChange={e => this.onChange({profile: e.currentTarget.value})}>
+          <option key='' value='' disabled hidden>Validation Profile</option>
           {profiles.map(({id, name}) => <option key={id} value={id}>{name}</option>)}
         </select>
       </FormItem>
