@@ -16,6 +16,9 @@
 
 @import (reference) '../styles/defs';
 
+@resultsHeadingHt: 60px;
+@contact-ht: 60px;
+
 .clearfix() {  // Needed because Bootstrap implements grid with floats like some kind of cave person.
   &:after {
     clear: both;
@@ -28,8 +31,9 @@
 
 .app-Table {
   flex-grow: 1;
-  margin: @gap 0 0;
+  margin: 12px;
   width: 100%;
+  width: calc(~"100vw - " (2 * @gap + 2 * 12px));
 
   color: @ink;
   background: @paper;
@@ -81,17 +85,9 @@
     padding-left: @gap;
   }
 
-  &-table,
-  &-loading,
-  &-noTable {
-    width: calc(~"100vw - " (2 * @gap3));
-    margin: 12px;
-  }
-
   &-table {
-    background-color: @tablePaper;
     border-radius: 3px;
-    border: 1px solid @primary;
+    background-color: @tablePaper;
 
     &-inner {
       div {
@@ -114,18 +110,18 @@
   &-table-inner,
   &-loading,
   &-noTable {
-    height: calc(~"100vh - " (@bar-ht + @gap + @gap + 2px));
+    height: calc(~"100vh - " (@bar-ht + @gap + @resultsHeadingHt + @gap + @gap + @contact-ht + 2px));
   }
 
   &-withPager {
-    height: calc(~"100vh - " (@bar-ht + @gap + @gap + 34px + @gap + 2px));
+    height: calc(~"100vh - " (@bar-ht + @gap + @resultsHeadingHt + @gap + @gap + 34px + @gap + @contact-ht + 2px));
   }
 
   &-withZOptions {
-    height: calc(~"100vh - " (@bar-ht + @gap + @gap + 32px + @gap + 2px));
+    height: calc(~"100vh - " (@bar-ht + @gap + @resultsHeadingHt + @gap + @gap + 32px + @gap + @contact-ht + 2px));
   }
 
   &-withZOptions&-withPager {
-    height: calc(~"100vh - " (@bar-ht + @gap + @gap + 32px + @gap + 34px + @gap + 2px));
+    height: calc(~"100vh - " (@bar-ht + @gap + @resultsHeadingHt + @gap + @gap + 32px + @gap + 34px + @gap + @contact-ht + 2px));
   }
 }
