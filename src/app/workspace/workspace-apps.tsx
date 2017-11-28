@@ -34,7 +34,7 @@ export const HOME = `/${location.pathname.split('/')[1]}/`;
 export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
   validator: {
     name: 'Quick XBRL Validator',
-    description: 'Lorem ipsum dolor sit tsat amet, adipiscing elit ipsum.',
+    description: 'Tool that quickly validates your XBRL filing against a chosen taxonomy',
     action: 'UPLOAD',
     href: `${HOME}validator`,
     filingHref: `${HOME}validator/filing-version/{id}`,
@@ -42,6 +42,7 @@ export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
   },
   viewer: {
     name: 'Quick Viewer',
+    description: 'View your XBRL filing in table format',
     action: 'VIEW',
     href: `${HOME}viewer`,
     filingHref: `${HOME}viewer/filing-version/{id}`,
@@ -49,6 +50,7 @@ export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
   },
   statistics: {
     name: 'Filing Statistics',
+    description: 'View key statistics about your filing',
     action: 'VIEW',
     href: `${HOME}statistics`,
     filingHref: `${HOME}statistics/filing-version/{id}`,
@@ -56,6 +58,7 @@ export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
   },
   benford: {
     name: 'Benford\'s Analyser',
+    description: 'Analyse US SEC filings using Benford’s law',
     action: 'ANALYSE',
     external: true,
     href: `${HOME}benfords-analyser`,
@@ -64,6 +67,7 @@ export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
   },
   changeReport: {
     name: 'XBRL Document Change Report',
+    description: 'Compare two versions of the same filing and review changes',
     action: 'COMPARE',
     external: true,
     href: '/xbrl-document-change-report/',
@@ -71,6 +75,7 @@ export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
   },
   taxonomyInfo: {
     name: 'Quick Taxonomy Info',
+    description: 'Quickly search for concepts or codification references in a taxonomy',
     action: 'CHECK',
     external: true,
     href: '/quick-taxonomy-info/',
@@ -78,6 +83,7 @@ export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
   },
   taxonomyPackager: {
     name: 'Taxonomy Packager',
+    description: 'Create a taxonomy package by adding metadata to your existing taxonomy ZIP file',
     action: 'UPLOAD',
     external: true,
     href: '/taxonomy-packager/',
@@ -85,6 +91,7 @@ export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
   },
   oimConverter: {
     name: 'OIM/JSON Converter',
+    description: 'Convert XBRL to OIM JSON format',
     action: 'DOWNLOAD',
     external: true,
     href: `${HOME}oimConverter`,
