@@ -15,6 +15,7 @@
  */
 
 import * as React from 'react';
+import { Grid, Row, Col } from 'react-bootstrap';
 import { WorkspaceAppSpec } from '../state';
 import { Link } from 'react-router-dom';
 import BenfordIcon from './app-icons/benford';
@@ -26,50 +27,66 @@ import TaxonomyPackagerIcon from './app-icons/taxonomy-packager';
 import ValidatorIcon from './app-icons/validator';
 import ViewerIcon from './app-icons/viewer';
 
+import './workspace-apps.less';
+
 export const HOME = `/${location.pathname.split('/')[1]}/`;
 
 export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
   validator: {
     name: 'Quick XBRL Validator',
+    description: 'Lorem ipsum dolor sit tsat amet, adipiscing elit ipsum.',
+    action: 'UPLOAD',
     href: `${HOME}validator`,
     filingHref: `${HOME}validator/filing-version/{id}`,
     icon: props => <ValidatorIcon {... props } />,
   },
   viewer: {
     name: 'Quick Viewer',
+    action: 'VIEW',
     href: `${HOME}viewer`,
     filingHref: `${HOME}viewer/filing-version/{id}`,
     icon: props => <ViewerIcon {... props } />,
   },
   statistics: {
     name: 'Filing Statistics',
+    action: 'VIEW',
     href: `${HOME}statistics`,
     filingHref: `${HOME}statistics/filing-version/{id}`,
     icon: props => <StatisticsIcon {... props } />,
   },
   benford: {
-    name: 'Benford\'s Analyser', external: true,
+    name: 'Benford\'s Analyser',
+    action: 'ANALYSE',
+    external: true,
     href: `${HOME}benfords-analyser`,
     filingHref: '/benfords-analyser/filing-version/{id}',
     icon: props => <BenfordIcon {... props } />,
   },
   changeReport: {
-    name: 'XBRL Document Change Report', external: true,
+    name: 'XBRL Document Change Report',
+    action: 'COMPARE',
+    external: true,
     href: '/xbrl-document-change-report/',
     icon: props => <ChangeReportIcon {... props } />,
   },
   taxonomyInfo: {
-    name: 'Quick Taxonomy Info', external: true,
+    name: 'Quick Taxonomy Info',
+    action: 'CHECK',
+    external: true,
     href: '/quick-taxonomy-info/',
     icon: props => <TaxonomyInfoIcon {... props } />,
   },
   taxonomyPackager: {
-    name: 'Taxonomy Packager', external: true,
+    name: 'Taxonomy Packager',
+    action: 'UPLOAD',
+    external: true,
     href: '/taxonomy-packager/',
     icon: props => <TaxonomyPackagerIcon {... props } />,
   },
   oimConverter: {
-    name: 'OIM/JSON Converter', external: true,
+    name: 'OIM/JSON Converter',
+    action: 'DOWNLOAD',
+    external: true,
     href: `${HOME}oimConverter`,
     filingHref: '/api/document-service/filing-version/{id}/some-oim-please',
     icon: props => <OIMJsonIcon {... props } />,
@@ -96,24 +113,35 @@ export function linkForFiling(app: WorkspaceAppSpec, filingVersionId?: string): 
 }
 
 function WorkspaceAppTile({app}: {app: WorkspaceAppSpec}): JSX.Element {
-  const { href, external } = linkForFiling(app);
-  return <div>
+  const { href } = linkForFiling(app);
+  return <Col className='app-WorkspaceAppTile'>
+    <div className='app-WorkspaceAppTile-icon'>{app.icon ? app.icon({}) : undefined}</div>
+    <div className='app-WorkspaceAppTile-name'>{app.name}</div>
+    <div className='app-WorkspaceAppTile-description'>{app.description}</div>
     { external ?
-      <a href={href}>{app.name}</a> :
-      <Link to={href}>{app.name}</Link>
+      <a className='app-WorkspaceAppTile-button' href={href}>{app.action}</a> :
+      <Link className='app-WorkspaceAppTile-button' to={href}>{app.action}</Link>
     }
-  </div>;
+  </Col>;
 }
 
 export default function WorkspaceApps(): JSX.Element {
-  return <div>
-    <WorkspaceAppTile app={WORKSPACE_APPS.validator} />
-    <WorkspaceAppTile app={WORKSPACE_APPS.viewer} />
-    <WorkspaceAppTile app={WORKSPACE_APPS.statistics} />
-    <WorkspaceAppTile app={WORKSPACE_APPS.benford} />
-    <WorkspaceAppTile app={WORKSPACE_APPS.changeReport} />
-    <WorkspaceAppTile app={WORKSPACE_APPS.taxonomyInfo} />
-    <WorkspaceAppTile app={WORKSPACE_APPS.taxonomyPackager}/>
-    <WorkspaceAppTile app={WORKSPACE_APPS.oimConverter} />
+  return <div className='app-WorkspaceApps'>
+    <Grid className='app-WorkspaceAppsGrid'>
+      <Row className='app-WorkspaceAppsRow'>
+        <WorkspaceAppTile app={WORKSPACE_APPS.validator} />
+        <WorkspaceAppTile app={WORKSPACE_APPS.taxonomyInfo} />
+        <WorkspaceAppTile app={WORKSPACE_APPS.benford} />
+      </Row>
+      <Row className='app-WorkspaceAppsRow'>
+        <WorkspaceAppTile app={WORKSPACE_APPS.taxonomyPackager}/>
+        <WorkspaceAppTile app={WORKSPACE_APPS.oimConverter} />
+        <WorkspaceAppTile app={WORKSPACE_APPS.viewer} />
+      </Row>
+      <Row className='app-WorkspaceAppsRow'>
+        <WorkspaceAppTile app={WORKSPACE_APPS.statistics} />
+        <WorkspaceAppTile app={WORKSPACE_APPS.changeReport} />
+      </Row>
+    </Grid>
   </div>;
 }
