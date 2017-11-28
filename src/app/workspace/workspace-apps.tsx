@@ -34,7 +34,7 @@ export const HOME = `/${location.pathname.split('/')[1]}/`;
 export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
   validator: {
     name: 'Quick XBRL Validator',
-    description: 'Tool that quickly validates your XBRL filing against a chosen taxonomy',
+    description: 'Quickly validate your XBRL filing against a chosen taxonomy',
     action: 'UPLOAD',
     href: `${HOME}validator`,
     filingHref: `${HOME}validator/filing-version/{id}`,
