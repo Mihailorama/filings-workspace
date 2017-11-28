@@ -30,31 +30,36 @@ import LinkToGitHubIcon from './icons/link-to-github';
 
 import './workspace-apps.less';
 
-export const HOME = `/${location.pathname.split('/')[1]}/`;
+export const ROOT = `/${location.pathname.split('/')[1]}/`;
+
+// We link to external apps that are usually hosted on the same domain.
+// Use absolute links to the production when running on localhost for users running from git checkouts.
+export const EXTERNAL_ROOT = location.hostname === 'localhost'
+? 'https://labs.corefiling.com/' : '/';
 
 export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
   validator: {
     name: 'Quick XBRL Validator',
     description: 'Quickly validate your XBRL filing against a chosen taxonomy',
     action: 'UPLOAD',
-    href: `${HOME}validator`,
-    filingHref: `${HOME}validator/filing-versions/{id}`,
+    href: `${ROOT}validator`,
+    filingHref: `${ROOT}validator/filing-versions/{id}`,
     icon: props => <ValidatorIcon {... props } />,
   },
   viewer: {
     name: 'Quick Viewer',
     description: 'View your XBRL filing in table format',
     action: 'VIEW',
-    href: `${HOME}viewer`,
-    filingHref: `${HOME}viewer/filing-versions/{id}`,
+    href: `${ROOT}viewer`,
+    filingHref: `${ROOT}viewer/filing-versions/{id}`,
     icon: props => <ViewerIcon {... props } />,
   },
   statistics: {
     name: 'Filing Statistics',
     description: 'View key statistics about your filing',
     action: 'VIEW',
-    href: `${HOME}statistics`,
-    filingHref: `${HOME}statistics/filing-versions/{id}`,
+    href: `${ROOT}statistics`,
+    filingHref: `${ROOT}statistics/filing-versions/{id}`,
     icon: props => <StatisticsIcon {... props } />,
   },
   benford: {
@@ -62,16 +67,25 @@ export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
     description: 'Analyse XBRL filings using Benford’s law',
     action: 'ANALYSE',
     external: false,
-    href: `${HOME}benfords-analyser-report`,
-    filingHref: `${HOME}benfords-analyser-report/filing-version/{id}`,
+    href: `${ROOT}benfords-analyser-report`,
+    filingHref: `${ROOT}benfords-analyser-report/filing-version/{id}`,
     icon: props => <BenfordIcon {... props } />,
+  },
+  oimConverter: {
+    name: 'OIM/JSON Converter',
+    description: 'Convert XBRL to OIM JSON format',
+    action: 'DOWNLOAD',
+    external: true,
+    href: `${ROOT}oimConverter`,
+    filingHref: '/api/document-service/filing-versions/{id}/some-oim-please',
+    icon: props => <OIMJsonIcon {... props } />,
   },
   changeReport: {
     name: 'XBRL Document Change Report',
     description: 'Compare two versions of the same filing and review changes',
     action: 'COMPARE',
     external: true,
-    href: '/xbrl-document-change-report/',
+    href: `${EXTERNAL_ROOT}xbrl-document-change-report/`,
     icon: props => <ChangeReportIcon {... props } />,
   },
   taxonomyInfo: {
@@ -79,7 +93,7 @@ export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
     description: 'Quickly search for concepts or codification references in a taxonomy',
     action: 'CHECK',
     external: true,
-    href: '/quick-taxonomy-info/',
+    href: `${EXTERNAL_ROOT}quick-taxonomy-info/`,
     icon: props => <TaxonomyInfoIcon {... props } />,
   },
   taxonomyPackager: {
@@ -87,17 +101,8 @@ export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
     description: 'Create a taxonomy package by adding metadata to your existing taxonomy ZIP file',
     action: 'UPLOAD',
     external: true,
-    href: '/taxonomy-packager/',
+    href: `${EXTERNAL_ROOT}taxonomy-packager/`,
     icon: props => <TaxonomyPackagerIcon {... props } />,
-  },
-  oimConverter: {
-    name: 'OIM/JSON Converter',
-    description: 'Convert XBRL to OIM JSON format',
-    action: 'DOWNLOAD',
-    external: true,
-    href: `${HOME}oimConverter`,
-    filingHref: '/api/document-service/filing-versions/{id}/some-oim-please',
-    icon: props => <OIMJsonIcon {... props } />,
   },
 };
 
