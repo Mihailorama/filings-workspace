@@ -30,7 +30,7 @@ import WorkspaceIcon from './workspace-icon';
 import { User } from '../models';
 import { WorkspaceAppSpec } from '../state';
 import { AUTH_LOGOUT } from '../urls';
-import { linkForFiling, HOME } from '../workspace/workspace-apps';
+import { linkForFiling, ROOT } from '../workspace/workspace-apps';
 
 import './app-bar.less';
 
@@ -62,7 +62,7 @@ export default class AppBar extends Component<AppBarProps> {
     itemGroups.push([{label: 'Log out', href: AUTH_LOGOUT, external: true}]);
 
     const name = app ? app.name : 'Innovations';
-    const href = app ? app.href : HOME;
+    const href = app ? app.href : ROOT;
     const icon = app && app.icon ? app.icon : (props: any) => <WorkspaceIcon {... props} />;
 
     return <header className={classNames('app-AppBar', className)}>
@@ -78,7 +78,7 @@ export default class AppBar extends Component<AppBarProps> {
       </div>
       <nav className='app-AppBar-nav'>
         <ul className='app-AppBar-breadcrumbNav'>
-          <li><Link to={HOME} className='app-AppBar-breadcrumbLink'>Home</Link></li>
+          <li><Link to={ROOT} className='app-AppBar-breadcrumbLink'>Home</Link></li>
         </ul>
         {user && <span className='app-AppBar-userName'>{user.email}</span>}
         <NavMenu itemGroups={itemGroups}/>
