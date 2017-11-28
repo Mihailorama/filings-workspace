@@ -61,7 +61,7 @@ export default class AppBar extends Component<AppBarProps> {
     }
     itemGroups.push([{label: 'Log out', href: AUTH_LOGOUT, external: true}]);
 
-    const name = app ? app.name : 'Workspace';
+    const name = app ? app.name : 'Innovations';
     const href = app ? app.href : HOME;
     const icon = app && app.icon ? app.icon : (props: any) => <WorkspaceIcon {... props} />;
 
