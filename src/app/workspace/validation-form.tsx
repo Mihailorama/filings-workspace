@@ -15,12 +15,12 @@
  */
 
 import * as React from 'react';
-import * as Dropzone from 'react-dropzone';
 import { Component, Props } from 'react';
 
 import { Profile, ValidationParams, paramsAreComplete } from '../models';
-import FileReference from './file-reference';
 import { Form, FormItem, FormActionList, FormAction } from './form';
+import ContactDetails from './contact-details';
+import FileInput from './file-input';
 
 import './validation-form.less';
 
@@ -59,7 +59,7 @@ export default class ValidationForm extends Component<ValidationFormProps, Valid
     const { params } = this.state;
 
     if (!profiles) {
-      return <div  className='app-ValidationForm-loading'>
+      return <div className='app-ValidationForm app-ValidationForm-loading'>
           <span>{error || 'Loading\u2009…'}</span>
         </div>;
     }
@@ -71,38 +71,24 @@ export default class ValidationForm extends Component<ValidationFormProps, Valid
           ? <div className='app-ValidationForm-dropzone app-ValidationForm-errorDropzone'>
               <span  className='app-ValidationForm-error'>{error}</span>
             </div>
-          : <Dropzone
-              className='app-ValidationForm-dropzone'
-              activeClassName='app-ValidationForm-dropzoneActive'
-              multiple={false}
-              accept='.xml,.xbrl,.html,.htm,.zip'
-              maxSize={5 * 1024 * 1024}
-              aria-label='File to validate'
-              onDrop={(files: File[]) => this.onChange({file: files[0]})}
-            >
-              <div>
-                {params.file
-                ? <FileReference className='app-ValidationForm-file' file={params.file}/>
-                : <div>
-                    <h2 className='app-ValidationForm-heading'>Drag &amp; Drop</h2>
-                    <div className='app-ValidationForm-prompt'>
-                      your file here, or <span className='app-ValidationForm-btn'>browse</span>
-                    </div>
-                    <div className='app-ValidationForm-hint'>XBRL, Inline XBRL, or ZIP. 5&thinsp;MB max.</div>
-                  </div>}
-                </div>
-            </Dropzone>
+          : <FileInput file={params.file} onChange={file => this.onChange({file})}/>
         }
       </FormItem>
       <FormItem>
-        <label htmlFor='profile-pickr'>Validation profile</label>
-        <select id='profile-pickr' disabled={!onSubmit} onChange={e => this.onChange({profile: e.currentTarget.value})}>
+        <select
+          id='profile-pickr'
+          disabled={!onSubmit}
+          required
+          defaultValue=''
+          onChange={e => this.onChange({profile: e.currentTarget.value})}>
+          <option key='' value='' disabled hidden>Validation Profile</option>
           {profiles.map(({id, name}) => <option key={id} value={id}>{name}</option>)}
         </select>
       </FormItem>
       <FormActionList>
         <FormAction enabled={onSubmit && paramsAreComplete(params)} primary>Validate</FormAction>
       </FormActionList>
+      <ContactDetails />
     </Form>;
   }
 

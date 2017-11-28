@@ -15,7 +15,7 @@
  */
 
 @import (reference) '../styles/defs';
-
+@import (reference) './file-input';
 
 .form-boxiness() {
   box-sizing: border-box;
@@ -42,35 +42,15 @@
     max-width: (@form-wd - 4 * @gap);
   }
 
-  &-dropzone {
-    width: 100%;
-    height: 275px;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: flex-start;
-    align-items: center;
-
-    background-color: #F8F5F5;
-    background-image: url(validation-form-dragndrop-bg.svg);
-    border-radius: 3px;
-
-    &:before {
-      content: " ";
-      display: block;
-      margin-top: 75px;
-      width: 44px;
-      height: 61px;
-
-      background-image: url(validation-form-dragndrop.svg);
-      background-size: 44px 61px;
-    }
-  }
-
   &-errorDropzone {
+    .app-FileInput;
+    cursor: not-allowed;
+
     font-style: italic;
     color: #E74C3C;
 
     &:before {
+      content: '';
       margin-top: 50px;
       margin-bottom: @gap;
       width: 122px;
@@ -82,7 +62,7 @@
   }
 
   select {
-    width: (@form-wd - 2 * @gap - 110px - @gap);
+    width: @form-wd / @golden;
   }
 
   &-heading {
@@ -99,13 +79,14 @@
     font-size: 14px;
     font-weight: 500;
     line-height: 17px;
-    color: @muted;
+    color: @disabled;
   }
   &-hint {
     margin-top: @gap;
     font-size: 12px;
     font-weight: 300;
     line-height: (14/12);
+    color: @muted;
   }
   &-btn {
     color: @primary;

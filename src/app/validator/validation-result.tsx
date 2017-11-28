@@ -29,7 +29,7 @@ interface Spec {
 
 const specByStatus: {[status: string]: Spec} = {
   loading: {
-    detail: 'Processing\u2009…',
+    detail: 'loading…',
   },
   OK: {
     label: 'Pass',
@@ -61,10 +61,12 @@ export default class ValidationResult extends Component<ValidationResultProps> {
     const lowerStatus = toLowerStatus(status);
     const { label, detail } = specByStatus[status];
 
-    return <div className={classNames('app-ValidationResult', `app-ValidationResult-${lowerStatus}`)}>
-      {label && <b className={classNames('app-ValidationResult-status', `app-ValidationResult-${lowerStatus}Status`)}>{label}</b>}
-      {detail && <p className={classNames('app-ValidationResult-detail', `app-ValidationResult-${lowerStatus}Detail`)}>{detail}</p>}
-      {error && <p className={classNames('app-ValidationResult-errorDetail')}>{error}</p>}
+    return <div className='app-ValidationResult-container'>
+        <div className={classNames('app-ValidationResult', `app-ValidationResult-${lowerStatus}`)}>
+        {label && <div className={classNames('app-ValidationResult-status', `app-ValidationResult-${lowerStatus}Status`)}>{label}</div>}
+        {detail && <div className={classNames('app-ValidationResult-detail', `app-ValidationResult-${lowerStatus}Detail`)}>{detail}</div>}
+        {error && <div className='app-ValidationResult-error'>{error}</div>}
+      </div>
     </div>;
   }
 }
