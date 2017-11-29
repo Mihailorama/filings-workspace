@@ -6,10 +6,15 @@ import { reducer, ViewerState, tablePageKey } from '../reducers';
 import { exampleViewerState, exampleTableMetadata, exampleZOption, exampleQueryableTablePage } from '../../tests/model-examples';
 
 describe('viewerTablesReducer', () => {
-  const initial: ViewerState | undefined = reducer(exampleViewerState, {type: '????'});
+  const initial: ViewerState | undefined = reducer(undefined, {type: '????'});
 
-  it('is initially undefined', () => {
-    expect(initial).toBeUndefined();
+  it('sets initial state', () => {
+    expect(initial).toEqual({
+      selectedTablePage: {},
+      tableRendering: {},
+      tables: {},
+      zOptions: {},
+    });
   });
 
   it('clears tables when fetching', () => {
@@ -33,12 +38,17 @@ describe('viewerTablesReducer', () => {
 });
 
 describe('viewerPageReducer', () => {
-  const initial: ViewerState | undefined = reducer(exampleViewerState, {type: '????'});
+  const initial: ViewerState | undefined = reducer(undefined, {type: '????'});
   const page = {table: exampleTableMetadata, x: 1, y: 2, z: 3};
   const pageKey = tablePageKey(page);
 
-  it('is initially undefined', () => {
-    expect(initial).toBeUndefined();
+  it('sets initial state', () => {
+    expect(initial).toEqual({
+      selectedTablePage: {},
+      tableRendering: {},
+      tables: {},
+      zOptions: {},
+    });
   });
 
   it('clears page when fetching', () => {

@@ -3,10 +3,12 @@ import { reducer, ValidatorState } from '../reducers';
 import { exampleValidatorState } from '../../tests/model-examples';
 
 describe('validatorReducer', () => {
-  const initial: ValidatorState | undefined = reducer(exampleValidatorState, {type: '????'});
+  const initial: ValidatorState | undefined = reducer(undefined, {type: '????'});
 
-  it('is initially undefined', () => {
-    expect(initial).toBeUndefined();
+  it('sets initial state', () => {
+    expect(initial).toEqual({
+      status: {},
+    });
   });
 
   it('clears status when fetching', () => {

@@ -3,10 +3,10 @@ import { reducer, AppBarState } from '../reducers';
 import { exampleAppBarState } from '../../tests/model-examples';
 
 describe('appBarReducer', () => {
-  const initial: AppBarState | undefined = reducer(exampleAppBarState, {type: '????'});
+  const initial: AppBarState | undefined = reducer(undefined, {type: '????'});
 
-  it('is initially undefined', () => {
-    expect(initial).toBeUndefined();
+  it('creates initial state', () => {
+    expect(initial).toEqual({user: {loading: false}});
   });
 
   it('clears user and apps when fetching', () => {

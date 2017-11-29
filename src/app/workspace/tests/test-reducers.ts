@@ -13,11 +13,14 @@ import { WORKSPACE_APPS } from '../workspace-apps';
 import { ValidationParams } from '../../models';
 import { exampleWorkspaceState, exampleRecentFilings } from '../../tests/model-examples';
 
-const initial: WorkspaceState | undefined = reducer(exampleWorkspaceState, {type: '????'});
+const initial: WorkspaceState | undefined = reducer(undefined, {type: '????'});
 
 describe('profilesReducer', () => {
-  it('is initially undefined', () => {
-    expect(initial).toBeUndefined();
+  it('sets initial state', () => {
+    expect(initial).toEqual({
+      profiles: {loading: false, value: []},
+      recentFilings: {loading: false, value: []},
+    });
   });
 
   it('clears profiles when fetching', () => {
@@ -42,9 +45,6 @@ describe('profilesReducer', () => {
 });
 
 describe('filingsReducer', () => {
-  it('is initially undefined', () => {
-    expect(initial).toBeUndefined();
-  });
 
   it('clears filings when fetching', () => {
     const after: WorkspaceState | undefined = reducer(exampleWorkspaceState, fetchFilingsAction());

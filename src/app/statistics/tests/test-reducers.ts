@@ -5,10 +5,12 @@ import { reducer, StatisticsState } from '../reducers';
 import { exampleStatisticsState } from '../../tests/model-examples';
 
 describe('statisticsReducer', () => {
-  const initial: StatisticsState | undefined = reducer(exampleStatisticsState, {type: '????'});
+  const initial: StatisticsState | undefined = reducer(undefined, {type: '????'});
 
-  it('is initially undefined', () => {
-    expect(initial).toBeUndefined();
+  it('sets initial state', () => {
+    expect(initial).toEqual({
+      statistics: {},
+    });
   });
 
   it('clears statistics when fetching', () => {
