@@ -96,7 +96,7 @@ publish:chart:
   dependencies:
     - build:version
   script:
-    - tools/publish.sh
+    - tools/publish.sh filings-workspace
   # Restrict to only publishing on develop/release - don't need to publish fb builds
   # unless we have a CI staging environment for them
   only:
