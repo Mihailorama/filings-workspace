@@ -17,6 +17,9 @@
 @import (reference) '../styles/defs';
 
 .app-ContactDetails {
+  flex-shrink: 0;
+  flex-grow: 0;
+
   display: flex;
   flex-flow: column;
   align-items: center;
@@ -37,6 +40,10 @@
   &-primaryLink {
     padding-top: 14px;
     color: #FFF;
+  }
+
+  &-primaryLink:only-child {
+    padding-top: 34px;
   }
 
   &-secondaryLink {

@@ -21,12 +21,13 @@ import ContactLink from './contact-link';
 
 import './contact-details.less';
 
-export default function ContactDetails({className}: {className?: string}): JSX.Element {
+export default function ContactDetails({className, apiLink}: {className?: string, apiLink?: boolean}): JSX.Element {
   return <div className={classNames('app-ContactDetails', className)}>
-    <a className='app-ContactDetails-link app-ContactDetails-secondaryLink'
+    {apiLink &&
+      <a className='app-ContactDetails-link app-ContactDetails-secondaryLink'
         href='https://github.com/CoreFiling/filings-workspace' target='_blank'>
-      <b className='app-Link'>API available</b>
-    </a>
+        <b className='app-Link'>API available</b>
+      </a>}
     <ContactLink className='app-ContactDetails-link app-ContactDetails-primaryLink' />
   </div>;
 }

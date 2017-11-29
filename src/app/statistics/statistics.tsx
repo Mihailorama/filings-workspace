@@ -55,6 +55,6 @@ export default function Statistics({statistics}: StatisticsProps): JSX.Element {
         {statistics.loading && <div className='app-Statistics-loading'>loading…</div>}
       </div>
     </div>
-    <ContactDetails />
+    <ContactDetails apiLink />
   </div>;
 }
