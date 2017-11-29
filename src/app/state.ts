@@ -25,6 +25,7 @@ import { StatisticsState } from './statistics/reducers';
 import { WorkspaceState } from './workspace/reducers';
 import { ValidatorState } from './validator/reducers';
 import { AppBarState } from './corefiling/reducers';
+import { OimState } from './oim-converter/reducers';
 
 export interface Item<T> {
   loading: boolean;
@@ -35,6 +36,7 @@ export interface Item<T> {
 export interface State {
   appBar: AppBarState;
   benfords: BenfordsState;
+  oimConverter: OimState;
   router: RouterState;
   statistics: StatisticsState;
   validator: ValidatorState;

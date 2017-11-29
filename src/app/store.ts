@@ -25,6 +25,7 @@ import { saga as benfordsSaga } from './benford/sagas';
 import { saga as statisticsSaga } from './statistics/sagas';
 import { saga as validatorSaga } from './validator/sagas';
 import { saga as viewerSaga } from './viewer/sagas';
+import { saga as oimConverterSaga } from './oim-converter/sagas';
 import { saga as workspaceSaga } from './workspace/sagas';
 
 export const history = createHistory();
@@ -43,7 +44,7 @@ const store = createStore(
   composeEnhancers(
     applyMiddleware(sagaMiddleware, routerMiddleware)));
 
-[appBarSaga, benfordsSaga, statisticsSaga, validatorSaga, viewerSaga, workspaceSaga]
+[appBarSaga, benfordsSaga, statisticsSaga, validatorSaga, viewerSaga, oimConverterSaga, workspaceSaga]
   .forEach(s => sagaMiddleware.run(s));
 
 export default store;

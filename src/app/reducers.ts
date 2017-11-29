@@ -20,6 +20,7 @@ import { reducer as validator } from './validator/reducers';
 import { reducer as viewer } from './viewer/reducers';
 import { reducer as workspace } from './workspace/reducers';
 import { reducer as benfords } from './benford/reducers';
+import { reducer as oimConverter } from './oim-converter/reducers';
 import { routerReducer as router } from 'react-router-redux';
 
 export const reducers = {
@@ -30,4 +31,5 @@ export const reducers = {
   validator,
   viewer,
   workspace,
+  oimConverter,
 };
