@@ -22,10 +22,10 @@ import { TableMetadata, Option } from '@cfl/table-rendering-service';
 import { QueryableTablePage } from '@cfl/table-viewer';
 
 import { fetchTablesAction, fetchPageAction } from './actions';
-import Table from './table';
-import TableSelector from './table-selector';
+import Viewer from './viewer';
 import { filingVersionId, FilingRouterProps } from '../containers/filing-version-route';
-import { Item, State, tablePageKey } from '../state';
+import { Item } from '../state';
+import { ViewerState, tablePageKey } from './reducers';
 
 export interface PropsFromState {
   tables: Item<TableMetadata[]>;
@@ -34,58 +34,50 @@ export interface PropsFromState {
   zOptions?: Option[][];
 }
 
-export interface ViewerContainerProps extends FilingRouterProps, PropsFromState {
+export interface ContainerProps extends FilingRouterProps, PropsFromState {
   fetchTablesAction: typeof fetchTablesAction;
   fetchPageAction: typeof fetchPageAction;
 }
 
-class ViewerContainer extends Component<ViewerContainerProps> {
+class Container extends Component<ContainerProps> {
 
   componentDidMount(): void {
     this.props.fetchTablesAction(filingVersionId(this.props));
   }
 
-  componentWillReceiveProps(nextProps: ViewerContainerProps): void {
+  componentWillReceiveProps(nextProps: ContainerProps): void {
     const nextFilingVersionId = filingVersionId(nextProps);
     if (nextFilingVersionId !== filingVersionId(this.props)) {
       this.props.fetchTablesAction(nextFilingVersionId);
     }
   }
 
-  renderTable(): JSX.Element | undefined {
-    const {table, zOptions, selectedTable, fetchPageAction} = this.props;
-    if (selectedTable) {
-      const fvid = filingVersionId(this.props);
-      const onChangePage = (x: number, y: number, z: number) => fetchPageAction(fvid, {table: selectedTable, x, y, z});
-
-      return <Table metadata={selectedTable} zOptions={zOptions} table={table && table.value}
-                    onChangePage={onChangePage} />;
-    }
-    return undefined;
-  }
-
   render(): JSX.Element {
-    const {tables, fetchPageAction} = this.props;
+    const {tables, selectedTable, table, zOptions, fetchPageAction} = this.props;
     const fvid = filingVersionId(this.props);
-    const onChangeTable = (table: TableMetadata) => fetchPageAction(fvid, {table, x: 0, y: 0, z: 0});
-    return <div>
-      { tables && tables.value && [
-          <TableSelector tables={tables.value} onChangeTable={onChangeTable}/>,
-          this.renderTable(),
-        ]
-      }
-    </div>;
+    const onChangePage = (x: number, y: number, z: number) => selectedTable &&
+      fetchPageAction(fvid, {table: selectedTable, x, y, z});
+    const onChangeTable = (t: TableMetadata) => fetchPageAction(fvid, {table: t, x: 0, y: 0, z: 0});
+    return <Viewer
+      tables={tables}
+      selectedTable={selectedTable}
+      table={table}
+      zOptions={zOptions}
+      onChangePage={onChangePage}
+      onChangeTable={onChangeTable}
+    />;
   }
 }
 
 export default connect(
-  (state: State, routerProps: FilingRouterProps): PropsFromState => {
+  ({viewer: state}: {viewer: ViewerState}, routerProps: FilingRouterProps): PropsFromState => {
     const fvid = filingVersionId(routerProps);
     const tables = state.tables[fvid] || {loading: true};
     const page = state.selectedTablePage[fvid];
     const table = page && state.tableRendering[tablePageKey(page)] || {loading: true};
     const zOptions = page && state.zOptions[page.table.id];
+
     return {tables, selectedTable: page && page.table, table, zOptions};
   },
   {fetchTablesAction, fetchPageAction},
-)(ViewerContainer);
+)(Container);

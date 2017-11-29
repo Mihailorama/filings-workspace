@@ -14,80 +14,22 @@
  *  limitations under the License.
  */
 
-/**
- * Reducers (in the Redux sense).
- */
-import { Action } from 'redux';
+import { reducer as appBar } from './corefiling/reducers';
+import { reducer as statistics } from './statistics/reducers';
+import { reducer as validator } from './validator/reducers';
+import { reducer as viewer } from './viewer/reducers';
+import { reducer as workspace } from './workspace/reducers';
+import { reducer as benfords } from './benford/reducers';
+import { reducer as oimConverter } from './oim-converter/reducers';
+import { routerReducer as router } from 'react-router-redux';
 
-import { State } from './state';
-import { reducer as appBarReducer } from './corefiling/reducers';
-import { reducer as statisticsReducer } from './statistics/reducers';
-import { reducer as validatorReducer } from './validator/reducers';
-import { reducer as viewerReducer } from './viewer/reducers';
-import { reducer as workspaceReducer } from './workspace/reducers';
-import { reducer as benfordsReducer } from './benford/reducers';
-import { reducer as oimConverterReducer } from './oim-converter/reducers';
-import { routerReducer } from 'react-router-redux';
-
-export function globalReducer(state: State | undefined, action: Action): State {
-  if (!state) {
-    return {
-      apps: {loading: false, value: []},
-      user: {loading: false},
-      profiles: {loading: false, value: []},
-      recentFilings: {loading: false, value: []},
-      status: {},
-      selectedTablePage: {},
-      statistics: {},
-      tableRendering: {},
-      tables: {},
-      zOptions: {},
-      router: routerReducer(undefined as any, undefined as any),
-      benford: {
-        phase: 'ready',
-        searchText: '',
-        filingName: undefined,
-      },
-      oimConverter: {},
-    };
-  }
-
-  let newState;
-  newState = appBarReducer(state, action);
-  if (newState) {
-    return newState;
-  }
-  newState = statisticsReducer(state, action);
-  if (newState) {
-    return newState;
-  }
-  newState = validatorReducer(state, action);
-  if (newState) {
-    return newState;
-  }
-  newState = viewerReducer(state, action);
-  if (newState) {
-    return newState;
-  }
-  newState = workspaceReducer(state, action);
-  if (newState) {
-    return newState;
-  }
-  newState = benfordsReducer(state, action);
-  if (newState) {
-    return newState;
-  }
-  newState = oimConverterReducer(state, action);
-  if (newState) {
-    return newState;
-  }
-
-  // We should restructure the state so we can switch to using combineReducers.
-  const newRouterState = routerReducer(state.router, action);
-  if (newRouterState) {
-    return {... state, router: newRouterState};
-  }
-
-  return state;
-}
-export default globalReducer;
+export const reducers = {
+  appBar,
+  benfords,
+  router,
+  statistics,
+  validator,
+  viewer,
+  workspace,
+  oimConverter
+};

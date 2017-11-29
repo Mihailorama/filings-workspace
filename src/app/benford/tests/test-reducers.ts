@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-import { reducer } from '../reducers';
+import { reducer, BenfordsState } from '../reducers';
 import { searchAction } from '../actions';
 import { exampleAnalysis, exampleFilingMatch } from '../tests/model-examples';
 import { State } from '../../state';
@@ -22,16 +22,13 @@ import { State } from '../../state';
 describe('reducer', () => {
 
   it('clears all results when searching again', () => {
-    const withResults: any = {
-      benfords: {
-        searchText: 'foo',
-        phase: 'ready',
-        analysisResults: exampleAnalysis,
-        filingName: exampleFilingMatch.filingName,
-      },
+    const withResults: BenfordsState = {
+      searchText: 'foo',
+      phase: 'ready',
+      analysisResults: exampleAnalysis,
+      filingName: exampleFilingMatch.filingName,
     };
-    const appState = reducer(withResults, searchAction('lala')) as State;
-    const newState = appState.benford;
+    const newState = reducer(withResults, searchAction('lala'));
     expect(newState.filingName).toBeUndefined();
     expect(newState.analysisResults).toBeUndefined();
     expect(newState.phase).toEqual('searching');

@@ -18,7 +18,7 @@
 
 .app-ContactDetails {
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: column;
   align-items: center;
   justify-content: center;
 
@@ -26,7 +26,6 @@
     color: inherit;
     text-decoration: inherit;
 
-    position: absolute;
     display: block;
 
     font-size: 14px;
@@ -36,16 +35,12 @@
   }
 
   &-primaryLink {
-    top: 100%;
-
-    padding-top: 40px;
+    padding-top: 14px;
     color: #FFF;
   }
 
   &-secondaryLink {
-    position: absolute;
-    top: 100%;
-    right: 0;
+    align-self: flex-end;
     margin-top: -3px;
 
     box-sizing: border-box;

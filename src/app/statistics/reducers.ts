@@ -16,12 +16,19 @@
 
 import { Action } from 'redux';
 
-import { State } from '../state';
+import { Item } from '../state';
 import { FETCH, FAILED, RECEIVED, FetchAction, FailedAction, ReceivedAction } from './actions';
+import { Statistic } from '@cfl/filing-statistics-service';
 
-export function reducer(state: State | undefined, action: Action): State | undefined {
+export interface StatisticsState {
+  statistics: {[filingVersionId: string]: Item<Statistic[]> | undefined};
+}
+
+export function reducer(state: StatisticsState | undefined, action: Action): StatisticsState | undefined {
   if (!state) {
-    return undefined;
+    return {
+      statistics: {},
+    };
   }
   switch (action.type) {
     case FETCH: {
@@ -37,6 +44,6 @@ export function reducer(state: State | undefined, action: Action): State | undef
       return { ...state, statistics: { ... state.statistics, [filingVersionId]: {loading: false, error} }};
     }
     default:
-      return undefined;
+      return state;
   }
 }

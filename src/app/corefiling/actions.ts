@@ -16,7 +16,7 @@
 
 import { Action } from 'redux';
 
-import { App, User } from '../models';
+import { User } from '../models';
 
 export const FETCH = 'APP_BAR_FETCH';
 export const RECEIVED = 'APP_BAR_RECEIVED';
@@ -24,7 +24,6 @@ export const FAILED = 'APP_BAR_FAILED';
 
 export interface ReceivedAction extends Action {
   user: User;
-  apps: App[];
 }
 
 export interface FailedAction extends Action {
@@ -35,8 +34,8 @@ export function fetchAction(): Action {
   return {type: FETCH};
 }
 
-export function receivedAction(user: User, apps: App[]): ReceivedAction {
-  return {type: RECEIVED, user, apps};
+export function receivedAction(user: User): ReceivedAction {
+  return {type: RECEIVED, user};
 }
 
 export function failedAction(message: string): FailedAction {

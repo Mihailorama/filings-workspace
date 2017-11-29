@@ -19,8 +19,8 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import FilingList from './filing-list';
-import { WorkspaceAppSpec, WorkspaceFiling } from '../state';
 import { MemoryRouter } from 'react-router';
+import { WorkspaceAppSpec, WorkspaceFiling } from './reducers';
 
 const filings: WorkspaceFiling[] = [
   {id: '1', name: 'Filing 1', date: new Date('2017-01-01')},

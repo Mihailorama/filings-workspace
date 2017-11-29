@@ -16,7 +16,6 @@
 
 import * as React from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
-import { WorkspaceAppSpec } from '../state';
 import { Link } from 'react-router-dom';
 import BenfordIcon from './icons/benford';
 import ChangeReportIcon from './icons/change-report';
@@ -29,6 +28,7 @@ import ViewerIcon from './icons/viewer';
 import LinkToGitHubIcon from './icons/link-to-github';
 
 import './workspace-apps.less';
+import { WorkspaceAppSpec } from './reducers';
 
 export const ROOT = `/${location.pathname.split('/')[1]}/`;
 

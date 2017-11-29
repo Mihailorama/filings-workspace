@@ -20,34 +20,36 @@
 import { Action } from 'redux';
 
 import { FETCH, RECEIVED, FAILED, ReceivedAction, FailedAction } from './actions';
-import { State } from '../state';
+import { Item } from '../state';
+import { User } from '../models';
 
-export function reducer(state: State | undefined, action: Action): State | undefined {
+export interface AppBarState {
+  user: Item<User>;
+}
+
+export function reducer(state: AppBarState | undefined, action: Action): AppBarState | undefined {
   if (!state) {
-    return undefined;
+    return {user: {loading: false}};
   }
   switch (action.type) {
     case FETCH: {
       return { ...state,
-        apps: {loading: true},
         user: {loading: true},
       };
     }
     case RECEIVED: {
-      const { apps, user } = action as ReceivedAction;
+      const { user } = action as ReceivedAction;
       return { ...state,
-        apps: {loading: false, value: apps},
         user: {loading: false, value: user},
       };
     }
     case FAILED: {
       const { message } = action as FailedAction;
       return { ...state,
-        apps: {loading: false, error: message},
         user: {loading: false, error: message},
       };
     }
     default:
-      return undefined;
+      return state;
   }
 }

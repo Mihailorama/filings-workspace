@@ -16,19 +16,21 @@
 
 import { Effect } from 'redux-saga';
 import { all, call, put, takeEvery } from 'redux-saga/effects';
+import { TableMetadata } from '@cfl/table-rendering-service';
 
 import {
   FetchTablesAction, FetchPageAction, TABLES_FETCH, PAGE_FETCH,
   receivedTablesAction, fetchPageAction, failedTablesAction, failedPageAction, receivedPageAction,
 } from './actions';
-import { apiFetchJson } from '../api-fetch';
 import QueryableTablePageImpl, { TABLE_WINDOW_HEIGHT } from './models//queryable-table-page-impl';
-import { tableRenderingServiceZOptions, tableRenderingServiceRender, tableRenderingServiceTables } from '../urls';
+import { filingVersionsApi, tablesApi } from '../urls';
 
 export function* fetchTablesSaga(action: FetchTablesAction): IterableIterator<Effect> {
   const { filingVersionId } = action;
   try {
-    const tables = yield call(apiFetchJson, tableRenderingServiceTables(filingVersionId));
+    const tablesWithEmpties: TableMetadata[] = yield call([filingVersionsApi, filingVersionsApi.getTables], {filingVersionId});
+    const tables = tablesWithEmpties.filter(x => !x.empty);
+
     yield put(receivedTablesAction(filingVersionId, tables));
     yield put(fetchPageAction(filingVersionId, {table: tables[0], x: 0, y: 0, z: 0}));
   } catch (res) {
@@ -44,8 +46,9 @@ export function* fetchPageSaga(action: FetchPageAction): IterableIterator<Effect
     const window = {x, y, z, width, height: TABLE_WINDOW_HEIGHT};
 
     const [ zOptions, tableRendering ] = yield all([
-      call(apiFetchJson, tableRenderingServiceZOptions(table.id, 0)),
-      call(apiFetchJson, tableRenderingServiceRender(table.id, window)),
+      call([tablesApi, tablesApi.getTableZOptions], {tableId: table.id, z: 0}),
+      call([tablesApi, tablesApi.renderTable], {tableId: table.id, ...window}),
+
     ]);
     yield put(receivedPageAction(filingVersionId, page, zOptions, new QueryableTablePageImpl(table, tableRendering)));
   } catch (res) {

@@ -18,6 +18,9 @@ import * as React from 'react';
 
 import { Statistic } from '@cfl/filing-statistics-service';
 
+import ContactDetails from '../components/contact-details';
+import { Item } from '../state';
+
 import './statistics.less';
 
 export function StatisticsTable({statistics}: {statistics: Statistic[]}): JSX.Element {
@@ -36,34 +39,22 @@ export function StatisticsTable({statistics}: {statistics: Statistic[]}): JSX.El
   </table>;
 }
 
-function StatisticsPopupTitle({onCloseClick}: {onCloseClick?: () => void}): JSX.Element {
-  return <div className='app-StatisticsPopup-title'>
-    <div className='app-StatisticsPopup-title-text'>Filing statistics</div>
-    <button onClick={onCloseClick} title='Close statistics'>
-      <svg width={7} height={8}>
-        <line x1={0} y1={0} x2={7} y2={8} />
-        <line x1={0} y1={8} x2={7} y2={0} />
-      </svg>
-    </button>
-  </div>;
+export interface StatisticsProps {
+  statistics: Item<Statistic[]>;
 }
 
-export interface StatisticsPopupProps {
-  statistics?: Statistic[];
-  onCloseClick?: () => void;
-}
-
-export default function StatisticsPopup({statistics, onCloseClick}: StatisticsPopupProps): JSX.Element {
-  return <div>
-    <div className='app-StatisticsPopup-container'>
-      <div className='app-StatisticsPopup-background' onClick={onCloseClick} />
-      <div className='app-StatisticsPopup'>
-        <StatisticsPopupTitle onCloseClick={onCloseClick}/>
-        {!statistics && <div className='app-StatisticsPopup-loading' />}
-        {statistics && (statistics.length > 0 ?
-          <StatisticsTable statistics={statistics} /> :
-          <div className='app-StatisticsPopup-noResults'>No statistics.</div>)}
+export default function Statistics({statistics}: StatisticsProps): JSX.Element {
+  return <div className='app-Statistics-container'>
+    <div className='app-Statistics'>
+      <div className='app-Statistics-inner'>
+        <div className='app-Statistics-title'>Filing statistics</div>
+        {statistics.value && (statistics.value.length > 0 ?
+          <StatisticsTable statistics={statistics.value} /> :
+          <div className='app-Statistics-noResults'>No statistics.</div>)}
+        {statistics.error && <div className='app-Statistics-error'>{statistics.error}</div>}
+        {statistics.loading && <div className='app-Statistics-loading'>loading…</div>}
       </div>
     </div>
+    <ContactDetails />
   </div>;
 }

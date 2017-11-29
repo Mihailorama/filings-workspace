@@ -36,6 +36,22 @@ storiesOf('AppBar', module)
   .add('User with name', () => <AppBar app={WORKSPACE_APPS.validator}
     apps={{validator: WORKSPACE_APPS.validator}}
     user={{sub, name: 'Tamandani Pleško', email: 'tp@example.com'}}/>)
-  .add('Multiple apps', () => <AppBar app={WORKSPACE_APPS.validator}
+  .add('Only filing apps', () => <AppBar app={WORKSPACE_APPS.validator}
+    apps={{
+      validator: WORKSPACE_APPS.validator,
+      viewer: WORKSPACE_APPS.viewer,
+      statistics: WORKSPACE_APPS.statistics,
+      benford: WORKSPACE_APPS.benford,
+      oimConverter: WORKSPACE_APPS.oimConverter,
+    }}
+    user={{sub, email: 'tp@example.com'}}/>)
+  .add('Only non-filing apps', () => <AppBar app={WORKSPACE_APPS.changeReport}
+    apps={{
+      changeReport: WORKSPACE_APPS.changeReport,
+      taxonomyInfo: WORKSPACE_APPS.taxonomyInfo,
+      taxonomyPackager: WORKSPACE_APPS.taxonomyPackager,
+    }}
+    user={{sub, email: 'tp@example.com'}}/>)
+  .add('All apps', () => <AppBar app={WORKSPACE_APPS.validator}
     apps={WORKSPACE_APPS}
-    user={{sub, email: 'tp@example.com'}}/>);
+  user={{sub, email: 'tp@example.com'}}/>);

@@ -18,10 +18,11 @@ import * as React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchAction } from './actions';
-import { State, Item } from '../state';
+import { Item } from '../state';
 import { Statistic } from '@cfl/filing-statistics-service';
 import { filingVersionId, FilingRouterProps } from '../containers/filing-version-route';
 import Statistics from './statistics';
+import { StatisticsState } from './reducers';
 
 export interface StatisticsContainerProps extends FilingRouterProps {
   statistics: Item<Statistic[]>;
@@ -43,13 +44,13 @@ class StatisticsContainer extends Component<StatisticsContainerProps> {
 
   render(): JSX.Element {
     const {statistics} = this.props;
-    return <Statistics statistics={statistics && statistics.value} />;
+    return <Statistics statistics={statistics} />;
   }
 
 }
 
 export default connect(
-  (state: State, ownProps: FilingRouterProps) => {
+  ({statistics: state}: {statistics: StatisticsState}, ownProps: FilingRouterProps) => {
     const statistics = state.statistics[filingVersionId(ownProps)] || {loading: true};
     return {statistics};
   },

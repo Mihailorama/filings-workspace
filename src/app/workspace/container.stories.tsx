@@ -21,32 +21,23 @@ import { MemoryRouter } from 'react-router';
 import { storiesOf } from '@storybook/react';
 
 import WorkspaceContainer from './container';
-import { WorkspaceAppSpec, State } from '../state';
 import { profiles } from '../../stories/util';
 import { action } from '@storybook/addon-actions';
+import { WorkspaceAppSpec } from './reducers';
 
 const app: WorkspaceAppSpec = {name: 'Test App', action: 'CHECK', href: '/test-app', filingHref: '/test-app/{id}'};
 
-const etc: State = {
-  apps: {loading: false, value: []},
-  user: {loading: false, value: {email: 'a@b.com', name: 'A Butler', sub: '1234'} },
-  profiles: {loading: false, value: profiles('Profile')},
-  recentFilings: {loading: false, value: [
-    {id: '1', name: 'Filing 1', date: new Date('2017-01-01')},
-    {id: '2', name: 'Filing 2', date: new Date('2017-01-02')},
-  ]},
-  status: {},
-  statistics: {},
-  tables: {},
-  selectedTablePage: {},
-  zOptions: {},
-  tableRendering: {},
-  oimConverter: {},
-  router: undefined as any,
-  benford: undefined as any,
+const etc = {
+  workspace: {
+    profiles: {loading: false, value: profiles('Profile')},
+    recentFilings: {loading: false, value: [
+      {id: '1', name: 'Filing 1', date: new Date('2017-01-01')},
+      {id: '2', name: 'Filing 2', date: new Date('2017-01-02')},
+    ]},
+  },
 };
 
-const funcs: Store<State> = {
+const funcs: Store<any> = {
   getState: () => etc,
   dispatch: action('dispatch') as any,
   subscribe: action('subscribe') as any,

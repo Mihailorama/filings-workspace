@@ -24,9 +24,9 @@ import OimConverterContainer from '../oim-converter/container';
 import WorkspaceContainer from '../workspace/container';
 import BenfordsAnalyserContainer from '../benford/benfords-analysis-container';
 import { WORKSPACE_APPS } from '../workspace/workspace-apps';
-import { WorkspaceAppSpec } from '../state';
 
 import './main.less';
+import { WorkspaceAppSpec } from '../workspace/reducers';
 
 export const appBaseUri = '/filings-app/';
 

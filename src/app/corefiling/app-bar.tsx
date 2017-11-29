@@ -28,11 +28,11 @@ import CoreFilingLogo from './corefiling-logo';
 import NavMenu, { MenuItem } from './nav-menu';
 import WorkspaceIcon from './workspace-icon';
 import { User } from '../models';
-import { WorkspaceAppSpec } from '../state';
 import { AUTH_LOGOUT } from '../urls';
 import { linkForFiling, ROOT } from '../workspace/workspace-apps';
 
 import './app-bar.less';
+import { WorkspaceAppSpec } from '../workspace/reducers';
 
 export interface AppBarProps extends Props<AppBar> {
   apps: {[key: string]: WorkspaceAppSpec};
@@ -43,21 +43,24 @@ export interface AppBarProps extends Props<AppBar> {
 }
 
 export default class AppBar extends Component<AppBarProps> {
+  appMenuItem(app: WorkspaceAppSpec): MenuItem {
+    const link = linkForFiling(app, this.props.filingVersionId);
+    return {label: app.name, href: link.href, external: link.external};
+  }
+
   render(): JSX.Element {
-    const { app, filingVersionId, user, className } = this.props;
+    const { app, user, className } = this.props;
     const apps = Object.keys(this.props.apps).map(key => this.props.apps[key]);
 
     // Assemble the menu.
     const itemGroups: MenuItem[][] = [];
-    if (apps) {
-      const appItems = apps.filter(x => x !== app)
-        .map(x => {
-          const link = linkForFiling(x, filingVersionId);
-          return {label: x.name, href: link.href, external: link.external};
-        });
-      if (appItems.length > 0) {
-        itemGroups.push(appItems);
-      }
+    const filingAppItems = apps.filter(x => x !== app).filter(x => x.filingHref).map(x => this.appMenuItem(x));
+    if (filingAppItems.length > 0) {
+      itemGroups.push(filingAppItems);
+    }
+    const nonFilingAppItems = apps.filter(x => x !== app).filter(x => !x.filingHref).map(x => this.appMenuItem(x));
+    if (nonFilingAppItems.length > 0) {
+      itemGroups.push(nonFilingAppItems);
     }
     itemGroups.push([{label: 'Log out', href: AUTH_LOGOUT, external: true}]);
 

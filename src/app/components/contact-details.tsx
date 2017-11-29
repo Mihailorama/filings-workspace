@@ -14,14 +14,19 @@
  *  limitations under the License.
  */
 
-import { AnalysisResponse } from '@cfl/digit-frequency-analysis-service';
+import * as classNames from 'classnames';
+import * as React from 'react';
 
-export type BenfordPhase = 'ready' | 'searching' | 'analysing' | 'failed';
+import ContactLink from './contact-link';
 
-export interface BenfordState {
-  phase: BenfordPhase;
-  searchText: string;
-  message?: string;
-  filingName?: string;
-  analysisResults?: AnalysisResponse;
+import './contact-details.less';
+
+export default function ContactDetails({className}: {className?: string}): JSX.Element {
+  return <div className={classNames('app-ContactDetails', className)}>
+    <a className='app-ContactDetails-link app-ContactDetails-secondaryLink'
+        href='https://github.com/CoreFiling/filings-app' target='_blank'>
+      <b className='app-Link'>API available</b>
+    </a>
+    <ContactLink className='app-ContactDetails-link app-ContactDetails-primaryLink' />
+  </div>;
 }

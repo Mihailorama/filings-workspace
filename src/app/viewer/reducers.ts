@@ -20,11 +20,43 @@ import {
   TABLES_FETCH, TABLES_RECEIVED, TABLES_FAILED, PAGE_FETCH, PAGE_RECEIVED, PAGE_FAILED,
   FetchTablesAction, ReceivedTablesAction, FailedTablesAction, FetchPageAction, ReceivedPageAction, FailedPageAction,
 } from './actions';
-import { State, tablePageKey } from '../state';
+import { QueryableTablePage } from '@cfl/table-viewer';
+import { Option, TableMetadata } from '@cfl/table-rendering-service';
+import { Item } from '../state';
 
-export function reducer(state: State | undefined, action: Action): State | undefined {
+export interface TablePage {
+  table: TableMetadata;
+  x: number;
+  y: number;
+  z: number;
+}
+
+export interface ViewerState {
+  // The various details we can display for a filing
+  tables: {[filingVersionId: string]: Item<TableMetadata[]>};
+  // UI state tracking the selected table
+  selectedTablePage: {[filingVersionId: string]: TablePage | undefined};
+
+  // UI state tracking the table rendering options.
+  zOptions: {[tableId: string]: Option[][] | undefined};
+
+  // Per-table rendering details.  Does this vary with z-options?
+  tableRendering: {[tablePageKey: string]: Item<QueryableTablePage>};
+}
+
+export function tablePageKey(page: TablePage): string {
+  const { table: {id}, x, y, z } = page;
+  return `${id}(${x},${y},${z})`;
+};
+
+export function reducer(state: ViewerState | undefined, action: Action): ViewerState | undefined {
   if (!state) {
-    return undefined;
+    return {
+      selectedTablePage: {},
+      tableRendering: {},
+      tables: {},
+      zOptions: {},
+    };
   }
   switch (action.type) {
     case TABLES_FETCH: {
@@ -68,6 +100,6 @@ export function reducer(state: State | undefined, action: Action): State | undef
       };
     }
     default:
-      return undefined;
+      return state;
   }
 }

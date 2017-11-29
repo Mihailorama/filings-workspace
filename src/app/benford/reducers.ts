@@ -14,9 +14,6 @@
  *  limitations under the License.
  */
 
-/**
- * Reducers (in the Redux sense).
- */
 import { Action } from 'redux';
 
 import {
@@ -27,29 +24,45 @@ import {
   ANALYSE_RESULTS_RECEIVED, AnalyseResultsReceivedAction,
   FAILED,
 } from './actions';
-import { State } from '../state';
 
-export function reducer(state: State, action: Action): State | undefined {
-  const {benford} = state;
+import { AnalysisResponse } from '@cfl/digit-frequency-analysis-service';
+import { BenfordPhase } from './models';
+
+export interface BenfordsState {
+  phase: BenfordPhase;
+  searchText: string;
+  message?: string;
+  filingName?: string;
+  analysisResults?: AnalysisResponse;
+}
+
+export function reducer(state: BenfordsState | undefined, action: Action): BenfordsState {
+  if (!state) {
+    return {
+      phase: 'ready',
+      searchText: '',
+      filingName: undefined,
+    };
+  }
   switch (action.type)  {
     case SEARCH_TEXT_CHANGED: {
       const { searchText } = action as SearchTextChangedAction;
-      return { ...state, benford: {... benford, searchText} };
+      return { ...state, searchText };
     }
     case SEARCH: {
-      return { ...state, benford: {... benford, filingName: undefined, analysisResults: undefined, phase: 'searching'}};
+      return { ...state, filingName: undefined, analysisResults: undefined, phase: 'searching'};
     }
     case SEARCH_RESULTS_RECEIVED: {
       const { filingName } = action as SearchResultsReceivedAction;
-      return { ...state, benford: {... benford, filingName, phase: 'analysing'} };
+      return { ...state, filingName, phase: 'analysing'};
     }
     case FAILED: {
       const { message } = action as FailedAction;
-      return { ...state, benford: {... benford, phase: 'failed', message }};
+      return { ...state, phase: 'failed', message };
     }
     case ANALYSE_RESULTS_RECEIVED: {
       const { results } = action as AnalyseResultsReceivedAction;
-      return { ...state, benford: {... benford, phase: 'ready', analysisResults: results }};
+      return { ...state, phase: 'ready', analysisResults: results };
     }
     default:
       break;

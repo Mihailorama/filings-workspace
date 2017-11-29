@@ -6,8 +6,7 @@ import {
   fetchPageAction, receivedPageAction, failedPageAction,
 } from '../actions';
 import { fetchTablesSaga, fetchPageSaga } from '../sagas';
-import { apiFetchJson } from '../../api-fetch';
-import { tableRenderingServiceTables, tableRenderingServiceZOptions, tableRenderingServiceRender } from '../../urls';
+import { filingVersionsApi, tablesApi } from '../../urls';
 import { exampleTableMetadata, exampleZOption, exampleTableChunk } from '../../tests/model-examples';
 
 describe('fetchTablesSaga', () => {
@@ -16,9 +15,13 @@ describe('fetchTablesSaga', () => {
   it('dispatches RECEIVED if all goes well', () => {
     const saga = fetchTablesSaga(fetchTablesAction(filingVersionId));
 
-    expect(saga.next().value).toEqual(call(apiFetchJson, tableRenderingServiceTables(filingVersionId)));
-    expect(saga.next([exampleTableMetadata]).value).toEqual(put(
-      receivedTablesAction(filingVersionId, [exampleTableMetadata])));
+    expect(saga.next().value).toEqual(
+      call([filingVersionsApi, filingVersionsApi.getTables], {filingVersionId}));
+    const tableMetadatas = [exampleTableMetadata, {...exampleTableMetadata, id: 'bar', empty: true}, {...exampleTableMetadata, id: 'baz'}];
+    expect(saga.next(tableMetadatas).value).toEqual(
+      put(receivedTablesAction(filingVersionId, [tableMetadatas[0], tableMetadatas[2]])));  // Omitting the empty table (INV-171).
+    expect(saga.next().value).toEqual(
+      put(fetchPageAction(filingVersionId, {table: tableMetadatas[0], x: 0, y: 0, z: 0})));
   });
 
   it('dispatches FAILED if call to service fails', () => {
@@ -40,8 +43,8 @@ describe('fetchPageSaga', () => {
     const expectedWindow = {x: page.x, y: page.y, z: page.z, width: expectedWidth, height: TABLE_WINDOW_HEIGHT};
 
     expect(saga.next().value).toEqual(all([
-      call(apiFetchJson, tableRenderingServiceZOptions(page.table.id, 0)),
-      call(apiFetchJson, tableRenderingServiceRender(page.table.id, expectedWindow)),
+      call([tablesApi, tablesApi.getTableZOptions], {tableId: page.table.id, z: 0}),
+      call([tablesApi, tablesApi.renderTable], {tableId: page.table.id, ...expectedWindow}),
     ]));
     expect(saga.next([[[exampleZOption]], exampleTableChunk]).value).toEqual(put(
       receivedPageAction(filingVersionId, page, [[exampleZOption]], new QueryableTablePageImpl(page.table, exampleTableChunk))));
