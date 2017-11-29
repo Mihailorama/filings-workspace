@@ -35,11 +35,11 @@ export function reducer(state: State, action: Action): State | undefined {
     }
     case RECEIVED_FILING_VERSION: {
       const { filingVersion } = action as FilingVersionReceivedAction;
-      return { ...state, oimConverter: {... oimConverter, filingVersion } };
+      return { ...state, oimConverter: {... oimConverter, message: undefined, filingVersion } };
     }
     case RECEIVED_DOCUMENT_CONTENT: {
       const { documentContents } = action as DocumentContentReceivedAction;
-      return { ...state, oimConverter: {... oimConverter, documentContents } };
+      return { ...state, oimConverter: {... oimConverter, message: undefined, documentContents } };
     }
     default:
       break;

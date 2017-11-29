@@ -45,8 +45,9 @@ class OimConverterContainer extends Component<OimConverterContainerProps> {
   }
 
   render(): JSX.Element {
-    const {filingVersion, getDocumentContentAction, documentContents} = this.props;
+    const {filingVersion, getDocumentContentAction, documentContents, message} = this.props;
     return <OimConverter filingVersion={filingVersion}
+                         message={message}
                          documentContentFetcher={getDocumentContentAction}
                          documentContent={documentContents}/>;
   }
