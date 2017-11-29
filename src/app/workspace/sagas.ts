@@ -26,7 +26,7 @@ import {
 import { apiFetchJson } from '../api-fetch';
 import { documentServiceFilingVersion, documentServiceCategories, DOCUMENT_SERVICE_FILINGS } from '../urls';
 import { Filing, FilingVersion, Category } from '../models';
-import { WorkspaceFiling } from '../state';
+import { WorkspaceFiling } from './reducers';
 
 export const POLL_MILLIS = 1000;
 

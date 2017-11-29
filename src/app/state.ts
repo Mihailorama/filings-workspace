@@ -18,12 +18,13 @@
  * State of the app as a whole.
  */
 
-import { User, App, Profile, ValidationStatus } from './models';
-import { Statistic } from '@cfl/filing-statistics-service';
-import { QueryableTablePage } from '@cfl/table-viewer';
-import { Option, TableMetadata } from '@cfl/table-rendering-service';
 import { RouterState } from 'react-router-redux';
-import { BenfordState } from './benford/state';
+import { BenfordsState } from './benford/reducers';
+import { ViewerState } from './viewer/reducers';
+import { StatisticsState } from './statistics/reducers';
+import { WorkspaceState } from './workspace/reducers';
+import { ValidatorState } from './validator/reducers';
+import { AppBarState } from './corefiling/reducers';
 
 export interface Item<T> {
   loading: boolean;
@@ -31,63 +32,12 @@ export interface Item<T> {
   value?: T;
 }
 
-export interface UploadStatus {
-  uploading: boolean;
-  error?: string;
-}
-
-export interface TablePage {
-  table: TableMetadata;
-  x: number;
-  y: number;
-  z: number;
-}
-
-export interface WorkspaceAppSpec {
-  name: string;
-  href: string;
-  action: 'VIEW' | 'UPLOAD' | 'ANALYSE' | 'CHECK' | 'DOWNLOAD' | 'COMPARE';
-  description?: string;
-  filingHref?: string;
-  external?: boolean;
-  icon?: (extraProps: any) => JSX.Element;
-}
-
-export interface WorkspaceFiling {
-  id: string;
-  name: string;
-  date: Date;
-}
-
-export function tablePageKey(page: TablePage): string {
-  const { table: {id}, x, y, z } = page;
-  return `${id}(${x},${y},${z})`;
-};
-
 export interface State {
-  apps: Item<App[]>;
-  profiles: Item<Profile[]>;
-  user: Item<User>;
-
-  // UI state tracking an in-progress upload.
-  upload?: UploadStatus;
-  // The recent filings.
-  recentFilings: Item<WorkspaceFiling[]>;
-
-  // The various details we can display for a filing
-  status: {[filingVersionId: string]: Item<ValidationStatus>};
-  statistics: {[filingVersionId: string]: Item<Statistic[]> | undefined};
-  tables: {[filingVersionId: string]: Item<TableMetadata[]>};
-  // UI state tracking the selected table
-  selectedTablePage: {[filingVersionId: string]: TablePage | undefined};
-
-  // UI state tracking the table rendering options.
-  zOptions: {[tableId: string]: Option[][] | undefined};
-
-  // Per-table rendering details.  Does this vary with z-options?
-  tableRendering: {[tablePageKey: string]: Item<QueryableTablePage>};
-
-  benford: BenfordState;
-
+  appBar: AppBarState;
+  benfords: BenfordsState;
   router: RouterState;
+  statistics: StatisticsState;
+  validator: ValidatorState;
+  viewer: ViewerState;
+  workspace: WorkspaceState;
 }

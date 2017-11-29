@@ -28,11 +28,11 @@ import CoreFilingLogo from './corefiling-logo';
 import NavMenu, { MenuItem } from './nav-menu';
 import WorkspaceIcon from './workspace-icon';
 import { User } from '../models';
-import { WorkspaceAppSpec } from '../state';
 import { AUTH_LOGOUT } from '../urls';
 import { linkForFiling, ROOT } from '../workspace/workspace-apps';
 
 import './app-bar.less';
+import { WorkspaceAppSpec } from '../workspace/reducers';
 
 export interface AppBarProps extends Props<AppBar> {
   apps: {[key: string]: WorkspaceAppSpec};

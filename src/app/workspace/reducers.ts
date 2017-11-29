@@ -33,11 +33,44 @@ import {
   UPLOAD_FAILED,
   ShowUploadAction,
 } from './actions';
-import { State } from '../state';
+import { Item } from '../state';
+import { Profile } from '../models';
 
-export function reducer(state: State | undefined, action: Action): State | undefined {
+export interface UploadStatus {
+  uploading: boolean;
+  error?: string;
+}
+
+export interface WorkspaceAppSpec {
+  name: string;
+  href: string;
+  action: 'VIEW' | 'UPLOAD' | 'ANALYSE' | 'CHECK' | 'DOWNLOAD' | 'COMPARE';
+  description?: string;
+  filingHref?: string;
+  external?: boolean;
+  icon?: (extraProps: any) => JSX.Element;
+}
+
+export interface WorkspaceFiling {
+  id: string;
+  name: string;
+  date: Date;
+}
+
+export interface WorkspaceState {
+  profiles: Item<Profile[]>;
+  // UI state tracking an in-progress upload.
+  upload?: UploadStatus;
+  // The recent filings.
+  recentFilings: Item<WorkspaceFiling[]>;
+}
+
+export function reducer(state: WorkspaceState | undefined, action: Action): WorkspaceState | undefined {
   if (!state) {
-    return undefined;
+    return {
+      profiles: {loading: false, value: []},
+      recentFilings: {loading: false, value: []},
+    };
   }
   switch (action.type) {
     case PROFILES_FETCH: {
@@ -75,6 +108,6 @@ export function reducer(state: State | undefined, action: Action): State | undef
       return { ...state, upload: {uploading: false, error} };
     }
     default:
-      return undefined;
+      return state;
   }
 }

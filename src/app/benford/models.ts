@@ -14,6 +14,8 @@
  *  limitations under the License.
  */
 
+export type BenfordPhase = 'ready' | 'searching' | 'analysing' | 'failed';
+
 /**
  * Minimal model of the Platform search API results.
  */

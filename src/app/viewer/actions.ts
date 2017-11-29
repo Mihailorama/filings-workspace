@@ -17,7 +17,7 @@
 import { Action } from 'redux';
 import { QueryableTablePage } from '@cfl/table-viewer';
 import { Option, TableMetadata } from '@cfl/table-rendering-service';
-import { TablePage } from '../state';
+import { TablePage } from './reducers';
 
 export const TABLES_FETCH = 'TABLES_VIEWER_FETCH';
 export const TABLES_RECEIVED = 'TABLES_VIEWER_RECEIVED';

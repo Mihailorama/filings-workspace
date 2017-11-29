@@ -18,13 +18,14 @@ import * as React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchProfilesAction, fetchFilingsAction, uploadAction, showUpload } from './actions';
-import { Item, State, WorkspaceFiling, UploadStatus, WorkspaceAppSpec } from '../state';
+import { Item } from '../state';
 import WorkspaceApps from './workspace-apps';
 import FilingList from './filing-list';
 import Upload from './upload';
 import { Profile } from '../models';
 
 import './container.less';
+import { WorkspaceFiling, UploadStatus, WorkspaceAppSpec, WorkspaceState } from './reducers';
 
 interface PropsFromState {
   filings: Item<WorkspaceFiling[]>;
@@ -89,10 +90,8 @@ class WorkspaceContainer extends Component<WorkspaceContainerProps> {
 }
 
 export default connect(
-  (state: State): PropsFromState => {
-    const filings = state.recentFilings || {loading: true};
-    const profiles = state.profiles;
-    const upload = state.upload;
+  ({workspace: state}: {workspace: WorkspaceState}): PropsFromState => {
+    const {recentFilings: filings = {loading: true}, profiles, upload} = state;
     return {filings, profiles, upload};
   },
   {fetchProfilesAction, fetchFilingsAction, uploadAction, showUpload},

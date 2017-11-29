@@ -23,38 +23,48 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import Main, { appBaseUri } from './main';
-import { State, tablePageKey } from '../state';
+import { State } from '../state';
 import { profiles } from '../../stories/util';
 import QueryableTablePageImpl from '../viewer/models/queryable-table-page-impl';
+import { tablePageKey } from '../viewer/reducers';
 
 const { tables, zOptions, tableChunk } = (require('../../stories/table-a.json'));
 const table = new QueryableTablePageImpl(tables[0], tableChunk);
 const page = {table: tables[0], x: 0, y: 0, z: 0};
 
 const etc: State = {
-  apps: {loading: false, value: []},
-  user: {loading: false, value: {email: 'a@b.com', name: 'A Butler', sub: '1234'} },
-  profiles: {loading: false, value: profiles('Profile')},
-  recentFilings: {loading: false, value: [
-    {id: '1', name: 'Filing 1', date: new Date('2017-01-01')},
-    {id: '2', name: 'Filing 2', date: new Date('2017-01-02')},
-  ]},
-  status: {1: {loading: false, value: 'WARNING'}},
-  statistics: {1: {loading: false, value: [
-    {format: 'integer', name: 'facts', value: 123, label: 'Fact count'},
-    {format: 'integer', name: 'tables', value: 12, label: 'Table count'},
-    {format: 'integer', name: 'wallies', value: 1, label: 'Wally count'},
-    {format: 'percentage', name: 'tagged', value: 12.3, label: 'Percentage tagged'},
-  ]}},
-  tables: {1: {loading: false, value: tables}},
-  selectedTablePage: {1: page},
-  zOptions: {'01901ff9-d32f-4148-bbff-3c868bc60bd7': zOptions},
-  tableRendering: {},
-  router: undefined as any,
-  benford: undefined as any,
+  appBar: {
+    user: {loading: false, value: {email: 'a@b.com', name: 'A Butler', sub: '1234'} },
+  },
+  workspace: {
+    profiles: {loading: false, value: profiles('Profile')},
+    recentFilings: {loading: false, value: [
+      {id: '1', name: 'Filing 1', date: new Date('2017-01-01')},
+      {id: '2', name: 'Filing 2', date: new Date('2017-01-02')},
+    ]},
+  },
+  statistics: {
+    statistics: {1: {loading: false, value: [
+      {format: 'integer', name: 'facts', value: 123, label: 'Fact count'},
+      {format: 'integer', name: 'tables', value: 12, label: 'Table count'},
+      {format: 'integer', name: 'wallies', value: 1, label: 'Wally count'},
+      {format: 'percentage', name: 'tagged', value: 12.3, label: 'Percentage tagged'},
+    ]}},
+  },
+  validator: {
+    status: {1: {loading: false, value: 'WARNING'}},
+  },
+  viewer: {
+    tables: {1: {loading: false, value: tables}},
+    selectedTablePage: {1: page},
+    zOptions: {'01901ff9-d32f-4148-bbff-3c868bc60bd7': zOptions},
+    tableRendering: {},
+  },
+  router: undefined!,
+  benfords: undefined!,
 };
 
-etc.tableRendering[tablePageKey(page)] = {loading: false, value: table};
+etc.viewer.tableRendering[tablePageKey(page)] = {loading: false, value: table};
 
 const funcs: Store<State> = {
   getState: () => etc,

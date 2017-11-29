@@ -15,8 +15,8 @@
  */
 
 import { Action } from 'redux';
-import { WorkspaceFiling, WorkspaceAppSpec } from '../state';
 import { Profile, ValidationParams } from '../models';
+import { WorkspaceFiling, WorkspaceAppSpec } from './reducers';
 
 export const PROFILES_FETCH = 'WORKSPACE_PROFILES_FETCH';
 export const PROFILES_RECEIVED = 'WORKSPACE_PROFILES_RECEIVED';

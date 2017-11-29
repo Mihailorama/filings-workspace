@@ -17,10 +17,11 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
 
-import { Item, UploadStatus } from '../state';
+import { Item } from '../state';
 import { ValidationParams, Profile } from '../models';
 import ContactDetails from '../components/contact-details';
 import ValidationForm from './validation-form';
+import { UploadStatus } from './reducers';
 
 import './upload.less';
 

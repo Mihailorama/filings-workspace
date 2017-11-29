@@ -20,9 +20,10 @@ import { connect } from 'react-redux';
 
 import { ValidationStatus } from '../models';
 import { fetchAction } from './actions';
-import { State, Item } from '../state';
+import { Item } from '../state';
 import { filingVersionId, FilingRouterProps } from '../containers/filing-version-route';
 import ValidationResult from './validation-result';
+import { ValidatorState } from './reducers';
 
 export interface ValidatorContainerProps extends FilingRouterProps {
   status: Item<ValidationStatus>;
@@ -50,7 +51,7 @@ class ValidatorContainer extends Component<ValidatorContainerProps> {
 }
 
 export default connect(
-  (state: State, ownProps: FilingRouterProps) => {
+  ({validator: state}: {validator: ValidatorState}, ownProps: FilingRouterProps) => {
     const status = state.status[filingVersionId(ownProps)] || {loading: true};
     return {status};
   },

@@ -19,10 +19,10 @@ import { Component, Props } from 'react';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { AnalysisResponse } from '@cfl/digit-frequency-analysis-service';
 
-import { State } from '../state';
-import { BenfordPhase } from './state';
 import BenfordsAnalysis from './benfords-analysis';
 import { analyseAction, searchAction, searchTextChangedAction } from './actions';
+import { BenfordPhase } from './models';
+import { BenfordsState } from './reducers';
 
 type OwnProps = Props<BenfordsAnalysisContainer>;
 
@@ -81,8 +81,8 @@ class BenfordsAnalysisContainer extends Component<BenfordsAnalysisContainerProps
   }
 }
 
-function propsFromState(state: State): PropsFromState {
-  const { message, phase, searchText, filingName, analysisResults: analysis } = state.benford;
+function propsFromState({benfords: state}: {benfords: BenfordsState}): PropsFromState {
+  const { message, phase, searchText, filingName, analysisResults: analysis } = state;
   return { message, phase, searchText, filingName, analysis };
 }
 

@@ -17,11 +17,18 @@
 import { Action } from 'redux';
 
 import { FETCH, FAILED, RECEIVED, FetchAction, FailedAction, ReceivedAction } from './actions';
-import { State } from '../state';
+import { Item } from '../state';
+import { ValidationStatus } from '../models';
 
-export function reducer(state: State | undefined, action: Action): State | undefined {
+export interface ValidatorState {
+  status: {[filingVersionId: string]: Item<ValidationStatus>};
+}
+
+export function reducer(state: ValidatorState | undefined, action: Action): ValidatorState | undefined {
   if (!state) {
-    return undefined;
+    return {
+      status: {},
+    };
   }
   switch (action.type) {
     case FETCH: {
@@ -37,6 +44,6 @@ export function reducer(state: State | undefined, action: Action): State | undef
       return { ...state, status: { ... state.status, [filingVersionId]: {loading: false, error} }};
     }
     default:
-      return undefined;
+      return state;
   }
 }
