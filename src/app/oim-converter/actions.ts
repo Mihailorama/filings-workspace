@@ -44,22 +44,6 @@ export function filingVersionReceivedAction(filingVersion: FilingVersion): Filin
   return {type: RECEIVED_FILING_VERSION, filingVersion};
 }
 
-export interface GetDocumentContentAction extends Action {
-  documentId: string;
-}
-
-export function getDocumentContentAction(documentId: string): GetDocumentContentAction {
-  return {type: GET_DOCUMENT_CONTENT, documentId};
-}
-
-export interface DocumentContentReceivedAction extends Action {
-  documentContents: string;
-}
-
-export function documentContentReceivedAction(documentContents: string): DocumentContentReceivedAction {
-  return {type: RECEIVED_DOCUMENT_CONTENT, documentContents};
-}
-
 export interface FailedAction extends Action {
   message?: string;
 }

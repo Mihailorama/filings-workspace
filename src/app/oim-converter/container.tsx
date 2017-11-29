@@ -17,7 +17,7 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { connect, MapDispatchToProps } from 'react-redux';
-import { getFilingVersionAction, getDocumentContentAction } from './actions';
+import { getFilingVersionAction } from './actions';
 import OimState from './state';
 
 import { filingVersionId, FilingRouterProps } from '../containers/filing-version-route';
@@ -28,7 +28,6 @@ export type OimConverterContainerProps = PropsFromDispatch & OimState & FilingRo
 
 interface PropsFromDispatch {
   getFilingVersionAction: typeof getFilingVersionAction;
-  getDocumentContentAction: typeof getDocumentContentAction;
 }
 
 class OimConverterContainer extends Component<OimConverterContainerProps> {
@@ -45,17 +44,14 @@ class OimConverterContainer extends Component<OimConverterContainerProps> {
   }
 
   render(): JSX.Element {
-    const {filingVersion, getDocumentContentAction, documentContents, message} = this.props;
-    return <OimConverter filingVersion={filingVersion}
-                         message={message}
-                         documentContentFetcher={getDocumentContentAction}
-                         documentContent={documentContents}/>;
+    const {filingVersion, message} = this.props;
+    return <OimConverter filingVersion={filingVersion} message={message}/>;
   }
 
 }
 
 const propsFromDispatch: MapDispatchToProps<PropsFromDispatch, {}> = {
-  getFilingVersionAction, getDocumentContentAction,
+  getFilingVersionAction,
 };
 
 export default connect(state => state.oimConverter, propsFromDispatch)(OimConverterContainer);

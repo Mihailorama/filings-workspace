@@ -21,24 +21,14 @@ import { FilingVersion } from '@cfl/document-service';
 
 import {
   GET_FILING_VERSION, GetFilingVersionAction, filingVersionReceivedAction,
-  GET_DOCUMENT_CONTENT, GetDocumentContentAction, documentContentReceivedAction,
   failedAction,
 } from './actions';
-import { filingVersion, documentContent } from './urls';
+import { filingVersion } from './urls';
 
 export function* filingVersionSaga(action: GetFilingVersionAction): IterableIterator<Effect> {
   try {
     const result: FilingVersion = yield call(filingVersion, action.filingVersionId);
     yield put(filingVersionReceivedAction(result));
-  } catch (res) {
-    yield put(failedAction(`Error searching (${res.message || res.statusText || res.status}).`));
-  }
-}
-
-export function* documentContentSaga(action: GetDocumentContentAction): IterableIterator<Effect> {
-  try {
-    const content: string = yield call(documentContent, action.documentId);
-    yield put(documentContentReceivedAction(content));
   } catch (res) {
     yield put(failedAction(`Error searching (${res.message || res.statusText || res.status}).`));
   }
@@ -50,6 +40,5 @@ export function* documentContentSaga(action: GetDocumentContentAction): Iterable
 export function* saga(): IterableIterator<Effect> {
   yield all([
     takeLatest(GET_FILING_VERSION, filingVersionSaga),
-    takeLatest(GET_DOCUMENT_CONTENT, documentContentSaga),
   ]);
 }
