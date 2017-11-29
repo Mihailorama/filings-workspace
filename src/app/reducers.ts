@@ -31,5 +31,5 @@ export const reducers = {
   validator,
   viewer,
   workspace,
-  oimConverter
+  oimConverter,
 };
