@@ -25,7 +25,7 @@ import { StatisticsState } from './statistics/reducers';
 import { WorkspaceState } from './workspace/reducers';
 import { ValidatorState } from './validator/reducers';
 import { AppBarState } from './corefiling/reducers';
-import OimState from './oim-converter/state';
+import { OimState } from './oim-converter/reducers';
 
 export interface Item<T> {
   loading: boolean;

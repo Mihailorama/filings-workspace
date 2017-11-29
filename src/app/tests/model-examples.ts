@@ -223,6 +223,7 @@ export const exampleStatisticsState: StatisticsState = {
 export const exampleState: State = {
   appBar: exampleAppBarState,
   benfords: undefined!,
+  oimConverter: undefined!,
   router: undefined!,
   statistics: exampleStatisticsState,
   validator: exampleValidatorState,

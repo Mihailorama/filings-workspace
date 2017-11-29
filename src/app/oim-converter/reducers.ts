@@ -19,26 +19,33 @@
  */
 import { Action } from 'redux';
 
+import { FilingVersion } from '@cfl/document-service';
 import {
   GET_FILING_VERSION_FAILED, FailedAction,
   RECEIVED_FILING_VERSION, FilingVersionReceivedAction,
 } from './actions';
-import { State } from '../state';
 
-export function reducer(state: State, action: Action): State | undefined {
-  const {oimConverter} = state;
+export interface OimState {
+  filingVersion?: FilingVersion;
+  message?: string;
+}
+
+export function reducer(state: OimState | undefined, action: Action): OimState {
+  if (!state) {
+    return {};
+  }
   switch (action.type)  {
     case GET_FILING_VERSION_FAILED: {
       const { message } = action as FailedAction;
-      return { ...state, oimConverter: {...oimConverter, message}};
+      return { ...state, message };
     }
     case RECEIVED_FILING_VERSION: {
       const { filingVersion } = action as FilingVersionReceivedAction;
-      return { ...state, oimConverter: {... oimConverter, message: undefined, filingVersion } };
+      return { ...state, message: undefined, filingVersion };
     }
     default:
       break;
   }
 
-  return undefined;
+  return state;
 }

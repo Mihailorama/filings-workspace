@@ -18,7 +18,7 @@ import * as React from 'react';
 import { Component } from 'react';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { getFilingVersionAction } from './actions';
-import OimState from './state';
+import { OimState } from './reducers';
 
 import { filingVersionId, FilingRouterProps } from '../containers/filing-version-route';
 

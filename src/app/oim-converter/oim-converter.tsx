@@ -35,7 +35,7 @@ function contents(props: OimConverterProps): JSX.Element {
       No JSON download available.
     </div>;
   }
-  return <div className='app-OimConverter-loading'>loading...</div>;
+  return <div className='app-OimConverter-loading'>loading…</div>;
 }
 
 export default function OimConverter(props: OimConverterProps): JSX.Element {

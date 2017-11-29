@@ -68,5 +68,5 @@ export function reducer(state: BenfordsState | undefined, action: Action): Benfo
       break;
   }
 
-  return undefined;
+  return state;
 }

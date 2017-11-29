@@ -17,7 +17,6 @@
 import { reducer, BenfordsState } from '../reducers';
 import { searchAction } from '../actions';
 import { exampleAnalysis, exampleFilingMatch } from '../tests/model-examples';
-import { State } from '../../state';
 
 describe('reducer', () => {
 
