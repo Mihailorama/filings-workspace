@@ -68,7 +68,7 @@ export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
     action: 'ANALYSE',
     external: false,
     href: `${ROOT}benfords-analyser-report`,
-    filingHref: `${ROOT}benfords-analyser-report/filing-version/{id}`,
+    filingHref: `${ROOT}benfords-analyser-report/filing-versions/{id}`,
     icon: props => <BenfordIcon {... props } />,
   },
   oimConverter: {
