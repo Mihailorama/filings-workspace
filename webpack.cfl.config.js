@@ -23,7 +23,7 @@ let isLoggedIn = true;
 
 const mergedConfig = merge.smart(mainConfig, {
   output: {
-    publicPath: `${baseUrl}/filings-app/`,
+    publicPath: `${baseUrl}/filings-workspace/`,
   },
   devtool: 'inline-source-map',
   watch: true,
@@ -39,7 +39,7 @@ const mergedConfig = merge.smart(mainConfig, {
     ca: fs.readFileSync(path.resolve(devDir, 'digicert.pem')),
     key: fs.readFileSync(path.resolve(devDir, 'star_cfl_io.key')),
     historyApiFallback: {
-      index: `${baseUrl}/filings-app/index.html`,
+      index: `${baseUrl}/filings-workspace/index.html`,
     },
     proxy: {
       '/api/user': {
@@ -81,7 +81,7 @@ const mergedConfig = merge.smart(mainConfig, {
       });
       app.get('/api/apps', (req, res) => {
         res.json([
-          {"id":"filings-app","name":"Filings App","href":"/filings-app/","colour":"#69BEAB","iconHref":"/img/logo-beacon.svg","features":[]},
+          {"id":"filings-workspace","name":"Filings App","href":"/filings-workspace/","colour":"#69BEAB","iconHref":"/img/logo-beacon.svg","features":[]},
           {"id":"beacon","name":"Beacon","href":"/beacon/","colour":"#3c7c34","iconHref":"/img/logo-beacon.svg","features":[]},
           {"id":"account","name":"Manage account","href":"/auth/account","colour":"#3A75C4","features":[]},
           {"id":"sms","name":"Manage organisation","href":"/sms/","colour":"#3A75C4","features":[]},

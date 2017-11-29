@@ -1,5 +1,5 @@
 {
-  "name": "@cfl/filings-app",
+  "name": "@cfl/filings-workspace",
   "version": "1.2.1-local",
   "cfl": {
     "group": {
@@ -8,10 +8,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/CoreFiling/filings-app.git"
+    "url": "https://github.com/CoreFiling/filings-workspace.git"
   },
   "license": "Apache-2.0",
-  "homepage": "https://github.com/CoreFiling/filings-app",
+  "homepage": "https://github.com/CoreFiling/filings-workspace",
   "scripts": {
     "prepublishOnly": "rm -rf www && npm run compile",
     "compile": "npm run compile:webpack",
@@ -26,7 +26,7 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "prestart": "npm run compile:webpack",
-    "start": "simple-platform-server -d www -a filings-app -p 8080"
+    "start": "simple-platform-server -d www -a filings-workspace -p 8080"
   },
   "config": {
     "devserver-https": true,

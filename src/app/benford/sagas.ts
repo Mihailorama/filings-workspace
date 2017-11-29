@@ -38,7 +38,7 @@ export function* searchSaga(action: SearchAction): IterableIterator<Effect> {
       while (!(yield call(isFilingVersionReady, filingVersionId))) {
         yield call(delay, POLL_MILLIS);
       }
-      yield put(push(`/filings-app/benfords-analyser-report/filing-versions/${filingVersionId}`));
+      yield put(push(`/filings-workspace/benfords-analyser-report/filing-versions/${filingVersionId}`));
     }
   } catch (res) {
     yield put(failedAction(`Error searching (${res.message || res.statusText || res.status}).`));

@@ -28,7 +28,7 @@ import { WORKSPACE_APPS } from '../workspace/workspace-apps';
 import './main.less';
 import { WorkspaceAppSpec } from '../workspace/reducers';
 
-export const appBaseUri = '/filings-app/';
+export const appBaseUri = '/filings-workspace/';
 
 function workspaceContainerForApp(app: WorkspaceAppSpec): (props: RouteComponentProps<any>) => JSX.Element {
   return props => <WorkspaceContainer {... props} app={app} />;
