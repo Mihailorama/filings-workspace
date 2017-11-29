@@ -14,12 +14,214 @@
  *  limitations under the License.
  */
 
- @import (reference) '../styles/defs';
+@import (reference) '../styles/defs';
 
- .app-Workspace {
-   width: 500px;
-   background: @paper;
-   color: @ink;
-   border-radius: 3px;
-   padding: 10px;
- }
+.app-FilingListPage-container {
+  display: flex;
+  flex-direction: column;
+  margin: @gap3;
+  height: calc(~"100vh" - (@bar-ht + @gap3 + @gap3));
+}
+
+.app-FilingListPage {
+  color: @ink;
+  background: @paper;
+  border-radius: 3px;
+
+  box-shadow: 0 15px 50px 0 rgba(0, 0, 0, 0.3);
+
+  flex-shrink: 0;
+  flex-grow: 1;
+  padding: @gap2 @gap @gap;
+  display: flex;
+  flex-direction: column;
+
+  &-header {
+    flex-basis: auto;
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-bottom: @gap;
+    padding: 0 92px;
+
+    display: flex;
+    justify-content: space-around;
+  }
+
+  &-search {
+    margin-left: 60px;
+    flex-grow: 1;
+    flex-shrink: 0;
+  }
+
+  &-uploadButton {
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    // Align icon and text centrally
+    display: flex;
+    align-items: center;
+    line-height: 1;
+
+    svg {
+      margin-right: 10px;
+      fill: @secondary;
+    }
+
+    &:hover svg, &:active svg {
+      fill: white;
+    }
+  }
+
+  &-inner {
+    flex-grow: 1;
+    flex-shrink: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    border-radius: 3px;
+    border: 1px solid @primary;
+
+    height: 200px;
+  }
+
+  .app-FilingList {
+    @cell-ht: 30px;
+
+    display: flex;
+    flex-direction: column;
+
+    &-header,
+    &-row {
+      flex-grow: 0;
+      flex-shrink: 0;
+
+      height: @cell-ht;
+      display: flex;
+      align-items: stretch;
+
+      &-name,
+      &-date {
+        box-sizing: border-box;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        line-height: @cell-ht;
+        padding: 0 @gap;
+      }
+
+      &-name {
+        width: calc(~"(100vw - " (@gap3 + @gap3 + @gap + @gap) ~") * 0.8");
+        flex-grow: 0;
+        flex-shrink: 0;
+      }
+
+      &-date {
+        flex-grow: 1;
+        flex-shrink: 1;
+        text-align: center;
+      }
+    }
+
+    &-header {
+      background-color: @primary-lt;
+      color: white;
+      text-align: center;
+
+      &-name {
+        font-weight: bold;
+        border-right: 1px solid white;
+      }
+    }
+
+    &-row {
+      border-bottom: 1px solid @primary;
+      text-decoration: none;
+      color: @secondary;
+      font-size: 12px;
+
+      &:nth-of-type(even) {
+        background-color: @tablePaper;
+      }
+
+      &-name {
+        border-right: 1px solid @primary;
+      }
+
+      &:hover,
+      &:active {
+        background-color: @primary;
+        color: white;
+      }
+    }
+
+    &-list {
+      overflow-y: auto;
+    }
+  }
+
+  &-loading,
+  &-noFilings,
+  &-error {
+    flex-grow: 1;
+
+    display: flex;
+    flex-flow: column wrap;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    padding: @gap3;
+  }
+
+  &-loading,
+  &-noFilings,
+  &-error {
+    &:before {
+      content: " ";
+      display: block;
+      background-position: 50% 50%;
+      background-repeat: no-repeat;
+    }
+  }
+
+  &-loading {
+    font-weight: 300;
+    font-style: italic;
+
+    &:before {
+      width: 134px;
+      height: 134px;
+      background-image: url(../assets/loading.gif);
+    }
+  }
+
+  &-noFilings,
+  &-error {
+    flex-flow: row;
+
+    font-size: 36px;
+    font-weight: 300;
+
+    &:before {
+      width: 38px;
+      height: 38px;
+      margin-right: 8px;
+
+      background-size: auto 100%;
+    }
+  }
+
+  &-noFilings-upload {
+    color: @primary;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  &-noFilings:before {
+    background-image: url(../assets/intriguing.svg);
+  }
+
+  &-error:before {
+    background-image: url(../assets/error.svg);
+  }
+}

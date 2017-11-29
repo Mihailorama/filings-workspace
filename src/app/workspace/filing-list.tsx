@@ -15,39 +15,74 @@
  */
 
 import * as React from 'react';
-import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-import { linkForFiling, LinkDef } from './workspace-apps';
 import { WorkspaceAppSpec, WorkspaceFiling } from './reducers';
+import UploadIcon from './upload-icon';
+import { linkForFiling, LinkDef } from './workspace-apps';
 
-interface FilingListProps {
+import Button from '../components/button';
+import ContactDetails from '../components/contact-details';
+
+import { Item } from '../state';
+
+import './filing-list.less';
+
+interface FilingListPage {
   app: WorkspaceAppSpec;
-  filings?: WorkspaceFiling[];
+  filings: Item<WorkspaceFiling[]>;
   showUpload: () => void;
 }
 
-function createLink({href, external}: LinkDef, name: string, date: Date): JSX.Element {
+function createFilingRow({href, external}: LinkDef, name: string, date: Date): JSX.Element {
   const format = new Intl.DateTimeFormat(window.navigator.language || 'en-US', {
     year: 'numeric', month: 'short', day: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric',
   });
-  const text = `${name} - ${format.format(date)}`;
+  const innards = [
+    <div className='app-FilingList-row-name'>{name}</div>,
+    <div className='app-FilingList-row-date'>{format.format(date)}</div>,
+  ];
   return external ?
-    <a href={href}>{text}</a> :
-    <Link to={href}>{text}</Link>;
+    <a className='app-FilingList-row' href={href}>{innards}</a> :
+    <Link className='app-FilingList-row' to={href}>{innards}</Link>;
 }
 
-export default function FilingList({app, filings, showUpload}: FilingListProps): JSX.Element {
-  return <div>
-    <h2>{app.name}</h2>
-    <div><Button onClick={showUpload}>Upload</Button></div>
-    {filings ?
-      filings.map(filing =>
-        <div key={filing.id}>
-          {createLink(linkForFiling(app, filing.id), filing.name, filing.date)}
-        </div>,
-      ) :
-      <div>Loading ...</div>
-    }
+function FilingList({app, filings}: {app: WorkspaceAppSpec, filings: WorkspaceFiling[]}): JSX.Element {
+  return <div className='app-FilingList'>
+    <div className='app-FilingList-header'>
+      <div className='app-FilingList-header-name'>Recent Filings</div>
+      <div className='app-FilingList-header-date'>Date</div>
+    </div>
+    <div className='app-FilingList-list'>
+      {filings.map(filing =>
+        createFilingRow(linkForFiling(app, filing.id), filing.name, filing.date))}
+    </div>
+  </div>;
+}
+
+export default function FilingListPage({app, filings, showUpload}: FilingListPage): JSX.Element {
+  return <div className='app-FilingListPage-container'>
+    <div className='app-FilingListPage'>
+      <div className='app-FilingListPage-header'>
+        <Button className='app-FilingListPage-uploadButton' primary onClick={showUpload}>
+          <UploadIcon />
+          <div>Upload</div>
+        </Button>
+        <div className='app-FilingListPage-search'></div>
+      </div>
+      <div className='app-FilingListPage-inner'>
+        {filings.loading ?
+          <div className='app-FilingListPage-loading'>loading…</div> :
+          filings.error ?
+            <div className='app-FilingListPage-error'>{filings.error}</div> :
+            filings.value && filings.value.length ?
+              <FilingList app={app} filings={filings.value} /> :
+              <div className='app-FilingListPage-noFilings'>
+                <div><a onClick={showUpload} className='app-FilingListPage-noFilings-upload'>Upload a filing</a> to begin.</div>
+              </div>
+        }
+      </div>
+    </div>
+    <ContactDetails />
   </div>;
 }

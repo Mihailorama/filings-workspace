@@ -82,7 +82,7 @@ class WorkspaceContainer extends Component<WorkspaceContainerProps> {
         }
         return <Upload profiles={profiles} upload={upload} onSubmit={params => uploadAction(app, params)} />;
       }
-      return <FilingList app={app} filings={filings && filings.value} showUpload={() => showUpload(true)} />;
+      return <FilingList app={app} filings={filings} showUpload={() => showUpload(true)} />;
     }
     return <WorkspaceApps />;
   }
