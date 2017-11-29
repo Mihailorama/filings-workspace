@@ -15,19 +15,21 @@
  */
 
 import { Effect } from 'redux-saga';
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { all, call, put, takeEvery } from 'redux-saga/effects';
+import { FilingVersion } from '@cfl/document-service';
+import { FilingVersionSummary } from '@cfl/validation-service';
 
 import { receivedAction, failedAction, FETCH, FetchAction } from './actions';
-import {
-  validationServiceFilingVersion,
-} from '../urls';
-import { apiFetchJson } from '../api-fetch';
+import { filingsApi, validationFilingVersionsApi } from '../urls';
 
 export function* fetchSaga(action: FetchAction): IterableIterator<Effect> {
   const { filingVersionId } = action;
   try {
-    const validationSummary = yield call(apiFetchJson, validationServiceFilingVersion(filingVersionId));
-    yield put(receivedAction(filingVersionId, validationSummary.severity));
+    const [validationSummary, filingVersion]: [FilingVersionSummary, FilingVersion] = yield all([
+      call([validationFilingVersionsApi, validationFilingVersionsApi.getFilingVersion], {filingVersionId}),
+      call([filingsApi, filingsApi.getFilingVersion], {filingVersionId}),
+    ]);
+    yield put(receivedAction(filingVersionId, filingVersion.filing.name, validationSummary.severity));
   } catch (res) {
     yield put(failedAction(filingVersionId, res.message || res.statusText || `Status: ${res.status}`));
   }

@@ -52,6 +52,7 @@ const etc: State = {
     ]}},
   },
   validator: {
+    names: {1: 'Example filing.zip'},
     status: {1: {loading: false, value: 'WARNING'}},
   },
   viewer: {

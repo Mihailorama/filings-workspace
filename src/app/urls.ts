@@ -20,6 +20,8 @@ import { StatisticsApiFactory } from '@cfl/filing-statistics-service';
 import { apiFetch } from './api-fetch';
 import { App } from './models';
 import { FilingversionsApiFactory, TablesApiFactory } from '@cfl/table-rendering-service';
+import { FilingsApiFactory } from '@cfl/document-service';
+import { FilingversionsApiFactory as ValidationFilingversionsApiFactory } from '@cfl/validation-service';
 
 export const USER = '/api/user';
 export const APPS = '/api/apps';
@@ -31,19 +33,17 @@ const APP_HELP = uriTemplates('{+base}static/user-guide.html');
 export const appHome = ({href}: App) => APP_HOME.fillFromObject({base: href});
 export const appHelp = ({href}: App) => APP_HELP.fillFromObject({base: href});
 
-const DOCUMENT_SERVICE_BASE = '/api/document-service/v1/';
-const DOCUMENT_SERVICE_CATEGORIES = uriTemplates(DOCUMENT_SERVICE_BASE + 'categories/{category}');
-export const DOCUMENT_SERVICE_FILINGS = DOCUMENT_SERVICE_BASE + 'filings/';
-const DOCUMENT_SERVICE_FILING_VERSION = uriTemplates(DOCUMENT_SERVICE_BASE + 'filing-versions/{filingVersionId}');
+const DOCUMENT_SERVICE_PREFIX = '/api/document-service/v1';
+export const filingsApi = FilingsApiFactory(apiFetch, DOCUMENT_SERVICE_PREFIX);
+const DOCUMENT_SERVICE_CATEGORIES = uriTemplates(DOCUMENT_SERVICE_PREFIX + '/categories/{category}');
+export const DOCUMENT_SERVICE_FILINGS = DOCUMENT_SERVICE_PREFIX + '/filings/';
+const DOCUMENT_SERVICE_FILING_VERSION = uriTemplates(DOCUMENT_SERVICE_PREFIX + '/filing-versions/{filingVersionId}');
 
 export const documentServiceCategories = (category: 'validation') => DOCUMENT_SERVICE_CATEGORIES.fillFromObject({category});
 export const documentServiceFilingVersion = (filingVersionId: string) => DOCUMENT_SERVICE_FILING_VERSION.fillFromObject({filingVersionId});
 
-const VALIDATION_SERVICE_BASE = '/api/validation-service/v1/';
-const VALIDATION_SERVICE_FILING_VERSION = uriTemplates(VALIDATION_SERVICE_BASE + 'filing-versions/{filingVersionId}');
-
-export const validationServiceFilingVersion = (filingVersionId: string) =>
-  VALIDATION_SERVICE_FILING_VERSION.fillFromObject({filingVersionId});
+const VALIDATION_SERVICE_PREFIX = '/api/validation-service/v1';
+export const validationFilingVersionsApi = ValidationFilingversionsApiFactory(apiFetch, VALIDATION_SERVICE_PREFIX);
 
 const TABLE_RENDERING_SERVICE_PREFIX = '/api/table-rendering-service/v1';
 export const filingVersionsApi = FilingversionsApiFactory(apiFetch, TABLE_RENDERING_SERVICE_PREFIX);

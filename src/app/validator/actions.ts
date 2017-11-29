@@ -15,7 +15,7 @@
  */
 
 import { Action } from 'redux';
-import { ValidationStatus } from '../models';
+import { ValidationStatus } from '@cfl/validation-service';
 
 export const FETCH = 'VALIDATOR_FETCH';
 export const RECEIVED = 'VALIDATOR_RECEIVED';
@@ -27,6 +27,7 @@ export interface FetchAction extends Action {
 
 export interface ReceivedAction extends Action {
   filingVersionId: string;
+  filingName: string;
   status: ValidationStatus;
 }
 
@@ -39,8 +40,8 @@ export function fetchAction(filingVersionId: string): FetchAction {
   return {type: FETCH, filingVersionId};
 }
 
-export function receivedAction(filingVersionId: string, status: ValidationStatus): ReceivedAction {
-  return {type: RECEIVED, filingVersionId, status};
+export function receivedAction(filingVersionId: string, filingName: string, status: ValidationStatus): ReceivedAction {
+  return {type: RECEIVED, filingVersionId, filingName, status};
 }
 
 export function failedAction(filingVersionId: string, error: string): FailedAction {

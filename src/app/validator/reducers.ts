@@ -15,18 +15,20 @@
  */
 
 import { Action } from 'redux';
+import { ValidationStatus } from '@cfl/validation-service';
 
 import { FETCH, FAILED, RECEIVED, FetchAction, FailedAction, ReceivedAction } from './actions';
 import { Item } from '../state';
-import { ValidationStatus } from '../models';
 
 export interface ValidatorState {
+  names: {[filingVersionId: string]: String | undefined};
   status: {[filingVersionId: string]: Item<ValidationStatus>};
 }
 
 export function reducer(state: ValidatorState | undefined, action: Action): ValidatorState | undefined {
   if (!state) {
     return {
+      names: {},
       status: {},
     };
   }
@@ -36,8 +38,11 @@ export function reducer(state: ValidatorState | undefined, action: Action): Vali
       return { ...state, status: { ... state.status, [filingVersionId]: {loading: true} }};
     }
     case RECEIVED: {
-      const { filingVersionId, status } = action as ReceivedAction;
-      return { ...state, status: { ... state.status, [filingVersionId]: {loading: false, value: status} }};
+      const { filingVersionId, filingName, status } = action as ReceivedAction;
+      return { ...state,
+        names: { ... state.names, [filingVersionId]: filingName },
+        status: { ... state.status, [filingVersionId]: {loading: false, value: status} },
+      };
     }
     case FAILED: {
       const { filingVersionId, error } = action as FailedAction;

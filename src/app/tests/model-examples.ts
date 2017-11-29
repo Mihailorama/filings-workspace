@@ -15,10 +15,11 @@
  */
 
 import { User, App, Category, Filing, FilingVersion, Profile,
-  TableRenderingWindow, ValidationServiceFilingVersionSummary } from '../models';
+  TableRenderingWindow } from '../models';
 import { Statistic } from '@cfl/filing-statistics-service';
 import { QueryableTablePage } from '@cfl/table-viewer';
 import { Breakdown, Option, TableHeader, TableMetadata, TableChunk } from '@cfl/table-rendering-service';
+import { FilingVersionSummary } from '@cfl/validation-service';
 
 import { State } from '../state';
 import { ViewerState, TablePage } from '../viewer/reducers';
@@ -107,7 +108,7 @@ export const exampleFilingVersion: FilingVersion = {
   },
 };
 
-export const exampleValidationServiceFilingVersionSummary: ValidationServiceFilingVersionSummary = {
+export const exampleValidationServiceFilingVersionSummary: FilingVersionSummary = {
   id: exampleFilingVersion.id,
   severity: 'OK',
 };
@@ -213,6 +214,7 @@ export const exampleWorkspaceState: WorkspaceState = {
 };
 
 export const exampleValidatorState: ValidatorState = {
+  names: {'f09be954-1895-4954-b333-6c9c89b833f1': 'Example Filing.zip'},
   status: {'f09be954-1895-4954-b333-6c9c89b833f1': {loading: false, value: 'OK'}},
 };
 
