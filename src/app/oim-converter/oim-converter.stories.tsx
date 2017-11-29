@@ -9,7 +9,9 @@ storiesOf('OIM Converter', module)
     return <OimConverter />;
   })
   .add('Without download', () => {
-    const exampleFilingVersion: any = {documents: [ {category: 'something-else', id: '6d504704-cfed-4400-8772-44da2fc4c145'}]};
+    const exampleFilingVersion: any = {
+      documents: [ {category: 'something-else', id: '6d504704-cfed-4400-8772-44da2fc4c145'}, ],
+    };
     return <OimConverter filingVersion={exampleFilingVersion} />;
   })
   .add('Without documents', () => {

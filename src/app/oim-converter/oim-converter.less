@@ -2,43 +2,62 @@
 @import (reference) '../styles/defs';
 
 .app-OimConverter {
+  flex-grow: 1;
+  flex-shrink: 1;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 
-  &-box {
+  height: calc(~ "100vh" - @bar-ht);
+  width: 100%;
+
+  background-color: @secondary;
+  color: #FFF;
+
+  font-weight: 300;
+  font-size: 36px;
+  line-height: 42px;
+
+  &-loading {
+    font-size: 14px;
+    line-height: 16px;
+    font-style: italic;
+  }
+
+  &-image {
+    width: 208px;
+    height: 208px;
+    background-repeat: no-repeat;
+    background-size: 208px 208px;
+    margin-bottom: 30px;
+  }
+
+  &-error {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-radius: 3px;
-    box-shadow: 0 3px 7px 0 rgba(0,0,0,0.3);
 
-    padding: 30px 15px;
-    width: 255px;
-
-    background-color: @paper;
-    color: @ink;
-
-    margin: 25px;
-    font-size: 14px;
-    line-height: 18px;
+    &Image {
+      background-image: url(./error.svg);
+    }
   }
 
-  &-title {
-    margin-bottom: 20px;
-    font-size: 20px;
-    line-height: 30px;
-  }
+  &-download {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-  &-button {
-    color: #FFF !important;
-    background-color: @primary !important;
-    border: 0.5px solid @primary2 !important;
+    &Image {
+      background-image: url(./download.svg);
+    }
 
-    &:hover,
-    &:active {
-      border-color: @primary !important;
-      background-color: @secondary !important;
+    &Button {
+      margin-top: 20px;
+
+      &:hover {
+        border-color: #FFF;
+      }
     }
   }
 }

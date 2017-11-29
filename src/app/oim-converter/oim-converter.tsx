@@ -15,28 +15,32 @@ interface OimConverterProps {
 function contents(props: OimConverterProps): JSX.Element {
   const { message, filingVersion } = props;
   if (message) {
-    return <div>{message}</div>;
+    return <div className='app-OimConverter-error'>
+      <div className='app-OimConverter-image app-OimConverter-errorImage'/>
+      {message}
+    </div>;
   }
   if (filingVersion) {
     const jsonDocuments = filingVersion.documents.filter(d => d.category === 'json-rendering');
     if (jsonDocuments.length > 0) {
       window.location.href = documentContentURL(jsonDocuments[0].id);
-      return <Button className='app-OimConverter-button'
-                     onClick={() => window.location.href = documentContentURL(jsonDocuments[0].id)}>
-              Download again
-             </Button>;
+      return <div className='app-OimConverter-download'>
+        <div className='app-OimConverter-image app-OimConverter-downloadImage'/>
+        Downloaded
+        <Button primary className='app-OimConverter-downloadButton'>Download again</Button>
+      </div>;
     }
-    return <div>No JSON download available.</div>;
+    return <div className='app-OimConverter-error'>
+      <div className='app-OimConverter-image app-OimConverter-errorImage'/>
+      No JSON download available.
+    </div>;
   }
-  return <div>Loading...</div>;
+  return <div className='app-OimConverter-loading'>loading...</div>;
 }
 
 export default function OimConverter(props: OimConverterProps): JSX.Element {
   return <div className='app-OimConverter'>
-    <div className='app-OimConverter-box'>
-      <div className='app-OimConverter-title'>OIM/JSON Conversion</div>
-      {contents(props)}
-    </div>
+    {contents(props)}
   </div>;
 
 }
