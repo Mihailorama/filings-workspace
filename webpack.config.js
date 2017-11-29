@@ -34,7 +34,7 @@ let config = {
     extensions: ['.tsx', '.ts', '.js', '.less', '.css', '.json'],
   },
   output: {
-    publicPath: '',
+    publicPath: '/filings-workspace/',
     path: buildPath,
     filename: '[name].[hash].js'
   },
