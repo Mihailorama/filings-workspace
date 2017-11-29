@@ -129,6 +129,7 @@ export const exampleTableMetadata: TableMetadata = {
   x: exampleTableHeader,
   y: exampleTableHeader,
   z: exampleTableHeader,
+  empty: false,
 };
 
 export const exampleTableChunk: TableChunk = {
