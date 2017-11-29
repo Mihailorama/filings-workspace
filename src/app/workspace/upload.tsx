@@ -38,7 +38,7 @@ export default function Upload(props: UploadProps): JSX.Element {
     <div className={classNames('app-Upload', {'app-Upload-loading': loading})}>
       <div className='app-Upload-formHolder'>
         <ValidationForm profiles={profiles.value} error={upload.error} onSubmit={onSubmit}/>
-        <ContactDetails />
+        <ContactDetails apiLink={true} />
       </div>
     </div>
   );

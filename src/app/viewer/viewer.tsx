@@ -56,7 +56,7 @@ export default class Viewer extends React.Component<ViewerProps> {
               onChangePage={onChangePage} onChangeTable={onChangeTable}/>
         }
       </section>
-      <ContactDetails />
+      <ContactDetails apiLink={true} />
     </div>;
   }
 }
