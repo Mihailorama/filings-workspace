@@ -27,6 +27,7 @@ export interface TableProps {
   zOptions?: Option[][];
   table?: QueryableTablePage;
   onChangePage?: (x: number, y: number, z: number) => void;
+  onChangeTable?: (table: TableMetadata) => void;
 }
 export default function Table(props: TableProps): JSX.Element {
   const { metadata, zOptions, table, onChangePage } = props;

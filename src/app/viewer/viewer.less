@@ -16,32 +16,58 @@
 
 @import (reference) '../styles/defs';
 
-.clearfix() {  // Needed because Bootstrap implements grid with floats like some kind of cave person.
-  &:after {
-    clear: both;
-    display: block;
-    width: 0;
-    height: 0;
-    content: "";
-  }
+.app-Viewer-container {
+  display: flex;
+  flex-direction: column;
+  margin: @gap3;
+  height: calc(~"100vh" - (@bar-ht + @gap3 + @gap3));
 }
 
-.app-Table {
-  flex-grow: 1;
-  flex-shrink: 0;
-  margin: 12px;
-
+.app-Viewer {
   color: @ink;
   background: @paper;
+  border-radius: 3px;
 
+  box-shadow: 0 15px 50px 0 rgba(0, 0, 0, 0.3);
+
+  flex-shrink: 0;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
 
-  &-nav,
-  &-pager {
-    margin-bottom: @gap;
+  &-resultHeading {
+    flex-shrink: 0;
 
-    .clearfix();
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+
+    margin: 12px 12px 0px 12px;
+  }
+
+  &-error {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: start;
+
+    margin-top: @gap;
+
+    text-align: center;
+    font-size: 36px;
+    font-weight: 300;
+
+    &:before {
+      content: " ";
+      width: 38px;
+      height: 38px;
+      margin-right: 8px;
+
+      background-image: url(../assets/error.svg);
+      background-size: auto 100%;
+      background-repeat: no-repeat;
+    }
   }
 
   &-loading {
@@ -50,56 +76,22 @@
     justify-content: center;
     align-items: center;
 
+    font-weight: 300;
+    font-style: italic;
+
     &:before {
       content: " ";
+      margin-top: @gap;
       display: block;
-      width: 240px;
-      height: 240px;
+      width: 140px;
+      height: 140px;
       background-image: url(../assets/loading.gif);
       background-position: 50% 50%;
       background-repeat: no-repeat;
-      background-size: 300px 300px;
     }
   }
 
-  &-tableSelect {
-    flex-basis: auto;
-    flex-grow: 0;
-    flex-shrink: 1;
-  }
-
-  &-nav {
-    padding: 0 @gap;
-    > div {
-      display: flex;
-      flex-flow: row wrap;
-    }
-  }
-
-  &-pager {
-    padding-left: @gap;
-  }
-
-  &-table {
-    flex-grow: 1;
-    flex-shrink: 0;
-
-    display: flex;
-    flex-direction: column;
-
-    border-radius: 3px;
-    background-color: @tablePaper;
-
-    &-inner {
-      div {
-        box-sizing: border-box;
-      }
-    }
-  }
-
-  &-table-inner {
-    height: 200px;
-    flex-grow: 1;
-    flex-shrink: 0;
+  &-tableSelector {
+    width: 100%;
   }
 }

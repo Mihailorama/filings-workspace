@@ -16,30 +16,13 @@
 
  @import (reference) '../styles/defs';
 
- .app-Upload {
-  flex-grow: 1;
-  flex-shrink: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  margin: @gap3 0px;
-  height: calc(~ "100vh" - (@bar-ht + @gap3 + @gap3));
+.app-ContactLink {
+  font-size: 14px;
+  font-weight: 300;
+  font-style: italic;
+  text-align: center;
 
-  &:before,
-  &:after {
-    content: ' ';
-    flex-shrink: 1;
-    flex-grow: 0;
-    height: @big-gap;
-  }
-
-  .app-ValidationForm {
-    box-shadow: 0 5px 22px -2px rgba(0, 0, 0, 0.3);
-  }
-
-  .app-ContactDetails {
-    flex-shrink: 0;
-    flex-grow: 0;
+  .app-Link {
+    font-weight: 500;
   }
 }

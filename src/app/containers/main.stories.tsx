@@ -48,7 +48,7 @@ const etc: State = {
   ]}},
   tables: {1: {loading: false, value: tables}},
   selectedTablePage: {1: page},
-  zOptions: {1: zOptions},
+  zOptions: {'01901ff9-d32f-4148-bbff-3c868bc60bd7': zOptions},
   tableRendering: {},
   router: undefined as any,
   benford: undefined as any,

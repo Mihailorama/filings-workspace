@@ -14,32 +14,14 @@
  *  limitations under the License.
  */
 
- @import (reference) '../styles/defs';
+import * as classNames from 'classnames';
+import * as React from 'react';
 
- .app-Upload {
-  flex-grow: 1;
-  flex-shrink: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  margin: @gap3 0px;
-  height: calc(~ "100vh" - (@bar-ht + @gap3 + @gap3));
+import './contact-link.less';
 
-  &:before,
-  &:after {
-    content: ' ';
-    flex-shrink: 1;
-    flex-grow: 0;
-    height: @big-gap;
-  }
-
-  .app-ValidationForm {
-    box-shadow: 0 5px 22px -2px rgba(0, 0, 0, 0.3);
-  }
-
-  .app-ContactDetails {
-    flex-shrink: 0;
-    flex-grow: 0;
-  }
+export default function ContactLink({className}: {className?: string}): JSX.Element {
+  return <a className={classNames('app-ContactLink', className)}
+      href='https://www.corefiling.com/standing/contactus/' target='_blank'>
+    <b className='app-Link'>Contact us</b> to find out more!
+  </a>;
 }
