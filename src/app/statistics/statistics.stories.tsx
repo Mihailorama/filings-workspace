@@ -27,18 +27,23 @@ const statistics: Statistic[] = [
 ];
 
 storiesOf('Statistics', module)
-  .add('Not loaded', () => {
+  .add('Loading', () => {
     return (
-      <Statistics />
+      <Statistics statistics={{loading: true}} />
     );
   })
   .add('No statistics', () => {
     return (
-      <Statistics statistics={[]} />
+      <Statistics statistics={{loading: false, value: []}} />
     );
   })
   .add('With statistics', () => {
     return (
-      <Statistics statistics={statistics} />
+      <Statistics statistics={{loading: false, value: statistics}} />
+    );
+  })
+  .add('Error', () => {
+    return (
+      <Statistics statistics={{loading: false, error: 'Something went wrong.'}} />
     );
   });
