@@ -18,7 +18,8 @@ import * as uriTemplates from 'uri-templates';
 import { StatisticsApiFactory } from '@cfl/filing-statistics-service';
 
 import { apiFetch } from './api-fetch';
-import { App, TableRenderingWindow } from './models';
+import { App } from './models';
+import { FilingversionsApiFactory, TablesApiFactory } from '@cfl/table-rendering-service';
 
 export const USER = '/api/user';
 export const APPS = '/api/apps';
@@ -44,14 +45,8 @@ const VALIDATION_SERVICE_FILING_VERSION = uriTemplates(VALIDATION_SERVICE_BASE +
 export const validationServiceFilingVersion = (filingVersionId: string) =>
   VALIDATION_SERVICE_FILING_VERSION.fillFromObject({filingVersionId});
 
-const TABLE_RENDERING_SERVICE_BASE = '/api/table-rendering-service/v1/';
-const TABLE_RENDERING_SERVICE_TABLES = uriTemplates(TABLE_RENDERING_SERVICE_BASE + 'filing-versions/{filingVersionId}/tables/');
-const TABLE_RENDERING_SERVICE_Z_OPTIONS = uriTemplates(TABLE_RENDERING_SERVICE_BASE + 'tables/{tableId}/z-options{?z}');
-const TABLE_RENDERING_SERVICE_RENDER = uriTemplates(TABLE_RENDERING_SERVICE_BASE + 'tables/{tableId}/render{?x,y,z,width,height}');
-
-export const tableRenderingServiceTables = (filingVersionId: string) => TABLE_RENDERING_SERVICE_TABLES.fillFromObject({filingVersionId});
-export const tableRenderingServiceZOptions = (tableId: string, z: number) => TABLE_RENDERING_SERVICE_Z_OPTIONS.fillFromObject({tableId, z});
-export const tableRenderingServiceRender = (tableId: string, window: TableRenderingWindow) =>
-  TABLE_RENDERING_SERVICE_RENDER.fillFromObject({tableId, ...window});
+const TABLE_RENDERING_SERVICE_PREFIX = '/api/table-rendering-service/v1';
+export const filingVersionsApi = FilingversionsApiFactory(apiFetch, TABLE_RENDERING_SERVICE_PREFIX);
+export const tablesApi = TablesApiFactory(apiFetch, TABLE_RENDERING_SERVICE_PREFIX);
 
 export const filingStatisticsService = StatisticsApiFactory(apiFetch, '/api/filing-statistics-service/v1');
