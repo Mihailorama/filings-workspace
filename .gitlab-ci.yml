@@ -87,8 +87,8 @@ publish:npm:
   script:
     - time /app/scripts/build.py
   only:
-    - develop@labs/filings-app
-    - tags@labs/filings-app
+    - develop@labs/filings-workspace
+    - tags@labs/filings-workspace
 
 publish:chart:
   <<: *template_kube_deploy
@@ -100,8 +100,8 @@ publish:chart:
   # Restrict to only publishing on develop/release - don't need to publish fb builds
   # unless we have a CI staging environment for them
   only:
-    - develop@labs/filings-app
-    - tags@labs/filings-app
+    - develop@labs/filings-workspace
+    - tags@labs/filings-workspace
 
 docker image:
   <<: *template_docker_privileged
@@ -109,8 +109,8 @@ docker image:
   dependencies:
   - compile:webpack
   only:
-    - develop@labs/filings-app
-    - tags@labs/filings-app
+    - develop@labs/filings-workspace
+    - tags@labs/filings-workspace
   image: artifacts.int.corefiling.com:5000/nimbus-tools/build-dockerfile:0.9.0
   script:
     - /app/scripts/build.py

@@ -35,7 +35,7 @@ $ yarn install
 $ yarn start
 ```
 
-The application will be available on <http://localhost:8080/filings-app/>.
+The application will be available on <http://localhost:8080/filings-workspace/>.
 
 When prompted, log in using the email address and password for your CoreFiling account.
 
@@ -93,7 +93,7 @@ yarn compile
 ### Package
 
 ```bash
-yarn pack # Produces cfl-filings-app-$VERSION.tgz
+yarn pack # Produces cfl-filings-workspace-$VERSION.tgz
 ```
 
 ### Development server

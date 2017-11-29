@@ -41,7 +41,7 @@ describe('searchSaga', () => {
     expect(saga.next(filingVersionId).value)
       .toEqual(call(isFilingVersionReady, filingVersionId));
     expect(saga.next(true).value)
-      .toEqual(put(push('/filings-app/benfords-analyser-report/filing-versions/fvid')));
+      .toEqual(put(push('/filings-workspace/benfords-analyser-report/filing-versions/fvid')));
   });
 
   it('polls until the document service is ready', () => {
