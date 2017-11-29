@@ -20,6 +20,7 @@ import { Switch, Route, RouteComponentProps } from 'react-router';
 import StatisticsContainer from '../statistics/container';
 import ValidatorContainer from '../validator/container';
 import ViewerContainer from '../viewer/container';
+import OimConverterContainer from '../oim-converter/container';
 import WorkspaceContainer from '../workspace/container';
 import BenfordsAnalyserContainer from '../benford/benfords-analysis-container';
 import { WORKSPACE_APPS } from '../workspace/workspace-apps';
@@ -53,7 +54,8 @@ export default function Main(): JSX.Element {
         <Route path={`${appBaseUri}viewer/filing-versions/:filingVersionId`} component={ViewerContainer} />
         <Route path={`${appBaseUri}viewer`} render={workspaceContainerForApp(WORKSPACE_APPS.viewer)} />
 
-        <Route path={`${appBaseUri}oimConverter`} render={workspaceContainerForApp(WORKSPACE_APPS.oimConverter)} />
+        <Route path={`${appBaseUri}oim-converter/filing-versions/:filingVersionId`} component={OimConverterContainer} />
+        <Route path={`${appBaseUri}oim-converter`} render={workspaceContainerForApp(WORKSPACE_APPS.oimConverter)} />
 
         <Route path={`${appBaseUri}`} component={WorkspaceContainer} />
       </Switch>

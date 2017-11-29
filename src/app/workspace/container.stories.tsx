@@ -41,6 +41,7 @@ const etc: State = {
   selectedTablePage: {},
   zOptions: {},
   tableRendering: {},
+  oimConverter: {},
   router: undefined as any,
   benford: undefined as any,
 };

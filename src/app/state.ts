@@ -24,6 +24,7 @@ import { QueryableTablePage } from '@cfl/table-viewer';
 import { Option, TableMetadata } from '@cfl/table-rendering-service';
 import { RouterState } from 'react-router-redux';
 import { BenfordState } from './benford/state';
+import OimState from './oim-converter/state';
 
 export interface Item<T> {
   loading: boolean;
@@ -88,6 +89,8 @@ export interface State {
   tableRendering: {[tablePageKey: string]: Item<QueryableTablePage>};
 
   benford: BenfordState;
+
+  oimConverter: OimState;
 
   router: RouterState;
 }

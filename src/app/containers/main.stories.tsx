@@ -52,6 +52,7 @@ const etc: State = {
   tableRendering: {},
   router: undefined as any,
   benford: undefined as any,
+  oimConverter: undefined as any,
 };
 
 etc.tableRendering[tablePageKey(page)] = {loading: false, value: table};

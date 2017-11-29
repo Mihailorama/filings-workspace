@@ -17,6 +17,7 @@
 import { reducer } from '../reducers';
 import { searchAction } from '../actions';
 import { exampleAnalysis, exampleFilingMatch } from '../tests/model-examples';
+import { State } from '../../state';
 
 describe('reducer', () => {
 
@@ -29,7 +30,8 @@ describe('reducer', () => {
         filingName: exampleFilingMatch.filingName,
       },
     };
-    const newState = reducer(withResults, searchAction('lala')).benford;
+    const appState = reducer(withResults, searchAction('lala')) as State;
+    const newState = appState.benford;
     expect(newState.filingName).toBeUndefined();
     expect(newState.analysisResults).toBeUndefined();
     expect(newState.phase).toEqual('searching');

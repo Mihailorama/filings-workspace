@@ -26,6 +26,7 @@ import { reducer as validatorReducer } from './validator/reducers';
 import { reducer as viewerReducer } from './viewer/reducers';
 import { reducer as workspaceReducer } from './workspace/reducers';
 import { reducer as benfordsReducer } from './benford/reducers';
+import { reducer as oimConverterReducer } from './oim-converter/reducers';
 import { routerReducer } from 'react-router-redux';
 
 export function globalReducer(state: State | undefined, action: Action): State {
@@ -47,6 +48,7 @@ export function globalReducer(state: State | undefined, action: Action): State {
         searchText: '',
         filingName: undefined,
       },
+      oimConverter: {},
     };
   }
 
@@ -72,6 +74,10 @@ export function globalReducer(state: State | undefined, action: Action): State {
     return newState;
   }
   newState = benfordsReducer(state, action);
+  if (newState) {
+    return newState;
+  }
+  newState = oimConverterReducer(state, action);
   if (newState) {
     return newState;
   }

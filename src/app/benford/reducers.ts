@@ -29,7 +29,7 @@ import {
 } from './actions';
 import { State } from '../state';
 
-export function reducer(state: State, action: Action): State {
+export function reducer(state: State, action: Action): State | undefined {
   const {benford} = state;
   switch (action.type)  {
     case SEARCH_TEXT_CHANGED: {
@@ -55,5 +55,5 @@ export function reducer(state: State, action: Action): State {
       break;
   }
 
-  return state;
+  return undefined;
 }

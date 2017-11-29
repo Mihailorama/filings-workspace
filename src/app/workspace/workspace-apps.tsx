@@ -76,8 +76,8 @@ export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
     description: 'Convert XBRL to OIM JSON format',
     action: 'DOWNLOAD',
     external: true,
-    href: `${ROOT}oimConverter`,
-    filingHref: '/api/document-service/filing-versions/{id}/some-oim-please',
+    href: `${ROOT}oim-converter`,
+    filingHref: `${ROOT}oim-converter/filing-versions/{id}`,
     icon: props => <OIMJsonIcon {... props } />,
   },
   changeReport: {
