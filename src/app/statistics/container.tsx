@@ -43,7 +43,7 @@ class StatisticsContainer extends Component<StatisticsContainerProps> {
 
   render(): JSX.Element {
     const {statistics} = this.props;
-    return <Statistics statistics={statistics && statistics.value} />;
+    return <Statistics statistics={statistics} />;
   }
 
 }
