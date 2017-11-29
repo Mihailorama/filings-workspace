@@ -1,21 +1,17 @@
-import { all, call, put } from 'redux-saga/effects';
+import { call, put } from 'redux-saga/effects';
 
 import { apiFetchJson } from '../../api-fetch';
 import { saga as appBarSaga } from '../sagas';
 import { receivedAction, failedAction } from '../actions';
 
-import { exampleUser, exampleApps } from '../../tests/model-examples';
+import { exampleUser } from '../../tests/model-examples';
 
 describe('appBarSaga', () => {
-  it('calls APIs in parallel and dispatches', () => {
+  it('calls API and dispatches', () => {
     const saga = appBarSaga();
 
-    expect(saga.next().value).toEqual(all([
-      call(apiFetchJson, '/api/user'),
-      call(apiFetchJson, '/api/apps'),
-    ]));
-    expect(saga.next([exampleUser, exampleApps]).value)
-      .toEqual(put(receivedAction(exampleUser, exampleApps)));
+    expect(saga.next().value).toEqual(call(apiFetchJson, '/api/user'));
+    expect(saga.next(exampleUser).value).toEqual(put(receivedAction(exampleUser)));
   });
 
   it('is sad if error fetching', () => {

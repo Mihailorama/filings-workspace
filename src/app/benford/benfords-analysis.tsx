@@ -18,7 +18,7 @@ import * as React from 'react';
 import * as classNames from 'classnames';
 import { AnalysisResponse } from '@cfl/digit-frequency-analysis-service';
 
-import { BenfordPhase } from './state';
+import { BenfordPhase } from './models';
 import Graph from './benford-graph';
 import BoxTitle from './box-title';
 import InfoLarge from './info-box-icon';

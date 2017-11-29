@@ -18,8 +18,8 @@ import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-import { WorkspaceAppSpec, WorkspaceFiling } from '../state';
 import { linkForFiling, LinkDef } from './workspace-apps';
+import { WorkspaceAppSpec, WorkspaceFiling } from './reducers';
 
 interface FilingListProps {
   app: WorkspaceAppSpec;

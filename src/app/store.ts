@@ -14,12 +14,12 @@
  *  limitations under the License.
  */
 
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import createHistory from 'history/createBrowserHistory';
 import { routerMiddleware as createRouterMiddleware } from 'react-router-redux';
 
-import mainReducer from './reducers';
+import { reducers } from './reducers';
 import { saga as appBarSaga } from './corefiling/sagas';
 import { saga as benfordsSaga } from './benford/sagas';
 import { saga as statisticsSaga } from './statistics/sagas';
@@ -39,7 +39,7 @@ const windowPlus: {
 const composeEnhancers = windowPlus.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
-  mainReducer,
+  combineReducers(reducers),
   composeEnhancers(
     applyMiddleware(sagaMiddleware, routerMiddleware)));
 

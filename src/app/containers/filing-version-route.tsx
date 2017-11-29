@@ -15,8 +15,8 @@
  */
 
 import { RouteComponentProps } from 'react-router-dom';
-import { WorkspaceAppSpec } from '../state';
 import { WORKSPACE_APPS } from '../workspace/workspace-apps';
+import { WorkspaceAppSpec } from '../workspace/reducers';
 
 export type AppRouterProps = RouteComponentProps<{app?: string}>;
 export type FilingRouterProps = RouteComponentProps<{filingVersionId: string}>;

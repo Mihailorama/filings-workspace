@@ -24,7 +24,8 @@ import { QueryableTablePage } from '@cfl/table-viewer';
 import { fetchTablesAction, fetchPageAction } from './actions';
 import Viewer from './viewer';
 import { filingVersionId, FilingRouterProps } from '../containers/filing-version-route';
-import { Item, State, tablePageKey } from '../state';
+import { Item } from '../state';
+import { ViewerState, tablePageKey } from './reducers';
 
 export interface PropsFromState {
   tables: Item<TableMetadata[]>;
@@ -69,12 +70,13 @@ class Container extends Component<ContainerProps> {
 }
 
 export default connect(
-  (state: State, routerProps: FilingRouterProps): PropsFromState => {
+  ({viewer: state}: {viewer: ViewerState}, routerProps: FilingRouterProps): PropsFromState => {
     const fvid = filingVersionId(routerProps);
     const tables = state.tables[fvid] || {loading: true};
     const page = state.selectedTablePage[fvid];
     const table = page && state.tableRendering[tablePageKey(page)] || {loading: true};
     const zOptions = page && state.zOptions[page.table.id];
+
     return {tables, selectedTable: page && page.table, table, zOptions};
   },
   {fetchTablesAction, fetchPageAction},

@@ -15,20 +15,17 @@
  */
 
 import { Effect } from 'redux-saga';
-import { all, call, put } from 'redux-saga/effects';
+import { call, put } from 'redux-saga/effects';
 
 import { receivedAction, failedAction } from './actions';
 import { apiFetchJson } from '../api-fetch';
-import { App, User } from '../models';
-import { APPS, USER } from '../urls';
+import { User } from '../models';
+import { USER } from '../urls';
 
 export function* saga(): IterableIterator<Effect> {
   try {
-    const [user, apps]: [User, App[]] = yield all([
-      call(apiFetchJson, USER),
-      call(apiFetchJson, APPS),
-    ]);
-    yield put(receivedAction(user, apps));
+    const user: User = yield call(apiFetchJson, USER);
+    yield put(receivedAction(user));
   } catch (res) {
     yield put(failedAction(`Startup failed (${res.message || res.statusText || res.status}).`));
   }

@@ -8,13 +8,12 @@ import {
   uploadAction,
   uploadFailedAction,
 } from '../actions';
-import { reducer } from '../reducers';
+import { reducer, WorkspaceState } from '../reducers';
 import { WORKSPACE_APPS } from '../workspace-apps';
-import { State } from '../../state';
 import { ValidationParams } from '../../models';
-import { exampleState, exampleRecentFilings } from '../../tests/model-examples';
+import { exampleWorkspaceState, exampleRecentFilings } from '../../tests/model-examples';
 
-const initial: State | undefined = reducer(exampleState, {type: '????'});
+const initial: WorkspaceState | undefined = reducer(exampleWorkspaceState, {type: '????'});
 
 describe('profilesReducer', () => {
   it('is initially undefined', () => {
@@ -22,21 +21,21 @@ describe('profilesReducer', () => {
   });
 
   it('clears profiles when fetching', () => {
-    const after: State | undefined = reducer(exampleState, fetchProfilesAction());
+    const after: WorkspaceState | undefined = reducer(exampleWorkspaceState, fetchProfilesAction());
     expect(after).toBeDefined();
     expect(after!.profiles).toEqual({loading: true});
   });
 
   it('stores user and apps when received', () => {
     const profiles = [{id: 'profilename', name: 'Profile Label'}];
-    const after = reducer(exampleState, receivedProfilesAction(profiles));
+    const after = reducer(exampleWorkspaceState, receivedProfilesAction(profiles));
 
     expect(after).toBeDefined();
     expect(after!.profiles).toEqual({loading: false, value: profiles});
   });
 
   it('stores error when failed', () => {
-    const after: State | undefined = reducer(exampleState, failedProfilesAction('Oh no'));
+    const after: WorkspaceState | undefined = reducer(exampleWorkspaceState, failedProfilesAction('Oh no'));
     expect(after).toBeDefined();
     expect(after!.profiles).toEqual({loading: false, error: 'Oh no'});
   });
@@ -48,19 +47,19 @@ describe('filingsReducer', () => {
   });
 
   it('clears filings when fetching', () => {
-    const after: State | undefined = reducer(exampleState, fetchFilingsAction());
+    const after: WorkspaceState | undefined = reducer(exampleWorkspaceState, fetchFilingsAction());
     expect(after).toBeDefined();
     expect(after!.recentFilings).toEqual({loading: true});
   });
 
   it('stores filings when received', () => {
-    const after: State | undefined = reducer(exampleState, receivedFilingsAction(exampleRecentFilings));
+    const after: WorkspaceState | undefined = reducer(exampleWorkspaceState, receivedFilingsAction(exampleRecentFilings));
     expect(after).toBeDefined();
     expect(after!.recentFilings).toEqual({loading: false, value: exampleRecentFilings});
   });
 
   it('stores error when failed', () => {
-    const after: State | undefined = reducer(exampleState, failedFilingsAction('Oh no'));
+    const after: WorkspaceState | undefined = reducer(exampleWorkspaceState, failedFilingsAction('Oh no'));
     expect(after).toBeDefined();
     expect(after!.recentFilings).toEqual({loading: false, error: 'Oh no'});
   });
@@ -76,13 +75,13 @@ describe('uploadReducer', () => {
 
   /** Tests for upload reducer */
   it('clears upload state when uploading', () => {
-    const after: State | undefined = reducer(exampleState, uploadAction(app, params));
+    const after: WorkspaceState | undefined = reducer(exampleWorkspaceState, uploadAction(app, params));
     expect(after).toBeDefined();
     expect(after!.upload).toEqual({uploading: true});
   });
 
   it('stores error when failed', () => {
-    const after: State | undefined = reducer(exampleState, uploadFailedAction('Oh no'));
+    const after: WorkspaceState | undefined = reducer(exampleWorkspaceState, uploadFailedAction('Oh no'));
     expect(after).toBeDefined();
     expect(after!.upload).toEqual({uploading: false, error: 'Oh no'});
   });

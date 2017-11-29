@@ -20,7 +20,12 @@ import { Statistic } from '@cfl/filing-statistics-service';
 import { QueryableTablePage } from '@cfl/table-viewer';
 import { Breakdown, Option, TableHeader, TableMetadata, TableChunk } from '@cfl/table-rendering-service';
 
-import { State, TablePage, WorkspaceFiling } from '../state';
+import { State } from '../state';
+import { ViewerState, TablePage } from '../viewer/reducers';
+import { AppBarState } from '../corefiling/reducers';
+import { ValidatorState } from '../validator/reducers';
+import { WorkspaceState, WorkspaceFiling } from '../workspace/reducers';
+import { StatisticsState } from '../statistics/reducers';
 
 export const exampleUser: User = {
   sub: 'ecdc0363-976d-4a42-a4cc-ae5d63f3a806',
@@ -190,17 +195,36 @@ export const exampleTablePage: TablePage = {
   z: 0,
 };
 
-export const exampleState: State = {
-  apps: {loading: false, value: exampleApps},
-  profiles: {loading: false, value: exampleProfiles},
-  user: {loading: false, value: exampleUser},
-  recentFilings: {loading: false, value: exampleRecentFilings},
-  status: {'f09be954-1895-4954-b333-6c9c89b833f1': {loading: false, value: 'OK'}},
-  statistics: {'f09be954-1895-4954-b333-6c9c89b833f1': {loading: false, value: exampleStatistics}},
+export const exampleViewerState: ViewerState = {
   tables: {'f09be954-1895-4954-b333-6c9c89b833f1': {loading: false, value: [exampleTableMetadata]}},
   selectedTablePage: {'f09be954-1895-4954-b333-6c9c89b833f1': exampleTablePage},
   zOptions: {'f09be954-1895-4954-b333-6c9c89b833f1': [[exampleZOption]]},
   tableRendering: {'foo(0,0,0)': {loading: false, value: exampleQueryableTablePage}},
-  router: undefined as any,
-  benford: undefined as any,
+};
+
+export const exampleAppBarState: AppBarState = {
+  user: {loading: false, value: exampleUser},
+};
+
+export const exampleWorkspaceState: WorkspaceState = {
+  profiles: {loading: false, value: exampleProfiles},
+  recentFilings: {loading: false, value: exampleRecentFilings},
+};
+
+export const exampleValidatorState: ValidatorState = {
+  status: {'f09be954-1895-4954-b333-6c9c89b833f1': {loading: false, value: 'OK'}},
+};
+
+export const exampleStatisticsState: StatisticsState = {
+  statistics: {'f09be954-1895-4954-b333-6c9c89b833f1': {loading: false, value: exampleStatistics}},
+};
+
+export const exampleState: State = {
+  appBar: exampleAppBarState,
+  benfords: undefined!,
+  router: undefined!,
+  statistics: exampleStatisticsState,
+  validator: exampleValidatorState,
+  viewer: exampleViewerState,
+  workspace: exampleWorkspaceState,
 };
