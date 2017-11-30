@@ -17,8 +17,10 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
 import { Component, Props } from 'react';
+import { ValidationStatus } from '@cfl/validation-service';
 
-import { ValidationStatus } from '../models';
+import ContactDetails from '../components/contact-details';
+import FilingReference from '../components/filing-reference';
 
 import './validation-result.less';
 
@@ -51,21 +53,27 @@ function toLowerStatus(status: string): string {
 }
 
 export interface ValidationResultProps extends Props<ValidationResult> {
+  name?: string;
   status?: ValidationStatus;
   error?: string;
 }
 
 export default class ValidationResult extends Component<ValidationResultProps> {
   render(): JSX.Element {
-    const { status = 'loading', error } = this.props;
+    const { name, status = 'loading', error } = this.props;
     const lowerStatus = toLowerStatus(status);
     const { label, detail } = specByStatus[status];
 
     return <div className='app-ValidationResult-container'>
-        <div className={classNames('app-ValidationResult', `app-ValidationResult-${lowerStatus}`)}>
+      <div className={classNames('app-ValidationResult', `app-ValidationResult-${lowerStatus}`)}>
         {label && <div className={classNames('app-ValidationResult-status', `app-ValidationResult-${lowerStatus}Status`)}>{label}</div>}
         {detail && <div className={classNames('app-ValidationResult-detail', `app-ValidationResult-${lowerStatus}Detail`)}>{detail}</div>}
         {error && <div className='app-ValidationResult-error'>{error}</div>}
+        {name && <FilingReference
+          className={classNames('app-ValidationResult-filing', `app-ValidationResult-filing-${lowerStatus}`)}
+          name={name}
+        />}
+        <ContactDetails className='app-ValidationResult-contact' />
       </div>
     </div>;
   }

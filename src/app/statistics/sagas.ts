@@ -15,16 +15,19 @@
  */
 
 import { Effect } from 'redux-saga';
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { all, call, put, takeEvery } from 'redux-saga/effects';
 
 import { FetchAction, receivedAction, failedAction, FETCH } from './actions';
-import { filingStatisticsService } from '../urls';
+import { filingStatisticsService, filingsApi } from '../urls';
 
 export function* fetchSaga(action: FetchAction): IterableIterator<Effect> {
   const { filingVersionId } = action;
   try {
-    const statistics = yield call(filingStatisticsService.getStatistics, {filingVersionId});
-    yield put(receivedAction(filingVersionId, statistics));
+    const [statistics, filingVersion] = yield all([
+      call([filingStatisticsService, filingStatisticsService.getStatistics], {filingVersionId}),
+      call([filingsApi, filingsApi.getFilingVersion], {filingVersionId}),
+    ]);
+    yield put(receivedAction(filingVersionId, filingVersion.filing.name, statistics));
   } catch (res) {
     yield put(failedAction(filingVersionId, res.message || res.statusText || `Status: ${res.status}`));
   }

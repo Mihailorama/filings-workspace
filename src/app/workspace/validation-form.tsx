@@ -16,8 +16,9 @@
 
 import * as React from 'react';
 import { Component, Props } from 'react';
+import { Profile } from '@cfl/document-service';
 
-import { Profile, ValidationParams, paramsAreComplete } from '../models';
+import { ValidationParams, paramsAreComplete } from '../models';
 import { Form, FormItem, FormActionList, FormAction } from './form';
 import FileInput from './file-input';
 

@@ -32,6 +32,9 @@ export interface TablePage {
 }
 
 export interface ViewerState {
+  // The filing name for a filing
+  names: {[filingVersionId: string]: string | undefined};
+
   // The various details we can display for a filing
   tables: {[filingVersionId: string]: Item<TableMetadata[]>};
   // UI state tracking the selected table
@@ -52,6 +55,7 @@ export function tablePageKey(page: TablePage): string {
 export function reducer(state: ViewerState | undefined, action: Action): ViewerState | undefined {
   if (!state) {
     return {
+      names: {},
       selectedTablePage: {},
       tableRendering: {},
       tables: {},
@@ -66,8 +70,9 @@ export function reducer(state: ViewerState | undefined, action: Action): ViewerS
       };
     }
     case TABLES_RECEIVED: {
-      const { filingVersionId, tables } = action as ReceivedTablesAction;
+      const { filingVersionId, filingName, tables } = action as ReceivedTablesAction;
       return { ...state,
+        names: { ... state.names, [filingVersionId]: filingName },
         tables: { ... state.tables, [filingVersionId]: {loading: false, value: tables} },
       };
     }

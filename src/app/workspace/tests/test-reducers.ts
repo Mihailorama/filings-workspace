@@ -30,7 +30,7 @@ describe('profilesReducer', () => {
   });
 
   it('stores user and apps when received', () => {
-    const profiles = [{id: 'profilename', name: 'Profile Label'}];
+    const profiles = [{id: 'profilename', name: 'Profile Label', category: 'validation'}];
     const after = reducer(exampleWorkspaceState, receivedProfilesAction(profiles));
 
     expect(after).toBeDefined();

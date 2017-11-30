@@ -6,20 +6,24 @@ import {
   fetchPageAction, receivedPageAction, failedPageAction,
 } from '../actions';
 import { fetchTablesSaga, fetchPageSaga } from '../sagas';
-import { filingVersionsApi, tablesApi } from '../../urls';
+import { filingVersionsApi, tablesApi, filingsApi } from '../../urls';
 import { exampleTableMetadata, exampleZOption, exampleTableChunk } from '../../tests/model-examples';
 
 describe('fetchTablesSaga', () => {
   const filingVersionId = '1234';
 
   it('dispatches RECEIVED if all goes well', () => {
+    const filingName = 'Example filing.zip';
     const saga = fetchTablesSaga(fetchTablesAction(filingVersionId));
 
-    expect(saga.next().value).toEqual(
-      call([filingVersionsApi, filingVersionsApi.getTables], {filingVersionId}));
+    expect(saga.next().value).toEqual(all([
+      call([filingVersionsApi, filingVersionsApi.getTables], {filingVersionId}),
+      call([filingsApi, filingsApi.getFilingVersion], {filingVersionId}),
+    ]));
     const tableMetadatas = [exampleTableMetadata, {...exampleTableMetadata, id: 'bar', empty: true}, {...exampleTableMetadata, id: 'baz'}];
-    expect(saga.next(tableMetadatas).value).toEqual(
-      put(receivedTablesAction(filingVersionId, [tableMetadatas[0], tableMetadatas[2]])));  // Omitting the empty table (INV-171).
+    expect(saga.next([tableMetadatas, {filing: {name: filingName}}]).value).toEqual(
+      put(receivedTablesAction(
+        filingVersionId, filingName, [tableMetadatas[0], tableMetadatas[2]])));  // Omitting the empty table (INV-171).
     expect(saga.next().value).toEqual(
       put(fetchPageAction(filingVersionId, {table: tableMetadatas[0], x: 0, y: 0, z: 0})));
   });

@@ -9,6 +9,7 @@ describe('statisticsReducer', () => {
 
   it('sets initial state', () => {
     expect(initial).toEqual({
+      names: {},
       statistics: {},
     });
   });
@@ -19,13 +20,15 @@ describe('statisticsReducer', () => {
     expect(after!.statistics['1234']).toEqual({loading: true});
   });
 
-  it('stores statistics when received', () => {
+  it('stores name and statistics when received', () => {
+    const filingName = 'Example filing.zip';
     const statistics: Statistic[] = [
       {name: 'fact-count', value: 123, label: 'Fact count', format: 'integer'},
       {name: 'percentage-fraud', value: 99.5, label: 'Percentage fraud', format: 'percentage'},
     ];
-    const after: StatisticsState | undefined = reducer(exampleStatisticsState, receivedAction('1234', statistics));
+    const after: StatisticsState | undefined = reducer(exampleStatisticsState, receivedAction('1234', filingName, statistics));
     expect(after).toBeDefined();
+    expect(after!.names['1234']).toEqual(filingName);
     expect(after!.statistics['1234']).toEqual({loading: false, value: statistics});
   });
 

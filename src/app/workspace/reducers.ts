@@ -15,6 +15,7 @@
  */
 
 import { Action } from 'redux';
+import { Profile } from '@cfl/document-service';
 
 import {
   ReceivedProfilesAction,
@@ -34,7 +35,6 @@ import {
   ShowUploadAction,
 } from './actions';
 import { Item } from '../state';
-import { Profile } from '../models';
 
 export interface UploadStatus {
   uploading: boolean;
