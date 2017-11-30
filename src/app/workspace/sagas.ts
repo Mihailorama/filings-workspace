@@ -70,6 +70,10 @@ export function navigate(href: string): void {
   window.location.href = href;
 }
 
+export function stripExtension(name: string): string {
+  return name.replace(/^(.+)\.[A-Za-z0-9]{3,4}$/, '$1');
+}
+
 export function* uploadSaga(action: UploadAction): IterableIterator<Effect> {
   const { app, params } = action;
 
@@ -77,7 +81,7 @@ export function* uploadSaga(action: UploadAction): IterableIterator<Effect> {
   const { profile, file } = params;
   const formData = new FormData();
   formData.append('file', file, file.name);
-  formData.append('name', file.name);
+  formData.append('name', stripExtension(file.name));
   formData.append('validationProfile', profile);
   const init: RequestInit = {
     method: 'POST',
