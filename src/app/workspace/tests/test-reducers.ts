@@ -20,7 +20,7 @@ describe('profilesReducer', () => {
     const expected: WorkspaceState = {
       profiles: {loading: false, value: []},
       recentFilings: {loading: false, value: []},
-      search: { text: '', filings: { loading: false } },
+      search: {searchPerformed: false, text: '', filings: { loading: false } },
       mode: 'user',
     };
     expect(initial).toEqual(expected);

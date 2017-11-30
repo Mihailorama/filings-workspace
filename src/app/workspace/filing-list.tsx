@@ -37,6 +37,7 @@ export interface FilingListPage {
   searchResultFilings: Item<FilingMatch[]>;
   showUpload: () => void;
 
+  searchPerformed: boolean;
   searchText?: string;
   onSearch: () => void;
   onSearchTextChange: (search: string) => void;
@@ -86,7 +87,7 @@ function FilingList2({app, filings, onSearchSelection}: {app: WorkspaceAppSpec, 
   </div>;
 }
 
-export default function FilingListPage({app, mode, userFilings, searchResultFilings, searchText,
+export default function FilingListPage({app, mode, userFilings, searchResultFilings, searchPerformed, searchText,
     showUpload, onSearch, onSearchTextChange, onSearchSelection}: FilingListPage): JSX.Element {
   return <div className='app-FilingListPage-container'>
     <div className='app-FilingListPage'>
@@ -119,7 +120,7 @@ export default function FilingListPage({app, mode, userFilings, searchResultFili
               searchResultFilings.value && searchResultFilings.value.length ?
                 <FilingList2 app={app} filings={searchResultFilings.value} onSearchSelection={onSearchSelection} /> :
                 <div className='app-FilingListPage-noFilings'>
-                  <div>No results.</div>
+                  {searchPerformed ? <div>No results.</div> : <div>Search for SEC filings.</div>}
                 </div>
           }
         </div>

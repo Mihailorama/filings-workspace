@@ -75,7 +75,7 @@ export interface WorkspaceState {
   upload?: UploadStatus;
   // The recent filings.
   recentFilings: Item<WorkspaceFiling[]>;
-  search: { text: string; filings: Item<FilingMatch[]> };
+  search: { searchPerformed: boolean; text: string; filings: Item<FilingMatch[]> };
   mode: FilingListMode;
 }
 
@@ -84,7 +84,7 @@ export function reducer(state: WorkspaceState | undefined, action: Action): Work
     return {
       profiles: {loading: false, value: []},
       recentFilings: {loading: false, value: []},
-      search: {text: '', filings: { loading: false } },
+      search: { searchPerformed: false, text: '', filings: { loading: false } },
       mode: 'user',
     };
   }
@@ -125,7 +125,7 @@ export function reducer(state: WorkspaceState | undefined, action: Action): Work
     }
     case MODE_CHANGED: {
       const { mode } = action as ModeChangedAction;
-      return { ...state, mode };
+      return { ...state, mode, search: { ...state.search, searchPerformed: false } };
     }
     case SEARCH_TEXT_CHANGED: {
       const { searchText } = action as SearchTextChangedAction;
@@ -134,7 +134,7 @@ export function reducer(state: WorkspaceState | undefined, action: Action): Work
     }
     case SEARCH_RESULTS_RECEIVED: {
       const { filings } = action as SearchResultsReceivedAction;
-      return { ...state, search: { ...state.search, filings: { loading: false, value: filings } } };
+      return { ...state, search: { ...state.search, searchPerformed: true, filings: { loading: false, value: filings } } };
     }
     case SEARCH:
     case SEARCH_SELECTION: {

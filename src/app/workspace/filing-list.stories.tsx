@@ -53,6 +53,7 @@ const app: WorkspaceAppSpec = {name: 'Test App', action: 'CHECK', href: '/test-a
 const etc: FilingListPage = {
   app,
   mode: 'user',
+  searchPerformed: false,
   userFilings: {loading: true},
   searchResultFilings: {loading: false},
   searchText: '' ,

@@ -34,6 +34,7 @@ interface PropsFromState {
   profiles: Item<Profile[]>;
   upload?: UploadStatus;
   search: {
+    searchPerformed: boolean;
     text: string;
     filings: Item<FilingMatch[]>;
   };
@@ -93,8 +94,8 @@ class WorkspaceContainer extends Component<WorkspaceContainerProps> {
         }
         return <Upload profiles={profiles} upload={upload} onSubmit={params => uploadAction(app, params)} />;
       }
-      const { text, filings: searchResultFilings } = search;
-      return <FilingList app={app} mode={mode}
+      const { text, filings: searchResultFilings, searchPerformed } = search;
+      return <FilingList app={app} mode={mode} searchPerformed={searchPerformed}
         userFilings={filings} searchResultFilings={searchResultFilings}
         showUpload={() => showUpload(true)}
         searchText={text}
