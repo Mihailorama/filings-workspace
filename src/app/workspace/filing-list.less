@@ -90,6 +90,7 @@
 
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
 
     &-header,
     &-row {
@@ -156,6 +157,8 @@
     }
 
     &-list {
+      flex-basis: 0;
+      flex-grow: 1;
       overflow-y: auto;
     }
   }
