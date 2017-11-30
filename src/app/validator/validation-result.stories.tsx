@@ -30,4 +30,5 @@ storiesOf('ValidationResult', module)
   .add('Error', () => <ValidationResult status={{loading: false, error: 'Something went boom'}}/>)
   .add('Valid with warnings', () => <ValidationResult name='Example filing.zip' status={{loading: false, value: 'WARNING'}}/>)
   .add('Valid', () => <ValidationResult name='Example filing.zip' status={{loading: false, value: 'OK'}}/>)
-  .add('Failed', () => <ValidationResult name='Example filing.zip' status={{loading: false, value: 'FATAL_ERROR'}}/>);
+  .add('Failed (Error)', () => <ValidationResult name='Example filing.zip' status={{loading: false, value: 'ERROR'}}/>)
+  .add('Failed (Fatal error)', () => <ValidationResult name='Example filing.zip' status={{loading: false, value: 'FATAL_ERROR'}}/>);
