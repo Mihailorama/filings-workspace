@@ -93,7 +93,7 @@ export function latestFiling(search: string): Promise<FilingMatch|undefined> {
 }
 
 export function matchingFilings(search: string): Promise<FilingMatch[]> {
-  return searchForFilings(search, 10);
+  return searchForFilings(search, 25);
 }
 
 /**
