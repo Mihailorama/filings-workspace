@@ -29,7 +29,6 @@ storiesOf('Viewer', module)
     return (
       <Viewer
         tables={{loading: true}}
-        table={{loading: false}}
         onChangePage={action('onChangePage') as any}
         onChangeTable={action('onChangeTable') as any}
       />
@@ -65,7 +64,6 @@ storiesOf('Viewer', module)
       <Viewer
         name='Example filing.zip'
         tables={{loading: false, value: []}}
-        table={{loading: false}}
         onChangePage={action('onChangePage') as any}
         onChangeTable={action('onChangeTable') as any}
       />
@@ -75,7 +73,6 @@ storiesOf('Viewer', module)
     return (
       <Viewer
         tables={{loading: false, error: 'Something went wrong'}}
-        table={{loading: false}}
         onChangePage={action('onChangePage') as any}
         onChangeTable={action('onChangeTable') as any}
       />

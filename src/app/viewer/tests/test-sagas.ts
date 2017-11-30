@@ -28,6 +28,20 @@ describe('fetchTablesSaga', () => {
       put(fetchPageAction(filingVersionId, {table: tableMetadatas[0], x: 0, y: 0, z: 0})));
   });
 
+  it('does not fetch page if there are no non-empty tables', () => {
+    const filingName = 'Example filing.zip';
+    const saga = fetchTablesSaga(fetchTablesAction(filingVersionId));
+
+    expect(saga.next().value).toEqual(all([
+      call([filingVersionsApi, filingVersionsApi.getTables], {filingVersionId}),
+      call([filingsApi, filingsApi.getFilingVersion], {filingVersionId}),
+    ]));
+    const tableMetadatas = [{...exampleTableMetadata, id: 'bar', empty: true}];
+    expect(saga.next([tableMetadatas, {filing: {name: filingName}}]).value).toEqual(
+      put(receivedTablesAction(filingVersionId, filingName, [])));
+    expect(saga.next().done).toBeTruthy();
+  });
+
   it('dispatches FAILED if call to service fails', () => {
     const saga = fetchTablesSaga(fetchTablesAction(filingVersionId));
 
