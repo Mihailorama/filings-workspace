@@ -85,8 +85,9 @@ describe('searchSaga', () => {
 });
 
 describe('analyseSaga', () => {
+  const filingVersionId = 'fvid';
+
   it('happy path', () => {
-    const filingVersionId = 'fvid';
     const name = 'the name';
     const saga = analyseSaga(analyseAction(filingVersionId));
 
@@ -101,12 +102,20 @@ describe('analyseSaga', () => {
         put(analyseResultsReceived(exampleAnalysis)),
       ]));
   });
+
   it('is sad if error fetching', () => {
-    const filingVersionId = 'fvid';
     const saga = analyseSaga(analyseAction(filingVersionId));
 
     saga.next();
     expect(saga.throw && saga.throw({status: 403, statusText: 'LOLWAT'}).value)
     .toEqual(put(failedAction(jasmine.stringMatching(/LOLWAT/) as any)));
+  });
+
+  it('handles 404s with nice message', () => {
+    const saga = analyseSaga(analyseAction(filingVersionId));
+
+    saga.next();
+    expect(saga.throw && saga.throw({status: 404, statusText: 'LOLWAT'}).value)
+    .toEqual(put(failedAction('No valid filing found.')));
   });
 });
