@@ -15,6 +15,7 @@
  */
 
 import * as React from 'react';
+import * as classNames from 'classnames';
 import { Link } from 'react-router-dom';
 
 import { WorkspaceAppSpec, WorkspaceFiling, FilingListMode } from './reducers';
@@ -136,12 +137,21 @@ function SearchResultsList({ app, searchText, searchPerformed, searchResultFilin
   </div>;
 }
 
+function FilingListPageModeSelector({currentMode, requiredMode, title, changeMode}:
+  {currentMode: FilingListMode, requiredMode: FilingListMode, title: string, changeMode: (mode: FilingListMode) => void}): JSX.Element {
+  return <a className={
+    classNames('app-FilingListPageModeChanger-selector', {'app-FilingListPageModeChanger-selected': currentMode === requiredMode})
+    } onClick={() => changeMode(requiredMode)}>{title}</a>;
+}
+
 export default function FilingListPage({ app, mode, userFilings, searchResultFilings, searchPerformed, searchText,
   showUpload, onSearch, onSearchTextChange, onSearchSelection, changeMode }: FilingListPageProps): JSX.Element {
   return <div className='app-FilingListPage-container'>
     <div className='app-FilingListPage'>
-      <a onClick={() => changeMode('user')} >My Filings</a>
-      <a onClick={() => changeMode('search')}>Search SEC Filings</a>
+      <div className='app-FilingListPageModeChanger'>
+        <FilingListPageModeSelector currentMode={mode} requiredMode='user' title='My Filings' changeMode={changeMode}/>
+        <FilingListPageModeSelector currentMode={mode} requiredMode='search' title='Search SEC Filings' changeMode={changeMode}/>
+      </div>
       {(mode === 'user')
         ? <UserFilingList app={app} userFilings={userFilings} showUpload={showUpload} />
         : <SearchResultsList app={app} searchText={searchText} searchPerformed={searchPerformed} searchResultFilings={searchResultFilings}
