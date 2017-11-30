@@ -141,7 +141,7 @@ export function searchAction(search: string): SearchAction {
   return {type: SEARCH, search};
 }
 
-export function searchResultsReceived(filings: FilingMatch[]): SearchResultsReceivedAction {
+export function searchResultsReceivedAction(filings: FilingMatch[]): SearchResultsReceivedAction {
   return {type: SEARCH_RESULTS_RECEIVED, filings};
 }
 

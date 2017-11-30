@@ -23,7 +23,7 @@ import {
   receivedProfilesAction, failedProfilesAction,
   receivedFilingsAction, failedFilingsAction,
   UploadAction, uploadFailedAction,
-  SEARCH, searchResultsReceived, searchFailedAction, SearchAction,
+  SEARCH, searchResultsReceivedAction, searchFailedAction, SearchAction,
   SEARCH_SELECTION, SearchSelectionAction, searchSelectionFailedAction,
 } from './actions';
 import { FilingMatch } from '../fullbeam-search/models';
@@ -122,7 +122,7 @@ export function* uploadSaga(action: UploadAction): IterableIterator<Effect> {
 export function* searchSaga(action: SearchAction): IterableIterator<Effect> {
   try {
     const result: FilingMatch[] = yield call(matchingFilings, action.search);
-    yield put(searchResultsReceived(result));
+    yield put(searchResultsReceivedAction(result));
   } catch (res) {
     yield put(searchFailedAction(`Error searching (${res.message || res.statusText || res.status}).`));
   }

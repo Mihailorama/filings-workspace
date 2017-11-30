@@ -42,6 +42,8 @@ import {
   SEARCH_SELECTION,
   SEARCH_RESULTS_RECEIVED,
   SearchResultsReceivedAction,
+  SearchAction,
+  SEARCH_FAILED,
 } from './actions';
 import { Item } from '../state';
 import { FilingMatch } from '../fullbeam-search/models';
@@ -79,7 +81,7 @@ export interface WorkspaceState {
   mode: FilingListMode;
 }
 
-export function reducer(state: WorkspaceState | undefined, action: Action): WorkspaceState | undefined {
+export function reducer(state: WorkspaceState | undefined, action: Action): WorkspaceState {
   if (!state) {
     return {
       profiles: {loading: false, value: []},
@@ -132,11 +134,18 @@ export function reducer(state: WorkspaceState | undefined, action: Action): Work
       return { ...state, mode: 'search', search: { ...state.search, text: searchText,
         filings: { ...state.search.filings, loading: false, error: undefined } } };
     }
+    case SEARCH: {
+      const { search } = action as SearchAction;
+      return { ...state, search: { ...state.search, text: search, filings: { ...state.search.filings, loading: true } } };
+    }
+    case SEARCH_FAILED: {
+      const { error } = action as FailedAction;
+      return { ...state, search: { ...state.search, filings: { ...state.search.filings, loading: false, error } } };
+    }
     case SEARCH_RESULTS_RECEIVED: {
       const { filings } = action as SearchResultsReceivedAction;
       return { ...state, search: { ...state.search, filings: { loading: false, value: filings } } };
     }
-    case SEARCH:
     case SEARCH_SELECTION: {
       return { ...state, search: { ...state.search, filings: { ...state.search.filings, loading: true } } };
     }
