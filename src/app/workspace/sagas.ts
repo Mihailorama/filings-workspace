@@ -16,6 +16,7 @@
 
 import { Effect, delay } from 'redux-saga';
 import { all, call, put, takeEvery } from 'redux-saga/effects';
+import { Category, Filing, FilingVersionSummary } from '@cfl/document-service';
 
 import {
   PROFILES_FETCH, FILINGS_FETCH, UPLOAD,
@@ -23,18 +24,18 @@ import {
   receivedFilingsAction, failedFilingsAction,
   UploadAction, uploadFailedAction,
 } from './actions';
-import { apiFetchJson } from '../api-fetch';
-import { documentServiceFilingVersion, documentServiceCategories, DOCUMENT_SERVICE_FILINGS } from '../urls';
-import { Filing, FilingVersion, Category } from '../models';
+import { DOCUMENT_SERVICE_FILINGS } from '../urls';
 import { WorkspaceFiling } from './reducers';
+import { apiFetchJson } from '../api-fetch';
+import { categoriesApi, filingsApi } from '../urls';
 
 export const POLL_MILLIS = 1000;
 
-export const LATEST_FILINGS = `${DOCUMENT_SERVICE_FILINGS}?pageNumber=1&pageSize=20&sort=creationDate&sortOrder=desc`;
+export const LATEST_FILINGS = {pageNumber: 1, pageSize: 20, sort: 'creationDate', sortOrder: 'desc'};
 
 export function* fetchProfilesSaga(): IterableIterator<Effect> {
   try {
-    const category: Category = yield call(apiFetchJson, documentServiceCategories('validation'));
+    const category: Category = yield call([categoriesApi, categoriesApi.getCategory], {category: 'validation'});
     const { profiles } = category;
     if (!profiles || profiles.length === 0) {
       yield put(failedProfilesAction('Startup failed (No profiles)'));
@@ -48,7 +49,7 @@ export function* fetchProfilesSaga(): IterableIterator<Effect> {
 
 export function* fetchFilingsSaga(): IterableIterator<Effect> {
   try {
-    const filings: Filing[] = yield call(apiFetchJson, LATEST_FILINGS);
+    const filings: Filing[] = yield call([filingsApi, filingsApi.getFilings], LATEST_FILINGS);
     const workspaceFilings: WorkspaceFiling[] = filings
     .map(filing => ({...filing,
         versions: filing.versions && filing.versions.filter(version => version.status === 'DONE'),
@@ -97,10 +98,10 @@ export function* uploadSaga(action: UploadAction): IterableIterator<Effect> {
 
   try {
     // Poll for filing completion status.
-    let version: FilingVersion = filing.versions[0];
+    let version: FilingVersionSummary = filing.versions[0];
     while (version.status !== 'DONE') {
       yield call(delay, POLL_MILLIS);
-      version = yield call(apiFetchJson, documentServiceFilingVersion(version.id));
+      version = yield call([filingsApi, filingsApi.getFilingVersion], {filingVersionId: version.id});
     }
 
     const url = app.filingHref!.replace('{id}', version.id);

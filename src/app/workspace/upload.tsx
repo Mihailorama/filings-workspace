@@ -16,9 +16,10 @@
 
 import * as classNames from 'classnames';
 import * as React from 'react';
+import { Profile } from '@cfl/document-service';
 
 import { Item } from '../state';
-import { ValidationParams, Profile } from '../models';
+import { ValidationParams } from '../models';
 import ContactDetails from '../components/contact-details';
 import ValidationForm from './validation-form';
 import { UploadStatus } from './reducers';

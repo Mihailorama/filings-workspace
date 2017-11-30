@@ -17,15 +17,16 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
+import { Profile } from '@cfl/document-service';
+
 import { fetchProfilesAction, fetchFilingsAction, uploadAction, showUpload } from './actions';
-import { Item } from '../state';
 import WorkspaceApps from './workspace-apps';
 import FilingList from './filing-list';
+import { WorkspaceFiling, UploadStatus, WorkspaceAppSpec, WorkspaceState } from './reducers';
 import Upload from './upload';
-import { Profile } from '../models';
+import { Item } from '../state';
 
 import './container.less';
-import { WorkspaceFiling, UploadStatus, WorkspaceAppSpec, WorkspaceState } from './reducers';
 
 interface PropsFromState {
   filings: Item<WorkspaceFiling[]>;

@@ -20,7 +20,7 @@ import { StatisticsApiFactory } from '@cfl/filing-statistics-service';
 import { apiFetch } from './api-fetch';
 import { App } from './models';
 import { FilingversionsApiFactory, TablesApiFactory } from '@cfl/table-rendering-service';
-import { FilingsApiFactory } from '@cfl/document-service';
+import { FilingsApiFactory, CategoriesApiFactory } from '@cfl/document-service';
 import { FilingversionsApiFactory as ValidationFilingversionsApiFactory } from '@cfl/validation-service';
 
 export const USER = '/api/user';
@@ -35,12 +35,8 @@ export const appHelp = ({href}: App) => APP_HELP.fillFromObject({base: href});
 
 const DOCUMENT_SERVICE_PREFIX = '/api/document-service/v1';
 export const filingsApi = FilingsApiFactory(apiFetch, DOCUMENT_SERVICE_PREFIX);
-const DOCUMENT_SERVICE_CATEGORIES = uriTemplates(DOCUMENT_SERVICE_PREFIX + '/categories/{category}');
 export const DOCUMENT_SERVICE_FILINGS = DOCUMENT_SERVICE_PREFIX + '/filings/';
-const DOCUMENT_SERVICE_FILING_VERSION = uriTemplates(DOCUMENT_SERVICE_PREFIX + '/filing-versions/{filingVersionId}');
-
-export const documentServiceCategories = (category: 'validation') => DOCUMENT_SERVICE_CATEGORIES.fillFromObject({category});
-export const documentServiceFilingVersion = (filingVersionId: string) => DOCUMENT_SERVICE_FILING_VERSION.fillFromObject({filingVersionId});
+export const categoriesApi = CategoriesApiFactory(apiFetch, DOCUMENT_SERVICE_PREFIX);
 
 const VALIDATION_SERVICE_PREFIX = '/api/validation-service/v1';
 export const validationFilingVersionsApi = ValidationFilingversionsApiFactory(apiFetch, VALIDATION_SERVICE_PREFIX);

@@ -18,7 +18,7 @@
   * Create fake instances of models, for use in stories.
   */
 
-import { Profile } from '../app/models';
+import { Profile } from '@cfl/document-service';
 
 function id(label: string): string {
   let hash = 0;
@@ -33,6 +33,7 @@ export function profile(label: string): Profile {
   return {
     id: id(label),
     name: label,
+    category: 'validation',
   };
 }
 
