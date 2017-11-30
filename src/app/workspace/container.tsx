@@ -17,14 +17,15 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { Profile } from '@cfl/document-service';
-
-import { fetchProfilesAction, fetchFilingsAction, uploadAction, showUpload } from './actions';
+import { fetchProfilesAction, fetchFilingsAction, uploadAction, showUpload, searchAction,
+         searchTextChangedAction, searchSelectionAction, modeChangedAction } from './actions';
 import WorkspaceApps from './workspace-apps';
 import FilingList from './filing-list';
-import { WorkspaceFiling, UploadStatus, WorkspaceAppSpec, WorkspaceState } from './reducers';
 import Upload from './upload';
 import { Item } from '../state';
+import { FilingMatch } from '../fullbeam-search/models';
+import { WorkspaceFiling, UploadStatus, WorkspaceAppSpec, WorkspaceState, FilingListMode } from './reducers';
+import { Profile } from '@cfl/document-service';
 
 import './container.less';
 
@@ -32,6 +33,12 @@ interface PropsFromState {
   filings: Item<WorkspaceFiling[]>;
   profiles: Item<Profile[]>;
   upload?: UploadStatus;
+  search: {
+    searchPerformed: boolean;
+    text: string;
+    filings: Item<FilingMatch[]>;
+  };
+  mode: FilingListMode;
 }
 
 interface OwnProps {
@@ -43,6 +50,10 @@ export interface WorkspaceContainerProps extends PropsFromState, OwnProps {
   fetchFilingsAction: typeof fetchFilingsAction;
   uploadAction: typeof uploadAction;
   showUpload: typeof showUpload;
+  searchAction: typeof searchAction;
+  searchTextChangedAction: typeof searchTextChangedAction;
+  searchSelectionAction: typeof searchSelectionAction;
+  modeChangedAction: typeof modeChangedAction;
 }
 
 class WorkspaceContainer extends Component<WorkspaceContainerProps> {
@@ -73,7 +84,8 @@ class WorkspaceContainer extends Component<WorkspaceContainerProps> {
   }
 
   render(): JSX.Element {
-    const {app, filings, profiles, showUpload, upload, uploadAction} = this.props;
+    const {app, mode, filings, profiles, showUpload, upload, uploadAction, search,
+      searchAction, searchTextChangedAction, searchSelectionAction, modeChangedAction} = this.props;
     if (app) {
       if (upload) {
         if (upload.uploading) {
@@ -83,7 +95,16 @@ class WorkspaceContainer extends Component<WorkspaceContainerProps> {
         }
         return <Upload profiles={profiles} upload={upload} onSubmit={params => uploadAction(app, params)} />;
       }
-      return <FilingList app={app} filings={filings} showUpload={() => showUpload(true)} />;
+      const { text, filings: searchResultFilings, searchPerformed } = search;
+      return <FilingList app={app} mode={mode} searchPerformed={searchPerformed}
+        userFilings={filings} searchResultFilings={searchResultFilings}
+        showUpload={() => showUpload(true)}
+        searchText={text}
+        onSearch={() => searchAction(text)}
+        onSearchTextChange={searchTextChangedAction}
+        onSearchSelection={searchSelectionAction}
+        changeMode={modeChangedAction}
+        />;
     }
     return <WorkspaceApps />;
   }
@@ -92,8 +113,9 @@ class WorkspaceContainer extends Component<WorkspaceContainerProps> {
 
 export default connect(
   ({workspace: state}: {workspace: WorkspaceState}): PropsFromState => {
-    const {recentFilings: filings = {loading: true}, profiles, upload} = state;
-    return {filings, profiles, upload};
+    const {recentFilings: filings = {loading: true}, profiles, upload, search, mode} = state;
+    return {filings, profiles, upload, search, mode};
   },
-  {fetchProfilesAction, fetchFilingsAction, uploadAction, showUpload},
+  {fetchProfilesAction, fetchFilingsAction, uploadAction, showUpload, searchAction,
+   searchTextChangedAction, searchSelectionAction, modeChangedAction},
 )(WorkspaceContainer);

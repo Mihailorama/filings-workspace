@@ -22,10 +22,10 @@ import { AnalysisResponse } from '@cfl/digit-frequency-analysis-service';
 
 export const FAILED = 'BENFORD_FAILED';
 
-export const SEARCH = 'SEARCH';
+export const SEARCH = 'BENFORD_SEARCH';
 export const NAME_VERSION_LINK = 'NAME_VERSION_LINK';
-export const SEARCH_RESULTS_RECEIVED = 'SEARCH_RESULTS_RECEIVED';
-export const SEARCH_TEXT_CHANGED = 'SEARCH_TEXT_CHANGED';
+export const SEARCH_RESULTS_RECEIVED = 'BENFORD_SEARCH_RESULTS_RECEIVED';
+export const SEARCH_TEXT_CHANGED = 'BENFORD_SEARCH_TEXT_CHANGED';
 
 export const ANALYSE = 'ANALYSE';
 export const ANALYSE_RESULTS_RECEIVED = 'ANALYSE_RESULTS_RECEIVED';

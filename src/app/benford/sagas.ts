@@ -24,8 +24,9 @@ import {
   ANALYSE,
   nameVersionLinkAction,
 } from './actions';
-import { FilingMatch } from './models';
-import { latestFiling, analyseFiling, linkToPlatform, isFilingVersionReady, filingVersionName } from './urls';
+import { FilingMatch } from '../fullbeam-search/models';
+import { analyseFiling } from './urls';
+import { latestFiling, linkToPlatform, isFilingVersionReady, filingVersionName } from '../fullbeam-search/urls';
 import { push } from 'react-router-redux';
 
 const POLL_MILLIS = 1000;

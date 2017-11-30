@@ -18,7 +18,8 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import FilingList from './filing-list';
+import { FilingMatch } from '../fullbeam-search/models';
+import FilingList, { FilingListPageProps } from './filing-list';
 import { MemoryRouter } from 'react-router';
 import { WorkspaceAppSpec, WorkspaceFiling } from './reducers';
 
@@ -34,7 +35,34 @@ const filings: WorkspaceFiling[] = [
     'deserunt mollit anim id est laborum.', date: new Date('2017-01-03')},
 ];
 
+const filingMatches: FilingMatch[] = [
+  {filing: {id: 1}, filingName: 'Wibble wobble'} as any,
+  {filing: {id: 2}, filingName: 'Carrot'},
+  {filing: {id: 3}, filingName: 'Alphabet'},
+  {filing: {id: 4}, filingName: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ' +
+  'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ' +
+  'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris ' +
+  'nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in ' +
+  'reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. ' +
+  'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ' +
+  'deserunt mollit anim id est laborum.'},
+];
+
 const app: WorkspaceAppSpec = {name: 'Test App', action: 'SEARCH', href: '/test-app', filingHref: '/test-app/{id}'};
+
+const etc: FilingListPageProps = {
+  app,
+  mode: 'user',
+  searchPerformed: false,
+  userFilings: {loading: true},
+  searchResultFilings: {loading: false},
+  searchText: '' ,
+  showUpload: action('Upload'),
+  onSearch: action('Search'),
+  onSearchTextChange: action('Search Text Changed'),
+  onSearchSelection: action('Search Selected'),
+  changeMode: action('Mode Change'),
+};
 
 storiesOf('FilingList', module)
   .addDecorator(story => <MemoryRouter initialEntries={['/']}>
@@ -42,17 +70,17 @@ storiesOf('FilingList', module)
   </MemoryRouter>)
   .add('Loading', () => {
     return (
-      <FilingList filings={{loading: true}} app={app} showUpload={action('Upload')} />
+      <FilingList {...etc} />
     );
   })
   .add('No filings', () => {
     return (
-      <FilingList filings={{loading: false, value: []}} app={app} showUpload={action('Upload')} />
+      <FilingList {...etc} userFilings={{loading: false, value: []}} />
     );
   })
   .add('With filings', () => {
     return (
-      <FilingList filings={{loading: false, value: filings}} app={app} showUpload={action('Upload')} />
+      <FilingList {...etc} userFilings={{loading: false, value: filings}} />
     );
   })
   .add('Many filings', () => {
@@ -62,11 +90,45 @@ storiesOf('FilingList', module)
       date: new Date('2017-01-01'),
     }));
     return (
-      <FilingList filings={{loading: false, value: manyFilings}} app={app} showUpload={action('Upload')} />
+      <FilingList {...etc} userFilings={{loading: false, value: manyFilings}} />
     );
   })
   .add('Error', () => {
     return (
-      <FilingList filings={{loading: false, error: 'Something went wrong.'}} app={app} showUpload={action('Upload')} />
+      <FilingList {...etc} userFilings={{loading: false, error: 'Something went wrong.'}} />
     );
-  });
+  })
+  .add('Initial search', () => {
+    return (
+      <FilingList {...etc} mode='search' />
+    );
+  })
+  .add('With search text', () => {
+    return (
+      <FilingList {...etc} mode='search' searchText='Wibble' />
+    );
+  })
+  .add('Searching', () => {
+    return (
+      <FilingList {...etc} mode='search' searchText='Wibble' searchResultFilings={{loading: true}} />
+    );
+  })
+  .add('With search results', () => {
+    return (
+      <FilingList {...etc} mode='search' searchPerformed={true} searchText='Wibble'
+        searchResultFilings={{loading: false, value: filingMatches}} />
+    );
+  })
+  .add('No search results', () => {
+    return (
+      <FilingList {...etc} mode='search' searchPerformed={true} searchText='Wibble'
+        searchResultFilings={{loading: false, value: []}} />
+    );
+  })
+  .add('Search error', () => {
+    return (
+      <FilingList {...etc} mode='search' searchPerformed={true} searchText='Wibble'
+        searchResultFilings={{loading: false, error: 'Something went wrong.'}} />
+    );
+  })
+  ;

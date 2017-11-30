@@ -28,13 +28,27 @@ import {
   FILINGS_FAILED,
   FILINGS_FETCH,
   FILINGS_RECEIVED,
-  FailedUploadAction,
+  FailedAction,
   SHOW_UPLOAD,
   UPLOAD,
   UPLOAD_FAILED,
   ShowUploadAction,
+  SEARCH_TEXT_CHANGED,
+  SearchTextChangedAction,
+  SEARCH_SELECTION_FAILED,
+  MODE_CHANGED,
+  ModeChangedAction,
+  SEARCH,
+  SEARCH_SELECTION,
+  SEARCH_RESULTS_RECEIVED,
+  SearchResultsReceivedAction,
+  SearchAction,
+  SEARCH_FAILED,
 } from './actions';
 import { Item } from '../state';
+import { FilingMatch } from '../fullbeam-search/models';
+
+export type FilingListMode = 'user' | 'search';
 
 export interface UploadStatus {
   uploading: boolean;
@@ -63,13 +77,17 @@ export interface WorkspaceState {
   upload?: UploadStatus;
   // The recent filings.
   recentFilings: Item<WorkspaceFiling[]>;
+  search: { searchPerformed: boolean; text: string; filings: Item<FilingMatch[]> };
+  mode: FilingListMode;
 }
 
-export function reducer(state: WorkspaceState | undefined, action: Action): WorkspaceState | undefined {
+export function reducer(state: WorkspaceState | undefined, action: Action): WorkspaceState {
   if (!state) {
     return {
       profiles: {loading: false, value: []},
       recentFilings: {loading: false, value: []},
+      search: { searchPerformed: false, text: '', filings: { loading: false } },
+      mode: 'user',
     };
   }
   switch (action.type) {
@@ -104,8 +122,36 @@ export function reducer(state: WorkspaceState | undefined, action: Action): Work
       return { ...state, upload: {uploading: true} };
     }
     case UPLOAD_FAILED: {
-      const { error } = action as FailedUploadAction;
+      const { error } = action as FailedAction;
       return { ...state, upload: {uploading: false, error} };
+    }
+    case MODE_CHANGED: {
+      const { mode } = action as ModeChangedAction;
+      return { ...state, mode, search: { ...state.search, searchPerformed: false } };
+    }
+    case SEARCH_TEXT_CHANGED: {
+      const { searchText } = action as SearchTextChangedAction;
+      return { ...state, mode: 'search', search: { ...state.search, text: searchText,
+        filings: { ...state.search.filings, loading: false, error: undefined } } };
+    }
+    case SEARCH: {
+      const { search } = action as SearchAction;
+      return { ...state, search: { ...state.search, text: search, filings: { ...state.search.filings, loading: true } } };
+    }
+    case SEARCH_FAILED: {
+      const { error } = action as FailedAction;
+      return { ...state, search: { ...state.search, filings: { ...state.search.filings, loading: false, error } } };
+    }
+    case SEARCH_RESULTS_RECEIVED: {
+      const { filings } = action as SearchResultsReceivedAction;
+      return { ...state, search: { ...state.search, searchPerformed: true, filings: { loading: false, value: filings } } };
+    }
+    case SEARCH_SELECTION: {
+      return { ...state, search: { ...state.search, filings: { ...state.search.filings, loading: true } } };
+    }
+    case SEARCH_SELECTION_FAILED: {
+      const { error } = action as FailedAction;
+      return { ...state, search: { ...state.search, filings: { loading: false, error } } };
     }
     default:
       return state;

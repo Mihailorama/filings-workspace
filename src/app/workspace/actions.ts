@@ -15,9 +15,10 @@
  */
 
 import { Action } from 'redux';
-import { WorkspaceFiling, WorkspaceAppSpec } from './reducers';
 import { Profile } from '@cfl/document-service';
 import { ValidationParams } from '../models';
+import { FilingMatch } from '../fullbeam-search/models';
+import { WorkspaceFiling, WorkspaceAppSpec, FilingListMode } from './reducers';
 
 export const PROFILES_FETCH = 'WORKSPACE_PROFILES_FETCH';
 export const PROFILES_RECEIVED = 'WORKSPACE_PROFILES_RECEIVED';
@@ -27,10 +28,20 @@ export const FILINGS_FETCH = 'WORKSPACE_FILINGS_FETCH';
 export const FILINGS_RECEIVED = 'WORKSPACE_FILINGS_RECEIVED';
 export const FILINGS_FAILED = 'WORKSPACE_FILINGS_FAILED';
 
+export const SEARCH = 'WORKSPACE_SEARCH';
+export const SEARCH_RESULTS_RECEIVED = 'WORKSPACE_SEARCH_RESULTS_RECEIVED';
+export const SEARCH_TEXT_CHANGED = 'WORKSPACE_SEARCH_TEXT_CHANGED';
+export const SEARCH_FAILED = 'WORKSPACE_SEARCH_FAILED';
+
+export const SEARCH_SELECTION = 'WORKSPACE_SEARCH_SELECTION';
+export const SEARCH_SELECTION_FAILED = 'WORKSPACE_SEARCH_SELECTION_FAILED';
+
 export const SHOW_UPLOAD = 'WORKSPACE_SHOW_UPLOAD';
 
 export const UPLOAD = 'WORKSPACE_UPLOAD';
 export const UPLOAD_FAILED = 'WORKSPACE_UPLOAD_FAILED';
+
+export const MODE_CHANGED = 'WORKSPACE_MODE_CHANGED';
 
 export interface ReceivedProfilesAction extends Action {
   profiles: Profile[];
@@ -61,8 +72,29 @@ export interface ReceivedUploadAction extends Action {
   filingVersionId: string;
 }
 
-export interface FailedUploadAction extends Action {
+export interface FailedAction extends Action {
   error: string;
+}
+
+export interface SearchTextChangedAction extends Action {
+  searchText: string;
+}
+
+export interface SearchAction extends Action {
+  search: string;
+}
+
+export interface SearchResultsReceivedAction extends Action {
+  filings: FilingMatch[];
+}
+
+export interface SearchSelectionAction extends Action {
+  app: WorkspaceAppSpec;
+  selectedFiling: FilingMatch;
+}
+
+export interface ModeChangedAction extends Action {
+  mode: FilingListMode;
 }
 
 export function fetchProfilesAction(): Action {
@@ -97,6 +129,34 @@ export function uploadAction(app: WorkspaceAppSpec, params: ValidationParams): U
   return {type: UPLOAD, app, params};
 }
 
-export function uploadFailedAction(error: string): FailedUploadAction {
+export function uploadFailedAction(error: string): FailedAction {
   return {type: UPLOAD_FAILED, error};
+}
+
+export function searchTextChangedAction(searchText: string): SearchTextChangedAction {
+  return {type: SEARCH_TEXT_CHANGED, searchText};
+}
+
+export function searchAction(search: string): SearchAction {
+  return {type: SEARCH, search};
+}
+
+export function searchResultsReceivedAction(filings: FilingMatch[]): SearchResultsReceivedAction {
+  return {type: SEARCH_RESULTS_RECEIVED, filings};
+}
+
+export function searchFailedAction(error: string): FailedAction {
+  return {type: SEARCH_FAILED, error};
+}
+
+export function searchSelectionAction(app: WorkspaceAppSpec, selectedFiling: FilingMatch): SearchSelectionAction {
+  return {type: SEARCH_SELECTION, app, selectedFiling};
+}
+
+export function searchSelectionFailedAction(error: string): FailedAction {
+  return {type: SEARCH_SELECTION_FAILED, error};
+}
+
+export function modeChangedAction(mode: FilingListMode): ModeChangedAction {
+  return { type: MODE_CHANGED, mode };
 }

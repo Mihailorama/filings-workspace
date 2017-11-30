@@ -22,7 +22,7 @@ import { BenfordPhase } from './models';
 import Graph from './benford-graph';
 import BoxTitle from './box-title';
 import InfoLarge from './info-box-icon';
-import SearchBox from './search-box';
+import SearchBox from '../fullbeam-search/search-box';
 
 import './benfords-analysis.less';
 

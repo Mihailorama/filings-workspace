@@ -52,7 +52,7 @@ export function tablePageKey(page: TablePage): string {
   return `${id}(${x},${y},${z})`;
 };
 
-export function reducer(state: ViewerState | undefined, action: Action): ViewerState | undefined {
+export function reducer(state: ViewerState | undefined, action: Action): ViewerState {
   if (!state) {
     return {
       names: {},
