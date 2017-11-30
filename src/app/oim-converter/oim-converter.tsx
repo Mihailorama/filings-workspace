@@ -49,8 +49,10 @@ function contents(props: OimConverterProps): JSX.Element {
 }
 
 export default function OimConverter(props: OimConverterProps): JSX.Element {
-  return <div className='app-OimConverter'>
-    {contents(props)}
+  return <div className='app-OimConverter-container'>
+    <div className='app-OimConverter'>
+      {contents(props)}
+    </div>
   </div>;
 
 }
