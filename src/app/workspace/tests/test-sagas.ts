@@ -6,7 +6,9 @@ import {
   receivedFilingsAction, failedFilingsAction,
   uploadAction, uploadFailedAction,
 } from '../actions';
-import { fetchFilingsSaga, uploadSaga, navigate, LATEST_FILINGS, POLL_MILLIS, fetchProfilesSaga } from '../sagas';
+import {
+  fetchFilingsSaga, uploadSaga, navigate, LATEST_FILINGS, POLL_MILLIS, fetchProfilesSaga, stripExtension,
+} from '../sagas';
 import { WORKSPACE_APPS } from '../workspace-apps';
 import { exampleFiling, exampleFilingVersion, exampleCategory } from '../../tests/model-examples';
 import { ValidationParams } from '../../models';
@@ -75,6 +77,25 @@ describe('fetchFilingsSaga', () => {
   });
 });
 
+describe('stripExtension', () => {
+  it('strips 3-4 character extensions', () => {
+    expect(stripExtension('file.tx')).toEqual('file.tx');
+    expect(stripExtension('file.txT')).toEqual('file');
+    expect(stripExtension('file.txT1')).toEqual('file');
+    expect(stripExtension('file.txT12')).toEqual('file.txT12');
+  });
+  it('handles multi-dotted files', () => {
+    expect(stripExtension('File with multiple.parts.txt')).toEqual('File with multiple.parts');
+    expect(stripExtension('last part.not.valid')).toEqual('last part.not.valid');
+  });
+  it('does not strip extensions with nothing before the dot', () => {
+    expect(stripExtension('.txt')).toEqual('.txt');
+  });
+  it('does not strip files with no extension', () => {
+    expect(stripExtension('No extension')).toEqual('No extension');
+  });
+});
+
 describe('uploadSaga', () => {
   const file = new File(['Hello world'], 'name-of-file.txt', {type: 'text/plain'});
   const params: ValidationParams = {
@@ -88,7 +109,7 @@ describe('uploadSaga', () => {
 
     const formData = new FormData();
     formData.append('validationProfile', 'uuid-of-profile');
-    formData.append('name', 'name-of-file.txt');
+    formData.append('name', 'name-of-file');
     formData.append('file', file, 'name-of-file.txt');
     // Does not set dataSet (so servier will use the default dataset).
     expect(saga.next().value).toEqual(call(apiFetchJson, '/api/document-service/v1/filings/', {
