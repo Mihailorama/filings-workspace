@@ -1,20 +1,23 @@
-import { call, put } from 'redux-saga/effects';
+import { filingsApi, validationFilingVersionsApi } from '../../urls';
+import { call, put, all } from 'redux-saga/effects';
 
 import { fetchAction, receivedAction, failedAction } from '../actions';
 import { fetchSaga } from '../sagas';
-import { validationServiceFilingVersion } from '../../urls';
-import { apiFetchJson } from '../../api-fetch';
 
 describe('fetchValidatorSaga', () => {
   const filingVersionId = '1234';
 
   it('dispatches RECEIVED if all goes well', () => {
     const saga = fetchSaga(fetchAction(filingVersionId));
-    const status = 'OK';
+    const name = 'Filing.zip';
+    const severity = 'OK';
 
-    expect(saga.next().value).toEqual(call(apiFetchJson, validationServiceFilingVersion(filingVersionId)));
-    expect(saga.next({severity: status}).value).toEqual(put(
-      receivedAction(filingVersionId, status)));
+    expect(saga.next().value).toEqual(all([
+      call([validationFilingVersionsApi, validationFilingVersionsApi.getFilingVersion], {filingVersionId}),
+      call([filingsApi, filingsApi.getFilingVersion], {filingVersionId}),
+    ]));
+    expect(saga.next([{severity}, {filing: {name}}]).value).toEqual(put(
+      receivedAction(filingVersionId, name, severity)));
   });
 
   it('dispatches FAILED if call to service fails', () => {

@@ -7,6 +7,7 @@ describe('validatorReducer', () => {
 
   it('sets initial state', () => {
     expect(initial).toEqual({
+      names: {},
       status: {},
     });
   });
@@ -17,10 +18,12 @@ describe('validatorReducer', () => {
     expect(after!.status['1234']).toEqual({loading: true});
   });
 
-  it('stores status when received', () => {
+  it('stores name and status when received', () => {
+    const name = 'Filing.zip';
     const status = 'WARNING';
-    const after: ValidatorState | undefined = reducer(exampleValidatorState, receivedAction('1234', status));
+    const after: ValidatorState | undefined = reducer(exampleValidatorState, receivedAction('1234', name, status));
     expect(after).toBeDefined();
+    expect(after!.names['1234']).toEqual(name);
     expect(after!.status['1234']).toEqual({loading: false, value: status});
   });
 

@@ -28,6 +28,7 @@ import { Item } from '../state';
 import { ViewerState, tablePageKey } from './reducers';
 
 export interface PropsFromState {
+  name?: string;
   tables: Item<TableMetadata[]>;
   selectedTable?: TableMetadata;
   table: Item<QueryableTablePage>;
@@ -53,12 +54,13 @@ class Container extends Component<ContainerProps> {
   }
 
   render(): JSX.Element {
-    const {tables, selectedTable, table, zOptions, fetchPageAction} = this.props;
+    const {name, tables, selectedTable, table, zOptions, fetchPageAction} = this.props;
     const fvid = filingVersionId(this.props);
     const onChangePage = (x: number, y: number, z: number) => selectedTable &&
       fetchPageAction(fvid, {table: selectedTable, x, y, z});
     const onChangeTable = (t: TableMetadata) => fetchPageAction(fvid, {table: t, x: 0, y: 0, z: 0});
     return <Viewer
+      name={name}
       tables={tables}
       selectedTable={selectedTable}
       table={table}
@@ -72,12 +74,13 @@ class Container extends Component<ContainerProps> {
 export default connect(
   ({viewer: state}: {viewer: ViewerState}, routerProps: FilingRouterProps): PropsFromState => {
     const fvid = filingVersionId(routerProps);
+    const name = state.names[fvid];
     const tables = state.tables[fvid] || {loading: true};
     const page = state.selectedTablePage[fvid];
     const table = page && state.tableRendering[tablePageKey(page)] || {loading: true};
     const zOptions = page && state.zOptions[page.table.id];
 
-    return {tables, selectedTable: page && page.table, table, zOptions};
+    return {name, tables, selectedTable: page && page.table, table, zOptions};
   },
   {fetchTablesAction, fetchPageAction},
 )(Container);

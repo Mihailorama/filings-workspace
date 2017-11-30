@@ -24,8 +24,12 @@ import { filingVersionId, FilingRouterProps } from '../containers/filing-version
 import Statistics from './statistics';
 import { StatisticsState } from './reducers';
 
-export interface StatisticsContainerProps extends FilingRouterProps {
+interface PropsFromState {
+  name?: string;
   statistics: Item<Statistic[]>;
+}
+
+export interface StatisticsContainerProps extends PropsFromState, FilingRouterProps {
   fetchAction: typeof fetchAction;
 }
 
@@ -43,16 +47,18 @@ class StatisticsContainer extends Component<StatisticsContainerProps> {
   }
 
   render(): JSX.Element {
-    const {statistics} = this.props;
-    return <Statistics statistics={statistics} />;
+    const {name, statistics} = this.props;
+    return <Statistics name={name} statistics={statistics} />;
   }
 
 }
 
 export default connect(
-  ({statistics: state}: {statistics: StatisticsState}, ownProps: FilingRouterProps) => {
-    const statistics = state.statistics[filingVersionId(ownProps)] || {loading: true};
-    return {statistics};
+  ({statistics: state}: {statistics: StatisticsState}, ownProps: FilingRouterProps): PropsFromState => {
+    const fvid = filingVersionId(ownProps);
+    const name = state.names[fvid];
+    const statistics = state.statistics[fvid] || {loading: true};
+    return {name, statistics};
   },
   {fetchAction},
 )(StatisticsContainer);

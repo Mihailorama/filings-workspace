@@ -41,24 +41,6 @@ export interface App {
 }
 
 /**
- * One of the ways the backend might be asked to validate a document.
- */
-export interface Profile {
-  category?: 'validation';
-  id: string;  // Internal name.
-  name: string;  // Human-readable label.
-  description?: string;
-}
-
-/**
- * Returned by `/categories/validation`. Container for ValdiationProfile instances.
- */
-export interface Category {
-  name: string;
-  profiles: Profile[];
-}
-
-/**
  * Information needed to request a validation operation.
  */
 export interface ValidationParams {
@@ -73,37 +55,6 @@ export function paramsAreComplete(params: Partial<ValidationParams>): params is 
   const { profile,  file } = params;
   return !!profile && !!file;
 }
-
-/**
- * Information about filing returned by Document Service.
- */
-export interface Filing {
-  id: string;
-  type: 'Filing' | 'FilingSummary';
-  name: string;  // Human-chosen name for this filing.  (Defaults to name of uploaded file.)
-  versions?: FilingVersion[];  // Included if type is `Filing`.
-}
-
-/**
- * Information about one version of a filing. (Filings at present always have exactly one version.)
- */
-export interface FilingVersion {
-  type: 'FilingVersion' | 'FilingVersionSummary';
-  id: string;
-  creator?: Actor;
-  status: 'PENDING' | 'RUNNING' | 'DONE';
-  documents?: Document[];  // Included if type is `FilingVersion`
-  filing?: Filing;  // Included if type is `FilingVersion`.
-  created: string; // Date in XML Schema format
-  deleted?: string;  // Date in XML Schema format
-}
-
-export interface ValidationServiceFilingVersionSummary {
-  id: string;
-  severity: ValidationStatus;
-}
-
-export type ValidationStatus = 'FATAL_ERROR' | 'ERROR' | 'WARNING' | 'OK';
 
 /**
  * Describes the person or system that performed an action.

@@ -11,12 +11,14 @@ import { WORKSPACE_APPS } from '../workspace-apps';
 import { exampleFiling, exampleFilingVersion, exampleCategory } from '../../tests/model-examples';
 import { ValidationParams } from '../../models';
 import { apiFetchJson } from '../../api-fetch';
+import { categoriesApi, filingsApi } from '../../urls';
 
 describe('profilesSaga', () => {
   it('calls APIs in parallel and dispatches', () => {
     const saga = fetchProfilesSaga();
 
-    expect(saga.next().value).toEqual(call(apiFetchJson, '/api/document-service/v1/categories/validation'));
+    expect(saga.next().value)
+      .toEqual(call([categoriesApi, categoriesApi.getCategory], {category: 'validation'}));
     expect(saga.next(exampleCategory).value)
       .toEqual(put(receivedProfilesAction(exampleCategory.profiles)));
   });
@@ -34,7 +36,7 @@ describe('fetchFilingsSaga', () => {
   it('dispatches RECEIVED if all goes well', () => {
     const saga = fetchFilingsSaga();
 
-    expect(saga.next().value).toEqual(call(apiFetchJson, LATEST_FILINGS));
+    expect(saga.next().value).toEqual(call([filingsApi, filingsApi.getFilings], LATEST_FILINGS));
 
     const filings = [
       exampleFiling,
@@ -51,7 +53,7 @@ describe('fetchFilingsSaga', () => {
   it('limits to the latest 10 filing versions', () => {
     const saga = fetchFilingsSaga();
 
-    expect(saga.next().value).toEqual(call(apiFetchJson, LATEST_FILINGS));
+    expect(saga.next().value).toEqual(call([filingsApi, filingsApi.getFilings], LATEST_FILINGS));
 
     const filings = new Array(20).fill(
       {...exampleFiling, versions: [exampleFilingVersion]},
@@ -76,7 +78,7 @@ describe('fetchFilingsSaga', () => {
 describe('uploadSaga', () => {
   const file = new File(['Hello world'], 'name-of-file.txt', {type: 'text/plain'});
   const params: ValidationParams = {
-    profile: 'uiid-of-profile',
+    profile: 'uuid-of-profile',
     file,
   };
   const app = WORKSPACE_APPS.validator;
@@ -98,7 +100,9 @@ describe('uploadSaga', () => {
 
     // Then poll for updates after 1 second.
     expect(saga.next({versions: [inProgress]}).value).toEqual(call(delay, POLL_MILLIS));
-    expect(saga.next().value).toEqual(call(apiFetchJson, '/api/document-service/v1/filing-versions/f09be954-1895-4954-b333-6c9c89b833f1'));
+    expect(saga.next().value).toEqual(call([filingsApi, filingsApi.getFilingVersion], {
+      filingVersionId: 'f09be954-1895-4954-b333-6c9c89b833f1',
+    }));
     const url = app.filingHref!.replace('{id}', 'f09be954-1895-4954-b333-6c9c89b833f1');
     expect(saga.next(exampleFilingVersion).value).toEqual(call(
       navigate, url));

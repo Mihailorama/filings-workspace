@@ -38,6 +38,7 @@ storiesOf('Viewer', module)
   .add('Full', () => {
     return (
       <Viewer
+        name='Example filing.zip'
         tables={{loading: false, value: tables}}
         selectedTable={tables[0]}
         zOptions={zOptions}
@@ -62,6 +63,7 @@ storiesOf('Viewer', module)
   .add('No tables', () => {
     return (
       <Viewer
+        name='Example filing.zip'
         tables={{loading: false, value: []}}
         table={{loading: false}}
         onChangePage={action('onChangePage') as any}
