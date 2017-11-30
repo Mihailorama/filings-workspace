@@ -19,7 +19,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import { FilingMatch } from '../fullbeam-search/models';
-import FilingList, { FilingListPage } from './filing-list';
+import FilingList, { FilingListPageProps } from './filing-list';
 import { MemoryRouter } from 'react-router';
 import { WorkspaceAppSpec, WorkspaceFiling } from './reducers';
 
@@ -50,7 +50,7 @@ const filingMatches: FilingMatch[] = [
 
 const app: WorkspaceAppSpec = {name: 'Test App', action: 'CHECK', href: '/test-app', filingHref: '/test-app/{id}'};
 
-const etc: FilingListPage = {
+const etc: FilingListPageProps = {
   app,
   mode: 'user',
   searchPerformed: false,
@@ -61,6 +61,7 @@ const etc: FilingListPage = {
   onSearch: action('Search'),
   onSearchTextChange: action('Search Text Changed'),
   onSearchSelection: action('Search Selected'),
+  changeMode: action('Mode Change'),
 };
 
 storiesOf('FilingList', module)

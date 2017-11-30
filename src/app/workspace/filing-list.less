@@ -30,11 +30,18 @@
 
   box-shadow: 0 15px 50px 0 rgba(0, 0, 0, 0.3);
 
-  flex-shrink: 0;
-  flex-grow: 1;
   padding: @gap2 @gap @gap;
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
+  flex-grow: 1;
+
+  &-modeContainer {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    flex-grow: 1;
+  }
 
   &-header {
     flex-basis: auto;

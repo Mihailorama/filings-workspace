@@ -30,12 +30,13 @@ import { FilingMatch } from '../fullbeam-search/models';
 
 import './filing-list.less';
 
-export interface FilingListPage {
+export interface FilingListPageProps {
   app: WorkspaceAppSpec;
   mode: FilingListMode;
   userFilings: Item<WorkspaceFiling[]>;
   searchResultFilings: Item<FilingMatch[]>;
   showUpload: () => void;
+  changeMode: (mode: FilingListMode) => void;
 
   searchPerformed: boolean;
   searchText?: string;
@@ -44,7 +45,7 @@ export interface FilingListPage {
   onSearchSelection: (app: WorkspaceAppSpec, selectedFiling: FilingMatch) => void;
 }
 
-function createFilingRow(name: string, date: Date, {href, external}: LinkDef): JSX.Element {
+function createFilingRow(id: string, name: string, date: Date, {href, external}: LinkDef): JSX.Element {
   const format = new Intl.DateTimeFormat(window.navigator.language || 'en-US', {
     year: 'numeric', month: 'short', day: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric',
   });
@@ -53,8 +54,8 @@ function createFilingRow(name: string, date: Date, {href, external}: LinkDef): J
     <div className='app-FilingList-row-date app-FilingList-row-cell'>{format.format(date)}</div>,
   ];
   return external ?
-    <a className='app-FilingList-row' href={href}>{innards}</a> :
-    <Link className='app-FilingList-row' to={href}>{innards}</Link>;
+    <a key={id} className='app-FilingList-row' href={href}>{innards}</a> :
+    <Link key={id} className='app-FilingList-row' to={href}>{innards}</Link>;
 }
 
 function FilingList({app, filings}: {app: WorkspaceAppSpec, filings: WorkspaceFiling[]}): JSX.Element {
@@ -65,12 +66,12 @@ function FilingList({app, filings}: {app: WorkspaceAppSpec, filings: WorkspaceFi
     </div>
     <div className='app-FilingList-list'>
       {filings.map(filing =>
-        createFilingRow(filing.name, filing.date, linkForFiling(app, filing.id)))}
+        createFilingRow(filing.id, filing.name, filing.date, linkForFiling(app, filing.id)))}
     </div>
   </div>;
 }
 
-function FilingList2({app, filings, onSearchSelection}: {app: WorkspaceAppSpec, filings: FilingMatch[],
+function SearchResultFilingList({app, filings, onSearchSelection}: {app: WorkspaceAppSpec, filings: FilingMatch[],
     onSearchSelection: (app: WorkspaceAppSpec, selectedFiling: FilingMatch) => void}): JSX.Element {
   return <div className='app-FilingList'>
     <div className='app-FilingList-header'>
@@ -78,7 +79,7 @@ function FilingList2({app, filings, onSearchSelection}: {app: WorkspaceAppSpec, 
     </div>
     <div className='app-FilingList-list'>
       {filings.map(filing => {
-        return <a className='app-FilingList-row' onClick={
+        return <a key={filing.filing.id} className='app-FilingList-row' onClick={
             e => { e.preventDefault(); onSearchSelection(app, filing); }}>
             <div className='app-FilingList-row-cell'>{filing.filingName}</div>
             </a>;
@@ -87,45 +88,66 @@ function FilingList2({app, filings, onSearchSelection}: {app: WorkspaceAppSpec, 
   </div>;
 }
 
-export default function FilingListPage({app, mode, userFilings, searchResultFilings, searchPerformed, searchText,
-    showUpload, onSearch, onSearchTextChange, onSearchSelection}: FilingListPage): JSX.Element {
+function UserFilingList({ app, userFilings, showUpload }:
+  { app: WorkspaceAppSpec, userFilings: Item<WorkspaceFiling[]>, showUpload: () => void }): JSX.Element {
+  return <div className='app-FilingListPage-modeContainer'>
+    <div className='app-FilingListPage-header'>
+      <Button className='app-FilingListPage-uploadButton' primary onClick={showUpload}>
+        <UploadIcon />
+        <div>Upload</div>
+      </Button>
+    </div>
+    <div className='app-FilingListPage-inner'>
+      {userFilings.loading ?
+        <div className='app-FilingListPage-loading'>loading…</div> :
+        userFilings.error ?
+          <div className='app-FilingListPage-error'>{userFilings.error}</div> :
+          userFilings.value && userFilings.value.length ?
+            <FilingList app={app} filings={userFilings.value} /> :
+            <div className='app-FilingListPage-noFilings'>
+              <div><a onClick={showUpload} className='app-FilingListPage-noFilings-upload'>Upload a filing</a> to begin.</div>
+            </div>}
+    </div>
+  </div>;
+}
+
+function SearchResultsList({ app, searchText, searchPerformed, searchResultFilings, onSearch, onSearchTextChange, onSearchSelection }:
+  { app: WorkspaceAppSpec, searchText?: string, searchPerformed: boolean, searchResultFilings: Item<FilingMatch[]>,
+    onSearch: () => void, onSearchTextChange: (search: string) => void,
+    onSearchSelection: (app: WorkspaceAppSpec, selectedFiling: FilingMatch) => void,
+  }): JSX.Element {
+  return <div className='app-FilingListPage-modeContainer'>
+    <div className='app-FilingListPage-header'>
+      <SearchBox onSearch={onSearch} onSearchTextChange={onSearchTextChange} searchText={searchText}
+        placeholder='US Securities and Exchange Commission Filings' disabled={false} />
+    </div>
+    <div className='app-FilingListPage-inner'>
+      {searchResultFilings.loading ?
+        <div className='app-FilingListPage-loading'>loading…</div> :
+        searchResultFilings.error ?
+          <div className='app-FilingListPage-error'>{searchResultFilings.error}</div> :
+          searchResultFilings.value && searchResultFilings.value.length ?
+            <SearchResultFilingList app={app} filings={searchResultFilings.value} onSearchSelection={onSearchSelection} /> :
+            <div className='app-FilingListPage-noFilings'>
+              {searchPerformed ? <div>No results.</div> : <div>Search for SEC filings.</div>}
+            </div>
+      }
+    </div>
+  </div>;
+}
+
+export default function FilingListPage({ app, mode, userFilings, searchResultFilings, searchPerformed, searchText,
+  showUpload, onSearch, onSearchTextChange, onSearchSelection, changeMode }: FilingListPageProps): JSX.Element {
   return <div className='app-FilingListPage-container'>
     <div className='app-FilingListPage'>
-      <div className='app-FilingListPage-header'>
-        <Button className='app-FilingListPage-uploadButton' primary onClick={showUpload}>
-          <UploadIcon />
-          <div>Upload</div>
-        </Button>
-        <SearchBox onSearch={onSearch} onSearchTextChange={onSearchTextChange} searchText={searchText}
-                   placeholder='US Securities and Exchange Commission Filings' disabled={false} />
-      </div>
-      {(mode === 'user') ?
-      <div className='app-FilingListPage-inner'>
-        {userFilings.loading ?
-          <div className='app-FilingListPage-loading'>loading…</div> :
-          userFilings.error ?
-            <div className='app-FilingListPage-error'>{userFilings.error}</div> :
-            userFilings.value && userFilings.value.length ?
-              <FilingList app={app} filings={userFilings.value} /> :
-              <div className='app-FilingListPage-noFilings'>
-                <div><a onClick={showUpload} className='app-FilingListPage-noFilings-upload'>Upload a filing</a> to begin.</div>
-              </div>
-        }
-        </div>
-        : <div className='app-FilingListPage-inner'>
-          {searchResultFilings.loading ?
-            <div className='app-FilingListPage-loading'>loading…</div> :
-            searchResultFilings.error ?
-              <div className='app-FilingListPage-error'>{searchResultFilings.error}</div> :
-              searchResultFilings.value && searchResultFilings.value.length ?
-                <FilingList2 app={app} filings={searchResultFilings.value} onSearchSelection={onSearchSelection} /> :
-                <div className='app-FilingListPage-noFilings'>
-                  {searchPerformed ? <div>No results.</div> : <div>Search for SEC filings.</div>}
-                </div>
-          }
-        </div>
-      }
+      <a onClick={() => changeMode('user')} >My Filings</a>
+      <a onClick={() => changeMode('search')}>Search SEC Filings</a>
+      {(mode === 'user')
+        ? <UserFilingList app={app} userFilings={userFilings} showUpload={showUpload} />
+        : <SearchResultsList app={app} searchText={searchText} searchPerformed={searchPerformed} searchResultFilings={searchResultFilings}
+          onSearch={onSearch} onSearchTextChange={onSearchTextChange} onSearchSelection={onSearchSelection} />}
     </div>
     <ContactDetails />
   </div>;
+
 }

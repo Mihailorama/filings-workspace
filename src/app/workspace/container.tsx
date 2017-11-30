@@ -18,7 +18,7 @@ import * as React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchProfilesAction, fetchFilingsAction, uploadAction, showUpload, searchAction,
-         searchTextChangedAction, searchSelectionAction } from './actions';
+         searchTextChangedAction, searchSelectionAction, modeChangedAction } from './actions';
 import WorkspaceApps from './workspace-apps';
 import FilingList from './filing-list';
 import Upload from './upload';
@@ -53,6 +53,7 @@ export interface WorkspaceContainerProps extends PropsFromState, OwnProps {
   searchAction: typeof searchAction;
   searchTextChangedAction: typeof searchTextChangedAction;
   searchSelectionAction: typeof searchSelectionAction;
+  modeChangedAction: typeof modeChangedAction;
 }
 
 class WorkspaceContainer extends Component<WorkspaceContainerProps> {
@@ -84,7 +85,7 @@ class WorkspaceContainer extends Component<WorkspaceContainerProps> {
 
   render(): JSX.Element {
     const {app, mode, filings, profiles, showUpload, upload, uploadAction, search,
-      searchAction, searchTextChangedAction, searchSelectionAction} = this.props;
+      searchAction, searchTextChangedAction, searchSelectionAction, modeChangedAction} = this.props;
     if (app) {
       if (upload) {
         if (upload.uploading) {
@@ -101,7 +102,9 @@ class WorkspaceContainer extends Component<WorkspaceContainerProps> {
         searchText={text}
         onSearch={() => searchAction(text)}
         onSearchTextChange={searchTextChangedAction}
-        onSearchSelection={searchSelectionAction} />;
+        onSearchSelection={searchSelectionAction}
+        changeMode={modeChangedAction}
+        />;
     }
     return <WorkspaceApps />;
   }
@@ -113,5 +116,6 @@ export default connect(
     const {recentFilings: filings = {loading: true}, profiles, upload, search, mode} = state;
     return {filings, profiles, upload, search, mode};
   },
-  {fetchProfilesAction, fetchFilingsAction, uploadAction, showUpload, searchAction, searchTextChangedAction, searchSelectionAction},
+  {fetchProfilesAction, fetchFilingsAction, uploadAction, showUpload, searchAction,
+   searchTextChangedAction, searchSelectionAction, modeChangedAction},
 )(WorkspaceContainer);
