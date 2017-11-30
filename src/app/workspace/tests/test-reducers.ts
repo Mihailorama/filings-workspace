@@ -12,8 +12,9 @@ import {
   searchResultsReceivedAction,
   searchFailedAction,
   searchSelectionFailedAction,
+  searchSelectionAction,
 } from '../actions';
-import { reducer, WorkspaceState } from '../reducers';
+import { reducer, WorkspaceState, WorkspaceAppSpec } from '../reducers';
 import { WORKSPACE_APPS } from '../workspace-apps';
 import { ValidationParams } from '../../models';
 import { exampleWorkspaceState, exampleRecentFilings } from '../../tests/model-examples';
@@ -125,6 +126,18 @@ describe('reducer (searching)', () => {
 
     expect(after.search.filings.loading).toBeFalsy();
     expect(after.search.filings.error).toEqual('LOLWAT');
+  });
+
+  it('enters loading state when selection made', () => {
+    const exampleApp: WorkspaceAppSpec = {
+      name: 'Name of App',
+      href: '/idofapp',
+      action: 'COMPARE',
+      filingHref: '/idofapp/filing-versions/{id}',
+    };
+    const after = reducer(exampleWorkspaceState, searchSelectionAction(exampleApp, exampleFilingMatch));
+
+    expect(after.search.filings.loading).toBeTruthy();
   });
 
   it('enters error state when selection failed', () => {
