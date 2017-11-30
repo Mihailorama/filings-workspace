@@ -85,7 +85,7 @@ export default class ValidationForm extends Component<ValidationFormProps, Valid
         </select>
       </FormItem>
       <FormActionList>
-        <FormAction enabled={onSubmit && paramsAreComplete(params)} primary>Validate</FormAction>
+        <FormAction enabled={onSubmit && paramsAreComplete(params)} primary>Upload</FormAction>
       </FormActionList>
     </Form>;
   }
