@@ -3,7 +3,7 @@ import { reducer, ValidatorState } from '../reducers';
 import { exampleValidatorState } from '../../tests/model-examples';
 
 describe('validatorReducer', () => {
-  const initial: ValidatorState | undefined = reducer(undefined, {type: '????'});
+  const initial: ValidatorState = reducer(undefined, {type: '????'});
 
   it('sets initial state', () => {
     expect(initial).toEqual({
@@ -13,7 +13,7 @@ describe('validatorReducer', () => {
   });
 
   it('clears status when fetching', () => {
-    const after: ValidatorState | undefined = reducer(exampleValidatorState, fetchAction('1234'));
+    const after: ValidatorState = reducer(exampleValidatorState, fetchAction('1234'));
     expect(after).toBeDefined();
     expect(after!.status['1234']).toEqual({loading: true});
   });
@@ -21,14 +21,14 @@ describe('validatorReducer', () => {
   it('stores name and status when received', () => {
     const name = 'Filing.zip';
     const status = 'WARNING';
-    const after: ValidatorState | undefined = reducer(exampleValidatorState, receivedAction('1234', name, status));
+    const after: ValidatorState = reducer(exampleValidatorState, receivedAction('1234', name, status));
     expect(after).toBeDefined();
     expect(after!.names['1234']).toEqual(name);
     expect(after!.status['1234']).toEqual({loading: false, value: status});
   });
 
   it('stores error when failed', () => {
-    const after: ValidatorState | undefined = reducer(exampleValidatorState, failedAction('1234', 'Oh no'));
+    const after: ValidatorState = reducer(exampleValidatorState, failedAction('1234', 'Oh no'));
     expect(after).toBeDefined();
     expect(after!.status['1234']).toEqual({loading: false, error: 'Oh no'});
   });
