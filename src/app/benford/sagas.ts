@@ -22,6 +22,7 @@ import {
   analyseResultsReceived,
   AnalyseAction,
   ANALYSE,
+  nameVersionLinkAction,
 } from './actions';
 import { FilingMatch } from './models';
 import { latestFiling, analyseFiling, linkToPlatform, isFilingVersionReady, filingVersionName } from './urls';
@@ -35,6 +36,7 @@ export function* searchSaga(action: SearchAction): IterableIterator<Effect> {
     yield put(searchResultsReceived(result ? result.filingName : undefined));
     if (result) {
       const filingVersionId = yield call(linkToPlatform, result);
+      yield(put(nameVersionLinkAction(filingVersionId, result.filingName)));
       while (!(yield call(isFilingVersionReady, filingVersionId))) {
         yield call(delay, POLL_MILLIS);
       }
@@ -53,11 +55,13 @@ export function* analyseSaga(action: AnalyseAction): IterableIterator<Effect> {
       call(analyseFiling, filingVersionId),
     ]);
     yield all([
-      put(searchResultsReceived(name)),
+      put(nameVersionLinkAction(filingVersionId, name)),
       put(analyseResultsReceived(analyseResult)),
     ]);
   } catch (res) {
-    yield put(failedAction(`Error analysing (${res.message || res.statusText || res.status}).`));
+    const message = res.status && res.status === 404 ?
+       'No valid filing found.' : `Error analysing (${res.message || res.statusText || res.status}).`;
+    yield put(failedAction(message));
   }
 }
 

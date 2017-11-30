@@ -23,6 +23,7 @@ import { AnalysisResponse } from '@cfl/digit-frequency-analysis-service';
 export const FAILED = 'BENFORD_FAILED';
 
 export const SEARCH = 'SEARCH';
+export const NAME_VERSION_LINK = 'NAME_VERSION_LINK';
 export const SEARCH_RESULTS_RECEIVED = 'SEARCH_RESULTS_RECEIVED';
 export const SEARCH_TEXT_CHANGED = 'SEARCH_TEXT_CHANGED';
 
@@ -55,6 +56,15 @@ export interface SearchResultsReceivedAction extends Action {
 
 export function searchResultsReceived(filingName?: string): SearchResultsReceivedAction {
   return {type: SEARCH_RESULTS_RECEIVED, filingName};
+}
+
+export interface NameVersionLinkAction extends Action {
+  filingName: string;
+  filingVersionId: string;
+}
+
+export function nameVersionLinkAction(filingVersionId: string, filingName: string): NameVersionLinkAction {
+  return {type: NAME_VERSION_LINK, filingName, filingVersionId};
 }
 
 export interface AnalyseAction extends Action {

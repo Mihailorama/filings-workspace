@@ -17,7 +17,7 @@
 import { all, call, put } from 'redux-saga/effects';
 
 import {
-  searchAction, searchResultsReceived, failedAction, analyseResultsReceived, analyseAction,
+  searchAction, searchResultsReceived, failedAction, analyseResultsReceived, analyseAction, nameVersionLinkAction,
 } from '../actions';
 import { isFilingVersionReady, latestFiling, linkToPlatform, analyseFiling, filingVersionName } from '../urls';
 import { searchSaga, analyseSaga } from '../sagas';
@@ -38,7 +38,11 @@ describe('searchSaga', () => {
       .toEqual(put(searchResultsReceived(exampleFilingMatch.filingName)));
     expect(saga.next(exampleFilingMatch).value)
       .toEqual(call(linkToPlatform, exampleFilingMatch));
+
     expect(saga.next(filingVersionId).value)
+      .toEqual(put(nameVersionLinkAction(filingVersionId, exampleFilingMatch.filingName)));
+
+    expect(saga.next().value)
       .toEqual(call(isFilingVersionReady, filingVersionId));
     expect(saga.next(true).value)
       .toEqual(put(push('/filings-workspace/benfords-analyser-report/filing-versions/fvid')));
@@ -53,6 +57,7 @@ describe('searchSaga', () => {
     saga.next(exampleFilingMatch);
     saga.next(exampleFilingMatch);
     saga.next(filingVersionId);
+    saga.next();
     expect(saga.next(false).value)
       .toEqual(call(delay, 1000));
     saga.next(true);
@@ -92,7 +97,7 @@ describe('analyseSaga', () => {
       ]));
     expect(saga.next([name, exampleAnalysis]).value)
       .toEqual(all([
-        put(searchResultsReceived(name)),
+        put(nameVersionLinkAction(filingVersionId, name)),
         put(analyseResultsReceived(exampleAnalysis)),
       ]));
   });

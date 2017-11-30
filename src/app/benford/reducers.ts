@@ -23,6 +23,10 @@ import {
   SEARCH_TEXT_CHANGED, SearchTextChangedAction,
   ANALYSE_RESULTS_RECEIVED, AnalyseResultsReceivedAction,
   FAILED,
+  ANALYSE,
+  AnalyseAction,
+  NAME_VERSION_LINK,
+  NameVersionLinkAction,
 } from './actions';
 
 import { AnalysisResponse } from '@cfl/digit-frequency-analysis-service';
@@ -32,6 +36,9 @@ export interface BenfordsState {
   phase: BenfordPhase;
   searchText: string;
   message?: string;
+  // The filing version ID for the filing name, once the relationship is known from analyse or link to platform.
+  filingVersionId?: string;
+  // The filing name,
   filingName?: string;
   analysisResults?: AnalysisResponse;
 }
@@ -42,6 +49,7 @@ export function reducer(state: BenfordsState | undefined, action: Action): Benfo
       phase: 'ready',
       searchText: '',
       filingName: undefined,
+      filingVersionId: undefined,
     };
   }
   switch (action.type)  {
@@ -54,11 +62,22 @@ export function reducer(state: BenfordsState | undefined, action: Action): Benfo
     }
     case SEARCH_RESULTS_RECEIVED: {
       const { filingName } = action as SearchResultsReceivedAction;
-      return { ...state, filingName, phase: 'analysing'};
+      return { ...state, filingName, phase: filingName ? 'analysing' : 'ready'};
     }
     case FAILED: {
       const { message } = action as FailedAction;
       return { ...state, phase: 'failed', message };
+    }
+    case NAME_VERSION_LINK: {
+      const {filingName, filingVersionId} = action as NameVersionLinkAction;
+      return {... state, filingName, filingVersionId};
+    }
+    case ANALYSE: {
+      // We want to clear the filing name, if it wasn't added by a preceding search for the filing
+      // version ID we're analysing.  In that case it's better to continue to display it.
+      const {filingVersionId} = action as AnalyseAction;
+      const filingName = filingVersionId === state.filingVersionId ? state.filingName : undefined;
+      return { ...state, filingName, filingVersionId, analysisResults: undefined, phase: 'analysing'};
     }
     case ANALYSE_RESULTS_RECEIVED: {
       const { results } = action as AnalyseResultsReceivedAction;
