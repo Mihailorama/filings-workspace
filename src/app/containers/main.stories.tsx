@@ -42,6 +42,7 @@ const etc: State = {
       {id: '1', name: 'Filing 1', date: new Date('2017-01-01')},
       {id: '2', name: 'Filing 2', date: new Date('2017-01-02')},
     ]},
+    search : { text: '' },
   },
   statistics: {
     statistics: {1: {loading: false, value: [

@@ -42,17 +42,20 @@ storiesOf('FilingList', module)
   </MemoryRouter>)
   .add('Loading', () => {
     return (
-      <FilingList filings={{loading: true}} app={app} showUpload={action('Upload')} />
+      <FilingList filings={{loading: true}} app={app} searchText=''
+        showUpload={action('Upload')} onSearch={action('Search')} onSearchTextChange={action('Search Text Changed')} />
     );
   })
   .add('No filings', () => {
     return (
-      <FilingList filings={{loading: false, value: []}} app={app} showUpload={action('Upload')} />
+      <FilingList filings={{loading: false, value: []}} app={app}
+        showUpload={action('Upload')} onSearch={action('Search')} onSearchTextChange={action('Search Text Changed')} />
     );
   })
   .add('With filings', () => {
     return (
-      <FilingList filings={{loading: false, value: filings}} app={app} showUpload={action('Upload')} />
+      <FilingList filings={{loading: false, value: filings}} app={app}
+        showUpload={action('Upload')} onSearch={action('Search')} onSearchTextChange={action('Search Text Changed')} />
     );
   })
   .add('Many filings', () => {
@@ -62,11 +65,13 @@ storiesOf('FilingList', module)
       date: new Date('2017-01-01'),
     }));
     return (
-      <FilingList filings={{loading: false, value: manyFilings}} app={app} showUpload={action('Upload')} />
+      <FilingList filings={{loading: false, value: manyFilings}} app={app}
+        showUpload={action('Upload')} onSearch={action('Search')} onSearchTextChange={action('Search Text Changed')} />
     );
   })
   .add('Error', () => {
     return (
-      <FilingList filings={{loading: false, error: 'Something went wrong.'}} app={app} showUpload={action('Upload')} />
+      <FilingList filings={{loading: false, error: 'Something went wrong.'}} app={app}
+        showUpload={action('Upload')} onSearch={action('Search')} onSearchTextChange={action('Search Text Changed')} />
     );
   });

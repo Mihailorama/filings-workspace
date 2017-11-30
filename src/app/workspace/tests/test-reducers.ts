@@ -20,6 +20,7 @@ describe('profilesReducer', () => {
     expect(initial).toEqual({
       profiles: {loading: false, value: []},
       recentFilings: {loading: false, value: []},
+      search: { text: '' },
     });
   });
 

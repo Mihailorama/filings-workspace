@@ -22,7 +22,12 @@ import {
   receivedProfilesAction, failedProfilesAction,
   receivedFilingsAction, failedFilingsAction,
   UploadAction, uploadFailedAction,
+  SEARCH, searchResultsReceived, searchFailedAction, SearchAction,
+  SEARCH_SELECTION, SearchSelectionAction, searchSelectionFailedAction,
 } from './actions';
+import { FilingMatch } from '../fullbeam-search/models';
+
+import { matchingFilings, linkToPlatform, isFilingVersionReady } from '../fullbeam-search/urls';
 import { apiFetchJson } from '../api-fetch';
 import { documentServiceFilingVersion, documentServiceCategories, DOCUMENT_SERVICE_FILINGS } from '../urls';
 import { Filing, FilingVersion, Category } from '../models';
@@ -110,10 +115,35 @@ export function* uploadSaga(action: UploadAction): IterableIterator<Effect> {
   }
 }
 
+export function* searchSaga(action: SearchAction): IterableIterator<Effect> {
+  try {
+    const result: FilingMatch[] = yield call(matchingFilings, action.search);
+    yield put(searchResultsReceived(result));
+  } catch (res) {
+    yield put(searchFailedAction(`Error searching (${res.message || res.statusText || res.status}).`));
+  }
+}
+
+export function* searchSelectionSaga(action: SearchSelectionAction): IterableIterator<Effect> {
+  const { app, selectedFiling } = action;
+  try {
+    const filingVersionId = yield call(linkToPlatform, selectedFiling);
+    while (!(yield call(isFilingVersionReady, filingVersionId))) {
+      yield call(delay, POLL_MILLIS);
+    }
+    const url = app.filingHref!.replace('{id}', filingVersionId);
+    yield call(navigate, url);
+  } catch (res) {
+    yield put(searchSelectionFailedAction(`Error linking (${res.message || res.statusText || res.status}).`));
+  }
+}
+
 export function* saga(): IterableIterator<Effect> {
   yield all([
     takeEvery(PROFILES_FETCH, fetchProfilesSaga),
     takeEvery(FILINGS_FETCH, fetchFilingsSaga),
     takeEvery(UPLOAD, uploadSaga),
+    takeEvery(SEARCH, searchSaga),
+    takeEvery(SEARCH_SELECTION, searchSelectionSaga),
   ]);
 }

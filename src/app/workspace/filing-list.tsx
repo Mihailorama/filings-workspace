@@ -23,6 +23,7 @@ import { linkForFiling, LinkDef } from './workspace-apps';
 
 import Button from '../components/button';
 import ContactDetails from '../components/contact-details';
+import SearchBox from '../fullbeam-search/search-box';
 
 import { Item } from '../state';
 
@@ -32,6 +33,10 @@ interface FilingListPage {
   app: WorkspaceAppSpec;
   filings: Item<WorkspaceFiling[]>;
   showUpload: () => void;
+
+  searchText?: string;
+  onSearch?: () => any;
+  onSearchTextChange: (search: string) => any;
 }
 
 function createFilingRow({href, external}: LinkDef, name: string, date: Date): JSX.Element {
@@ -60,7 +65,7 @@ function FilingList({app, filings}: {app: WorkspaceAppSpec, filings: WorkspaceFi
   </div>;
 }
 
-export default function FilingListPage({app, filings, showUpload}: FilingListPage): JSX.Element {
+export default function FilingListPage({app, filings, showUpload, onSearch, onSearchTextChange, searchText}: FilingListPage): JSX.Element {
   return <div className='app-FilingListPage-container'>
     <div className='app-FilingListPage'>
       <div className='app-FilingListPage-header'>
@@ -68,7 +73,8 @@ export default function FilingListPage({app, filings, showUpload}: FilingListPag
           <UploadIcon />
           <div>Upload</div>
         </Button>
-        <div className='app-FilingListPage-search'></div>
+        <SearchBox onSearch={onSearch} onSearchTextChange={onSearchTextChange} searchText={searchText}
+                   placeholder='US Securities and Exchange Commission Filings' disabled={false} />
       </div>
       <div className='app-FilingListPage-inner'>
         {filings.loading ?

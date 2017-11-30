@@ -19,7 +19,8 @@ import { all, call, put } from 'redux-saga/effects';
 import {
   searchAction, searchResultsReceived, failedAction, analyseResultsReceived, analyseAction, nameVersionLinkAction,
 } from '../actions';
-import { isFilingVersionReady, latestFiling, linkToPlatform, analyseFiling, filingVersionName } from '../urls';
+import { analyseFiling } from '../urls';
+import { isFilingVersionReady, latestFiling, linkToPlatform, filingVersionName } from '../../fullbeam-search/urls';
 import { searchSaga, analyseSaga } from '../sagas';
 import { exampleFilingMatch, exampleAnalysis } from './model-examples';
 import { delay } from 'redux-saga';

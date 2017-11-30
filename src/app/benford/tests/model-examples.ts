@@ -15,7 +15,7 @@
  */
 
 import { AnalysisResponse } from '@cfl/digit-frequency-analysis-service';
-import { FilingMatch } from '../models';
+import { FilingMatch } from '../../fullbeam-search/models';
 
 export const exampleFilingMatch: FilingMatch = {
   company: {

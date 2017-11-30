@@ -210,6 +210,7 @@ export const exampleAppBarState: AppBarState = {
 export const exampleWorkspaceState: WorkspaceState = {
   profiles: {loading: false, value: exampleProfiles},
   recentFilings: {loading: false, value: exampleRecentFilings},
+  search: { text: '' },
 };
 
 export const exampleValidatorState: ValidatorState = {

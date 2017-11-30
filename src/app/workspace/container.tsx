@@ -17,7 +17,7 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchProfilesAction, fetchFilingsAction, uploadAction, showUpload } from './actions';
+import { fetchProfilesAction, fetchFilingsAction, uploadAction, showUpload, searchAction, searchTextChangedAction } from './actions';
 import { Item } from '../state';
 import WorkspaceApps from './workspace-apps';
 import FilingList from './filing-list';
@@ -31,6 +31,10 @@ interface PropsFromState {
   filings: Item<WorkspaceFiling[]>;
   profiles: Item<Profile[]>;
   upload?: UploadStatus;
+  search: {
+    text: string;
+    error?: string;
+  };
 }
 
 interface OwnProps {
@@ -42,6 +46,8 @@ export interface WorkspaceContainerProps extends PropsFromState, OwnProps {
   fetchFilingsAction: typeof fetchFilingsAction;
   uploadAction: typeof uploadAction;
   showUpload: typeof showUpload;
+  searchAction: typeof searchAction;
+  searchTextChangedAction: typeof searchTextChangedAction;
 }
 
 class WorkspaceContainer extends Component<WorkspaceContainerProps> {
@@ -72,7 +78,7 @@ class WorkspaceContainer extends Component<WorkspaceContainerProps> {
   }
 
   render(): JSX.Element {
-    const {app, filings, profiles, showUpload, upload, uploadAction} = this.props;
+    const {app, filings, profiles, showUpload, upload, uploadAction, search, searchAction, searchTextChangedAction} = this.props;
     if (app) {
       if (upload) {
         if (upload.uploading) {
@@ -82,7 +88,12 @@ class WorkspaceContainer extends Component<WorkspaceContainerProps> {
         }
         return <Upload profiles={profiles} upload={upload} onSubmit={params => uploadAction(app, params)} />;
       }
-      return <FilingList app={app} filings={filings} showUpload={() => showUpload(true)} />;
+      const { text } = search;
+      return <FilingList app={app} filings={filings}
+        showUpload={() => showUpload(true)}
+        searchText={text}
+        onSearch={() => searchAction(text)}
+        onSearchTextChange={searchTextChangedAction} />;
     }
     return <WorkspaceApps />;
   }
@@ -91,8 +102,8 @@ class WorkspaceContainer extends Component<WorkspaceContainerProps> {
 
 export default connect(
   ({workspace: state}: {workspace: WorkspaceState}): PropsFromState => {
-    const {recentFilings: filings = {loading: true}, profiles, upload} = state;
-    return {filings, profiles, upload};
+    const {recentFilings: filings = {loading: true}, profiles, upload, search} = state;
+    return {filings, profiles, upload, search};
   },
-  {fetchProfilesAction, fetchFilingsAction, uploadAction, showUpload},
+  {fetchProfilesAction, fetchFilingsAction, uploadAction, showUpload, searchAction, searchTextChangedAction},
 )(WorkspaceContainer);

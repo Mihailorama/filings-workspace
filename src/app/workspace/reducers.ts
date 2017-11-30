@@ -27,11 +27,14 @@ import {
   FILINGS_FAILED,
   FILINGS_FETCH,
   FILINGS_RECEIVED,
-  FailedUploadAction,
+  FailedAction,
   SHOW_UPLOAD,
   UPLOAD,
   UPLOAD_FAILED,
   ShowUploadAction,
+  SEARCH_TEXT_CHANGED,
+  SearchTextChangedAction,
+  SEARCH_SELECTION_FAILED,
 } from './actions';
 import { Item } from '../state';
 import { Profile } from '../models';
@@ -63,6 +66,7 @@ export interface WorkspaceState {
   upload?: UploadStatus;
   // The recent filings.
   recentFilings: Item<WorkspaceFiling[]>;
+  search: { text: string; error?: string };
 }
 
 export function reducer(state: WorkspaceState | undefined, action: Action): WorkspaceState | undefined {
@@ -70,6 +74,7 @@ export function reducer(state: WorkspaceState | undefined, action: Action): Work
     return {
       profiles: {loading: false, value: []},
       recentFilings: {loading: false, value: []},
+      search: {text: ''},
     };
   }
   switch (action.type) {
@@ -104,8 +109,16 @@ export function reducer(state: WorkspaceState | undefined, action: Action): Work
       return { ...state, upload: {uploading: true} };
     }
     case UPLOAD_FAILED: {
-      const { error } = action as FailedUploadAction;
+      const { error } = action as FailedAction;
       return { ...state, upload: {uploading: false, error} };
+    }
+    case SEARCH_TEXT_CHANGED: {
+      const { searchText } = action as SearchTextChangedAction;
+      return { ...state, search: { ...state.search, text: searchText, error: undefined } };
+    }
+    case SEARCH_SELECTION_FAILED: {
+      const { error } = action as FailedAction;
+      return { ...state, search: { ...state.search, error } };
     }
     default:
       return state;
