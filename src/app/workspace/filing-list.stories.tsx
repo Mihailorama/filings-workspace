@@ -34,7 +34,7 @@ const filings: WorkspaceFiling[] = [
     'deserunt mollit anim id est laborum.', date: new Date('2017-01-03')},
 ];
 
-const app: WorkspaceAppSpec = {name: 'Test App', action: 'CHECK', href: '/test-app', filingHref: '/test-app/{id}'};
+const app: WorkspaceAppSpec = {name: 'Test App', action: 'SEARCH', href: '/test-app', filingHref: '/test-app/{id}'};
 
 storiesOf('FilingList', module)
   .addDecorator(story => <MemoryRouter initialEntries={['/']}>
