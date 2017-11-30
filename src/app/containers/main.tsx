@@ -43,7 +43,8 @@ export default function Main(): JSX.Element {
       </Switch>
       <Switch>
         <Route path={`${appBaseUri}benfords-analyser-report/filing-versions/:filingVersionId`} component={BenfordsAnalyserContainer} />
-        <Route path={`${appBaseUri}benfords-analyser-report`} render={workspaceContainerForApp(WORKSPACE_APPS.benford)} />
+        <Route path={`${appBaseUri}benfords-analyser-report`}
+          render={workspaceContainerForApp(WORKSPACE_APPS['benfords-analyser-report'])} />
 
         <Route path={`${appBaseUri}validator/filing-versions/:filingVersionId`} component={ValidatorContainer} />
         <Route path={`${appBaseUri}validator`} render={workspaceContainerForApp(WORKSPACE_APPS.validator)} />
@@ -55,7 +56,7 @@ export default function Main(): JSX.Element {
         <Route path={`${appBaseUri}viewer`} render={workspaceContainerForApp(WORKSPACE_APPS.viewer)} />
 
         <Route path={`${appBaseUri}oim-converter/filing-versions/:filingVersionId`} component={OimConverterContainer} />
-        <Route path={`${appBaseUri}oim-converter`} render={workspaceContainerForApp(WORKSPACE_APPS.oimConverter)} />
+        <Route path={`${appBaseUri}oim-converter`} render={workspaceContainerForApp(WORKSPACE_APPS['oim-converter'])} />
 
         <Route path={`${appBaseUri}`} component={WorkspaceContainer} />
       </Switch>

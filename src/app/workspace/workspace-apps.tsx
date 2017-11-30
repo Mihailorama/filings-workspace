@@ -62,7 +62,7 @@ export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
     filingHref: `${ROOT}statistics/filing-versions/{id}`,
     icon: props => <StatisticsIcon {... props } />,
   },
-  benford: {
+  'benfords-analyser-report': {
     name: 'Benford\'s Analyser',
     description: 'Analyse XBRL filings using Benford’s law',
     action: 'ANALYSE',
@@ -71,7 +71,7 @@ export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
     filingHref: `${ROOT}benfords-analyser-report/filing-versions/{id}`,
     icon: props => <BenfordIcon {... props } />,
   },
-  oimConverter: {
+  'oim-converter': {
     name: 'OIM/JSON Converter',
     description: 'Convert XBRL to OIM JSON format',
     action: 'DOWNLOAD',
@@ -152,11 +152,11 @@ export default function WorkspaceApps(): JSX.Element {
       <Row className='app-WorkspaceAppsRow'>
         <WorkspaceAppTile app={WORKSPACE_APPS.validator} />
         <WorkspaceAppTile app={WORKSPACE_APPS.taxonomyInfo} />
-        <WorkspaceAppTile app={WORKSPACE_APPS.benford} />
+        <WorkspaceAppTile app={WORKSPACE_APPS['benfords-analyser-report']} />
       </Row>
       <Row className='app-WorkspaceAppsRow'>
         <WorkspaceAppTile app={WORKSPACE_APPS.taxonomyPackager}/>
-        <WorkspaceAppTile app={WORKSPACE_APPS.oimConverter} />
+        <WorkspaceAppTile app={WORKSPACE_APPS['oim-converter']} />
         <WorkspaceAppTile app={WORKSPACE_APPS.viewer} />
       </Row>
       <Row className='app-WorkspaceAppsRow'>
