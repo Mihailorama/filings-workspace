@@ -120,7 +120,7 @@ function SearchResultsList({ app, searchText, searchPerformed, searchResultFilin
   return <div className='app-FilingListPage-modeContainer'>
     <div className='app-FilingListPage-header'>
       <SearchBox onSearch={onSearch} onSearchTextChange={onSearchTextChange} searchText={searchText}
-        placeholder='US Securities and Exchange Commission Filings' disabled={false} />
+        placeholder='US Securities and Exchange Commission Filings' />
     </div>
     <div className='app-FilingListPage-inner'>
       {searchResultFilings.loading ?

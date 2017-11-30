@@ -22,7 +22,7 @@ import './search-box.less';
 export interface SearchBoxProps {
   searchText?: string;
   onSearch?: () => any;
-  disabled: boolean;
+  disabled?: boolean;
   placeholder: string;
   onSearchTextChange: (search: string) => any;
 }
