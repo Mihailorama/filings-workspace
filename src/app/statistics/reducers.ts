@@ -25,7 +25,7 @@ export interface StatisticsState {
   statistics: {[filingVersionId: string]: Item<Statistic[]> | undefined};
 }
 
-export function reducer(state: StatisticsState | undefined, action: Action): StatisticsState | undefined {
+export function reducer(state: StatisticsState | undefined, action: Action): StatisticsState {
   if (!state) {
     return {
       names: {},
