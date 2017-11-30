@@ -113,7 +113,7 @@ export default function BenfordsAnalysis(props: BenfordsAnalysisProps): JSX.Elem
           <SearchBox onSearch={onSearch} onSearchTextChange={onSearchTextChange} searchText={searchText}
             placeholder='Company name or number'
             disabled={searchDisabled} />
-          {phase !== 'searching' &&
+          {(error || phase === 'ready' || phase === 'analysing' && filingName) &&
             <FilingHeader message={error ? message : undefined} filingName={filingName} />
           }
         </div>

@@ -15,10 +15,40 @@
  */
 
 import { reducer, BenfordsState } from '../reducers';
-import { searchAction } from '../actions';
+import { searchAction, nameVersionLinkAction, analyseAction } from '../actions';
 import { exampleAnalysis, exampleFilingMatch } from '../tests/model-examples';
 
 describe('reducer', () => {
+
+  it('preserves name from search when analysing if id matches', () => {
+    let state: BenfordsState = {
+      searchText: 'foo',
+      phase: 'ready',
+      analysisResults: exampleAnalysis,
+      filingName: exampleFilingMatch.filingName,
+      filingVersionId: 'lala',
+      message: 'oops',
+    };
+
+    state = reducer(state, nameVersionLinkAction('the filingVersionId', 'the filingName'));
+    state = reducer(state, analyseAction('the filingVersionId'));
+    expect(state.filingName).toEqual('the filingName');
+  });
+
+  it('clears name from search when analysing if id does not matches', () => {
+    let state: BenfordsState = {
+      searchText: 'foo',
+      phase: 'ready',
+      analysisResults: exampleAnalysis,
+      filingName: exampleFilingMatch.filingName,
+      filingVersionId: 'lala',
+      message: 'oops',
+    };
+
+    state = reducer(state, nameVersionLinkAction('the filingVersionId', 'the filingName'));
+    state = reducer(state, analyseAction('anohter filingVersionId'));
+    expect(state.filingName).toBeUndefined();
+  });
 
   it('clears all results when searching again', () => {
     const withResults: BenfordsState = {
