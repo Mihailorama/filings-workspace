@@ -198,6 +198,7 @@ export const exampleTablePage: TablePage = {
 };
 
 export const exampleViewerState: ViewerState = {
+  names: {'f09be954-1895-4954-b333-6c9c89b833f1': 'Example filing.zip'},
   tables: {'f09be954-1895-4954-b333-6c9c89b833f1': {loading: false, value: [exampleTableMetadata]}},
   selectedTablePage: {'f09be954-1895-4954-b333-6c9c89b833f1': exampleTablePage},
   zOptions: {'f09be954-1895-4954-b333-6c9c89b833f1': [[exampleZOption]]},

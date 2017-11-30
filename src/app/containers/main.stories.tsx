@@ -57,6 +57,7 @@ const etc: State = {
     status: {1: {loading: false, value: 'WARNING'}},
   },
   viewer: {
+    names: {1: 'Example filing.zip'},
     tables: {1: {loading: false, value: tables}},
     selectedTablePage: {1: page},
     zOptions: {'01901ff9-d32f-4148-bbff-3c868bc60bd7': zOptions},
