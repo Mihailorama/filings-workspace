@@ -21,12 +21,14 @@ import { FETCH, FAILED, RECEIVED, FetchAction, FailedAction, ReceivedAction } fr
 import { Statistic } from '@cfl/filing-statistics-service';
 
 export interface StatisticsState {
+  names: {[filingVersionId: string]: string | undefined};
   statistics: {[filingVersionId: string]: Item<Statistic[]> | undefined};
 }
 
 export function reducer(state: StatisticsState | undefined, action: Action): StatisticsState | undefined {
   if (!state) {
     return {
+      names: {},
       statistics: {},
     };
   }
@@ -36,8 +38,11 @@ export function reducer(state: StatisticsState | undefined, action: Action): Sta
       return { ...state, statistics: { ... state.statistics, [filingVersionId]: {loading: true} }};
     }
     case RECEIVED: {
-      const { filingVersionId, statistics } = action as ReceivedAction;
-      return { ...state, statistics: { ... state.statistics, [filingVersionId]: {loading: false, value: statistics} }};
+      const { filingVersionId, filingName, statistics } = action as ReceivedAction;
+      return { ...state,
+        names: { ... state.names, [filingVersionId]: filingName},
+        statistics: { ... state.statistics, [filingVersionId]: {loading: false, value: statistics} },
+      };
     }
     case FAILED: {
       const { filingVersionId, error } = action as FailedAction;

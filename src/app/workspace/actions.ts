@@ -15,9 +15,10 @@
  */
 
 import { Action } from 'redux';
-import { Profile, ValidationParams } from '../models';
-import { WorkspaceFiling, WorkspaceAppSpec, FilingListMode } from './reducers';
+import { Profile } from '@cfl/document-service';
+import { ValidationParams } from '../models';
 import { FilingMatch } from '../fullbeam-search/models';
+import { WorkspaceFiling, WorkspaceAppSpec, FilingListMode } from './reducers';
 
 export const PROFILES_FETCH = 'WORKSPACE_PROFILES_FETCH';
 export const PROFILES_RECEIVED = 'WORKSPACE_PROFILES_RECEIVED';

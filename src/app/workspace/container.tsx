@@ -19,15 +19,15 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchProfilesAction, fetchFilingsAction, uploadAction, showUpload, searchAction,
          searchTextChangedAction, searchSelectionAction } from './actions';
-import { Item } from '../state';
 import WorkspaceApps from './workspace-apps';
 import FilingList from './filing-list';
 import Upload from './upload';
-import { Profile } from '../models';
+import { Item } from '../state';
 import { FilingMatch } from '../fullbeam-search/models';
+import { WorkspaceFiling, UploadStatus, WorkspaceAppSpec, WorkspaceState, FilingListMode } from './reducers';
+import { Profile } from '@cfl/document-service';
 
 import './container.less';
-import { WorkspaceFiling, UploadStatus, WorkspaceAppSpec, WorkspaceState, FilingListMode } from './reducers';
 
 interface PropsFromState {
   filings: Item<WorkspaceFiling[]>;

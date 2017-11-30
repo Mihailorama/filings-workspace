@@ -19,6 +19,7 @@ import { Component } from 'react';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { getFilingVersionAction } from './actions';
 import { OimState } from './reducers';
+import { documentContentURL } from './urls';
 
 import { filingVersionId, FilingRouterProps } from '../containers/filing-version-route';
 
@@ -45,7 +46,8 @@ class OimConverterContainer extends Component<OimConverterContainerProps> {
 
   render(): JSX.Element {
     const {filingVersion, message} = this.props;
-    return <OimConverter filingVersion={filingVersion} message={message}/>;
+    const onDownload = (documentId: string) => window.location.href = documentContentURL(documentId);
+    return <OimConverter filingVersion={filingVersion} message={message} onDownload={onDownload}/>;
   }
 
 }

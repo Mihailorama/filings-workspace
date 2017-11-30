@@ -17,16 +17,20 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
+import { ValidationStatus } from '@cfl/validation-service';
 
-import { ValidationStatus } from '../models';
 import { fetchAction } from './actions';
 import { Item } from '../state';
 import { filingVersionId, FilingRouterProps } from '../containers/filing-version-route';
 import ValidationResult from './validation-result';
 import { ValidatorState } from './reducers';
 
-export interface ValidatorContainerProps extends FilingRouterProps {
+interface PropsFromState {
+  name?: string;
   status: Item<ValidationStatus>;
+}
+
+export interface ValidatorContainerProps extends PropsFromState, FilingRouterProps {
   fetchAction: typeof fetchAction;
 }
 
@@ -44,16 +48,18 @@ class ValidatorContainer extends Component<ValidatorContainerProps> {
   }
 
   render(): JSX.Element {
-    const {status} = this.props;
-    return <ValidationResult status={status && status.value || undefined} />;
+    const {name, status} = this.props;
+    return <ValidationResult name={name} status={status} />;
   }
 
 }
 
 export default connect(
-  ({validator: state}: {validator: ValidatorState}, ownProps: FilingRouterProps) => {
-    const status = state.status[filingVersionId(ownProps)] || {loading: true};
-    return {status};
+  ({validator: state}: {validator: ValidatorState}, ownProps: FilingRouterProps): PropsFromState => {
+    const fvid = filingVersionId(ownProps);
+    const name = state.names[fvid];
+    const status = state.status[fvid] || {loading: true};
+    return {name, status};
   },
   {fetchAction},
 )(ValidatorContainer);

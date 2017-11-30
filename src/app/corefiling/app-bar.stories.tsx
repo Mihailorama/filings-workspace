@@ -41,8 +41,8 @@ storiesOf('AppBar', module)
       validator: WORKSPACE_APPS.validator,
       viewer: WORKSPACE_APPS.viewer,
       statistics: WORKSPACE_APPS.statistics,
-      benford: WORKSPACE_APPS.benford,
-      oimConverter: WORKSPACE_APPS.oimConverter,
+      benford: WORKSPACE_APPS['benfords-analyser-report'],
+      oimConverter: WORKSPACE_APPS['oim-converter'],
     }}
     user={{sub, email: 'tp@example.com'}}/>)
   .add('Only non-filing apps', () => <AppBar app={WORKSPACE_APPS.changeReport}

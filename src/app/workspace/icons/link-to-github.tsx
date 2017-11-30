@@ -3,7 +3,7 @@ import * as React from 'react';
 export default function Icon(): JSX.Element {
   /* tslint:disable */
   return <svg width='80px' height='82px' viewBox='0 0 80 82' version='1.1' xmlns='http://www.w3.org/2000/svg'>
-    <g stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'>
+    <g stroke='none' strokeWidth='1' fill='none' fillRule='evenodd'>
       <g transform='translate(-790.000000, -885.000000)'>
         <g transform='translate(790.000000, 885.000000)'>
           <g >

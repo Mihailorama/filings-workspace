@@ -23,13 +23,15 @@ import Table from './table';
 import TableSelector from './table-selector';
 import { Item } from '../state';
 import ContactDetails from '../components/contact-details';
+import FilingReference from '../components/filing-reference';
 
 import './viewer.less';
 
 export interface ViewerProps extends React.Props<Viewer> {
+  name?: string;
   tables: Item<TableMetadata[]>;
   selectedTable?: TableMetadata;
-  table: Item<QueryableTablePage>;
+  table?: Item<QueryableTablePage>;
   zOptions?: Option[][];
   onChangePage: (x: number, y: number, z: number) => void;
   onChangeTable: (table: TableMetadata) => void;
@@ -37,7 +39,7 @@ export interface ViewerProps extends React.Props<Viewer> {
 
 export default class Viewer extends React.Component<ViewerProps> {
   render(): JSX.Element {
-    const {tables, selectedTable, table, zOptions, onChangeTable, onChangePage} = this.props;
+    const {name, tables, selectedTable, table, zOptions, onChangeTable, onChangePage} = this.props;
     const error = tables.error || (table && table.error);
     return <div className='app-Viewer-container'>
       <section className='app-Viewer'>
@@ -48,13 +50,21 @@ export default class Viewer extends React.Component<ViewerProps> {
             onChangeTable={onChangeTable}
           />
         </header>
-        {(tables.loading || table.loading) ?
+        {(tables.loading || (table && table.loading)) ?
           <div className='app-Viewer-loading'>loading…</div> :
           error ?
             <div className='app-Viewer-error'>{error}</div> :
-            <Table metadata={selectedTable} zOptions={zOptions} table={table.value}
-              onChangePage={onChangePage} onChangeTable={onChangeTable}/>
+            tables.value && tables.value.length > 0 && table ?
+              <Table metadata={selectedTable} zOptions={zOptions} table={table.value}
+                onChangePage={onChangePage} onChangeTable={onChangeTable}/> :
+              <div className='app-Viewer-noTables'>This filing is empty.</div>
         }
+        <div className='app-Viewer-filing'>
+          {name ?
+            <FilingReference className='app-Viewer-filing-reference' name={name} /> :
+            <div className='app-Viewer-filing-noReference' />
+          }
+        </div>
       </section>
       <ContactDetails apiLink />
     </div>;

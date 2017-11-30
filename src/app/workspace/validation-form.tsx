@@ -16,8 +16,9 @@
 
 import * as React from 'react';
 import { Component, Props } from 'react';
+import { Profile } from '@cfl/document-service';
 
-import { Profile, ValidationParams, paramsAreComplete } from '../models';
+import { ValidationParams, paramsAreComplete } from '../models';
 import { Form, FormItem, FormActionList, FormAction } from './form';
 import FileInput from './file-input';
 
@@ -85,7 +86,7 @@ export default class ValidationForm extends Component<ValidationFormProps, Valid
         </select>
       </FormItem>
       <FormActionList>
-        <FormAction enabled={onSubmit && paramsAreComplete(params)} primary>Validate</FormAction>
+        <FormAction enabled={onSubmit && paramsAreComplete(params)} primary>Upload</FormAction>
       </FormActionList>
     </Form>;
   }

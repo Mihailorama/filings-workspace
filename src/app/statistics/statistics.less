@@ -69,7 +69,7 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  padding: @gap @gap2;
+  padding: @gap @gap2 10px;
 
   &-inner {
     box-sizing: border-box;
@@ -143,5 +143,21 @@
 
   &-error:before {
     background-image: url(../assets/error.svg);
+  }
+
+  &-filing {
+    display: flex;
+    justify-content: center;
+    &-reference {
+      margin-top: 10px;
+      color: @secondary;
+      svg {
+        stroke: @secondary;
+      }
+    }
+    &-noReference {
+      margin-top: 10px;
+      height: 16px;
+    }
   }
 }

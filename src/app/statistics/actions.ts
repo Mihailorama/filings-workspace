@@ -26,6 +26,7 @@ export interface FetchAction extends Action {
 }
 
 export interface ReceivedAction extends Action {
+  filingName: string;
   filingVersionId: string;
   statistics: Statistic[];
 }
@@ -39,8 +40,8 @@ export function fetchAction(filingVersionId: string): FetchAction {
   return {type: FETCH, filingVersionId};
 }
 
-export function receivedAction(filingVersionId: string, statistics: Statistic[]): ReceivedAction {
-  return {type: RECEIVED, filingVersionId, statistics};
+export function receivedAction(filingVersionId: string, filingName: string, statistics: Statistic[]): ReceivedAction {
+  return {type: RECEIVED, filingVersionId, filingName, statistics};
 }
 
 export function failedAction(filingVersionId: string, error: string): FailedAction {

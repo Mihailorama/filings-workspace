@@ -19,6 +19,7 @@ import * as React from 'react';
 import { Statistic } from '@cfl/filing-statistics-service';
 
 import ContactDetails from '../components/contact-details';
+import FilingReference from '../components/filing-reference';
 import { Item } from '../state';
 
 import './statistics.less';
@@ -41,9 +42,10 @@ export function StatisticsTable({statistics}: {statistics: Statistic[]}): JSX.El
 
 export interface StatisticsProps {
   statistics: Item<Statistic[]>;
+  name?: string;
 }
 
-export default function Statistics({statistics}: StatisticsProps): JSX.Element {
+export default function Statistics({statistics, name}: StatisticsProps): JSX.Element {
   return <div className='app-Statistics-container'>
     <div className='app-Statistics'>
       <div className='app-Statistics-inner'>
@@ -53,6 +55,12 @@ export default function Statistics({statistics}: StatisticsProps): JSX.Element {
           <div className='app-Statistics-noResults'>No statistics.</div>)}
         {statistics.error && <div className='app-Statistics-error'>{statistics.error}</div>}
         {statistics.loading && <div className='app-Statistics-loading'>loading…</div>}
+      </div>
+      <div className='app-Statistics-filing'>
+        {name ?
+          <FilingReference className='app-Statistics-filing-reference' name={name} /> :
+          <div className='app-Statistics-filing-noReference' />
+        }
       </div>
     </div>
     <ContactDetails apiLink />

@@ -15,6 +15,7 @@
  */
 
 import { Action } from 'redux';
+import { Profile } from '@cfl/document-service';
 
 import {
   ReceivedProfilesAction,
@@ -43,7 +44,6 @@ import {
   SearchResultsReceivedAction,
 } from './actions';
 import { Item } from '../state';
-import { Profile } from '../models';
 import { FilingMatch } from '../fullbeam-search/models';
 
 export type FilingListMode = 'user' | 'search';

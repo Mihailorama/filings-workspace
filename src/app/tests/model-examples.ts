@@ -14,11 +14,12 @@
  *  limitations under the License.
  */
 
-import { User, App, Category, Filing, FilingVersion, Profile,
-  TableRenderingWindow, ValidationServiceFilingVersionSummary } from '../models';
+import { User, App, TableRenderingWindow } from '../models';
+import { Category, Profile, Filing, FilingVersion } from '@cfl/document-service';
 import { Statistic } from '@cfl/filing-statistics-service';
 import { QueryableTablePage } from '@cfl/table-viewer';
 import { Breakdown, Option, TableHeader, TableMetadata, TableChunk } from '@cfl/table-rendering-service';
+import { FilingVersionSummary } from '@cfl/validation-service';
 
 import { State } from '../state';
 import { ViewerState, TablePage } from '../viewer/reducers';
@@ -65,7 +66,7 @@ export const exampleFiling: Filing = {
     {
       id: 'f09be954-1895-4954-b333-6c9c89b833f1',
       type: 'FilingVersionSummary',
-      created: '2017-09-12T10:09:49.915Z',
+      created: new Date('2017-09-12T10:09:49.915Z'),
       creator: {
         id: '4b7fe222-0d6e-4ae1-977d-c4eb047c2fbc',
         name: 'Gurdeep Tash',
@@ -79,7 +80,7 @@ export const exampleFiling: Filing = {
 export const exampleFilingVersion: FilingVersion = {
   id: 'f09be954-1895-4954-b333-6c9c89b833f1',
   type: 'FilingVersion',
-  created: '2017-09-12T10:09:49.915Z',
+  created: new Date('2017-09-12T10:09:49.915Z'),
   creator:  {
     id: '4b7fe222-0d6e-4ae1-977d-c4eb047c2fbc',
     name: 'Gurdeep Tash',
@@ -88,14 +89,14 @@ export const exampleFilingVersion: FilingVersion = {
   documents: [
     {
       category: 'validation',
-      created: '2017-09-12T10:09:50.875Z',
+      created: new Date('2017-09-12T10:09:50.875Z'),
       creation: {status: 'DONE'},
       id: '081c4d35-7c12-40e9-b3a5-df3eb8ddc214',
       profile: 'SII 2.0.1',
     },
     {
       category: 'unknown',
-      created: '2017-09-12T10:09:49.915Z',
+      created: new Date('2017-09-12T10:09:49.915Z'),
       id: 'd18a0433-8f5d-44d3-821b-3b505df37d63',
       profile: 'default',
     },
@@ -107,7 +108,7 @@ export const exampleFilingVersion: FilingVersion = {
   },
 };
 
-export const exampleValidationServiceFilingVersionSummary: ValidationServiceFilingVersionSummary = {
+export const exampleValidationServiceFilingVersionSummary: FilingVersionSummary = {
   id: exampleFilingVersion.id,
   severity: 'OK',
 };
@@ -197,6 +198,7 @@ export const exampleTablePage: TablePage = {
 };
 
 export const exampleViewerState: ViewerState = {
+  names: {'f09be954-1895-4954-b333-6c9c89b833f1': 'Example filing.zip'},
   tables: {'f09be954-1895-4954-b333-6c9c89b833f1': {loading: false, value: [exampleTableMetadata]}},
   selectedTablePage: {'f09be954-1895-4954-b333-6c9c89b833f1': exampleTablePage},
   zOptions: {'f09be954-1895-4954-b333-6c9c89b833f1': [[exampleZOption]]},
@@ -215,10 +217,12 @@ export const exampleWorkspaceState: WorkspaceState = {
 };
 
 export const exampleValidatorState: ValidatorState = {
+  names: {'f09be954-1895-4954-b333-6c9c89b833f1': 'Example Filing.zip'},
   status: {'f09be954-1895-4954-b333-6c9c89b833f1': {loading: false, value: 'OK'}},
 };
 
 export const exampleStatisticsState: StatisticsState = {
+  names: {'f09be954-1895-4954-b333-6c9c89b833f1': 'Example Filing.zip'},
   statistics: {'f09be954-1895-4954-b333-6c9c89b833f1': {loading: false, value: exampleStatistics}},
 };
 

@@ -16,6 +16,7 @@
 
 import { Effect } from 'redux-saga';
 import { all, call, put, takeEvery } from 'redux-saga/effects';
+import { FilingVersion } from '@cfl/document-service';
 import { TableMetadata } from '@cfl/table-rendering-service';
 
 import {
@@ -23,16 +24,20 @@ import {
   receivedTablesAction, fetchPageAction, failedTablesAction, failedPageAction, receivedPageAction,
 } from './actions';
 import QueryableTablePageImpl, { TABLE_WINDOW_HEIGHT } from './models//queryable-table-page-impl';
-import { filingVersionsApi, tablesApi } from '../urls';
+import { filingVersionsApi, tablesApi, filingsApi } from '../urls';
 
 export function* fetchTablesSaga(action: FetchTablesAction): IterableIterator<Effect> {
   const { filingVersionId } = action;
   try {
-    const tablesWithEmpties: TableMetadata[] = yield call([filingVersionsApi, filingVersionsApi.getTables], {filingVersionId});
+    const [tablesWithEmpties, filingVersion]: [TableMetadata[], FilingVersion] = yield all([
+      call([filingVersionsApi, filingVersionsApi.getTables], {filingVersionId}),
+      call([filingsApi, filingsApi.getFilingVersion], {filingVersionId}),
+    ]);
     const tables = tablesWithEmpties.filter(x => !x.empty);
-
-    yield put(receivedTablesAction(filingVersionId, tables));
-    yield put(fetchPageAction(filingVersionId, {table: tables[0], x: 0, y: 0, z: 0}));
+    yield put(receivedTablesAction(filingVersionId, filingVersion.filing.name, tables));
+    if (tables.length) {
+      yield put(fetchPageAction(filingVersionId, {table: tables[0], x: 0, y: 0, z: 0}));
+    }
   } catch (res) {
     yield put(failedTablesAction(filingVersionId, res.message || res.statusText || `Status: ${res.status}`));
   }

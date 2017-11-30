@@ -10,6 +10,7 @@ describe('viewerTablesReducer', () => {
 
   it('sets initial state', () => {
     expect(initial).toEqual({
+      names: {},
       selectedTablePage: {},
       tableRendering: {},
       tables: {},
@@ -23,10 +24,12 @@ describe('viewerTablesReducer', () => {
     expect(after!.tables['1234']).toEqual({loading: true});
   });
 
-  it('stores tables when received', () => {
+  it('stores name and tables when received', () => {
+    const filingName = 'Filing example.zip';
     const tables = [exampleTableMetadata];
-    const after: ViewerState | undefined = reducer(exampleViewerState, receivedTablesAction('1234', tables));
+    const after: ViewerState | undefined = reducer(exampleViewerState, receivedTablesAction('1234', filingName, tables));
     expect(after).toBeDefined();
+    expect(after!.names['1234']).toEqual(filingName);
     expect(after!.tables['1234']).toEqual({loading: false, value: tables});
   });
 
@@ -44,6 +47,7 @@ describe('viewerPageReducer', () => {
 
   it('sets initial state', () => {
     expect(initial).toEqual({
+      names: {},
       selectedTablePage: {},
       tableRendering: {},
       tables: {},

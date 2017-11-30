@@ -1,19 +1,23 @@
-import { call, put } from 'redux-saga/effects';
+import { all, call, put } from 'redux-saga/effects';
 
 import { fetchAction, receivedAction, failedAction } from '../actions';
 import { fetchSaga } from '../sagas';
-import { filingStatisticsService } from '../../urls';
+import { filingStatisticsService, filingsApi } from '../../urls';
 import { exampleStatistics } from '../../tests/model-examples';
 
 describe('fetchStatisticsSaga', () => {
+  const filingName = 'Example filing.zip';
   const filingVersionId = '1234';
 
   it('dispatches RECEIVED if all goes well', () => {
     const saga = fetchSaga(fetchAction(filingVersionId));
 
-    expect(saga.next().value).toEqual(call(filingStatisticsService.getStatistics, {filingVersionId}));
-    expect(saga.next(exampleStatistics).value).toEqual(put(
-      receivedAction(filingVersionId, exampleStatistics)));
+    expect(saga.next().value).toEqual(all([
+      call([filingStatisticsService, filingStatisticsService.getStatistics], {filingVersionId}),
+      call([filingsApi, filingsApi.getFilingVersion], {filingVersionId}),
+    ]));
+    expect(saga.next([exampleStatistics, {filing: {name: filingName}}]).value).toEqual(put(
+      receivedAction(filingVersionId, filingName, exampleStatistics)));
   });
 
   it('dispatches FAILED if call to service fails', () => {

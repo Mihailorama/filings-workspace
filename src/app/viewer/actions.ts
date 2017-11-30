@@ -33,6 +33,7 @@ export interface FetchTablesAction extends Action {
 
 export interface ReceivedTablesAction extends Action {
   filingVersionId: string;
+  filingName: string;
   tables: TableMetadata[];
 }
 
@@ -63,8 +64,8 @@ export function fetchTablesAction(filingVersionId: string): FetchTablesAction {
   return {type: TABLES_FETCH, filingVersionId};
 }
 
-export function receivedTablesAction(filingVersionId: string, tables: TableMetadata[]): ReceivedTablesAction {
-  return {type: TABLES_RECEIVED, filingVersionId, tables};
+export function receivedTablesAction(filingVersionId: string, filingName: string, tables: TableMetadata[]): ReceivedTablesAction {
+  return {type: TABLES_RECEIVED, filingVersionId, filingName, tables};
 }
 
 export function failedTablesAction(filingVersionId: string, error: string): FailedTablesAction {

@@ -17,55 +17,67 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
 import { Component, Props } from 'react';
+import { ValidationStatus } from '@cfl/validation-service';
 
-import { ValidationStatus } from '../models';
+import ContactDetails from '../components/contact-details';
+import FilingReference from '../components/filing-reference';
 
 import './validation-result.less';
+import { Item } from '../state';
 
 interface Spec {
+  lowerStatus: string;
   label?: string;
   detail?: string;
+  error?: string;
 }
 
 const specByStatus: {[status: string]: Spec} = {
   loading: {
+    lowerStatus: 'loading',
     detail: 'loading…',
   },
   OK: {
+    lowerStatus: 'ok',
     label: 'Pass',
   },
   WARNING: {
+    lowerStatus: 'warning',
     label: 'Valid',
     detail: 'With Warnings',
   },
   ERROR: {
+    lowerStatus: 'error',
     label: 'Fail',
   },
   FATAL_ERROR: {
+    lowerStatus: 'fatalError',
     label: 'Fail',
   },
 };
 
-function toLowerStatus(status: string): string {
-  return status.toLowerCase().split('_').map((x, i) => i === 0 ? x : x.charAt(0).toUpperCase() + x.substr(1)).join('');
-}
-
 export interface ValidationResultProps extends Props<ValidationResult> {
-  status?: ValidationStatus;
-  error?: string;
+  name?: string;
+  status: Item<ValidationStatus>;
 }
 
 export default class ValidationResult extends Component<ValidationResultProps> {
   render(): JSX.Element {
-    const { status = 'loading', error } = this.props;
-    const lowerStatus = toLowerStatus(status);
-    const { label, detail } = specByStatus[status];
+    const { name, status } = this.props;
+    const spec = status.error ? {... specByStatus.ERROR, error: status.error} :
+      status.value ? specByStatus[status.value] : specByStatus.loading;
+    const { lowerStatus, label, detail, error } = spec;
 
     return <div className='app-ValidationResult-container'>
-        <div className={classNames('app-ValidationResult', `app-ValidationResult-${lowerStatus}`)}>
+      <div className={classNames('app-ValidationResult', `app-ValidationResult-${lowerStatus}`)}>
         {label && <div className={classNames('app-ValidationResult-status', `app-ValidationResult-${lowerStatus}Status`)}>{label}</div>}
         {detail && <div className={classNames('app-ValidationResult-detail', `app-ValidationResult-${lowerStatus}Detail`)}>{detail}</div>}
         {error && <div className='app-ValidationResult-error'>{error}</div>}
+        {name && <FilingReference
+          className={classNames('app-ValidationResult-filing', `app-ValidationResult-filing-${lowerStatus}`)}
+          name={name}
+        />}
+        <ContactDetails className='app-ValidationResult-contact' />
       </div>
     </div>;
   }
