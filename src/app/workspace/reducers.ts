@@ -35,9 +35,18 @@ import {
   SEARCH_TEXT_CHANGED,
   SearchTextChangedAction,
   SEARCH_SELECTION_FAILED,
+  MODE_CHANGED,
+  ModeChangedAction,
+  SEARCH,
+  SEARCH_SELECTION,
+  SEARCH_RESULTS_RECEIVED,
+  SearchResultsReceivedAction,
 } from './actions';
 import { Item } from '../state';
 import { Profile } from '../models';
+import { FilingMatch } from '../fullbeam-search/models';
+
+export type FilingListMode = 'user' | 'search';
 
 export interface UploadStatus {
   uploading: boolean;
@@ -66,7 +75,8 @@ export interface WorkspaceState {
   upload?: UploadStatus;
   // The recent filings.
   recentFilings: Item<WorkspaceFiling[]>;
-  search: { text: string; error?: string };
+  search: { text: string; filings: Item<FilingMatch[]> };
+  mode: FilingListMode;
 }
 
 export function reducer(state: WorkspaceState | undefined, action: Action): WorkspaceState | undefined {
@@ -74,7 +84,8 @@ export function reducer(state: WorkspaceState | undefined, action: Action): Work
     return {
       profiles: {loading: false, value: []},
       recentFilings: {loading: false, value: []},
-      search: {text: ''},
+      search: {text: '', filings: { loading: false } },
+      mode: 'user',
     };
   }
   switch (action.type) {
@@ -112,13 +123,26 @@ export function reducer(state: WorkspaceState | undefined, action: Action): Work
       const { error } = action as FailedAction;
       return { ...state, upload: {uploading: false, error} };
     }
+    case MODE_CHANGED: {
+      const { mode } = action as ModeChangedAction;
+      return { ...state, mode };
+    }
     case SEARCH_TEXT_CHANGED: {
       const { searchText } = action as SearchTextChangedAction;
-      return { ...state, search: { ...state.search, text: searchText, error: undefined } };
+      return { ...state, mode: 'search', search: { ...state.search, text: searchText,
+        filings: { ...state.search.filings, loading: false, error: undefined } } };
+    }
+    case SEARCH_RESULTS_RECEIVED: {
+      const { filings } = action as SearchResultsReceivedAction;
+      return { ...state, search: { ...state.search, filings: { loading: false, value: filings } } };
+    }
+    case SEARCH:
+    case SEARCH_SELECTION: {
+      return { ...state, search: { ...state.search, filings: { ...state.search.filings, loading: true } } };
     }
     case SEARCH_SELECTION_FAILED: {
       const { error } = action as FailedAction;
-      return { ...state, search: { ...state.search, error } };
+      return { ...state, search: { ...state.search, filings: { loading: false, error } } };
     }
     default:
       return state;

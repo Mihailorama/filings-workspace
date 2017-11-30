@@ -16,7 +16,7 @@
 
 import { Action } from 'redux';
 import { Profile, ValidationParams } from '../models';
-import { WorkspaceFiling, WorkspaceAppSpec } from './reducers';
+import { WorkspaceFiling, WorkspaceAppSpec, FilingListMode } from './reducers';
 import { FilingMatch } from '../fullbeam-search/models';
 
 export const PROFILES_FETCH = 'WORKSPACE_PROFILES_FETCH';
@@ -39,6 +39,8 @@ export const SHOW_UPLOAD = 'WORKSPACE_SHOW_UPLOAD';
 
 export const UPLOAD = 'WORKSPACE_UPLOAD';
 export const UPLOAD_FAILED = 'WORKSPACE_UPLOAD_FAILED';
+
+export const MODE_CHANGED = 'WORKSPACE_MODE_CHANGED';
 
 export interface ReceivedProfilesAction extends Action {
   profiles: Profile[];
@@ -88,6 +90,10 @@ export interface SearchResultsReceivedAction extends Action {
 export interface SearchSelectionAction extends Action {
   app: WorkspaceAppSpec;
   selectedFiling: FilingMatch;
+}
+
+export interface ModeChangedAction extends Action {
+  mode: FilingListMode;
 }
 
 export function fetchProfilesAction(): Action {
@@ -148,4 +154,8 @@ export function searchSelectionAction(app: WorkspaceAppSpec, selectedFiling: Fil
 
 export function searchSelectionFailedAction(error: string): FailedAction {
   return {type: SEARCH_SELECTION_FAILED, error};
+}
+
+export function modeChangedAction(mode: FilingListMode): ModeChangedAction {
+  return { type: MODE_CHANGED, mode };
 }

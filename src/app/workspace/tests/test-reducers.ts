@@ -17,11 +17,13 @@ const initial: WorkspaceState | undefined = reducer(undefined, {type: '????'});
 
 describe('profilesReducer', () => {
   it('sets initial state', () => {
-    expect(initial).toEqual({
+    const expected: WorkspaceState = {
       profiles: {loading: false, value: []},
       recentFilings: {loading: false, value: []},
-      search: { text: '' },
-    });
+      search: { text: '', filings: { loading: false } },
+      mode: 'user',
+    };
+    expect(initial).toEqual(expected);
   });
 
   it('clears profiles when fetching', () => {

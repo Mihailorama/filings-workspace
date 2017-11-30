@@ -1,5 +1,4 @@
 
-
 /**
  * Minimal model of the Platform search API results.
  */

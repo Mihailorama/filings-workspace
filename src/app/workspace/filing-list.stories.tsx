@@ -18,7 +18,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import FilingList from './filing-list';
+import FilingList, { FilingListPage } from './filing-list';
 import { MemoryRouter } from 'react-router';
 import { WorkspaceAppSpec, WorkspaceFiling } from './reducers';
 
@@ -36,26 +36,35 @@ const filings: WorkspaceFiling[] = [
 
 const app: WorkspaceAppSpec = {name: 'Test App', action: 'CHECK', href: '/test-app', filingHref: '/test-app/{id}'};
 
+const etc: FilingListPage = {
+  app,
+  mode: 'user',
+  userFilings: {loading: true},
+  searchResultFilings: {loading: false},
+  searchText: '' ,
+  showUpload: action('Upload'),
+  onSearch: action('Search'),
+  onSearchTextChange: action('Search Text Changed'),
+  onSearchSelection: action('Search Selected'),
+};
+
 storiesOf('FilingList', module)
   .addDecorator(story => <MemoryRouter initialEntries={['/']}>
     {story()}
   </MemoryRouter>)
   .add('Loading', () => {
     return (
-      <FilingList filings={{loading: true}} app={app} searchText=''
-        showUpload={action('Upload')} onSearch={action('Search')} onSearchTextChange={action('Search Text Changed')} />
+      <FilingList {...etc} />
     );
   })
   .add('No filings', () => {
     return (
-      <FilingList filings={{loading: false, value: []}} app={app}
-        showUpload={action('Upload')} onSearch={action('Search')} onSearchTextChange={action('Search Text Changed')} />
+      <FilingList {...etc} userFilings={{loading: false, value: []}} />
     );
   })
   .add('With filings', () => {
     return (
-      <FilingList filings={{loading: false, value: filings}} app={app}
-        showUpload={action('Upload')} onSearch={action('Search')} onSearchTextChange={action('Search Text Changed')} />
+      <FilingList {...etc} userFilings={{loading: false, value: filings}} />
     );
   })
   .add('Many filings', () => {
@@ -65,13 +74,11 @@ storiesOf('FilingList', module)
       date: new Date('2017-01-01'),
     }));
     return (
-      <FilingList filings={{loading: false, value: manyFilings}} app={app}
-        showUpload={action('Upload')} onSearch={action('Search')} onSearchTextChange={action('Search Text Changed')} />
+      <FilingList {...etc} userFilings={{loading: false, value: manyFilings}} />
     );
   })
   .add('Error', () => {
     return (
-      <FilingList filings={{loading: false, error: 'Something went wrong.'}} app={app}
-        showUpload={action('Upload')} onSearch={action('Search')} onSearchTextChange={action('Search Text Changed')} />
+      <FilingList {...etc} userFilings={{loading: false, error: 'Something went wrong.'}} />
     );
   });

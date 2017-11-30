@@ -100,8 +100,7 @@
       display: flex;
       align-items: stretch;
 
-      &-name,
-      &-date {
+      &-cell {
         box-sizing: border-box;
         overflow: hidden;
         white-space: nowrap;
@@ -121,6 +120,10 @@
         flex-shrink: 1;
         text-align: center;
       }
+
+      &-only {
+        width: 100%;
+      }
     }
 
     &-header {
@@ -128,8 +131,11 @@
       color: white;
       text-align: center;
 
-      &-name {
+      &-main {
         font-weight: bold;
+      }
+
+      &-name {
         border-right: 1px solid white;
       }
     }
