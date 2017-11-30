@@ -58,7 +58,7 @@ export interface UploadStatus {
 export interface WorkspaceAppSpec {
   name: string;
   href: string;
-  action: 'VIEW' | 'UPLOAD' | 'ANALYSE' | 'CHECK' | 'DOWNLOAD' | 'COMPARE';
+  action: string;
   description?: string;
   filingHref?: string;
   external?: boolean;

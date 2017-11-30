@@ -47,11 +47,11 @@ const specByStatus: {[status: string]: Spec} = {
     detail: 'With Warnings',
   },
   ERROR: {
-    lowerStatus: 'error',
+    lowerStatus: 'fail',
     label: 'Fail',
   },
   FATAL_ERROR: {
-    lowerStatus: 'fatalError',
+    lowerStatus: 'fail',
     label: 'Fail',
   },
 };

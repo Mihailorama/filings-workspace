@@ -48,7 +48,7 @@ const filingMatches: FilingMatch[] = [
   'deserunt mollit anim id est laborum.'},
 ];
 
-const app: WorkspaceAppSpec = {name: 'Test App', action: 'CHECK', href: '/test-app', filingHref: '/test-app/{id}'};
+const app: WorkspaceAppSpec = {name: 'Test App', action: 'SEARCH', href: '/test-app', filingHref: '/test-app/{id}'};
 
 const etc: FilingListPageProps = {
   app,

@@ -26,19 +26,22 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
-  padding: @gap3 0px;
-  height: calc(~ "100vh" - (@bar-ht + @gap3 + @gap3));
+  align-items: stretch;
+  height: calc(~ "100vh" - @bar-ht);
 
-  background-color: @secondary;
   color: white;
 
   &:before,
   &:after {
     content: ' ';
+    background-color: @secondary;
     flex-shrink: 1;
     flex-grow: 0;
     height: @big-gap;
+  }
+
+  &:after {
+    flex-grow: 1;
   }
 }
 
@@ -49,6 +52,8 @@
   justify-content: center;
   align-items: center;
   line-height: 1;
+  background-color: @secondary;
+  padding: @gap3 0px;
 
   &:before {
     content: " ";
@@ -78,8 +83,7 @@
     width: 208px;
     height: 182px;
   }
-  &-error:before,
-  &-fatalError:before {
+  &-fail:before {
     background-image: url(validation-result-error.svg);
   }
 
@@ -108,8 +112,7 @@
   &-filing {
     margin-top: 30px;
 
-    &-error svg,
-    &-fatalError svg {
+    &-fail svg {
       stroke: #E74C3C;
     }
   }
