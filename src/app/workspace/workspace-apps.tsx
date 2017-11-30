@@ -41,7 +41,7 @@ export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
   validator: {
     name: 'Quick XBRL Validator',
     description: 'Quickly validate your XBRL filing against a chosen taxonomy',
-    action: 'UPLOAD',
+    action: 'VALIDATE',
     href: `${ROOT}validator`,
     filingHref: `${ROOT}validator/filing-versions/{id}`,
     icon: props => <ValidatorIcon {... props } />,
@@ -74,7 +74,7 @@ export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
   'oim-converter': {
     name: 'OIM/JSON Converter',
     description: 'Convert XBRL to OIM JSON format',
-    action: 'DOWNLOAD',
+    action: 'CONVERT',
     external: true,
     href: `${ROOT}oim-converter`,
     filingHref: `${ROOT}oim-converter/filing-versions/{id}`,
@@ -91,7 +91,7 @@ export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
   taxonomyInfo: {
     name: 'Quick Taxonomy Info',
     description: 'Quickly search for concepts or codification references in a taxonomy',
-    action: 'CHECK',
+    action: 'SEARCH',
     external: true,
     href: `${EXTERNAL_ROOT}quick-taxonomy-info/`,
     icon: props => <TaxonomyInfoIcon {... props } />,
@@ -99,7 +99,7 @@ export const WORKSPACE_APPS: {[key: string]: WorkspaceAppSpec} = {
   taxonomyPackager: {
     name: 'Taxonomy Packager',
     description: 'Create a taxonomy package by adding metadata to your existing taxonomy ZIP file',
-    action: 'UPLOAD',
+    action: 'CREATE',
     external: true,
     href: `${EXTERNAL_ROOT}taxonomy-packager/`,
     icon: props => <TaxonomyPackagerIcon {... props } />,
@@ -151,17 +151,17 @@ export default function WorkspaceApps(): JSX.Element {
     <Grid className='app-WorkspaceAppsGrid'>
       <Row className='app-WorkspaceAppsRow'>
         <WorkspaceAppTile app={WORKSPACE_APPS.validator} />
-        <WorkspaceAppTile app={WORKSPACE_APPS.taxonomyInfo} />
-        <WorkspaceAppTile app={WORKSPACE_APPS['benfords-analyser-report']} />
-      </Row>
-      <Row className='app-WorkspaceAppsRow'>
-        <WorkspaceAppTile app={WORKSPACE_APPS.taxonomyPackager}/>
-        <WorkspaceAppTile app={WORKSPACE_APPS['oim-converter']} />
         <WorkspaceAppTile app={WORKSPACE_APPS.viewer} />
+        <WorkspaceAppTile app={WORKSPACE_APPS.statistics} />
       </Row>
       <Row className='app-WorkspaceAppsRow'>
-        <WorkspaceAppTile app={WORKSPACE_APPS.statistics} />
+        <WorkspaceAppTile app={WORKSPACE_APPS['benfords-analyser-report']} />
+        <WorkspaceAppTile app={WORKSPACE_APPS['oim-converter']} />
         <WorkspaceAppTile app={WORKSPACE_APPS.changeReport} />
+      </Row>
+      <Row className='app-WorkspaceAppsRow'>
+        <WorkspaceAppTile app={WORKSPACE_APPS.taxonomyInfo} />
+        <WorkspaceAppTile app={WORKSPACE_APPS.taxonomyPackager}/>
         <WorkspaceTile
           icon={<LinkToGitHubIcon/>} name='CoreFiling GitHub' action='VIEW'
           description={'Visit CoreFiling\'s GitHub page'}
