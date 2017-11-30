@@ -49,7 +49,7 @@ class ValidatorContainer extends Component<ValidatorContainerProps> {
 
   render(): JSX.Element {
     const {name, status} = this.props;
-    return <ValidationResult name={name} status={status && status.value || undefined} />;
+    return <ValidationResult name={name} status={status} />;
   }
 
 }
