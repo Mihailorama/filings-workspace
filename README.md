@@ -21,7 +21,7 @@ ensures the document is validated against the correct set of business rules.
 This step uses the True North Data Platform Document Service and Search
 Service APIs. Documents are uploaded to the Document Service.
 
-The code can be found [in src/app/validator](./src/app/workspace).
+The code can be found [in src/app/workspace](./src/app/workspace).
 
 ### Validator
 
