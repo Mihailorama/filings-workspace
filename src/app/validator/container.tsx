@@ -25,9 +25,12 @@ import { filingVersionId, FilingRouterProps } from '../containers/filing-version
 import ValidationResult from './validation-result';
 import { ValidatorState } from './reducers';
 
-export interface ValidatorContainerProps extends FilingRouterProps {
-  name: string | undefined;
+interface PropsFromState {
+  name?: string;
   status: Item<ValidationStatus>;
+}
+
+export interface ValidatorContainerProps extends PropsFromState, FilingRouterProps {
   fetchAction: typeof fetchAction;
 }
 
@@ -52,7 +55,7 @@ class ValidatorContainer extends Component<ValidatorContainerProps> {
 }
 
 export default connect(
-  ({validator: state}: {validator: ValidatorState}, ownProps: FilingRouterProps) => {
+  ({validator: state}: {validator: ValidatorState}, ownProps: FilingRouterProps): PropsFromState => {
     const fvid = filingVersionId(ownProps);
     const name = state.names[fvid];
     const status = state.status[fvid] || {loading: true};

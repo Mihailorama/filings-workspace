@@ -44,6 +44,7 @@ const etc: State = {
     ]},
   },
   statistics: {
+    names: {1: 'Example filing.zip'},
     statistics: {1: {loading: false, value: [
       {format: 'integer', name: 'facts', value: 123, label: 'Fact count'},
       {format: 'integer', name: 'tables', value: 12, label: 'Table count'},

@@ -21,7 +21,7 @@ import { FETCH, FAILED, RECEIVED, FetchAction, FailedAction, ReceivedAction } fr
 import { Item } from '../state';
 
 export interface ValidatorState {
-  names: {[filingVersionId: string]: String | undefined};
+  names: {[filingVersionId: string]: string | undefined};
   status: {[filingVersionId: string]: Item<ValidationStatus>};
 }
 

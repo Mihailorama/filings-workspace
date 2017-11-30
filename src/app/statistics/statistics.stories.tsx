@@ -34,12 +34,12 @@ storiesOf('Statistics', module)
   })
   .add('No statistics', () => {
     return (
-      <Statistics statistics={{loading: false, value: []}} />
+      <Statistics statistics={{loading: false, value: []}} name='Example filing.zip' />
     );
   })
   .add('With statistics', () => {
     return (
-      <Statistics statistics={{loading: false, value: statistics}} />
+      <Statistics statistics={{loading: false, value: statistics}} name='Example filing.zip' />
     );
   })
   .add('Error', () => {

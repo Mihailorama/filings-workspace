@@ -219,6 +219,7 @@ export const exampleValidatorState: ValidatorState = {
 };
 
 export const exampleStatisticsState: StatisticsState = {
+  names: {'f09be954-1895-4954-b333-6c9c89b833f1': 'Example Filing.zip'},
   statistics: {'f09be954-1895-4954-b333-6c9c89b833f1': {loading: false, value: exampleStatistics}},
 };
 
