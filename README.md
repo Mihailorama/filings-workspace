@@ -1,32 +1,77 @@
-# CoreFiling Labs Quick XBRL Validator
+# CoreFiling Labs Filings Workspace
 
-A simple demonstration of how the CoreFiling Platform can be used to validate a document.
+A demonstration of CoreFiling's True North Data Platform.
 
-## Upload
+This application demonstrates the platform's support for working with XBRL
+filings and provides links to other applications that demonstrate other
+platform features.
 
-![upload3](https://user-images.githubusercontent.com/1489182/31607189-5a9ce7ea-b263-11e7-8233-c394db384606.png)
+To try out these examples, please sign-up for the True North Data Platform
+at <https://www.corefiling.com/platform/>.
 
-## Review
+## Working with XBRL filings
 
-![pass-with-tables](https://user-images.githubusercontent.com/1489182/31607196-602adff0-b263-11e7-8846-4f8df0793487.PNG)
+Each example requires the user to select a filing. This can be done by
+uploading a filing, selecting a filing from the dataset of all
+US Securities and Exchange Commission filings, or reusing a recent filing.
 
+When uploading a filing, choose the relevant "Validation Profile". This
+ensures the document is validated against the correct set of business rules.
 
-## Synopsis
+This step uses the True North Data Platform Document Service and Search
+Service APIs. Documents are uploaded to the Document Service.
 
-It starts by using the [CoreFiling True North Platform][] API to request a list of validation
-profiles, then presents a form for choosing one and uploading a file. It submits this
-to the Document Service and polls for the validation status.
+The code can be found [in src/app/validator](./src/app/workspace).
 
-Once the document has been processed it displays the valdiation status
-and displays table renderings provided by the Table Rendering API.
-This uses Table Linkbase if the taxonomy includes it, otherwise
-synthesizes table layouts automatically.
+### Validator
 
-  [CoreFiling True North Platform]: https://www.corefiling.com/products/true-north/
+This example displays the validation status of the filing from the Validation
+Service API.
+
+The code can be found [in src/app/validator](./src/app/validator).
+
+### Viewer
+
+This example displays table renderings provided by the Table Rendering API.
+This uses Table Linkbase if the taxonomy includes it, otherwise synthesizes
+table layouts automatically.
+
+The code can be found [in src/app/viewer](./src/app/viewer).
+
+### Filing Statistics
+
+This example displays statistics derived from CoreFiling platform APIs.
+
+The Filing Statistics Service API is a CoreFiling Labs API that aggregates
+the statistics.
+
+The code can be found [in src/app/statistics](./src/app/statistics).
+
+### Benfords Analysis Report
+
+This example shows how the CoreFiling Platform can be used to perform
+analysis of XBRL documents.
+
+An [Open Source CoreFiling Labs service](https://github.com/CoreFiling/digit-frequency-analysis-service-impl)
+is used to calculate statistics related to [Benford's law](https://en.wikipedia.org/wiki/Benford%27s_law).
+Benford's law is an observation about the frequency distribution of leading digits in
+many real-life sets of numerical data that has applications in accounting fraud detection.
+
+The code can be found [in src/app/benfords](./src/app/benfords).
+
+## Other applications demonstrating platform features
+
+- [Quick Taxonomy Info](https://github.com/CoreFiling/quick-taxonomy-info) demonstates searching for concepts in a taxonomy.
+- [Taxonomy Packager](https://github.com/CoreFiling/taxonomy-packager) demonstates creating an XBRL Taxonomy Package from a taxonomy ZIP file.
+- [XBRL Document Change Report](https://github.com/CoreFiling/xbrl-document-change-report) demonstates comparing two versions of a filing to review the changes.
 
 ## Quick start
 
 Sign-up for the True North Data Platform at <https://www.corefiling.com/platform/>.
+
+As part of the sign-up process you can access a CoreFiling-hosted copy of this
+application. The following instructions allow you to run a local copy based on
+a checkout of this Git repository.
 
 Install node@>=6.0.0, npm@>=4.0.0 and yarn@>=1.0.0.
 
