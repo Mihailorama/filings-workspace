@@ -25,7 +25,7 @@ export interface ValidatorState {
   status: {[filingVersionId: string]: Item<ValidationStatus>};
 }
 
-export function reducer(state: ValidatorState | undefined, action: Action): ValidatorState | undefined {
+export function reducer(state: ValidatorState | undefined, action: Action): ValidatorState {
   if (!state) {
     return {
       names: {},

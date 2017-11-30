@@ -5,15 +5,20 @@ import {
   receivedProfilesAction, failedProfilesAction,
   receivedFilingsAction, failedFilingsAction,
   uploadAction, uploadFailedAction,
+  searchAction, searchResultsReceivedAction, searchFailedAction,
+  searchSelectionAction, searchSelectionFailedAction,
 } from '../actions';
 import {
-  fetchFilingsSaga, uploadSaga, navigate, LATEST_FILINGS, POLL_MILLIS, fetchProfilesSaga, stripExtension,
+  fetchFilingsSaga, uploadSaga, navigate, LATEST_FILINGS, POLL_MILLIS, fetchProfilesSaga, stripExtension, searchSaga, searchSelectionSaga,
 } from '../sagas';
 import { WORKSPACE_APPS } from '../workspace-apps';
 import { exampleFiling, exampleFilingVersion, exampleCategory } from '../../tests/model-examples';
 import { ValidationParams } from '../../models';
 import { apiFetchJson } from '../../api-fetch';
 import { categoriesApi, filingsApi } from '../../urls';
+import { matchingFilings, linkToPlatform, isFilingVersionReady } from '../../fullbeam-search/urls';
+import { exampleFilingMatch } from '../../benford/tests/model-examples';
+import { WorkspaceAppSpec } from '../reducers';
 
 describe('profilesSaga', () => {
   it('calls APIs in parallel and dispatches', () => {
@@ -155,4 +160,58 @@ describe('uploadSaga', () => {
     .toEqual(put(uploadFailedAction(jasmine.stringMatching(/Nope./) as any)));
   });
 
+});
+
+describe('searchSaga', () => {
+  it('calls matchingFilings and that’s about it', () => {
+    const saga = searchSaga(searchAction('searchtext'));
+
+    expect(saga.next().value).toEqual(call(matchingFilings, 'searchtext'));
+
+    const filingMatches = [exampleFilingMatch];
+    expect(saga.next(filingMatches).value).toEqual(put(searchResultsReceivedAction(filingMatches)));
+  });
+
+  it('emits a failed action if fails', () => {
+    const saga = searchSaga(searchAction('searchtext'));
+    saga.next();
+
+    expect(saga.throw!(new Error('LOLWAT')).value).toEqual(put(searchFailedAction(jasmine.stringMatching(/LOLWAT/) as any)));
+  });
+});
+
+describe('searchSelectionSaga', () => {
+  const exampleApp: WorkspaceAppSpec = {
+    name: 'Name of App',
+    href: '/idofapp',
+    action: 'COMPARE',
+    filingHref: '/idofapp/filing-versions/{id}',
+  };
+
+  it('calls linkToPlatform and polls isFilingVersionReady', () => {
+    const saga = searchSelectionSaga(searchSelectionAction(exampleApp, exampleFilingMatch));
+
+    expect(saga.next().value).toEqual(call(linkToPlatform, exampleFilingMatch));
+
+    // Poll until ready! then navigate!!
+    expect(saga.next('id-of-filing-version').value).toEqual(call(isFilingVersionReady, 'id-of-filing-version'));
+    expect(saga.next(false).value).toEqual(call(delay, POLL_MILLIS));
+    expect(saga.next().value).toEqual(call(isFilingVersionReady, 'id-of-filing-version'));
+    expect(saga.next(true).value).toEqual(call(navigate, '/idofapp/filing-versions/id-of-filing-version'));
+  });
+
+  it('emits a failed action if fails', () => {
+    const saga = searchSelectionSaga(searchSelectionAction(exampleApp, exampleFilingMatch));
+    saga.next();
+
+    expect(saga.throw!(new Error('LOLWAT')).value).toEqual(put(searchSelectionFailedAction(jasmine.stringMatching(/LOLWAT/) as any)));
+  });
+
+  it('emits a failed action if fails during polling', () => {
+    const saga = searchSelectionSaga(searchSelectionAction(exampleApp, exampleFilingMatch));
+    saga.next();
+    saga.next('id-of-filing-version');
+
+    expect(saga.throw!(new Error('LOLWAT')).value).toEqual(put(searchSelectionFailedAction(jasmine.stringMatching(/LOLWAT/) as any)));
+  });
 });

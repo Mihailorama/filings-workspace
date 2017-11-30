@@ -3,14 +3,14 @@ import { reducer, AppBarState } from '../reducers';
 import { exampleAppBarState } from '../../tests/model-examples';
 
 describe('appBarReducer', () => {
-  const initial: AppBarState | undefined = reducer(undefined, {type: '????'});
+  const initial: AppBarState = reducer(undefined, {type: '????'});
 
   it('creates initial state', () => {
     expect(initial).toEqual({user: {loading: false}});
   });
 
   it('clears user and apps when fetching', () => {
-    const after: AppBarState | undefined = reducer(exampleAppBarState, fetchAction());
+    const after: AppBarState = reducer(exampleAppBarState, fetchAction());
     expect(after).toBeDefined();
     expect(after!.user).toEqual({loading: true});
   });
@@ -24,7 +24,7 @@ describe('appBarReducer', () => {
   });
 
   it('stores error when failed', () => {
-    const after: AppBarState | undefined = reducer(exampleAppBarState, failedAction('Oh no'));
+    const after: AppBarState = reducer(exampleAppBarState, failedAction('Oh no'));
     expect(after).toBeDefined();
     expect(after!.user).toEqual({loading: false, error: 'Oh no'});
   });

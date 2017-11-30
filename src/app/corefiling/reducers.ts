@@ -27,7 +27,7 @@ export interface AppBarState {
   user: Item<User>;
 }
 
-export function reducer(state: AppBarState | undefined, action: Action): AppBarState | undefined {
+export function reducer(state: AppBarState | undefined, action: Action): AppBarState {
   if (!state) {
     return {user: {loading: false}};
   }
