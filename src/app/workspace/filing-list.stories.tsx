@@ -36,10 +36,10 @@ const filings: WorkspaceFiling[] = [
 ];
 
 const filingMatches: FilingMatch[] = [
-  {filingName: 'Wibble wobble'} as any,
-  {filingName: 'Carrot'},
-  {filingName: 'Alphabet'},
-  {filingName: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ' +
+  {filing: {id: 1}, filingName: 'Wibble wobble'} as any,
+  {filing: {id: 2}, filingName: 'Carrot'},
+  {filing: {id: 3}, filingName: 'Alphabet'},
+  {filing: {id: 4}, filingName: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ' +
   'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ' +
   'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris ' +
   'nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in ' +
