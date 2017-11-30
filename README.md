@@ -23,14 +23,14 @@ Service APIs. Documents are uploaded to the Document Service.
 
 The code can be found [in src/app/workspace](./src/app/workspace).
 
-### Validator
+### Quick XBRL Validator
 
 This example displays the validation status of the filing from the Validation
 Service API.
 
 The code can be found [in src/app/validator](./src/app/validator).
 
-### Viewer
+### Quick XBRL Viewer
 
 This example displays table renderings provided by the Table Rendering API.
 This uses Table Linkbase if the taxonomy includes it, otherwise synthesizes
