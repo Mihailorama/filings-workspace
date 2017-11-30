@@ -27,7 +27,7 @@ export default class UploadIcon extends Component<UploadIconProps> {
     const { className, style } = this.props;
     /* tslint:disable */
     return <svg width="14px" height="24px" viewBox="0 0 14 24" className={className} style={style} xmlns="http://www.w3.org/2000/svg">
-      <g fill-rule="evenodd">
+      <g fillRule="evenodd">
         <g transform="translate(-151.000000, -158.000000)">
           <g transform="translate(134.000000, 148.000000)">
             <g transform="translate(24.000000, 20.000000) rotate(-180.000000) translate(-24.000000, -20.000000) translate(17.000000, 10.000000)">
