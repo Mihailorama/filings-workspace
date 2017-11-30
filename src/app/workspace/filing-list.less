@@ -159,6 +159,7 @@
       text-decoration: none;
       color: @secondary;
       font-size: 12px;
+      cursor: pointer;
 
       &:nth-of-type(even) {
         background-color: @tablePaper;
@@ -253,7 +254,6 @@
   flex-direction: row;
 
   &-selector {
-    cursor: pointer;
     background-color: @primary;
     border-color: @secondary;
 
@@ -270,6 +270,7 @@
   }
 
   &-selector:not(&-selected) {
+    cursor: pointer;
     border-width: 1px;
     border-style: solid;
   }
@@ -277,6 +278,5 @@
   &-selected {
     background-color: @paper;
     color: @secondary;
-    cursor: none;
   }
 }
