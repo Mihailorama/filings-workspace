@@ -31,7 +31,7 @@ export interface PropsFromState {
   name?: string;
   tables: Item<TableMetadata[]>;
   selectedTable?: TableMetadata;
-  table: Item<QueryableTablePage>;
+  table?: Item<QueryableTablePage>;
   zOptions?: Option[][];
 }
 
@@ -77,7 +77,7 @@ export default connect(
     const name = state.names[fvid];
     const tables = state.tables[fvid] || {loading: true};
     const page = state.selectedTablePage[fvid];
-    const table = page && state.tableRendering[tablePageKey(page)] || {loading: true};
+    const table = page && state.tableRendering[tablePageKey(page)];
     const zOptions = page && state.zOptions[page.table.id];
 
     return {name, tables, selectedTable: page && page.table, table, zOptions};

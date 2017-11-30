@@ -35,7 +35,9 @@ export function* fetchTablesSaga(action: FetchTablesAction): IterableIterator<Ef
     ]);
     const tables = tablesWithEmpties.filter(x => !x.empty);
     yield put(receivedTablesAction(filingVersionId, filingVersion.filing.name, tables));
-    yield put(fetchPageAction(filingVersionId, {table: tables[0], x: 0, y: 0, z: 0}));
+    if (tables.length) {
+      yield put(fetchPageAction(filingVersionId, {table: tables[0], x: 0, y: 0, z: 0}));
+    }
   } catch (res) {
     yield put(failedTablesAction(filingVersionId, res.message || res.statusText || `Status: ${res.status}`));
   }

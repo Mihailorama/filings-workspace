@@ -31,7 +31,7 @@ export interface ViewerProps extends React.Props<Viewer> {
   name?: string;
   tables: Item<TableMetadata[]>;
   selectedTable?: TableMetadata;
-  table: Item<QueryableTablePage>;
+  table?: Item<QueryableTablePage>;
   zOptions?: Option[][];
   onChangePage: (x: number, y: number, z: number) => void;
   onChangeTable: (table: TableMetadata) => void;
@@ -50,11 +50,11 @@ export default class Viewer extends React.Component<ViewerProps> {
             onChangeTable={onChangeTable}
           />
         </header>
-        {(tables.loading || table.loading) ?
+        {(tables.loading || (table && table.loading)) ?
           <div className='app-Viewer-loading'>loading…</div> :
           error ?
             <div className='app-Viewer-error'>{error}</div> :
-            tables.value && tables.value.length > 0 ?
+            tables.value && tables.value.length > 0 && table ?
               <Table metadata={selectedTable} zOptions={zOptions} table={table.value}
                 onChangePage={onChangePage} onChangeTable={onChangeTable}/> :
               <div className='app-Viewer-noTables'>This filing is empty.</div>
