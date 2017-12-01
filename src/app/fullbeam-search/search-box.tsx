@@ -23,6 +23,7 @@ export interface SearchBoxProps {
   searchText?: string;
   onSearch?: () => any;
   disabled?: boolean;
+  className?: string;
   placeholder: string;
   onSearchTextChange: (search: string) => any;
 }
@@ -40,9 +41,9 @@ export default class SearchBox extends React.Component<SearchBoxProps> {
   }
 
   render(): JSX.Element {
-    const { disabled, placeholder, onSearch, onSearchTextChange, searchText } = this.props;
+    const { disabled, placeholder, className, onSearch, onSearchTextChange, searchText } = this.props;
     return (
-      <form className='app-SearchBox' onSubmit={e => {e.preventDefault(); if (onSearch) { onSearch(); }}}>
+      <form className={classNames('app-SearchBox', className)} onSubmit={e => {e.preventDefault(); if (onSearch) { onSearch(); }}}>
         <div className={classNames('app-SearchBox-search', {'app-SearchBox-searchEnabled': !disabled})}>
           <input ref='input' id='searchInput' type='text' placeholder={placeholder} value={searchText}
             onChange={e => onSearchTextChange(e.currentTarget.value)}/>

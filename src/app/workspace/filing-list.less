@@ -19,6 +19,7 @@
 .app-FilingListPage-container {
   display: flex;
   flex-direction: column;
+  align-items: center;
   margin: @gap3;
   height: calc(~"100vh" - (@bar-ht + @gap3 + @gap3));
 }
@@ -35,6 +36,8 @@
   border-bottom-left-radius : 3px;
   border-bottom-right-radius : 3px;
 
+  width: 980px;
+
   &-modeContainer {
     color: @ink;
     background: @paper;
@@ -42,7 +45,7 @@
     border-bottom-right-radius : 3px;
 
     display: flex;
-    padding: @gap2 @gap @gap;
+    padding: @gap @gap @gap2 @gap;
     flex-direction: column;
     flex-shrink: 0;
     flex-grow: 1;
@@ -53,36 +56,55 @@
     flex-grow: 0;
     flex-shrink: 0;
     margin-bottom: @gap;
-    padding: 0 92px;
 
     display: flex;
-    justify-content: space-around;
   }
 
   &-search {
-    margin-left: 60px;
-    flex-grow: 1;
-    flex-shrink: 0;
-  }
 
-  &-uploadButton {
-    flex-grow: 0;
-    flex-shrink: 0;
+    &Header {
+      justify-content: space-around;
+      align-items: center;
+      padding: 0 92px;
+    }
 
-    // Align icon and text centrally
-    display: flex;
-    align-items: center;
-    line-height: 1;
-
-    svg {
+    &Label {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 35px;
+      width: 20%;
       margin-right: 10px;
-      fill: @secondary;
+      text-align: right;
+      color: #535353;
     }
 
-    &:hover svg, &:active svg {
-      fill: white;
+    &Box {
+      width: 100%;
     }
   }
+
+  &-upload {
+    &Header {
+      justify-content: flex-end;
+    }
+
+    &Button {
+      flex-grow: 0;
+      flex-shrink: 0;
+
+      // Align icon and text centrally
+      display: flex;
+      align-items: center;
+      line-height: 1;
+
+      svg {
+        margin-right: 10px;
+        fill: @secondary;
+      }
+
+    }
+  }
+
 
   &-inner {
     flex-grow: 1;
@@ -123,7 +145,7 @@
       }
 
       &-name {
-        width: calc(~"(100vw - " (@gap3 + @gap3 + @gap + @gap) ~") * 0.8");
+        width: calc(~"(100% - " (@gap3 + @gap3 + @gap + @gap) ~") * 0.8");
         flex-grow: 0;
         flex-shrink: 0;
       }
@@ -252,12 +274,11 @@
 .app-FilingListPageModeChanger {
   display: flex;
   flex-direction: row;
+  background-color: darken(@primary, 3%);
+  border-top-left-radius : 15px;
+  border-top-right-radius : 15px;
 
   &-selector {
-    background-color: @primary;
-    border-color: @secondary;
-
-    color: #FFF;
     width: 100%;
     padding: 10px 15px;
     font-size: 20px;
@@ -271,12 +292,24 @@
 
   &-selector:not(&-selected) {
     cursor: pointer;
-    border-width: 1px;
-    border-style: solid;
+    background-color: @primary-lt;
+    color: #FFF;
+    // border-width: 1px;
+    // border-style: solid;
+    // border-color: @primary;
+    // border-bottom: none;
   }
 
   &-selected {
     background-color: @paper;
     color: @secondary;
+
+    &-hasRight {
+      margin-right: 1px;
+    }
+
+    &-hasLeft {
+      margin-left: 1px;
+    }
   }
 }
