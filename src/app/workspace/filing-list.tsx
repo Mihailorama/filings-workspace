@@ -121,7 +121,7 @@ function SearchResultsList({ app, searchText, searchPerformed, searchResultFilin
     <div className='app-FilingListPage-header app-FilingListPage-searchHeader'>
       <div className='app-FilingListPage-searchLabel'>Search:</div>
       <SearchBox onSearch={onSearch} onSearchTextChange={onSearchTextChange} searchText={searchText}
-        className='app-FilingListPage-searchBox' placeholder='US Securities and Exchange Commission filings' />
+        className='app-FilingListPage-searchBox' placeholder='Company name or number' />
     </div>
     <div className='app-FilingListPage-inner'>
       {searchResultFilings.loading ?
