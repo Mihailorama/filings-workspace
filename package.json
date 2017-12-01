@@ -1,6 +1,6 @@
 {
   "name": "@cfl/filings-workspace",
-  "version": "1.2.1-local",
+  "version": "1.0.0-local",
   "cfl": {
     "group": {
       "name": "labs"
@@ -32,8 +32,7 @@
     "devserver-https": true,
     "devserver-host": "localhost",
     "devserver-port": 9091,
-    "api-proxy": "https://labs-api.cfl.io/",
-    "external-app-proxy": "https://platform.cfl.io/"
+    "api-proxy": "https://labs-api.cfl.io/"
   },
   "files": [
     "www"
