@@ -21,12 +21,16 @@ ensures the document is validated against the correct set of business rules.
 This step uses the True North Data Platform Document Service and Search
 Service APIs. Documents are uploaded to the Document Service.
 
+![Upload screenshot](https://user-images.githubusercontent.com/457790/33477443-996e23d8-d67d-11e7-85dd-125e81e285c2.png)
+
 The code can be found [in src/app/workspace](./src/app/workspace).
 
 ### Quick XBRL Validator
 
 This example displays the validation status of the filing from the Validation
 Service API.
+
+![Passing validation status screenshot](https://user-images.githubusercontent.com/457790/33477444-998651e2-d67d-11e7-94e3-b9972f532b13.png)
 
 The code can be found [in src/app/validator](./src/app/validator).
 
@@ -36,6 +40,8 @@ This example displays table renderings provided by the Table Rendering API.
 This uses Table Linkbase if the taxonomy includes it, otherwise synthesizes
 table layouts automatically.
 
+![Screenshot of Apple Inc's Document and Entity Information table](https://user-images.githubusercontent.com/457790/33477445-99b6ebae-d67d-11e7-88d4-73914eeda428.png)
+
 The code can be found [in src/app/viewer](./src/app/viewer).
 
 ### Filing Statistics
@@ -44,6 +50,8 @@ This example displays statistics derived from CoreFiling platform APIs.
 
 The Filing Statistics Service API is a CoreFiling Labs API that aggregates
 the statistics.
+
+![Screenshot of statistics table for Apple Inc](https://user-images.githubusercontent.com/457790/33477750-bcf6dcf4-d67e-11e7-9027-c86d522c7561.png)
 
 The code can be found [in src/app/statistics](./src/app/statistics).
 
@@ -56,6 +64,8 @@ An [Open Source CoreFiling Labs service](https://github.com/CoreFiling/digit-fre
 is used to calculate statistics related to [Benford's law](https://en.wikipedia.org/wiki/Benford%27s_law).
 Benford's law is an observation about the frequency distribution of leading digits in
 many real-life sets of numerical data that has applications in accounting fraud detection.
+
+![Screenshot of example Benford's law data](https://user-images.githubusercontent.com/457790/33477441-995087a6-d67d-11e7-9fc7-a574a12d078b.png)
 
 The code can be found [in src/app/benfords](./src/app/benfords).
 
