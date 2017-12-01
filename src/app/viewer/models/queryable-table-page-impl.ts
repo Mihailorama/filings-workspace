@@ -79,11 +79,11 @@ export default class QueryableTablePageImpl implements QueryableTablePage {
 
   getRow(y: number): Cell[] {
     const row = y - this.y;
-    return this.chunk.data.map(col => col[row]);
+    return this.chunk.data.map(col => ({... col[row], issues: []}));
   }
 
   getCell(col: number, row: number): Cell {
-    return this.chunk.data[col - this.x][row - this.y];
+    return {... this.chunk.data[col - this.x][row - this.y], issues: []};
   }
 
   get pageCoordinates(): [number[], number[]] {
