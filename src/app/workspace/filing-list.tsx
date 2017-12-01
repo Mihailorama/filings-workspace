@@ -137,21 +137,37 @@ function SearchResultsList({ app, searchText, searchPerformed, searchResultFilin
   </div>;
 }
 
-function FilingListPageModeSelector({currentMode, requiredMode, title, changeMode}:
-  {currentMode: FilingListMode, requiredMode: FilingListMode, title: string, changeMode: (mode: FilingListMode) => void}): JSX.Element {
+interface FilingListPageModeSelectorProps {
+  currentMode: FilingListMode;
+  requiredMode: FilingListMode;
+  title: string;
+  hasLeft?: boolean;
+  hasRight?: boolean;
+  changeMode: (mode: FilingListMode) => void;
+};
+
+function FilingListPageModeSelector(props: FilingListPageModeSelectorProps): JSX.Element {
+  const { currentMode, requiredMode, title, changeMode, hasLeft, hasRight } = props;
   return <a className={
-    classNames('app-FilingListPageModeChanger-selector', {'app-FilingListPageModeChanger-selected': currentMode === requiredMode})
-    } onClick={() => changeMode(requiredMode)}>{title}</a>;
+    classNames('app-FilingListPageModeChanger-selector', {
+      'app-FilingListPageModeChanger-selected': currentMode === requiredMode,
+      'app-FilingListPageModeChanger-selected-hasLeft': hasLeft,
+      'app-FilingListPageModeChanger-selected-hasRight': hasRight,
+    })} onClick={() => changeMode(requiredMode)}>{title}</a>;
+}
+
+function FilingListPageModeChanger({mode, changeMode}: {mode: FilingListMode, changeMode: (mode: FilingListMode) => void}): JSX.Element {
+  return <div className='app-FilingListPageModeChanger'>
+    <FilingListPageModeSelector currentMode={mode} hasRight={true} requiredMode='user' title='My Filings' changeMode={changeMode}/>
+    <FilingListPageModeSelector currentMode={mode} hasLeft={true} requiredMode='search' title='Search SEC Filings' changeMode={changeMode}/>
+  </div>;
 }
 
 export default function FilingListPage({ app, mode, userFilings, searchResultFilings, searchPerformed, searchText,
   showUpload, onSearch, onSearchTextChange, onSearchSelection, changeMode }: FilingListPageProps): JSX.Element {
   return <div className='app-FilingListPage-container'>
     <div className='app-FilingListPage'>
-      <div className='app-FilingListPageModeChanger'>
-        <FilingListPageModeSelector currentMode={mode} requiredMode='user' title='My Filings' changeMode={changeMode}/>
-        <FilingListPageModeSelector currentMode={mode} requiredMode='search' title='Search SEC Filings' changeMode={changeMode}/>
-      </div>
+      <FilingListPageModeChanger mode={mode} changeMode={changeMode} />
       {(mode === 'user')
         ? <UserFilingList app={app} userFilings={userFilings} showUpload={showUpload} />
         : <SearchResultsList app={app} searchText={searchText} searchPerformed={searchPerformed} searchResultFilings={searchResultFilings}

@@ -258,7 +258,6 @@
 
   &-selector {
     background-color: @primary;
-    border-color: @secondary;
 
     color: #FFF;
     width: 100%;
@@ -276,10 +275,20 @@
     cursor: pointer;
     border-width: 1px;
     border-style: solid;
+    border-color: @secondary;
+    border-bottom: none;
   }
 
   &-selected {
     background-color: @paper;
     color: @secondary;
+
+    &-hasRight {
+      margin-right: 1px;
+    }
+
+    &-hasLeft {
+      margin-left: 1px;
+    }
   }
 }
