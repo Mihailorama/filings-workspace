@@ -46,23 +46,25 @@ export interface StatisticsProps {
 }
 
 export default function Statistics({statistics, name}: StatisticsProps): JSX.Element {
-  return <div className='app-Statistics-container'>
-    <div className='app-Statistics'>
-      <div className='app-Statistics-inner'>
-        <div className='app-Statistics-title'>Filing statistics</div>
-        {statistics.value && (statistics.value.length > 0 ?
-          <StatisticsTable statistics={statistics.value} /> :
-          <div className='app-Statistics-noResults'>No statistics.</div>)}
-        {statistics.error && <div className='app-Statistics-error'>{statistics.error}</div>}
-        {statistics.loading && <div className='app-Statistics-loading'>loading…</div>}
+  return <div className='app-Statistics-container-row'>
+    <div className='app-Statistics-container'>
+      <div className='app-Statistics'>
+        <div className='app-Statistics-inner'>
+          <div className='app-Statistics-title'>Filing statistics</div>
+          {statistics.value && (statistics.value.length > 0 ?
+            <StatisticsTable statistics={statistics.value} /> :
+            <div className='app-Statistics-noResults'>No statistics.</div>)}
+          {statistics.error && <div className='app-Statistics-error'>{statistics.error}</div>}
+          {statistics.loading && <div className='app-Statistics-loading'>loading…</div>}
+        </div>
+        <div className='app-Statistics-filing'>
+          {name ?
+            <FilingReference className='app-Statistics-filing-reference' name={name} /> :
+            <div className='app-Statistics-filing-noReference' />
+          }
+        </div>
       </div>
-      <div className='app-Statistics-filing'>
-        {name ?
-          <FilingReference className='app-Statistics-filing-reference' name={name} /> :
-          <div className='app-Statistics-filing-noReference' />
-        }
-      </div>
+      <ContactDetails apiLink />
     </div>
-    <ContactDetails apiLink />
   </div>;
 }
