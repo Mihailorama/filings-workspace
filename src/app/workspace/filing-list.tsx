@@ -81,9 +81,9 @@ function SearchResultFilingList({app, filings, onSearchSelection}: {app: Workspa
     <div className='app-FilingList-list'>
       {filings.map(filing => {
         return <a key={filing.filing.id} className='app-FilingList-row' onClick={
-            e => { e.preventDefault(); onSearchSelection(app, filing); }}>
+          e => { e.preventDefault(); onSearchSelection(app, filing); }} href='#'>
             <div className='app-FilingList-row-cell app-FilingList-row-only'>{filing.filingName}</div>
-            </a>;
+          </a>;
       })}
     </div>
   </div>;
@@ -154,7 +154,7 @@ function FilingListPageModeSelector(props: FilingListPageModeSelectorProps): JSX
       'app-FilingListPageModeChanger-selected': currentMode === requiredMode,
       'app-FilingListPageModeChanger-selected-hasLeft': hasLeft,
       'app-FilingListPageModeChanger-selected-hasRight': hasRight,
-    })} onClick={() => changeMode(requiredMode)}>{title}</a>;
+    })} onClick={e => { e.preventDefault(); changeMode(requiredMode); }} href='#' role='tab'>{title}</a>;
 }
 
 function FilingListPageModeChanger({mode, changeMode}: {mode: FilingListMode, changeMode: (mode: FilingListMode) => void}): JSX.Element {
