@@ -1,6 +1,6 @@
 {
   "name": "@cfl/filings-workspace",
-  "version": "1.0.0-local",
+  "version": "1.0.1-local",
   "cfl": {
     "group": {
       "name": "labs"
