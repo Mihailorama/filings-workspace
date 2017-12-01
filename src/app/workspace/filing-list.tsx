@@ -81,9 +81,9 @@ function SearchResultFilingList({app, filings, onSearchSelection}: {app: Workspa
     <div className='app-FilingList-list'>
       {filings.map(filing => {
         return <a key={filing.filing.id} className='app-FilingList-row' onClick={
-            e => { e.preventDefault(); onSearchSelection(app, filing); }}>
+          e => { e.preventDefault(); onSearchSelection(app, filing); }} href='#'>
             <div className='app-FilingList-row-cell app-FilingList-row-only'>{filing.filingName}</div>
-            </a>;
+          </a>;
       })}
     </div>
   </div>;
