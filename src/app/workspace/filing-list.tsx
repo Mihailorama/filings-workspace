@@ -62,7 +62,7 @@ function createFilingRow(id: string, name: string, date: Date, {href, external}:
 function FilingList({app, filings}: {app: WorkspaceAppSpec, filings: WorkspaceFiling[]}): JSX.Element {
   return <div className='app-FilingList'>
     <div className='app-FilingList-header'>
-      <div className='app-FilingList-header-cell app-FilingList-header-name app-FilingList-header-main'>Recent Filings</div>
+      <div className='app-FilingList-header-cell app-FilingList-header-name app-FilingList-header-main'>Recent filings</div>
       <div className='app-FilingList-header-cell app-FilingList-header-date'>Date</div>
     </div>
     <div className='app-FilingList-list'>
@@ -76,13 +76,13 @@ function SearchResultFilingList({app, filings, onSearchSelection}: {app: Workspa
     onSearchSelection: (app: WorkspaceAppSpec, selectedFiling: FilingMatch) => void}): JSX.Element {
   return <div className='app-FilingList'>
     <div className='app-FilingList-header'>
-      <div className='app-FilingList-header-cell app-FilingList-header-main app-FilingList-header-only'>Matching Filings</div>
+      <div className='app-FilingList-header-cell app-FilingList-header-main app-FilingList-header-only'>Matching filings</div>
     </div>
     <div className='app-FilingList-list'>
       {filings.map(filing => {
         return <a key={filing.filing.id} className='app-FilingList-row' onClick={
             e => { e.preventDefault(); onSearchSelection(app, filing); }}>
-            <div className='app-FilingList-row-cell'>{filing.filingName}</div>
+            <div className='app-FilingList-row-cell app-FilingList-row-only'>{filing.filingName}</div>
             </a>;
       })}
     </div>
@@ -92,8 +92,8 @@ function SearchResultFilingList({app, filings, onSearchSelection}: {app: Workspa
 function UserFilingList({ app, userFilings, showUpload }:
   { app: WorkspaceAppSpec, userFilings: Item<WorkspaceFiling[]>, showUpload: () => void }): JSX.Element {
   return <div className='app-FilingListPage-modeContainer'>
-    <div className='app-FilingListPage-header'>
-      <Button className='app-FilingListPage-uploadButton' primary onClick={showUpload}>
+    <div className='app-FilingListPage-header app-FilingListPage-uploadHeader'>
+      <Button className='app-FilingListPage-uploadButton' onClick={showUpload}>
         <UploadIcon />
         <div>Upload</div>
       </Button>
@@ -118,9 +118,10 @@ function SearchResultsList({ app, searchText, searchPerformed, searchResultFilin
     onSearchSelection: (app: WorkspaceAppSpec, selectedFiling: FilingMatch) => void,
   }): JSX.Element {
   return <div className='app-FilingListPage-modeContainer'>
-    <div className='app-FilingListPage-header'>
+    <div className='app-FilingListPage-header app-FilingListPage-searchHeader'>
+      <div className='app-FilingListPage-searchLabel'>Search:</div>
       <SearchBox onSearch={onSearch} onSearchTextChange={onSearchTextChange} searchText={searchText}
-        placeholder='US Securities and Exchange Commission Filings' />
+        className='app-FilingListPage-searchBox' placeholder='US Securities and Exchange Commission filings' />
     </div>
     <div className='app-FilingListPage-inner'>
       {searchResultFilings.loading ?
@@ -130,7 +131,7 @@ function SearchResultsList({ app, searchText, searchPerformed, searchResultFilin
           searchResultFilings.value && searchResultFilings.value.length ?
             <SearchResultFilingList app={app} filings={searchResultFilings.value} onSearchSelection={onSearchSelection} /> :
             <div className='app-FilingListPage-noFilings'>
-              {searchPerformed ? <div>No results.</div> : <div>Search for SEC filings.</div>}
+              {searchPerformed ? <div>No results.</div> : <div>Search for US SEC filings.</div>}
             </div>
       }
     </div>
@@ -158,8 +159,8 @@ function FilingListPageModeSelector(props: FilingListPageModeSelectorProps): JSX
 
 function FilingListPageModeChanger({mode, changeMode}: {mode: FilingListMode, changeMode: (mode: FilingListMode) => void}): JSX.Element {
   return <div className='app-FilingListPageModeChanger'>
-    <FilingListPageModeSelector currentMode={mode} hasRight={true} requiredMode='user' title='My Filings' changeMode={changeMode}/>
-    <FilingListPageModeSelector currentMode={mode} hasLeft={true} requiredMode='search' title='Search SEC Filings' changeMode={changeMode}/>
+    <FilingListPageModeSelector currentMode={mode} hasRight={true} requiredMode='user' title='Recent filings' changeMode={changeMode}/>
+    <FilingListPageModeSelector currentMode={mode} hasLeft={true} requiredMode='search' title='Search SEC filings' changeMode={changeMode}/>
   </div>;
 }
 
