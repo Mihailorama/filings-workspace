@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/CoreFiling/filings-workspace.svg?branch=develop)](https://travis-ci.org/CoreFiling/filings-workspace.svg?branch=develop)
+[![Apache 2 license](http://img.shields.io/badge/license-Apache2-brightgreen.svg)](https://opensource.org/licenses/Apache-2.0)
+
 # CoreFiling Labs Filings Workspace
 
 A demonstration of CoreFiling's True North Data Platform.
